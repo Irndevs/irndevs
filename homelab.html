@@ -100,7 +100,7 @@
                             </div>
                         </div>
                         <div class="infra-img-wrap">
-                            <div class="infra-img-note">Registro textual: SSH login com MOTD customizado.</div>
+                            <div class="infra-img-note"><strong>Acesso seguro ao servidor</strong><br>Terminal Linux com mensagem inicial personalizada, identificação do ambiente e indicadores básicos de disponibilidade. O acesso é protegido por SSH, firewall e bloqueio contra tentativas repetidas.</div>
                         </div>
                     </div>
 
@@ -125,7 +125,7 @@
                             </div>
                         </div>
                         <div class="infra-img-wrap">
-                            <div class="infra-img-note">Registro textual: Windows Server Manager Dashboard.</div>
+                            <div class="infra-img-note"><strong>Máquina virtual de serviços</strong><br>Ambiente Windows isolado para testar administração de arquivos, armazenamento e serviços corporativos. A virtualização permite criar, pausar e restaurar o ambiente sem afetar os demais sistemas.</div>
                         </div>
                     </div>
                 </div>
@@ -163,21 +163,21 @@
 
                 <div class="gallery-grid loading inline-style-1">
                     <div class="gallery-item">
-                        <div class="infra-img-note">Registro textual: ambientes de desenvolvimento Shell com BGP EVPN.</div>
+                        <div class="infra-img-note"><strong>Roteamento entre ambientes</strong><br>Diagrama textual de uma topologia em camadas: núcleo de rede, nós de distribuição e ambientes de aplicação. A separação facilita testar rotas, isolamento e comunicação entre serviços sem expor endereços reais.</div>
                         <div class="gallery-caption">
                             <h4>🔧 BGP EVPN no ambientes de desenvolvimento</h4>
                             <p>Roteamento L2VPN com AS 65001. Peering ativo via eth0 com vizinho AS 65000. RIB entries e tabela de vizinhos em operação.</p>
                         </div>
                     </div>
                     <div class="gallery-item">
-                        <div class="infra-img-note">Registro textual: VM TrueNAS no ambientes de desenvolvimento.</div>
+                        <div class="infra-img-note"><strong>Armazenamento centralizado</strong><br>Ambiente dedicado para organizar volumes, backups e compartilhamentos de arquivos. A camada de storage fica separada das aplicações para facilitar recuperação, manutenção e expansão.</div>
                         <div class="gallery-caption">
                             <h4>💾 TrueNAS SCALE (VM 103)</h4>
                             <p>3 vCPUs, 4 GiB RAM, 32 GiB boot disk. Status running com uptime monitorado. Storage centralizado para backups e shares NFS/SMB.</p>
                         </div>
                     </div>
                     <div class="gallery-item">
-                        <div class="infra-img-note">Registro textual: Boot Order TrueNAS.</div>
+                        <div class="infra-img-note"><strong>Inicialização controlada</strong><br>Sequência de inicialização que prioriza o disco do sistema, valida mídias auxiliares e mantém a interface de rede como alternativa. Esse controle reduz falhas durante reinicializações e atualizações.</div>
                         <div class="gallery-caption">
                             <h4>⚙️ Configuração de Boot</h4>
                             <p>Ordem de boot: scsi0 (disco 32G) → ide2 (ISO TrueNAS SCALE 25.10.4) → net0 (virtio bridge vmbr0). Configuração otimizada para boot seguro.</p>
@@ -215,7 +215,7 @@
                             </div>
                         </div>
                         <div class="infra-img-wrap">
-                            <div class="infra-img-note">Registro textual: Regras de Firewall OPNsense.</div>
+                            <div class="infra-img-note"><strong>Políticas de firewall</strong><br>Regras organizadas por interface e finalidade, com controle de entrada, saída, NAT e segmentação. O objetivo é permitir apenas os fluxos necessários entre usuários, serviços e ambientes de teste.</div>
                         </div>
                     </div>
 
@@ -240,7 +240,7 @@
                             </div>
                         </div>
                         <div class="infra-img-wrap">
-                            <div class="infra-img-note">Registro textual: acesso seguro Machines Dashboard.</div>
+                            <div class="infra-img-note"><strong>Rede privada de acesso</strong><br>Malha de acesso remoto baseada em túneis criptografados e identidade por dispositivo. Ela permite administrar ambientes autorizados sem publicar interfaces internas diretamente na internet.</div>
                         </div>
                     </div>
                 </div>
@@ -254,28 +254,28 @@
 
                 <div class="gallery-grid loading">
                     <div class="gallery-item">
-                        <div class="infra-img-note">Registro textual: métricas de produto Node Exporter - CPU/Mem/Disk.</div>
+                        <div class="infra-img-note"><strong>Métricas de uso do sistema</strong><br>Painel textual para acompanhar CPU, memória, swap, disco e tempo de atividade. Esses sinais ajudam a identificar saturação, vazamentos de memória e crescimento de armazenamento antes de afetarem o produto.</div>
                         <div class="gallery-caption">
                             <h4>📊 métricas de produto — Node Exporter Full</h4>
                             <p>Dashboard completo com gauges de CPU, memória (97.7%), swap (29.3%), rootfs (24.6%), /boot (0%), /tmp (25.3%). Uptime e storage visíveis em tempo real.</p>
                         </div>
                     </div>
                     <div class="gallery-item">
-                        <div class="infra-img-note">Registro textual: métricas de produto Network Traffic.</div>
+                        <div class="infra-img-note"><strong>Tráfego e entrada/saída de disco</strong><br>Visão combinada de tráfego por interface e operações de leitura e gravação. A comparação ao longo do tempo ajuda a encontrar gargalos de rede, tarefas pesadas e padrões anormais de consumo.</div>
                         <div class="gallery-caption">
                             <h4>📡 métricas de produto — Network & Disk I/O</h4>
                             <p>Monitoramento de tráfego de rede (Rx por interface) e uso de disco por partição (/boot/efi, /boot, /run, /tmp). Timeline de 5 minutos com granularidade detalhada.</p>
                         </div>
                     </div>
                     <div class="gallery-item">
-                        <div class="infra-img-note">Registro textual: métricas de produto Node Exporter 24h.</div>
+                        <div class="infra-img-note"><strong>Histórico de desempenho</strong><br>Resumo das métricas das últimas horas para comparar carga, memória, espera de CPU e uso de recursos. O histórico apoia decisões de capacidade e investigação de incidentes.</div>
                         <div class="gallery-caption">
                             <h4>🕐 métricas de produto — Visão 24h</h4>
                             <p>Métricas de longo prazo: CPU busy system/user/iowait, memória total/used/cache/buffer/swap. Análise histórica para identificar padrões de carga.</p>
                         </div>
                     </div>
                     <div class="gallery-item">
-                        <div class="infra-img-note">Registro textual: métricas automatizadas Targets Health.</div>
+                        <div class="infra-img-note"><strong>Saúde das coletas</strong><br>Lista textual dos alvos monitorados e do estado de cada coleta. Quando um alvo falha, o alerta indica que a telemetria precisa ser investigada antes que o problema fique invisível.</div>
                         <div class="gallery-caption">
                             <h4>🔍 métricas automatizadas — Target Health</h4>
                             <p>Status de scraping: prometheus (1/1 UP) e servidor_físico (0/1 DOWN). Monitoramento ativo de endpoints com alertas de context deadline exceeded.</p>
@@ -312,7 +312,7 @@
                             </div>
                         </div>
                         <div class="infra-img-wrap">
-                            <div class="infra-img-note">Registro textual: Dashboard do Gitea.</div>
+                            <div class="infra-img-note"><strong>Forge de código</strong><br>Serviço central para repositórios, permissões, branches, pull requests e integrações. Ele organiza o ciclo de desenvolvimento e mantém o histórico de mudanças associado a cada produto.</div>
                         </div>
                     </div>
 
@@ -338,7 +338,7 @@
                             </div>
                         </div>
                         <div class="infra-img-wrap">
-                            <div class="infra-img-note">Registro textual: Gitea Actions Pipeline.</div>
+                            <div class="infra-img-note"><strong>Pipeline de entrega</strong><br>Fluxo automatizado que executa lint, testes, build e empacotamento. A pipeline reduz trabalho manual, detecta regressões cedo e prepara uma entrega repetível para cada alteração.</div>
                         </div>
                     </div>
                 </div>
