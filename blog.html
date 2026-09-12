@@ -57,6 +57,11 @@
   <div class="sec-head"><span class="amber">$</span> ls posts/ --recent</div>
   <h1>Blog</h1>
   <p>Artigos sobre desenvolvimento de software, Linux e automação — do que é testado no laboratório de software pra o que entra em produção.</p>
+  <div class="search-box" id="buscar">
+     <label for="postSearch">buscar artigos</label>
+     <input id="postSearch" type="search" placeholder="ex.: Docker, Linux, Kubernetes..." autocomplete="off">
+     <span id="searchCount" aria-live="polite">7 artigos</span>
+   </div>
   <div class="filters">
     <button class="filter-btn active" data-category="all">todos</button>
     <button class="filter-btn" data-category="qualidade e confiabilidade">qualidade e confiabilidade</button>
@@ -176,17 +181,33 @@
 <script>
   const buttons = document.querySelectorAll('.filter-btn');
   const posts = document.querySelectorAll('.post');
+ const searchInput = document.getElementById('postSearch');
+ const searchCount = document.getElementById('searchCount');
+ let activeCategory = 'all';
+
+ function applyFilters() {
+   const query = searchInput.value.trim().toLowerCase();
+   let visible = 0;
+   posts.forEach(post => {
+     const categoryMatch = activeCategory === 'all' || post.getAttribute('data-category') === activeCategory;
+     const textMatch = !query || post.textContent.toLowerCase().includes(query);
+     const show = categoryMatch && textMatch;
+     post.hidden = !show;
+     if (show) visible++;
+   });
+   searchCount.textContent = visible + (visible === 1 ? ' artigo' : ' artigos');
+ }
+
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
       buttons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      const cat = btn.getAttribute('data-category');
-      posts.forEach(post => {
-        const match = cat === 'all' || post.getAttribute('data-category') === cat;
-        post.style.display = match ? '' : 'none';
-      });
+     activeCategory = btn.getAttribute('data-category');
+     applyFilters();
     });
   });
+ searchInput.addEventListener('input', applyFilters);
+ applyFilters();
 </script>
 
   <script src="assets/js/site-nav.js" defer></script>
