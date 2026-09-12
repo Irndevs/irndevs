@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRN Devs — Desenvolvimento de Software</title>
+<meta name="description" content="IRN Devs: engenharia de software, Kubernetes (plataformas de software), qualidade e confiabilidade (métricas de produto, métricas automatizadas, Loki, telemetria de aplicações) e automação em produção.">
+<meta name="keywords" content="desenvolvimento de software, devops, laboratório de software, kubernetes, plataformas de software, docker, proxmox, grafana, prometheus">
+<meta name="author" content="IRN Devs">
+<meta property="og:type" content="website">
+<meta property="og:title" content="IRN Devs — Desenvolvimento de Software">
+<meta property="og:description" content="IRN Devs: engenharia de software, Kubernetes (plataformas de software), qualidade e confiabilidade (métricas de produto, métricas automatizadas, Loki, telemetria de aplicações) e automação em produção.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/index.css">
+  <link rel="stylesheet" href="assets/css/site-nav.css">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://irndevs.com/">
+  <link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/">
+  <link rel="alternate" hreflang="x-default" href="https://irndevs.com/">
+  <meta property="og:url" content="https://irndevs.com/">
+  <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="IRN Devs">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="IRN Devs — Desenvolvimento de Software">
+  <meta name="twitter:description" content="IRN Devs: engenharia de software, Kubernetes (plataformas de software), qualidade e confiabilidade (métricas de produto, métricas automatizadas, Loki, telemetria de aplicações) e automação em produção.">
+  <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "IRN Devs",
+      "url": "https://irndevs.com",
+      "logo": "https://irndevs.com/assets/img/og-default.png",
+      "description": "Desenvolvimento de software e automação de plataformas."
+    },
+    {
+      "@type": "WebSite",
+      "name": "IRN Devs",
+      "url": "https://irndevs.com",
+      "inLanguage": "pt-BR",
+      "publisher": {
+        "@type": "Organization",
+        "name": "IRN Devs"
+      }
+    }
+  ]
+}
+  </script>
+  <!-- Substitua CONTENT pelo código do Google Search Console -->
+  <!-- <meta name="google-site-verification" content="CONTENT"> -->
+  <meta name="theme-color" content="#10130f">
+  <link rel="alternate" type="application/rss+xml" title="IRN Devs Blog" href="https://irndevs.com/feed.xml">
+  <!-- Analytics (descomente e troque o domínio quando criar conta Plausible/Umami)
+  <script defer data-domain="irndevs.com" src="https://plausible.io/js/script.js"></script>
+  -->
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="index.html" class="brand" aria-label="IRN Devs"><img src="assets/img/logo-irndevs.svg" alt="~/irndevs $" class="inline-style-1"></a>
+    <div class="navlinks">
+      <a href="#projetos">projetos</a>
+      <a href="#ferramentas">ferramentas</a>
+      <a href="#skills">skills</a>
+      <a href="servicos.html">serviços</a>
+      <a href="como-contratar.html">como contratar</a>
+      <a href="sobre.html">sobre</a>
+      <a href="blog.html">blog</a>
+      <a href="jogos.html">jogos</a>
+      <a href="produtividade.html">produtividade</a>
+      <a href="https://loja.irndevs.com">loja</a>
+      <a href="contato.html">contato</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="term">
+      <div><span class="green">irn@serv-irn</span><span class="dim">:~$</span> uptime</div>
+      <div class="dim">serv-irn up 41 days · plataformas de software: 6 nodes active · 12 services healthy</div>
+      <div class="inline-style-2"><span class="green">irn@serv-irn</span><span class="dim">:~$</span> whoami --role</div>
+      <div class="inline-style-3"><span class="green">irn@serv-irn</span><span class="dim">:~$</span> <span class="cursor"></span></div>
+    </div>
+    <h1>Construo e opero a própria desenvolvimento de software pra aprender do jeito que fica.</h1>
+    <p class="lede">Laboratório de software bare-metal, cluster plataformas de software, pipelines de qualidade e confiabilidade e produtos rodando em produção — tudo documentado enquanto é construído, não depois.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="#projetos">ver projetos</a>
+      <a class="btn ghost" href="contato.html">fale conosco</a>
+    </div>
+  </div>
+</header>
+
+<div class="status">
+  <div class="wrap">
+    <div class="item"><span class="dot"></span><b>plataformas de software</b> — 6 workloads em produção</div>
+    <div class="item"><span class="dot"></span><b>Laboratório de software</b> — ambientes de desenvolvimento, 6 VMs ativas</div>
+    <div class="item"><span class="dot"></span><b>Qualidade e confiabilidade</b> — testes automatizados e métricas de produto</div>
+  </div>
+</div>
+
+<section id="projetos">
+  <div class="wrap">
+    <div class="sec-head"><span class="amber">$</span> ls -la projetos/ --status</div>
+    <h2 class="sec-title">Projetos</h2>
+    <p class="sec-sub">Separados por status real de deploy — não é portfólio de maquete, é o que está de pé agora.</p>
+
+    <div class="proj fade-in"><div class="status-tag live">● produção</div><div>
+      <div class="proj-name">ZapAgendador IA</div>
+      <div class="proj-desc">SaaS multi-tenant de agendamento via WhatsApp com IA generativa local (migrado de Gemini pra Gemma via serviços de IA), arquitetura type-safe ponta a ponta.</div>
+      <div class="stack"><span>Node.js</span><span>tRPC</span><span>TypeScript</span><span>TiDB Cloud</span><span>Render</span></div>
+      <div class="proj-links">
+        <a class="proj-link" href="https://zapagendador-ia.onrender.com" target="_blank" rel="noopener noreferrer">ver projeto →</a>
+        <a class="proj-link" href="https://github.com/iri-afk/zapagendador-ia" target="_blank" rel="noopener noreferrer">repositório →</a>
+      </div>
+    </div></div>
+
+    <div class="proj fade-in"><div class="status-tag live">● produção</div><div>
+      <div class="proj-name">NeoBank</div>
+      <div class="proj-desc">Sistema bancário fullstack simulando operações reais — contas, transferências, extrato — com IA local via serviços de IA e deploy replicado no cluster próprio.</div>
+      <div class="stack"><span>Python</span><span>Flask</span><span>SQLite</span><span>serviços de IA</span><span>plataformas de software</span></div>
+      <div class="proj-links">
+        <a class="proj-link" href="https://neobankirn.irndevs.com" target="_blank" rel="noopener noreferrer">ver projeto →</a>
+        <a class="proj-link" href="https://github.com/iri-afk/neobank" target="_blank" rel="noopener noreferrer">repositório →</a>
+      </div>
+    </div></div>
+
+    <div class="proj fade-in"><div class="status-tag live">● produção</div><div>
+      <div class="proj-name">EcoMonitor</div>
+      <div class="proj-desc">Plataforma colaborativa de monitoramento ambiental em tempo real, com CI/CD no Gitea buildando e reimplantando no plataformas de software a cada push.</div>
+      <div class="stack"><span>Vite/React</span><span>Node.js</span><span>Docker</span><span>Gitea CI/CD</span></div>
+      <div class="proj-links">
+        <span class="proj-link inline-style-4">deploy interno</span>
+      </div>
+    </div></div>
+
+    <div class="proj fade-in"><div class="status-tag live">● funcional</div><div>
+      <div class="proj-name">Job Hunter Inteligente</div>
+      <div class="proj-desc">Busca vagas em múltiplas fontes públicas e usa LLM pra calcular compatibilidade com o perfil do candidato, com ranking explicado.</div>
+      <div class="stack"><span>FastAPI</span><span>SQLAlchemy</span><span>serviços de IA</span><span>Postgres</span></div>
+      <div class="proj-links">
+        <a class="proj-link" href="https://job.irndevs.com" target="_blank" rel="noopener noreferrer">ver projeto →</a>
+      </div>
+    </div></div>
+
+    <div class="proj fade-in"><div class="status-tag live">● produção</div><div>
+      <div class="proj-name">Laboratório de software Self-hosted</div>
+      <div class="proj-desc">Servidor bare-metal com ambientes de desenvolvimento orquestrando VMs e containers Docker/LXC. Monitoramento completo com testes automatizados, métricas e logs.</div>
+      <div class="stack"><span>ambientes de desenvolvimento</span><span>Docker</span><span>LXC</span><span>métricas de produto</span></div>
+      <div class="proj-links">
+        <a class="proj-link" href="homelab.html">ver projeto →</a>
+      </div>
+    </div></div>
+
+    <div class="proj fade-in"><div class="status-tag live">● produção</div><div>
+      <div class="proj-name">Cluster Kubernetes (plataformas de software)</div>
+      <div class="proj-desc">Orquestração de workloads em cluster plataformas de software leve, integrado com Gitea Actions Runner e ArgoCD (GitOps) para CI/CD.</div>
+      <div class="stack"><span>plataformas de software</span><span>Gitea</span><span>ArgoCD</span><span>Bash</span></div>
+      <div class="proj-links">
+        <a class="proj-link" href="artigo-k3s-homelab.html">ler artigo →</a>
+        <a class="proj-link" href="homelab.html">laboratório de software →</a>
+      </div>
+    </div></div>
+
+    <div class="proj fade-in"><div class="status-tag build">● em build</div><div>
+      <div class="proj-name">Find My Device</div>
+      <div class="proj-desc">MQTT + backend + app Android pra rastreamento de dispositivo próprio. Broker e API já respondendo.</div>
+      <div class="stack"><span>Mosquitto</span><span>Postgres</span><span>JWT</span><span>Kotlin</span></div>
+      <div class="proj-links">
+        <span class="proj-link inline-style-5">em build</span>
+      </div>
+    </div></div>
+
+    <div class="proj fade-in"><div class="status-tag build">● estudo</div><div>
+      <div class="proj-name">meubanco</div>
+      <div class="proj-desc">Banco de dados construído do zero em Python — storage engine, índice, WAL e parser SQL próprio.</div>
+      <div class="stack"><span>Python</span><span>WAL</span><span>SQL parser</span></div>
+      <div class="proj-links">
+      </div>
+    </div></div>
+  </div>
+</section>
+
+
+<section id="cases">
+  <div class="wrap">
+    <div class="sec-head"><span class="amber">$</span> cases --resumo</div>
+    <h2 class="sec-title">Resultados</h2>
+    <p class="sec-sub">Exemplos do tipo de impacto que buscamos em cada entrega.</p>
+    <div class="tools-grid">
+      <div class="tool">
+        <div class="tool-name">Laboratório de software + qualidade e confiabilidade</div>
+        <div class="tool-desc"><strong>Antes:</strong> serviços sem métricas centralizadas.<br><strong>Depois:</strong> métricas de produto + métricas automatizadas + Loki com alertas acionáveis e visão única do bare-metal.</div>
+      </div>
+      <div class="tool">
+        <div class="tool-name">Cluster plataformas de software + GitOps</div>
+        <div class="tool-desc"><strong>Antes:</strong> deploy manual e pouco repetível.<br><strong>Depois:</strong> pipeline commit → build → cluster, com rollback previsível.</div>
+      </div>
+      <div class="tool">
+        <div class="tool-name">SaaS em produção</div>
+        <div class="tool-desc"><strong>Antes:</strong> evolução ad hoc da API.<br><strong>Depois:</strong> stack type-safe e operação estável em cloud (ex.: ZapAgendador IA).</div>
+      </div>
+    </div>
+    <p class="inline-style-6">
+      <a href="servicos.html" class="inline-style-7">ver serviços →</a>
+      · <a href="como-contratar.html" class="inline-style-8">como contratar →</a>
+    </p>
+  </div>
+</section>
+
+<section id="arquitetura">
+  <div class="wrap">
+    <div class="sec-head"><span class="amber">$</span> architecture --overview</div>
+    <h2 class="sec-title">Visão da stack</h2>
+    <p class="sec-sub">Do bare-metal à qualidade e confiabilidade — o mesmo modelo usado nos projetos.</p>
+    <img src="assets/img/diagram-stack.svg" alt="Diagrama da stack IRN Devs: ambientes de desenvolvimento, plataformas de software, apps e qualidade e confiabilidade" width="720" height="320" loading="lazy" class="inline-style-9">
+  </div>
+</section>
+
+<section id="ferramentas">
+  <div class="wrap">
+    <div class="sec-head"><span class="amber">$</span> ls ferramentas/ --gratuitas</div>
+    <h2 class="sec-title">Ferramentas gratuitas</h2>
+    <p class="sec-sub">Mini-produtos deployados na Vercel, sem backend na maioria — direto no navegador.</p>
+    <div class="tools-grid">
+      <div class="tool"><div class="tool-name"><a href="https://contratos.irndevs.com">Gerador de Contratos</a></div><div class="tool-desc">Prestação de serviço, aluguel, NDA — exporta em PDF.</div></div>
+      <div class="tool"><div class="tool-name"><a href="https://precificacao.irndevs.com">Calculadora de Precificação</a></div><div class="tool-desc">Preço/hora ou de venda com custos, impostos e margem.</div></div>
+      <div class="tool"><div class="tool-name"><a href="https://converter.irndevs.com">Conversor de Arquivos</a></div><div class="tool-desc">CSV↔JSON, texto→slug, Markdown→HTML.</div></div>
+      <div class="tool"><div class="tool-name"><a href="https://links.irndevs.com">Encurtador de Links</a></div><div class="tool-desc">Dashboard de cliques com gráfico de acesso.</div></div>
+      <div class="tool"><div class="tool-name"><a href="https://qrcode.irndevs.com">Gerador de QR Code</a></div><div class="tool-desc">Link, Wi-Fi, WhatsApp ou e-mail — download em PNG.</div></div>
+      <div class="tool"><div class="tool-name"><a href="https://mei.irndevs.com">Calculadora MEI</a></div><div class="tool-desc">Estima DAS mensal e limite anual de faturamento.</div></div>
+      <div class="tool"><div class="tool-name"><a href="https://senha.irndevs.com">Gerador de Senha Segura</a></div><div class="tool-desc">Senhas aleatórias com indicador de força.</div></div>
+      <div class="tool"><div class="tool-name"><a href="https://vagas.irndevs.com">Buscador de Vagas</a></div><div class="tool-desc">RemoteOK + Adzuna, com filtro de palavra-chave e salário.</div></div>
+      <div class="tool"><div class="tool-name"><a href="produtividade.html">Produtividade</a></div><div class="tool-desc">To-do, pomodoro e scratchpad — tudo local no navegador.</div></div>
+      <div class="tool"><div class="tool-name"><a href="jogos.html">Minijogos</a></div><div class="tool-desc">Snake, Memory, Reflexo e Quiz no estilo terminal.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head"><span class="amber">$</span> cat skills.yaml</div>
+    <h2 class="sec-title">Stack</h2>
+    <table class="skills-table">
+      <tr><td>sistemas & redes</td><td>Linux, SSH hardening, Cloudflare Tunnels, acesso seguro, UFW, Fail2ban</td></tr>
+      <tr><td>virtualização</td><td>ambientes de desenvolvimento, LXC, Docker, Kubernetes (plataformas de software)</td></tr>
+      <tr><td>qualidade e confiabilidade</td><td>métricas de produto, métricas automatizadas, Loki, telemetria de aplicações</td></tr>
+      <tr><td>ci/cd</td><td>Gitea Actions, GitHub Actions, Bash, Python</td></tr>
+      <tr><td>dados</td><td>PostgreSQL, MySQL, MongoDB, ETL/Pandas</td></tr>
+      <tr><td>cloud</td><td>AWS (VPC, EC2, S3, IAM), FastAPI</td></tr>
+    </table>
+  </div>
+</section>
+
+<div class="wrap cta-final" id="contato">
+  <h2>Vamos trabalhar juntos?</h2>
+  <p>Abertos a novos projetos e parcerias em desenvolvimento de software e automação de plataformas.</p>
+  <div class="inline-style-10">
+    <a class="btn primary" href="contato.html">fale conosco</a>
+    <a class="btn ghost" href="servicos.html">ver serviços</a>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div class="inline-style-11">
+      <a href="jogos.html">jogos</a>
+      <a href="produtividade.html">produtividade</a>
+      <a href="mailto:contato@irndevs.com">formulario de contato</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+</script>
+
+  <script src="assets/js/site-nav.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Título do Artigo - Blog</title>
+    <meta name="description" content="Descrição do artigo.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/shared.css">
+    <link rel="stylesheet" href="assets/css/projeto-detalhado.css"> <style>
+        .post-content {
+            max-width: 800px;
+            margin: 40px auto;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        .post-content h2 {
+            font-size: 2rem;
+            margin: 40px 0 20px;
+            color: var(--light);
+        }
+        .post-content p {
+            margin-bottom: 20px;
+            color: rgba(248, 250, 252, 0.8);
+        }
+        .post-content code {
+            background: rgba(99, 102, 241, 0.1);
+            padding: 2px 6px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .post-content pre {
+            background: #011627;
+            border-radius: 10px;
+            padding: 20px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-gradient"></div>
+    <div class="grid-background"></div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">&lt;/Dev&gt;</a>
+            <ul class="nav-links">
+                <li><a href="index.html#home" class="nav-link">Início</a></li>
+                <li><a href="sobre.html" class="nav-link">Sobre</a></li>
+                <li><a href="index.html#projetos" class="nav-link">Projetos</a></li>
+                <li><a href="blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="index.html#habilidades" class="nav-link">Habilidades</a></li>
+                <li><a href="contato.html">Contato</a></li>
+            </ul>
+            <div class="theme-toggle" id="themeToggle">
+                <span>🌙</span> Tema
+            </div>
+            <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="index.html#home">Início</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="index.html#projetos">Projetos</a>
+            <a href="blog.html">Blog</a>
+            <a href="index.html#habilidades">Habilidades</a>
+            <a href="contato.html">Contato</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Início</a>
+                <span>→</span>
+                <a href="blog.html">Blog</a>
+                <span>→</span>
+                <span>Título do Artigo</span>
+            </div>
+
+            <header class="project-hero loading">
+                <div class="project-hero-content">
+                    <div class="project-status">
+                        <span style="margin-right: 8px;">🚀</span>
+                        React
+                    </div>
+                    <h1 class="page-title">Como Criar Aplicações React Performáticas em 2024</h1>
+                    <p class="page-subtitle">
+                        Publicado em 15 de Dezembro, 2024 | ⏱️ 8 min de leitura
+                    </p>
+                </div>
+            </header>
+            
+            <article class="post-content loading">
+                <h2>Introdução</h2>
+                <p>O React continua a ser uma das bibliotecas mais populares para a construção de interfaces de usuário, mas criar aplicações performáticas pode ser um desafio. Neste artigo, vamos explorar as melhores práticas e técnicas mais recentes para otimizar suas aplicações React.</p>
+
+                <h2>1. Lazy Loading de Componentes</h2>
+                <p>Uma das maneiras mais eficazes de melhorar o tempo de carregamento inicial é usar o lazy loading. Com <code>React.lazy</code> e <code>Suspense</code>, você pode carregar componentes apenas quando eles são necessários.</p>
+                <pre><code>
+const OtherComponent = React.lazy(() => import('./OtherComponent'));
+
+function MyComponent() {
+  return (
+    &lt;div&gt;
+      &lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt;
+        &lt;OtherComponent /&gt;
+      &lt;/Suspense&gt;
+    &lt;/div&gt;
+  );
+}
+                </code></pre>
+
+                <h2>2. Memoização com `React.memo`</h2>
+                <p>Evite re-renderizações desnecessárias de componentes funcionais usando <code>React.memo</code>. Ele funciona como um <code>PureComponent</code>, mas para componentes de função.</p>
+
+                 </article>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 Desenvolvedor. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/shared.js"></script>
+</body>
+</html>

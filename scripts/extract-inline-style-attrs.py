@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+"""Convert HTML style attributes into generated page stylesheet classes."""
+
+from pathlib import Path
+import re
+
+ROOT = Path(__file__).resolve().parents[1]
+TAG_WITH_STYLE = re.compile(r'<([A-Za-z][^>]*?)\sstyle="([^"]*)"([^>]*)>', re.IGNORECASE)
+CLASS_ATTR = re.compile(r'\sclass="([^"]*)"', re.IGNORECASE)
+
+for page in sorted(ROOT.glob("*.html")):
+    css_path = ROOT / "assets" / "css" / "pages" / f"{page.stem}.css"
+    if not css_path.exists():
+        continue
+
+    text = page.read_text(encoding="utf-8")
+    rules = []
+    counter = [0]
+
+    def replace(match):
+        counter[0] += 1
+        class_name = f"inline-style-{counter[0]}"
+        declaration = match.group(2).strip()
+        rules.append(f".{class_name} {{ {declaration} }}")
+        tag = match.group(1) + match.group(3)
+        if CLASS_ATTR.search(tag):
+            tag = CLASS_ATTR.sub(lambda class_match: f' class="{class_match.group(1)} {class_name}"', tag, count=1)
+        else:
+            tag += f' class="{class_name}"'
+        return f"<{tag}>"
+
+    updated = TAG_WITH_STYLE.sub(replace, text)
+    if rules:
+        css = css_path.read_text(encoding="utf-8")
+        css_path.write_text(css.rstrip() + "\n\n" + "\n".join(rules) + "\n", encoding="utf-8")
+        page.write_text(updated, encoding="utf-8")
+        print(f"{page.name}: converted {len(rules)} inline style attributes")

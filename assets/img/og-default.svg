@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#10130f"/>
+  <rect x="48" y="48" width="1104" height="534" fill="none" stroke="#2a3126" stroke-width="2"/>
+  <text x="80" y="200" font-family="IBM Plex Mono, monospace" font-size="42" fill="#e8a33d">~/irndevs $</text>
+  <text x="80" y="290" font-family="IBM Plex Sans, sans-serif" font-size="56" font-weight="700" fill="#eae6d9">Infraestrutura &amp; Observabilidade</text>
+  <text x="80" y="360" font-family="IBM Plex Mono, monospace" font-size="28" fill="#8f9587">k3s · Proxmox · Grafana · Prometheus · OTel</text>
+  <text x="80" y="520" font-family="IBM Plex Mono, monospace" font-size="24" fill="#5c6157">irndevs.com</text>
+</svg>

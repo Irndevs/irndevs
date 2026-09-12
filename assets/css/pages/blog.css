@@ -1,0 +1,73 @@
+:root {
+    --bg: #10130f; --bg-raised: #171b16; --bg-line: #1f251d; --border: #2a3126;
+    --amber: #e8a33d; --amber-dim: #b3801f; --green: #7fae6a;
+    --text: #eae6d9; --text-dim: #8f9587; --text-faint: #5c6157;
+    --mono: 'IBM Plex Mono', monospace; --sans: 'IBM Plex Sans', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--amber); color: #10130f; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 28px; }
+
+  nav { position: sticky; top: 0; z-index: 10; background: rgba(16,19,15,0.92); backdrop-filter: blur(6px); border-bottom: 1px solid var(--border); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .brand { font-family: var(--mono); font-size: 14px; color: var(--amber); text-decoration: none; }
+  .brand span { color: var(--text-faint); }
+  .navlinks { display: flex; gap: 24px; font-size: 14px; color: var(--text-dim); }
+  .navlinks a:hover { color: var(--amber); }
+  .navlinks a.active { color: var(--amber); }
+
+  @media (max-width: 640px) {
+    nav .wrap { height: auto; flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; gap: 8px; }
+    .navlinks { gap: 14px; font-size: 12.5px; flex-wrap: wrap; }
+  }
+
+  .crumb { padding: 22px 0 0; font-family: var(--mono); font-size: 13px; color: var(--text-faint); }
+  .crumb a:hover { color: var(--amber); }
+
+  .page-head { padding: 18px 0 40px; border-bottom: 1px solid var(--bg-line); }
+  .sec-head { font-family: var(--mono); font-size: 13px; color: var(--text-faint); margin-bottom: 14px; }
+  .sec-head .amber { color: var(--amber); }
+  .page-head h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .page-head p { color: var(--text-dim); font-size: 15px; max-width: 560px; }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .filter-btn { font-family: var(--mono); font-size: 12.5px; padding: 7px 14px; border: 1px solid var(--border); color: var(--text-dim); background: transparent; cursor: pointer; transition: all 0.2s ease; }
+  .filter-btn:hover { border-color: var(--amber-dim); color: var(--amber); }
+  .filter-btn.active { background: var(--amber); color: #10130f; border-color: var(--amber); font-weight: 600; }
+
+  .posts { padding: 10px 0 50px; }
+
+  .post { border-bottom: 1px solid var(--bg-line); padding: 26px 0; display: grid; grid-template-columns: 130px 1fr; gap: 22px; transition: background 0.2s ease; }
+  .post:hover { background: rgba(232,163,61,0.03); }
+  .post-meta-col { font-family: var(--mono); font-size: 12px; color: var(--text-faint); padding-top: 3px; }
+  .post-meta-col .date { color: var(--text-dim); display: block; margin-bottom: 4px; }
+  .post-tag { display: inline-block; font-family: var(--mono); font-size: 11px; color: var(--amber-dim); border: 1px solid var(--border); padding: 2px 7px; }
+
+  .post.featured { background: rgba(232,163,61,0.04); border: 1px solid var(--border); padding: 24px 20px; margin-bottom: 8px; }
+  .featured-flag { font-family: var(--mono); font-size: 11px; color: var(--amber); margin-bottom: 8px; }
+
+  .post-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+  .post-title a:hover { color: var(--amber); }
+  .post-excerpt { color: var(--text-dim); font-size: 14px; max-width: 620px; margin-bottom: 12px; }
+  .post-stack { font-family: var(--mono); font-size: 11.5px; color: var(--text-faint); margin-bottom: 10px; }
+  .post-stack span:not(:last-child)::after { content: ' · '; color: var(--bg-line); }
+  .read-more { font-family: var(--mono); font-size: 12px; color: var(--amber-dim); }
+  .read-more:hover { color: var(--amber); }
+
+  @media (max-width: 640px) {
+    .post { grid-template-columns: 1fr; gap: 6px; }
+  }
+
+  footer { border-top: 1px solid var(--bg-line); padding: 36px 0; }
+  footer .wrap { display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 13px; color: var(--text-faint); flex-wrap: wrap; gap: 12px; }
+  footer a:hover { color: var(--amber); }
+
+  .brand img { height: 26px; width: auto; display: block; }
+  a.brand { text-decoration: none; }
+
+.inline-style-1 { height:26px;width:auto;display:block }
+.inline-style-2 { color:var(--amber) }
+.inline-style-3 { display:flex; gap:20px; }

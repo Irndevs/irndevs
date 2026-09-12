@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ambientes de desenvolvimento: Do Zero ao Laboratório de software Produtivo — IRN Devs</title>
+<meta name="description" content="Configuração de ambientes de desenvolvimento VE: VMs, LXC, ZFS e backups para um laboratório de software produtivo.">
+<meta name="author" content="IRN Devs">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/artigo-proxmox-homelab.css">
+  <link rel="stylesheet" href="assets/css/site-nav.css">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="ambientes de desenvolvimento: Do Zero ao Laboratório de software Produtivo — IRN Devs">
+  <meta property="og:description" content="Configuração de ambientes de desenvolvimento VE: VMs, LXC, ZFS e backups para um laboratório de software produtivo.">
+  <meta property="og:type" content="article">
+  <link rel="canonical" href="https://irndevs.com/artigo-proxmox-homelab.html">
+  <link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-proxmox-homelab.html">
+  <link rel="alternate" hreflang="x-default" href="https://irndevs.com/artigo-proxmox-homelab.html">
+  <meta property="og:url" content="https://irndevs.com/artigo-proxmox-homelab.html">
+  <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="IRN Devs">
+  <meta property="article:published_time" content="2026-08-10">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ambientes de desenvolvimento: Do Zero ao Laboratório de software Produtivo — IRN Devs">
+  <meta name="twitter:description" content="Configuração de ambientes de desenvolvimento VE: VMs, LXC, ZFS e backups para um laboratório de software produtivo.">
+  <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta name="author" content="IRN Devs">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "ambientes de desenvolvimento: Do Zero ao Laboratório de software Produtivo",
+  "description": "Configuração de ambientes de desenvolvimento VE: VMs, LXC, ZFS e backups para um laboratório de software produtivo.",
+  "datePublished": "2026-08-10",
+  "author": {
+    "@type": "Organization",
+    "name": "IRN Devs"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "IRN Devs",
+    "url": "https://irndevs.com"
+  },
+  "mainEntityOfPage": "https://irndevs.com/artigo-proxmox-homelab.html",
+  "inLanguage": "pt-BR"
+}
+  </script>
+</head>
+<body>
+<nav>
+  <div class="wrap">
+    <a href="index.html" class="brand" aria-label="IRN Devs"><img src="assets/img/logo-irndevs.svg" alt="~/irndevs $" class="inline-style-1"></a>
+        <div class="navlinks">
+      <a href="index.html#projetos">projetos</a>
+      <a href="index.html#ferramentas">ferramentas</a>
+      <a href="index.html#skills">skills</a>
+      <a href="sobre.html">sobre</a>
+      <a href="blog.html" class="active">blog</a>
+      <a href="jogos.html">jogos</a>
+      <a href="produtividade.html">produtividade</a>
+      <a href="https://loja.irndevs.com">loja</a>
+      <a href="contato.html">contato</a>
+    </div>
+  </div>
+</nav>
+<div class="wrap crumb">
+  <a href="index.html">~</a> / <a href="blog.html">blog</a> / <span class="inline-style-2">proxmox</span>
+</div>
+<div class="wrap article-head">
+  <div class="meta">
+    <span>10 ago 2026</span>
+    <span class="tag">proxmox</span>
+    <span>10 min de leitura</span>
+  </div>
+  <h1>ambientes de desenvolvimento: Do Zero ao Laboratório de software Produtivo</h1>
+  <p class="excerpt">Como configurar um servidor bare-metal com ambientes de desenvolvimento VE: gestão de VMs e containers LXC, backups automáticos e integração com storage ZFS.</p>
+  <div class="stack"><span>ambientes de desenvolvimento</span><span>LXC</span><span>ZFS</span><span>Laboratório de software</span></div>
+</div>
+<div class="wrap">
+  <div class="toc">
+    <div class="label">$ cat sumario.txt</div>
+    <ol>
+      <li><a href="#por-que">Por que ambientes de desenvolvimento?</a></li>
+      <li><a href="#hw">Hardware e instalação</a></li>
+      <li><a href="#pos">Pós-instalação</a></li>
+      <li><a href="#zfs">Storage com ZFS</a></li>
+      <li><a href="#vms">VMs e LXC</a></li>
+      <li><a href="#rede">Rede</a></li>
+      <li><a href="#backup">Backups</a></li>
+      <li><a href="#dicas">Dicas</a></li>
+    </ol>
+  </div>
+  <article class="body">
+    <h2 id="por-que">1. Por que ambientes de desenvolvimento?</h2>
+    <p>ambientes de desenvolvimento VE combina KVM (VMs completas) com LXC (containers leves), interface web moderna e gratuito. Ideal para laboratório de software próximo de produção.</p>
+    <ul>
+      <li>VMs com KVM + QEMU</li>
+      <li>Containers LXC</li>
+      <li>Storage local (ZFS, LVM) e remoto (NFS, Ceph)</li>
+      <li>Cluster e backups nativos</li>
+    </ul>
+    <h2 id="hw">2. Hardware e instalação</h2>
+    <p>x86_64 com VT-x/AMD-V. Ideal: 16 GB+ RAM, SSD/NVMe, dois discos para mirror ZFS.</p>
+    <div class="step"><div class="n">$ # baixe a ISO oficial e grave no pendrive</div></div>
+    <ul>
+      <li>Boot pelo pendrive</li>
+      <li>Escolha disco (ou ZFS no root)</li>
+      <li>Hostname, IP estático, gateway, DNS</li>
+      <li>Senha root + e-mail de notificações</li>
+    </ul>
+    <div class="warn"><strong>warn</strong> · A instalação apaga o disco escolhido. Backup antes.</div>
+    <h2 id="pos">3. Pós-instalação</h2>
+    <p>Acesse <code>https://SEU-IP:8006</code>.</p>
+<pre><code>apt update && apt full-upgrade -y
+
+# repositório no-subscription (sem enterprise)
+echo "deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription" \
+  > /etc/apt/sources.list.d/pve-no-subscription.list
+# comente a linha do enterprise em pve-enterprise.list
+apt update && apt full-upgrade -y
+</code></pre>
+    <div class="tip"><strong>tip</strong> · Configure SSH com chave e desabilite login root por senha.</div>
+    <h2 id="zfs">4. Storage com ZFS</h2>
+<pre><code>zpool create -f tank mirror /dev/sdb /dev/sdc
+zfs set compression=lz4 tank
+zfs set atime=off tank
+zfs create tank/vms
+</code></pre>
+    <p>Depois adicione o storage no ambientes de desenvolvimento apontando para <code>tank/vms</code>.</p>
+    <h2 id="vms">5. VMs e LXC</h2>
+    <h3>VM (KVM)</h3>
+    <ol>
+      <li>Create VM → ID, nome, ISO</li>
+      <li>CPU, memória, disco no pool ZFS</li>
+      <li>Rede: bridge vmbr0</li>
+      <li>Inicie e instale o SO</li>
+    </ol>
+    <h3>Container LXC</h3>
+    <ol>
+      <li>Baixe template (CT Templates)</li>
+      <li>Create CT → template, hostname, recursos</li>
+      <li>Ideal para serviços isolados leves</li>
+    </ol>
+    <div class="tip"><strong>tip</strong> · LXC para serviços sem kernel próprio; VM quando precisar isolamento total.</div>
+    <h2 id="rede">6. Rede</h2>
+<pre><code>auto vmbr0
+iface vmbr0 inet static
+    address endereco interno omitido/24
+    gateway endereco interno omitido
+    bridge-ports enp3s0
+    bridge-stp off
+    bridge-fd 0
+</code></pre>
+    <h2 id="backup">7. Backups</h2>
+    <p>Datacenter → Backup → Add. Defina horário, storage de destino, retenção e VMs/CTs.</p>
+    <ul>
+      <li>Mode: Snapshot (se o storage suportar)</li>
+      <li>Compression: zstd</li>
+      <li>Retention: diários + semanais</li>
+    </ul>
+    <div class="warn"><strong>warn</strong> · Teste o restore periodicamente. Backup que não restaura não é backup.</div>
+    <h2 id="dicas">8. Dicas</h2>
+    <ul>
+      <li>Separe storage de sistema e de dados</li>
+      <li>Tags e notas nas VMs/CTs</li>
+      <li>Monitore com métricas automatizadas + métricas de produto</li>
+      <li>Considere ambientes de desenvolvimento Backup Server (PBS)</li>
+      <li>Documente IPs e o que cada VM faz</li>
+    </ul>
+  </article>
+  <div class="nav-art">
+    <a href="artigo-observabilidade-docker.html">← qualidade e confiabilidade</a>
+    <a href="artigo-k3s-homelab.html">próximo: plataformas de software →</a>
+  </div>
+</div>
+
+<div class="wrap inline-style-3">
+  <div class="inline-style-4">$ next</div>
+  <p class="inline-style-5">Precisa de desenvolvimento de software na prática?</p>
+  <a href="contato.html" class="inline-style-6">falar com a IRN Devs →</a>
+  <span class="inline-style-7"></span>
+  <a href="servicos.html" class="inline-style-8">serviços</a>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div class="inline-style-9">
+      <a href="mailto:contato@irndevs.com">formulario de contato</a>
+    </div>
+  </div>
+</footer>
+  <script src="assets/js/site-nav.js" defer></script>
+</body>
+</html>

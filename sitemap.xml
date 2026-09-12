@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://irndevs.com/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://irndevs.com/"/>
+  </url>
+  <url>
+    <loc>https://irndevs.com/servicos.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/servicos.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://irndevs.com/servicos.html"/>
+  </url>
+  <url>
+    <loc>https://irndevs.com/sobre.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/sobre.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://irndevs.com/sobre.html"/>
+  </url>
+  <url>
+    <loc>https://irndevs.com/blog.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/blog.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://irndevs.com/blog.html"/>
+  </url>
+  <url>
+    <loc>https://irndevs.com/contato.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/contato.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://irndevs.com/contato.html"/>
+  </url>
+  <url>
+    <loc>https://irndevs.com/homelab.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/homelab.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://irndevs.com/homelab.html"/>
+  </url>
+  <url>
+    <loc>https://irndevs.com/produtividade.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/produtividade.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://irndevs.com/produtividade.html"/>
+  </url>
+  <url>
+    <loc>https://irndevs.com/jogos.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/jogos.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://irndevs.com/jogos.html"/>
+  </url>
+  <url>
+    <loc>https://irndevs.com/artigo-observabilidade-docker.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.65</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-observabilidade-docker.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://irndevs.com/artigo-observabilidade-docker.html"/>
+  </url>
+  <url>
+    <loc>https://irndevs.com/artigo-proxmox-homelab.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.65</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-proxmox-homelab.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://irndevs.com/artigo-proxmox-homelab.html"/>
+  </url>
+  <url>
+    <loc>https://irndevs.com/artigo-k3s-homelab.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.65</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-k3s-homelab.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://irndevs.com/artigo-k3s-homelab.html"/>
+  </url>
+  <url>
+    <loc>https://irndevs.com/artigo-hardening-linux.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.65</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-hardening-linux.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://irndevs.com/artigo-hardening-linux.html"/>
+  </url>
+  <url>
+    <loc>https://irndevs.com/artigo-aws-cloud.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.65</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-aws-cloud.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://irndevs.com/artigo-aws-cloud.html"/>
+  </url>
+  <url>
+    <loc>https://irndevs.com/artigo-opentelemetry.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.65</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-opentelemetry.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://irndevs.com/artigo-opentelemetry.html"/>
+  </url>
+  <url>
+    <loc>https://irndevs.com/artigo-ubuntu-server.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.65</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-ubuntu-server.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://irndevs.com/artigo-ubuntu-server.html"/>
+  </url>
+  <url>
+    <loc>https://irndevs.com/como-contratar.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/como-contratar.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://irndevs.com/como-contratar.html"/>
+  </url>
+</urlset>

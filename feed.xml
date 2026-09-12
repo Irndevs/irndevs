@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>IRN Devs — Blog</title>
+    <link>https://irndevs.com/blog.html</link>
+    <description>Artigos sobre desenvolvimento de software, Linux e automação.</description>
+    <language>pt-BR</language>
+    <atom:link href="https://irndevs.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Stack de Qualidade e confiabilidade com Docker</title>
+      <link>https://irndevs.com/artigo-observabilidade-docker.html</link>
+      <guid>https://irndevs.com/artigo-observabilidade-docker.html</guid>
+      <pubDate>Fri, 15 Aug 2026 10:00:00 GMT</pubDate>
+      <description>testes automatizados, métricas e logs em Docker Compose.</description>
+    </item>
+    <item>
+      <title>ambientes de desenvolvimento: Do Zero ao Laboratório de software Produtivo</title>
+      <link>https://irndevs.com/artigo-proxmox-homelab.html</link>
+      <guid>https://irndevs.com/artigo-proxmox-homelab.html</guid>
+      <pubDate>Sun, 10 Aug 2026 10:00:00 GMT</pubDate>
+      <description>VMs, LXC, ZFS e backups no bare-metal.</description>
+    </item>
+    <item>
+      <title>plataformas de software no Laboratório de software</title>
+      <link>https://irndevs.com/artigo-k3s-homelab.html</link>
+      <guid>https://irndevs.com/artigo-k3s-homelab.html</guid>
+      <pubDate>Tue, 05 Aug 2026 10:00:00 GMT</pubDate>
+      <description>Cluster leve, Ingress, Longhorn e Helm.</description>
+    </item>
+    <item>
+      <title>Hardening Linux: SSH, UFW e Fail2ban</title>
+      <link>https://irndevs.com/artigo-hardening-linux.html</link>
+      <guid>https://irndevs.com/artigo-hardening-linux.html</guid>
+      <pubDate>Fri, 01 Aug 2026 10:00:00 GMT</pubDate>
+      <description>Checklist de segurança para servidores expostos.</description>
+    </item>
+    <item>
+      <title>AWS Cloud Foundations</title>
+      <link>https://irndevs.com/artigo-aws-cloud.html</link>
+      <guid>https://irndevs.com/artigo-aws-cloud.html</guid>
+      <pubDate>Mon, 28 Jul 2026 10:00:00 GMT</pubDate>
+      <description>IAM, VPC, EC2 e S3 na prática.</description>
+    </item>
+    <item>
+      <title>telemetria de aplicações: Métricas, Logs e Traces</title>
+      <link>https://irndevs.com/artigo-opentelemetry.html</link>
+      <guid>https://irndevs.com/artigo-opentelemetry.html</guid>
+      <pubDate>Tue, 22 Jul 2026 10:00:00 GMT</pubDate>
+      <description>Padrão aberto de qualidade e confiabilidade ponta a ponta.</description>
+    </item>
+    <item>
+      <title>Ubuntu Server: Configuração Inicial</title>
+      <link>https://irndevs.com/artigo-ubuntu-server.html</link>
+      <guid>https://irndevs.com/artigo-ubuntu-server.html</guid>
+      <pubDate>Fri, 18 Jul 2026 10:00:00 GMT</pubDate>
+      <description>Base sólida antes de subir qualquer serviço.</description>
+    </item>
+  </channel>
+</rss>

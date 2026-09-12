@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stack de Qualidade e confiabilidade com Docker — IRN Devs</title>
+<meta name="description" content="Guia prático: testes automatizados, métricas e logs em Docker Compose. Do zero aos dashboards.">
+<meta name="author" content="IRN Devs">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/artigo-observabilidade-docker.css">
+  <link rel="stylesheet" href="assets/css/site-nav.css">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="Stack de Qualidade e confiabilidade com Docker — IRN Devs">
+  <meta property="og:description" content="Guia prático: testes automatizados, métricas e logs em Docker Compose. Do zero aos dashboards.">
+  <meta property="og:type" content="article">
+  <link rel="canonical" href="https://irndevs.com/artigo-observabilidade-docker.html">
+  <link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-observabilidade-docker.html">
+  <link rel="alternate" hreflang="x-default" href="https://irndevs.com/artigo-observabilidade-docker.html">
+  <meta property="og:url" content="https://irndevs.com/artigo-observabilidade-docker.html">
+  <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="IRN Devs">
+  <meta property="article:published_time" content="2026-08-15">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Stack de Qualidade e confiabilidade com Docker — IRN Devs">
+  <meta name="twitter:description" content="Guia prático: testes automatizados, métricas e logs em Docker Compose. Do zero aos dashboards.">
+  <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta name="author" content="IRN Devs">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Stack de Qualidade e confiabilidade com Docker",
+  "description": "Guia prático: testes automatizados, métricas e logs em Docker Compose. Do zero aos dashboards.",
+  "datePublished": "2026-08-15",
+  "author": {
+    "@type": "Organization",
+    "name": "IRN Devs"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "IRN Devs",
+    "url": "https://irndevs.com"
+  },
+  "mainEntityOfPage": "https://irndevs.com/artigo-observabilidade-docker.html",
+  "inLanguage": "pt-BR"
+}
+  </script>
+</head>
+<body>
+<nav>
+  <div class="wrap">
+    <a href="index.html" class="brand" aria-label="IRN Devs"><img src="assets/img/logo-irndevs.svg" alt="~/irndevs $" class="inline-style-1"></a>
+        <div class="navlinks">
+      <a href="index.html#projetos">projetos</a>
+      <a href="index.html#ferramentas">ferramentas</a>
+      <a href="index.html#skills">skills</a>
+      <a href="sobre.html">sobre</a>
+      <a href="blog.html" class="active">blog</a>
+      <a href="jogos.html">jogos</a>
+      <a href="produtividade.html">produtividade</a>
+      <a href="https://loja.irndevs.com">loja</a>
+      <a href="contato.html">contato</a>
+    </div>
+  </div>
+</nav>
+<div class="wrap crumb">
+  <a href="index.html">~</a> / <a href="blog.html">blog</a> / <span class="inline-style-2">qualidade e confiabilidade</span>
+</div>
+<div class="wrap article-head">
+  <div class="meta">
+    <span>15 ago 2026</span>
+    <span class="tag">qualidade e confiabilidade</span>
+    <span>12 min de leitura</span>
+  </div>
+  <h1>Montando uma Stack de Qualidade e confiabilidade Completa com Docker</h1>
+  <p class="excerpt">Guia prático para subir testes automatizados, métricas e logs em containers Docker — do zero até dashboards funcionando.</p>
+  <div class="stack"><span>métricas de produto</span><span>métricas automatizadas</span><span>Loki</span><span>telemetria de aplicações</span><span>Docker</span></div>
+</div>
+<div class="wrap">
+  <div class="toc">
+    <div class="label">$ cat sumario.txt</div>
+    <ol>
+      <li><a href="#intro">Introdução e arquitetura</a></li>
+      <li><a href="#req">Pré-requisitos</a></li>
+      <li><a href="#struct">Estrutura e docker-compose</a></li>
+      <li><a href="#prom">métricas automatizadas</a></li>
+      <li><a href="#loki">Loki</a></li>
+      <li><a href="#grafana">métricas de produto + datasources</a></li>
+      <li><a href="#otel">telemetria de aplicações Collector</a></li>
+      <li><a href="#exp">Exporters</a></li>
+      <li><a href="#dash">Dashboards</a></li>
+      <li><a href="#fim">Próximos passos</a></li>
+    </ol>
+  </div>
+  <article class="body">
+    <h2 id="intro">1. Introdução e arquitetura</h2>
+    <p>Uma stack de qualidade e confiabilidade responde três perguntas: <strong>o que</strong> está acontecendo (métricas), <strong>por que</strong> (logs) e <strong>onde</strong> (traces). Neste guia montamos tudo com Docker Compose:</p>
+    <ul>
+      <li><strong>métricas automatizadas</strong> — coleta e armazena métricas</li>
+      <li><strong>Loki</strong> — agrega logs (estilo métricas automatizadas)</li>
+      <li><strong>métricas de produto</strong> — visualização unificada</li>
+      <li><strong>telemetria de aplicações Collector</strong> — recebe traces, métricas e logs das apps</li>
+    </ul>
+    <h2 id="req">2. Pré-requisitos</h2>
+    <ul>
+      <li>Docker + Docker Compose 2.x</li>
+      <li>~4 GB RAM livres (8 GB mais confortável)</li>
+      <li>Portas: 3000, 9090, 3100, 4317/4318</li>
+    </ul>
+    <h2 id="struct">3. Estrutura e docker-compose</h2>
+<pre><code>qualidade e confiabilidade/
+├── docker-compose.yml
+├── prometheus/prometheus.yml
+├── loki/loki-config.yml
+├── otel/otel-collector-config.yml
+└── grafana/provisioning/datasources/datasources.yml
+</code></pre>
+    <div class="step"><div class="n">$ cat docker-compose.yml</div></div>
+<pre><code>version: "3.8"
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.54.0
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.enable-lifecycle"
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+
+  loki:
+    image: grafana/loki:3.0.0
+    volumes:
+      - ./loki/loki-config.yml:/etc/loki/local-config.yaml
+      - loki_data:/loki
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:11.1.0
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+      - loki
+    restart: unless-stopped
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.105.0
+    volumes:
+      - ./otel/otel-collector-config.yml:/etc/otelcol/config.yaml
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+    depends_on:
+      - prometheus
+      - loki
+    restart: unless-stopped
+
+volumes:
+  prometheus_data:
+  loki_data:
+  grafana_data:
+</code></pre>
+    <h2 id="prom">4. métricas automatizadas</h2>
+<pre><code>global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+  - job_name: "otel-collector"
+    static_configs:
+      - targets: ["otel-collector:8888"]
+</code></pre>
+    <h2 id="loki">5. Loki</h2>
+<pre><code>auth_enabled: false
+server:
+  http_listen_port: 3100
+common:
+  path_prefix: /loki
+  storage:
+    filesystem:
+      chunks_directory: /loki/chunks
+      rules_directory: /loki/rules
+  replication_factor: 1
+  ring:
+    instance_addr: 127.0.0.1
+    kvstore:
+      store: inmemory
+schema_config:
+  configs:
+    - from: 2020-10-24
+      store: boltdb-shipper
+      object_store: filesystem
+      schema: v11
+      index:
+        prefix: index_
+        period: 24h
+</code></pre>
+    <h2 id="grafana">6. métricas de produto + datasources</h2>
+<pre><code>apiVersion: 1
+datasources:
+  - name: métricas automatizadas
+    type: prometheus
+    access: proxy
+    url: http://prometheus:9090
+    isDefault: true
+  - name: Loki
+    type: loki
+    access: proxy
+    url: http://loki:3100
+</code></pre>
+    <div class="step">
+      <div class="n">$ docker compose up -d</div>
+      <p class="inline-style-3">métricas de produto → http://localhost:3000 (admin / admin123)<br>métricas automatizadas → http://localhost:9090</p>
+    </div>
+    <div class="warn"><strong>warn</strong> · Altere a senha do métricas de produto imediatamente em qualquer ambiente exposto.</div>
+    <h2 id="otel">7. telemetria de aplicações Collector</h2>
+<pre><code>receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+processors:
+  batch:
+exporters:
+  prometheus:
+    endpoint: "0.0.0.0:8888"
+  loki:
+    endpoint: http://loki:3100/loki/api/v1/push
+  logging:
+    loglevel: info
+service:
+  pipelines:
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [prometheus, logging]
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [loki, logging]
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging]
+</code></pre>
+    <h2 id="exp">8. Exporters</h2>
+    <p>Adicione o node-exporter ao compose e o job correspondente no prometheus.yml para métricas de host. Instrumente apps com SDKs OTel apontando para <code>localhost:4318</code> (HTTP) ou <code>:4317</code> (gRPC).</p>
+    <h2 id="dash">9. Dashboards</h2>
+    <ol>
+      <li>métricas de produto → Dashboards → Import</li>
+      <li>Node Exporter oficial (ID <strong>1860</strong>)</li>
+      <li>Crie painéis LogQL no Loki para logs de containers</li>
+    </ol>
+    <div class="tip"><strong>tip</strong> · Use labels consistentes (job, instance, service) para correlacionar métricas e logs.</div>
+    <h2 id="fim">10. Próximos passos</h2>
+    <ul>
+      <li>Adicionar Tempo/Jaeger para traces</li>
+      <li>Alertas no métricas de produto + Alertmanager</li>
+      <li>Instrumentar aplicações reais</li>
+      <li>Reverse proxy com TLS (Traefik/Nginx)</li>
+      <li>Versionar configs no Git</li>
+    </ul>
+    <p>Stack leve o bastante para laboratório de software e sólida para dev/staging. Em produção, refine retenção, HA e segurança.</p>
+  </article>
+  <div class="nav-art">
+    <a href="blog.html">← blog</a>
+    <a href="artigo-proxmox-homelab.html">próximo: proxmox →</a>
+  </div>
+</div>
+
+<div class="wrap inline-style-4">
+  <div class="inline-style-5">$ next</div>
+  <p class="inline-style-6">Precisa de desenvolvimento de software na prática?</p>
+  <a href="contato.html" class="inline-style-7">falar com a IRN Devs →</a>
+  <span class="inline-style-8"></span>
+  <a href="servicos.html" class="inline-style-9">serviços</a>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div class="inline-style-10">
+      <a href="mailto:contato@irndevs.com">formulario de contato</a>
+    </div>
+  </div>
+</footer>
+  <script src="assets/js/site-nav.js" defer></script>
+</body>
+</html>

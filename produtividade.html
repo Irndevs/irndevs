@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Produtividade — IRN Devs</title>
+<meta name="description" content="To-do, pomodoro e scratchpad locais no navegador. Ferramentas de foco da IRN Devs.">
+<meta name="author" content="IRN Devs">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/produtividade.css">
+  <link rel="stylesheet" href="assets/css/site-nav.css">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="Produtividade — IRN Devs">
+  <meta property="og:description" content="To-do, pomodoro e scratchpad locais no navegador. Ferramentas de foco da IRN Devs.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://irndevs.com/produtividade.html">
+  <link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/produtividade.html">
+  <link rel="alternate" hreflang="x-default" href="https://irndevs.com/produtividade.html">
+  <meta property="og:url" content="https://irndevs.com/produtividade.html">
+  <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="IRN Devs">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Produtividade — IRN Devs">
+  <meta name="twitter:description" content="To-do, pomodoro e scratchpad locais no navegador. Ferramentas de foco da IRN Devs.">
+  <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="index.html" class="brand" aria-label="IRN Devs"><img src="assets/img/logo-irndevs.svg" alt="~/irndevs $" class="inline-style-1"></a>
+        <div class="navlinks">
+      <a href="index.html#projetos">projetos</a>
+      <a href="index.html#ferramentas">ferramentas</a>
+      <a href="index.html#skills">skills</a>
+      <a href="servicos.html">serviços</a>
+      <a href="sobre.html">sobre</a>
+      <a href="blog.html">blog</a>
+      <a href="jogos.html">jogos</a>
+      <a href="produtividade.html" class="active">produtividade</a>
+      <a href="https://loja.irndevs.com">loja</a>
+      <a href="contato.html">contato</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap crumb">
+  <a href="index.html">~</a> / <span class="inline-style-2">produtividade</span>
+</div>
+
+<div class="wrap page-head">
+  <div class="sec-head"><span class="amber">$</span> focus --local</div>
+  <h1>Produtividade</h1>
+  <p>To-do, pomodoro e notas rápidas. Tudo roda no navegador e salva no localStorage — sem conta, sem nuvem.</p>
+</div>
+
+<div class="wrap grid">
+
+  <!-- TODO -->
+  <div class="card">
+    <h2>$ todo</h2>
+    <p class="desc">Lista de tarefas do dia. Marque, apague, reinicie.</p>
+    <form class="todo-form" id="todoForm">
+      <input type="text" id="todoInput" placeholder="nova tarefa…" maxlength="200" autocomplete="off">
+      <button class="btn primary" type="submit">add</button>
+    </form>
+    <ul class="todo-list" id="todoList"></ul>
+    <div class="todo-empty" id="todoEmpty">nenhuma tarefa · digite acima</div>
+    <div class="todo-meta">
+      <span><b id="todoLeft">0</b> pendentes · <b id="todoDone">0</b> feitas</span>
+      <button type="button" class="btn danger" id="todoClearDone">limpar feitas</button>
+    </div>
+  </div>
+
+  <!-- POMODORO -->
+  <div class="card pomodoro">
+    <h2>$ pomodoro</h2>
+    <p class="desc">25 min foco · 5 min pausa · 15 min pausa longa</p>
+    <div class="timer-modes">
+      <button type="button" class="btn active" data-mode="focus" data-min="25">foco</button>
+      <button type="button" class="btn" data-mode="short" data-min="5">pausa</button>
+      <button type="button" class="btn" data-mode="long" data-min="15">pausa longa</button>
+    </div>
+    <div class="timer-mode" id="timerModeLabel">modo: foco</div>
+    <div class="timer-display" id="timerDisplay">25:00</div>
+    <div class="timer-controls">
+      <button type="button" class="btn primary" id="timerStart">iniciar</button>
+      <button type="button" class="btn" id="timerReset">reset</button>
+    </div>
+    <div class="cycles">ciclos concluídos: <b id="timerCycles">0</b></div>
+  </div>
+
+  <!-- NOTES -->
+  <div class="card notes inline-style-3">
+    <h2>$ scratchpad</h2>
+    <p class="desc">Notas rápidas da sessão. Salvas automaticamente.</p>
+    <textarea id="notesArea" placeholder="// anote ideias, comandos, links…"></textarea>
+    <p class="hint">salvo em localStorage · irndevs_notes</p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div class="inline-style-4">
+      <a href="jogos.html">jogos</a>
+      <a href="mailto:contato@irndevs.com">formulario de contato</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ========== TODO ========== */
+(function () {
+  const KEY = 'irndevs_todos';
+  const form = document.getElementById('todoForm');
+  const input = document.getElementById('todoInput');
+  const list = document.getElementById('todoList');
+  const empty = document.getElementById('todoEmpty');
+  const leftEl = document.getElementById('todoLeft');
+  const doneEl = document.getElementById('todoDone');
+  const clearBtn = document.getElementById('todoClearDone');
+
+  let todos = [];
+  try { todos = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (_) { todos = []; }
+
+  function save() {
+    localStorage.setItem(KEY, JSON.stringify(todos));
+    render();
+  }
+
+  function render() {
+    list.innerHTML = '';
+    todos.forEach((t, i) => {
+      const li = document.createElement('li');
+      li.className = 'todo-item' + (t.done ? ' done' : '');
+      li.innerHTML =
+        '<input type="checkbox" ' + (t.done ? 'checked' : '') + ' data-i="' + i + '">' +
+        '<span class="text"></span>' +
+        '<button type="button" class="del" data-del="' + i + '" aria-label="remover">rm</button>';
+      li.querySelector('.text').textContent = t.text;
+      list.appendChild(li);
+    });
+    empty.style.display = todos.length ? 'none' : 'block';
+    const done = todos.filter(t => t.done).length;
+    doneEl.textContent = done;
+    leftEl.textContent = todos.length - done;
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text) return;
+    todos.unshift({ text, done: false, id: Date.now() });
+    input.value = '';
+    save();
+  });
+
+  list.addEventListener('change', (e) => {
+    if (e.target.matches('input[type="checkbox"]')) {
+      const i = Number(e.target.dataset.i);
+      todos[i].done = e.target.checked;
+      save();
+    }
+  });
+
+  list.addEventListener('click', (e) => {
+    if (e.target.matches('[data-del]')) {
+      todos.splice(Number(e.target.dataset.del), 1);
+      save();
+    }
+  });
+
+  clearBtn.addEventListener('click', () => {
+    todos = todos.filter(t => !t.done);
+    save();
+  });
+
+  render();
+})();
+
+/* ========== POMODORO ========== */
+(function () {
+  const display = document.getElementById('timerDisplay');
+  const modeLabel = document.getElementById('timerModeLabel');
+  const startBtn = document.getElementById('timerStart');
+  const resetBtn = document.getElementById('timerReset');
+  const cyclesEl = document.getElementById('timerCycles');
+  const modeBtns = document.querySelectorAll('.timer-modes .btn');
+
+  let totalSec = 25 * 60;
+  let left = totalSec;
+  let running = false;
+  let interval = null;
+  let cycles = Number(localStorage.getItem('irndevs_pomodoro_cycles') || 0);
+  cyclesEl.textContent = cycles;
+
+  function fmt(s) {
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+  }
+
+  function paint() {
+    display.textContent = fmt(left);
+  }
+
+  function stop() {
+    running = false;
+    clearInterval(interval);
+    interval = null;
+    startBtn.textContent = 'iniciar';
+  }
+
+  function tick() {
+    if (left <= 0) {
+      stop();
+      if (document.querySelector('.timer-modes .btn.active').dataset.mode === 'focus') {
+        cycles++;
+        localStorage.setItem('irndevs_pomodoro_cycles', String(cycles));
+        cyclesEl.textContent = cycles;
+      }
+      try {
+        if (Notification.permission === 'granted') {
+          new Notification('IRN Devs · pomodoro', { body: 'Tempo esgotado!' });
+        }
+      } catch (_) {}
+      // beep simples
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination);
+        o.frequency.value = 880; g.gain.value = 0.08;
+        o.start(); setTimeout(() => o.stop(), 200);
+      } catch (_) {}
+      return;
+    }
+    left--;
+    paint();
+  }
+
+  modeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      modeBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      stop();
+      totalSec = Number(btn.dataset.min) * 60;
+      left = totalSec;
+      modeLabel.textContent = 'modo: ' + btn.textContent;
+      paint();
+    });
+  });
+
+  startBtn.addEventListener('click', () => {
+    if (running) {
+      stop();
+      return;
+    }
+    running = true;
+    startBtn.textContent = 'pausar';
+    if (Notification.permission === 'default') {
+      try { Notification.requestPermission(); } catch (_) {}
+    }
+    interval = setInterval(tick, 1000);
+  });
+
+  resetBtn.addEventListener('click', () => {
+    stop();
+    left = totalSec;
+    paint();
+  });
+
+  paint();
+})();
+
+/* ========== NOTES ========== */
+(function () {
+  const KEY = 'irndevs_notes';
+  const area = document.getElementById('notesArea');
+  area.value = localStorage.getItem(KEY) || '';
+  let t;
+  area.addEventListener('input', () => {
+    clearTimeout(t);
+    t = setTimeout(() => localStorage.setItem(KEY, area.value), 200);
+  });
+})();
+</script>
+  <script src="assets/js/site-nav.js" defer></script>
+</body>
+</html>

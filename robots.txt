@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Disallow: /_legado/
+
+Sitemap: https://irndevs.com/sitemap.xml

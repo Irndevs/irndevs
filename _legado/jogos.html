@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Jogos - Projeto Detalhado</title>
+    <meta name="description" content="Detalhes do projeto de plataforma de jogos com ranking, chat em tempo real e perfis de usuário.">
+    <meta name="keywords" content="jogos, javascript, websocket, canvas, firebase, projeto, portfolio">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/shared.css">
+    <link rel="stylesheet" href="assets/css/projeto-detalhado.css">
+</head>
+<body>
+    <div class="background-gradient"></div>
+    <div class="grid-background"></div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">&lt;/Dev&gt;</a>
+            <ul class="nav-links">
+                <li><a href="index.html#home" class="nav-link">Início</a></li>
+                <li><a href="sobre.html" class="nav-link">Sobre</a></li>
+                <li><a href="index.html#projetos" class="nav-link active">Projetos</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="index.html#habilidades" class="nav-link">Habilidades</a></li>
+                <li><a href="contato.html">Contato</a></li>
+            </ul>
+            <div class="theme-toggle" id="themeToggle">
+                <span>🌙</span> Tema
+            </div>
+            <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="index.html#home">Início</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="index.html#projetos">Projetos</a>
+            <a href="blog.html">Blog</a>
+            <a href="index.html#habilidades">Habilidades</a>
+            <a href="contato.html">Contato</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Início</a>
+                <span>→</span>
+                <a href="index.html#projetos">Projetos</a>
+                <span>→</span>
+                <span>Plataforma de Jogos</span>
+            </div>
+
+            <header class="project-hero loading">
+                <div class="project-hero-content">
+                    <span class="project-icon">🎮</span>
+                    <div class="project-status">
+                        <div class="status-dot"></div>
+                        Projeto Concluído
+                    </div>
+                    <h1 class="page-title">Plataforma de Jogos</h1>
+                    <p class="page-subtitle">
+                        Aplicação web interativa com múltiplos jogos, sistema de ranking, chat em tempo real 
+                        e perfis de usuários personalizados.
+                    </p>
+                    <div class="project-links">
+                        <a href="#" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                            📱 Ver no GitHub
+                        </a>
+                        <a href="#" class="btn btn-secondary">
+                            🌐 Demo Online
+                        </a>
+                    </div>
+                </div>
+            </header>
+            
+            <section class="project-overview loading">
+                 <div class="project-content">
+                    <p class="project-description">
+                        Este projeto é uma plataforma de jogos online que oferece uma experiência de usuário rica e interativa. Os jogadores podem competir em tempo real, conversar com outros usuários e acompanhar seu progresso em um ranking global.
+                    </p>
+
+                    <h3 style="color: var(--light); margin-bottom: 20px; font-size: 1.4rem;">
+                        🎯 Principais Funcionalidades
+                    </h3>
+                    <ul class="project-highlights">
+                        <li>
+                            <span class="highlight-icon">🎲</span>
+                            Múltiplos jogos implementados com Canvas API.
+                        </li>
+                        <li>
+                            <span class="highlight-icon">💬</span>
+                            Chat em tempo real com salas e mensagens privadas usando WebSockets.
+                        </li>
+                        <li>
+                            <span class="highlight-icon">🏆</span>
+                            Sistema de ranking global e por jogo.
+                        </li>
+                         <li>
+                            <span class="highlight-icon">👤</span>
+                            Perfis de usuário personalizados com estatísticas de jogo.
+                        </li>
+                        <li>
+                            <span class="highlight-icon">🔥</span>
+                            Autenticação e armazenamento de dados com Firebase.
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="project-info">
+                    <div class="info-card">
+                         <h3>
+                            <span class="info-card-icon">🛠️</span>
+                            Tecnologias
+                        </h3>
+                        <div class="tech-grid">
+                            <div class="tech-item">
+                                <span class="tech-icon">📜</span>
+                                <div class="tech-name">JavaScript</div>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-icon">🔗</span>
+                                <div class="tech-name">WebSocket</div>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-icon">🎨</span>
+                                <div class="tech-name">Canvas</div>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-icon">🔥</span>
+                                <div class="tech-name">Firebase</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="social-links">
+                    <a href="https://github.com" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                        <span>📱</span>
+                    </a>
+                    <a href="https://linkedin.com" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <span>💼</span>
+                    </a>
+                </div>
+                <p>&copy; 2024 Desenvolvedor. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/shared.js"></script>
+</body>
+</html>

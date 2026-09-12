@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>telemetria de aplicações: Métricas, Logs e Traces — IRN Devs</title>
+<meta name="description" content="telemetria de aplicações como padrão aberto de qualidade e confiabilidade: instrumentação, Collector e métricas de produto.">
+<meta name="author" content="IRN Devs">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/artigo-opentelemetry.css">
+  <link rel="stylesheet" href="assets/css/site-nav.css">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="telemetria de aplicações: Métricas, Logs e Traces — IRN Devs">
+  <meta property="og:description" content="telemetria de aplicações como padrão aberto de qualidade e confiabilidade: instrumentação, Collector e métricas de produto.">
+  <meta property="og:type" content="article">
+  <link rel="canonical" href="https://irndevs.com/artigo-opentelemetry.html">
+  <link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-opentelemetry.html">
+  <link rel="alternate" hreflang="x-default" href="https://irndevs.com/artigo-opentelemetry.html">
+  <meta property="og:url" content="https://irndevs.com/artigo-opentelemetry.html">
+  <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="IRN Devs">
+  <meta property="article:published_time" content="2026-07-22">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="telemetria de aplicações: Métricas, Logs e Traces — IRN Devs">
+  <meta name="twitter:description" content="telemetria de aplicações como padrão aberto de qualidade e confiabilidade: instrumentação, Collector e métricas de produto.">
+  <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta name="author" content="IRN Devs">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "telemetria de aplicações: Métricas, Logs e Traces",
+  "description": "telemetria de aplicações como padrão aberto de qualidade e confiabilidade: instrumentação, Collector e métricas de produto.",
+  "datePublished": "2026-07-22",
+  "author": {
+    "@type": "Organization",
+    "name": "IRN Devs"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "IRN Devs",
+    "url": "https://irndevs.com"
+  },
+  "mainEntityOfPage": "https://irndevs.com/artigo-opentelemetry.html",
+  "inLanguage": "pt-BR"
+}
+  </script>
+</head>
+<body>
+<nav>
+  <div class="wrap">
+    <a href="index.html" class="brand" aria-label="IRN Devs"><img src="assets/img/logo-irndevs.svg" alt="~/irndevs $" class="inline-style-1"></a>
+        <div class="navlinks">
+      <a href="index.html#projetos">projetos</a>
+      <a href="index.html#ferramentas">ferramentas</a>
+      <a href="index.html#skills">skills</a>
+      <a href="sobre.html">sobre</a>
+      <a href="blog.html" class="active">blog</a>
+      <a href="jogos.html">jogos</a>
+      <a href="produtividade.html">produtividade</a>
+      <a href="https://loja.irndevs.com">loja</a>
+      <a href="contato.html">contato</a>
+    </div>
+  </div>
+</nav>
+<div class="wrap crumb">
+  <a href="index.html">~</a> / <a href="blog.html">blog</a> / <span class="inline-style-2">qualidade e confiabilidade</span>
+</div>
+<div class="wrap article-head">
+  <div class="meta">
+    <span>22 jul 2026</span>
+    <span class="tag">qualidade e confiabilidade</span>
+    <span>14 min de leitura</span>
+  </div>
+  <h1>telemetria de aplicações: Unificando Métricas, Logs e Traces</h1>
+  <p class="excerpt">Introdução ao telemetria de aplicações como padrão aberto. Como instrumentar aplicações e coletar sinais unificados para o métricas de produto.</p>
+  <div class="stack"><span>telemetria de aplicações</span><span>Qualidade e confiabilidade</span><span>métricas de produto</span><span>DevOps</span></div>
+</div>
+<div class="wrap">
+  <div class="toc">
+    <div class="label">$ cat sumario.txt</div>
+    <ol>
+      <li><a href="#o-que">O que é OTel?</a></li>
+      <li><a href="#pilares">Os três pilares</a></li>
+      <li><a href="#arch">SDK + Collector</a></li>
+      <li><a href="#instr">Instrumentação</a></li>
+      <li><a href="#coll">Collector</a></li>
+      <li><a href="#grafana">métricas de produto</a></li>
+      <li><a href="#bp">Boas práticas</a></li>
+    </ol>
+  </div>
+  <article class="body">
+    <h2 id="o-que">1. O que é telemetria de aplicações?</h2>
+    <p>Padrão aberto (CNCF) para gerar, coletar e exportar <strong>métricas, logs e traces</strong>. Instrumente uma vez e envie para qualquer backend (métricas automatizadas, Loki, Tempo, Jaeger, etc.).</p>
+    <h2 id="pilares">2. Os três pilares</h2>
+    <ul>
+      <li><strong>Métricas</strong> — números agregados (latência p99, taxa de erro)</li>
+      <li><strong>Logs</strong> — eventos discretos com contexto</li>
+      <li><strong>Traces</strong> — caminho de uma requisição entre serviços (spans)</li>
+    </ul>
+    <p>O poder está em correlacionar os três via trace_id / request_id.</p>
+    <h2 id="arch">3. SDK + Collector</h2>
+    <p>A app usa o SDK (ou auto-instrumentação) e exporta OTLP para o Collector. O Collector processa (batch, filter, sample) e exporta para os backends.</p>
+    <div class="tip"><strong>tip</strong> · A app não precisa saber o destino final. Você muda o pipeline no Collector sem redeploy.</div>
+    <h2 id="instr">4. Instrumentação (Node.js)</h2>
+<pre><code>const { NodeSDK } = require('@opentelemetry/sdk-node');
+const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumentations-node');
+const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-http');
+
+const sdk = new NodeSDK({
+  traceExporter: new OTLPTraceExporter({
+    url: 'http://localhost:4318/v1/traces',
+  }),
+  instrumentations: [getNodeAutoInstrumentations()],
+});
+sdk.start();
+</code></pre>
+    <p>Python, Java, Go e .NET seguem o mesmo padrão: SDK + exporter OTLP.</p>
+    <h2 id="coll">5. Collector</h2>
+<pre><code>receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+processors:
+  batch:
+exporters:
+  otlp/tempo:
+    endpoint: tempo:4317
+  prometheus:
+    endpoint: "0.0.0.0:8889"
+  loki:
+    endpoint: http://loki:3100/loki/api/v1/push
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp/tempo]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [prometheus]
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [loki]
+</code></pre>
+    <h2 id="grafana">6. métricas de produto</h2>
+    <ul>
+      <li>métricas automatizadas → métricas e alertas</li>
+      <li>Loki → logs (LogQL)</li>
+      <li>Tempo/Jaeger → traces</li>
+    </ul>
+    <p>Configure as três data sources e use correlação (métrica → trace → logs).</p>
+    <h2 id="bp">7. Boas práticas</h2>
+    <ul>
+      <li>Semantic conventions (http.method, http.status_code…)</li>
+      <li>Propagar contexto entre serviços</li>
+      <li>Sampling inteligente em produção</li>
+      <li>Collector próximo das apps (sidecar/DaemonSet)</li>
+      <li>Config do Collector como código</li>
+    </ul>
+    <p>OTel não é “mais uma ferramenta”: é o padrão que unifica instrumentação e permite trocar de backend. Combinado com métricas de produto/métricas automatizadas/Loki/Tempo, forma base sólida de qualidade e confiabilidade.</p>
+  </article>
+  <div class="nav-art">
+    <a href="artigo-aws-cloud.html">← aws</a>
+    <a href="artigo-ubuntu-server.html">próximo: ubuntu →</a>
+  </div>
+</div>
+
+<div class="wrap inline-style-3">
+  <div class="inline-style-4">$ next</div>
+  <p class="inline-style-5">Precisa de desenvolvimento de software na prática?</p>
+  <a href="contato.html" class="inline-style-6">falar com a IRN Devs →</a>
+  <span class="inline-style-7"></span>
+  <a href="servicos.html" class="inline-style-8">serviços</a>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div class="inline-style-9">
+      <a href="mailto:contato@irndevs.com">formulario de contato</a>
+    </div>
+  </div>
+</footer>
+  <script src="assets/js/site-nav.js" defer></script>
+</body>
+</html>

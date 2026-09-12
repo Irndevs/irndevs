@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="7" fill="#0c0e0b"/>
+  <circle cx="6" cy="6" r="1.4" fill="#c45c5c"/>
+  <circle cx="10" cy="6" r="1.4" fill="#e8a33d"/>
+  <circle cx="14" cy="6" r="1.4" fill="#7fae6a"/>
+  <text x="16" y="23" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700">
+    <tspan fill="#7fae6a">~/</tspan><tspan fill="#e8a33d">$</tspan>
+  </text>
+</svg>

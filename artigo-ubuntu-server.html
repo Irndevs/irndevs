@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ubuntu Server: Configuração Inicial — IRN Devs</title>
+<meta name="description" content="Configuração inicial de Ubuntu Server: updates, usuário, rede, timezone e NTP.">
+<meta name="author" content="IRN Devs">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/artigo-ubuntu-server.css">
+  <link rel="stylesheet" href="assets/css/site-nav.css">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="Ubuntu Server: Configuração Inicial — IRN Devs">
+  <meta property="og:description" content="Configuração inicial de Ubuntu Server: updates, usuário, rede, timezone e NTP.">
+  <meta property="og:type" content="article">
+  <link rel="canonical" href="https://irndevs.com/artigo-ubuntu-server.html">
+  <link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-ubuntu-server.html">
+  <link rel="alternate" hreflang="x-default" href="https://irndevs.com/artigo-ubuntu-server.html">
+  <meta property="og:url" content="https://irndevs.com/artigo-ubuntu-server.html">
+  <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="IRN Devs">
+  <meta property="article:published_time" content="2026-07-18">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ubuntu Server: Configuração Inicial — IRN Devs">
+  <meta name="twitter:description" content="Configuração inicial de Ubuntu Server: updates, usuário, rede, timezone e NTP.">
+  <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta name="author" content="IRN Devs">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Ubuntu Server: Configuração Inicial",
+  "description": "Configuração inicial de Ubuntu Server: updates, usuário, rede, timezone e NTP.",
+  "datePublished": "2026-07-18",
+  "author": {
+    "@type": "Organization",
+    "name": "IRN Devs"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "IRN Devs",
+    "url": "https://irndevs.com"
+  },
+  "mainEntityOfPage": "https://irndevs.com/artigo-ubuntu-server.html",
+  "inLanguage": "pt-BR"
+}
+  </script>
+</head>
+<body>
+<nav>
+  <div class="wrap">
+    <a href="index.html" class="brand" aria-label="IRN Devs"><img src="assets/img/logo-irndevs.svg" alt="~/irndevs $" class="inline-style-1"></a>
+        <div class="navlinks">
+      <a href="index.html#projetos">projetos</a>
+      <a href="index.html#ferramentas">ferramentas</a>
+      <a href="index.html#skills">skills</a>
+      <a href="sobre.html">sobre</a>
+      <a href="blog.html" class="active">blog</a>
+      <a href="jogos.html">jogos</a>
+      <a href="produtividade.html">produtividade</a>
+      <a href="https://loja.irndevs.com">loja</a>
+      <a href="contato.html">contato</a>
+    </div>
+  </div>
+</nav>
+<div class="wrap crumb">
+  <a href="index.html">~</a> / <a href="blog.html">blog</a> / <span class="inline-style-2">linux</span>
+</div>
+<div class="wrap article-head">
+  <div class="meta">
+    <span>18 jul 2026</span>
+    <span class="tag">linux</span>
+    <span>7 min de leitura</span>
+  </div>
+  <h1>Ubuntu Server: Configuração Inicial Essencial</h1>
+  <p class="excerpt">Passo a passo: atualizações, usuário, rede, timezone, NTP e preparação para serviços.</p>
+  <div class="stack"><span>Ubuntu</span><span>Linux</span><span>Server</span><span>Sysadmin</span></div>
+</div>
+<div class="wrap">
+  <div class="toc">
+    <div class="label">$ cat sumario.txt</div>
+    <ol>
+      <li><a href="#acesso">Primeiro acesso</a></li>
+      <li><a href="#update">Atualização</a></li>
+      <li><a href="#user">Usuário admin</a></li>
+      <li><a href="#net">Rede e hostname</a></li>
+      <li><a href="#tz">Timezone e NTP</a></li>
+      <li><a href="#ssh">SSH (visão geral)</a></li>
+      <li><a href="#prep">Preparação</a></li>
+    </ol>
+  </div>
+  <article class="body">
+    <h2 id="acesso">1. Primeiro acesso</h2>
+<pre><code>ssh usuario@IP-DO-SERVIDOR
+</code></pre>
+    <p>Login com o usuário do instalador (ou <code>ubuntu</code> em cloud images com chave SSH).</p>
+    <h2 id="update">2. Atualização</h2>
+<pre><code>sudo apt update
+sudo apt full-upgrade -y
+sudo reboot   # se kernel/systemd atualizados
+</code></pre>
+    <div class="tip"><strong>tip</strong> · Considere unattended-upgrades para patches de segurança.</div>
+    <h2 id="user">3. Usuário admin</h2>
+<pre><code>sudo adduser admin
+sudo usermod -aG sudo admin
+su - admin
+sudo whoami   # deve retornar root
+</code></pre>
+    <h2 id="net">4. Rede e hostname</h2>
+<pre><code>sudo hostnamectl set-hostname meu-servidor
+</code></pre>
+    <p>Netplan (<code>/etc/netplan/*.yaml</code>):</p>
+<pre><code>network:
+  version: 2
+  ethernets:
+    ens18:
+      dhcp4: false
+      addresses:
+        - endereco interno omitido/24
+      routes:
+        - to: default
+          via: endereco interno omitido
+      nameservers:
+        addresses: [1.1.1.1, 8.8.8.8]
+</code></pre>
+<pre><code>sudo netplan apply
+</code></pre>
+    <div class="warn"><strong>warn</strong> · Erro de sintaxe no Netplan pode derrubar a rede. Mantenha console aberto.</div>
+    <h2 id="tz">5. Timezone e NTP</h2>
+<pre><code>sudo timedatectl set-timezone America/Sao_Paulo
+sudo timedatectl set-ntp true
+timedatectl status
+</code></pre>
+    <p>Tempo correto é essencial para logs, TLS e autenticação.</p>
+    <h2 id="ssh">6. SSH (visão geral)</h2>
+    <p>Depois da base, siga o artigo de hardening: chave SSH, desabilitar senha/root, UFW e Fail2ban. Não deixe login por senha na porta 22 exposta.</p>
+    <h2 id="prep">7. Preparação</h2>
+<pre><code>sudo apt install -y curl wget git htop vim net-tools
+</code></pre>
+    <ul>
+      <li>Ferramentas úteis instaladas</li>
+      <li>Editor padrão configurado se quiser</li>
+      <li>Documente propósito e IPs do servidor</li>
+    </ul>
+    <p>Com isso o Ubuntu fica pronto para Docker, plataformas de software, stacks de qualidade e confiabilidade ou qualquer serviço. Base sólida evita problemas difíceis depois.</p>
+  </article>
+  <div class="nav-art">
+    <a href="artigo-opentelemetry.html">← opentelemetry</a>
+    <a href="blog.html">blog →</a>
+  </div>
+</div>
+
+<div class="wrap inline-style-3">
+  <div class="inline-style-4">$ next</div>
+  <p class="inline-style-5">Precisa de desenvolvimento de software na prática?</p>
+  <a href="contato.html" class="inline-style-6">falar com a IRN Devs →</a>
+  <span class="inline-style-7"></span>
+  <a href="servicos.html" class="inline-style-8">serviços</a>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div class="inline-style-9">
+      <a href="mailto:contato@irndevs.com">formulario de contato</a>
+    </div>
+  </div>
+</footer>
+  <script src="assets/js/site-nav.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratório de software — IRN Devs</title>
+    <meta name="description" content="Laboratório de software da IRN Devs: produtos digitais, automação, testes e engenharia de aplicações.">
+    <meta name="author" content="IRN Devs">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/pages/homelab.css">
+  <link rel="stylesheet" href="assets/css/site-nav.css">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="Laboratório de software — IRN Devs">
+    <meta property="og:description" content="Laboratório de software da IRN Devs: produtos digitais, automação, testes e engenharia de aplicações.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://irndevs.com/homelab.html">
+  <link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/homelab.html">
+  <link rel="alternate" hreflang="x-default" href="https://irndevs.com/homelab.html">
+  <meta property="og:url" content="https://irndevs.com/homelab.html">
+  <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="IRN Devs">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Laboratório de software — IRN Devs">
+    <meta name="twitter:description" content="Laboratório de software da IRN Devs: produtos digitais, automação, testes e engenharia de aplicações.">
+  <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
+</head>
+<body>
+
+    <main>
+
+        <section id="visao-geral" class="hero">
+            <div class="container">
+                <div class="hero-content loading">
+                    <h1>Laboratório de software</h1>
+                    <p class="tagline">Ambiente próprio para desenvolver, testar e evoluir produtos digitais com automação e qualidade.</p>
+                    <div class="hero-badges">
+                        <span class="hero-badge">🖥️ Bare-metal</span>
+                        <span class="hero-badge">📦 ambientes de desenvolvimento VE</span>
+                        <span class="hero-badge">📊 métricas de produto + métricas automatizadas</span>
+                        <span class="hero-badge">🔒 OPNsense</span>
+                        <span class="hero-badge">🐳 Docker / LXC</span>
+                        <span class="hero-badge">🌐 acesso seguro</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="stats loading">
+                    <div class="stat-card">
+                        <div class="stat-number">8+</div>
+                        <div class="stat-label">VMs Ativas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Serviços Docker</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Disponibilidade</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Self-hosted</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="hardware" class="section">
+            <div class="container">
+                <h2 class="section-title loading">Desenvolvimento de software Física</h2>
+                <p class="section-desc loading">Servidor bare-metal rodando Ubuntu Server 26.04 LTS como base. Acesso remoto via SSH com MOTD customizado e monitoramento de temperatura e carga do sistema em tempo real.</p>
+
+                <div class="infra-grid loading">
+                    <div class="infra-card">
+                        <div class="infra-card-header">
+                            <div class="infra-icon">🐧</div>
+                            <h3>Servidor Principal</h3>
+                            <span>Online</span>
+                        </div>
+                        <div class="infra-card-body">
+                            <ul>
+                                <li>Ubuntu Server 26.04 LTS</li>
+                                <li>IP: endereco interno omitido</li>
+                                <li>CPU: Bare-metal</li>
+                                <li>RAM: 16 GiB</li>
+                                <li>Storage: 454 GB</li>
+                                <li>Temperatura: ~48°C</li>
+                                <li>SSH + Hardening ativo</li>
+                            </ul>
+                            <div class="tech-row">
+                                <span class="tech-tag">Ubuntu</span>
+                                <span class="tech-tag">SSH</span>
+                                <span class="tech-tag">UFW</span>
+                                <span class="tech-tag">Fail2ban</span>
+                            </div>
+                        </div>
+                        <div class="infra-img-wrap" onclick="openLightbox(this)">
+                            <img loading="lazy" decoding="async" src="assets/img/laboratório de software/laboratório de software-01.png" alt="SSH login com MOTD customizado">
+                            <div class="infra-img-overlay"><span>🔍 Clique para ampliar</span></div>
+                        </div>
+                    </div>
+
+                    <div class="infra-card">
+                        <div class="infra-card-header">
+                            <div class="infra-icon">🪟</div>
+                            <h3>Windows Server</h3>
+                            <span>Online</span>
+                        </div>
+                        <div class="infra-card-body">
+                            <ul>
+                                <li>VM via QEMU/KVM no ambientes de desenvolvimento</li>
+                                <li>Server Manager Dashboard</li>
+                                <li>File and Storage Services</li>
+                                <li>Active Directory (planejado)</li>
+                                <li>Acesso via noVNC</li>
+                            </ul>
+                            <div class="tech-row">
+                                <span class="tech-tag">Windows Server</span>
+                                <span class="tech-tag">QEMU/KVM</span>
+                                <span class="tech-tag">noVNC</span>
+                            </div>
+                        </div>
+                        <div class="infra-img-wrap" onclick="openLightbox(this)">
+                            <img loading="lazy" decoding="async" src="assets/img/laboratório de software/laboratório de software-02.png" alt="Windows Server Manager Dashboard">
+                            <div class="infra-img-overlay"><span>🔍 Clique para ampliar</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="virtualizacao" class="section">
+            <div class="container">
+                <h2 class="section-title loading">Virtualização — ambientes de desenvolvimento VE 9.1.1</h2>
+                <p class="section-desc loading">Hypervisor Type-1 gerenciando múltiplas VMs e containers LXC. Topologia de rede com BGP (spine-leaf) para roteamento interno entre as máquinas virtuais.</p>
+
+                <div class="network-diagram loading">
+                    <h3>🗺️ Topologia de VMs no ambientes de desenvolvimento</h3>
+                    <div class="net-layer">
+                        <div class="net-node"><span class="icon">🌐</span><span class="name">spine1</span><span class="ip">201</span></div>
+                        <div class="net-node"><span class="icon">🌐</span><span class="name">spine2</span><span class="ip">202</span></div>
+                    </div>
+                    <div class="net-connector">⇅ BGP EVPN ⇅</div>
+                    <div class="net-layer">
+                        <div class="net-node"><span class="icon">🍃</span><span class="name">leaf1</span><span class="ip">203</span></div>
+                        <div class="net-node"><span class="icon">🍃</span><span class="name">leaf2</span><span class="ip">204</span></div>
+                        <div class="net-node"><span class="icon">🍃</span><span class="name">leaf3</span><span class="ip">205</span></div>
+                    </div>
+                    <div class="net-connector">⇅</div>
+                    <div class="net-layer">
+                        <div class="net-node"><span class="icon">🦜</span><span class="name">parrot</span><span class="ip">100</span></div>
+                        <div class="net-node"><span class="icon">🎯</span><span class="name">metasploitable</span><span class="ip">101</span></div>
+                        <div class="net-node"><span class="icon">🪨</span><span class="name">rocky-linux</span><span class="ip">102</span></div>
+                        <div class="net-node"><span class="icon">💾</span><span class="name">truenas</span><span class="ip">103</span></div>
+                        <div class="net-node"><span class="icon">🖥️</span><span class="name">irn-serv</span><span class="ip">104</span></div>
+                        <div class="net-node"><span class="icon">🔥</span><span class="name">OPNsense</span><span class="ip">105</span></div>
+                        <div class="net-node"><span class="icon">🐧</span><span class="name">Lubuntu</span><span class="ip">106</span></div>
+                    </div>
+                </div>
+
+                <div class="gallery-grid loading inline-style-1">
+                    <div class="gallery-item" onclick="openLightbox(this)">
+                        <img loading="lazy" decoding="async" src="assets/img/laboratório de software/laboratório de software-03.png" alt="ambientes de desenvolvimento Shell com BGP EVPN">
+                        <div class="gallery-caption">
+                            <h4>🔧 BGP EVPN no ambientes de desenvolvimento</h4>
+                            <p>Roteamento L2VPN com AS 65001. Peering ativo via eth0 com vizinho AS 65000. RIB entries e tabela de vizinhos em operação.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox(this)">
+                        <img loading="lazy" decoding="async" src="assets/img/laboratório de software/laboratório de software-04.png" alt="VM TrueNAS no ambientes de desenvolvimento">
+                        <div class="gallery-caption">
+                            <h4>💾 TrueNAS SCALE (VM 103)</h4>
+                            <p>3 vCPUs, 4 GiB RAM, 32 GiB boot disk. Status running com uptime monitorado. Storage centralizado para backups e shares NFS/SMB.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox(this)">
+                        <img loading="lazy" decoding="async" src="assets/img/laboratório de software/laboratório de software-05.png" alt="Boot Order TrueNAS">
+                        <div class="gallery-caption">
+                            <h4>⚙️ Configuração de Boot</h4>
+                            <p>Ordem de boot: scsi0 (disco 32G) → ide2 (ISO TrueNAS SCALE 25.10.4) → net0 (virtio bridge vmbr0). Configuração otimizada para boot seguro.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="rede" class="section">
+            <div class="container">
+                <h2 class="section-title loading">Rede & Segurança</h2>
+                <p class="section-desc loading">Firewall OPNsense gerenciando regras de tráfego LAN/WAN, VPN acesso seguro para acesso remoto seguro e segmentação de rede entre VMs.</p>
+
+                <div class="infra-grid loading">
+                    <div class="infra-card">
+                        <div class="infra-card-header">
+                            <div class="infra-icon">🔥</div>
+                            <h3>OPNsense Firewall</h3>
+                            <span>Ativo</span>
+                        </div>
+                        <div class="infra-card-body">
+                            <ul>
+                                <li>Regras IPv4/IPv6 por interface</li>
+                                <li>LAN network policies</li>
+                                <li>NAT automático</li>
+                                <li>25 regras configuradas</li>
+                                <li>Log e diagnóstico integrados</li>
+                            </ul>
+                            <div class="tech-row">
+                                <span class="tech-tag">OPNsense</span>
+                                <span class="tech-tag">PF</span>
+                                <span class="tech-tag">NAT</span>
+                                <span class="tech-tag">VLAN</span>
+                            </div>
+                        </div>
+                        <div class="infra-img-wrap" onclick="openLightbox(this)">
+                            <img loading="lazy" decoding="async" src="assets/img/laboratório de software/laboratório de software-06.png" alt="Regras de Firewall OPNsense">
+                            <div class="infra-img-overlay"><span>🔍 Clique para ampliar</span></div>
+                        </div>
+                    </div>
+
+                    <div class="infra-card">
+                        <div class="infra-card-header">
+                            <div class="infra-icon">🌐</div>
+                            <h3>acesso seguro Mesh VPN</h3>
+                            <span>4 nodes</span>
+                        </div>
+                        <div class="infra-card-body">
+                            <ul>
+                                <li>serv-irn (Linux 7.0.0)</li>
+                                <li>desktop-b8bvrrl (Win 11)</li>
+                                <li>irn (ambientes de desenvolvimento PVE)</li>
+                                <li>parrot (Parrot OS)</li>
+                                <li>WireGuard-based, zero-config</li>
+                            </ul>
+                            <div class="tech-row">
+                                <span class="tech-tag">acesso seguro</span>
+                                <span class="tech-tag">WireGuard</span>
+                                <span class="tech-tag">Mesh VPN</span>
+                            </div>
+                        </div>
+                        <div class="infra-img-wrap" onclick="openLightbox(this)">
+                            <img loading="lazy" decoding="async" src="assets/img/laboratório de software/laboratório de software-07.png" alt="acesso seguro Machines Dashboard">
+                            <div class="infra-img-overlay"><span>🔍 Clique para ampliar</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="qualidade e confiabilidade" class="section">
+            <div class="container">
+                <h2 class="section-title center loading">Qualidade e confiabilidade</h2>
+                <p class="section-desc loading inline-style-2">Stack completa de monitoramento: métricas automatizadas coleta métricas, métricas de produto visualiza dashboards em tempo real e Node Exporter expõe dados do sistema operacional.</p>
+
+                <div class="gallery-grid loading">
+                    <div class="gallery-item" onclick="openLightbox(this)">
+                        <img loading="lazy" decoding="async" src="assets/img/laboratório de software/laboratório de software-08.png" alt="métricas de produto Node Exporter - CPU/Mem/Disk">
+                        <div class="gallery-caption">
+                            <h4>📊 métricas de produto — Node Exporter Full</h4>
+                            <p>Dashboard completo com gauges de CPU, memória (97.7%), swap (29.3%), rootfs (24.6%), /boot (0%), /tmp (25.3%). Uptime e storage visíveis em tempo real.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox(this)">
+                        <img loading="lazy" decoding="async" src="assets/img/laboratório de software/laboratório de software-09.png" alt="métricas de produto Network Traffic">
+                        <div class="gallery-caption">
+                            <h4>📡 métricas de produto — Network & Disk I/O</h4>
+                            <p>Monitoramento de tráfego de rede (Rx por interface) e uso de disco por partição (/boot/efi, /boot, /run, /tmp). Timeline de 5 minutos com granularidade detalhada.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox(this)">
+                        <img loading="lazy" decoding="async" src="assets/img/laboratório de software/laboratório de software-10.png" alt="métricas de produto Node Exporter 24h">
+                        <div class="gallery-caption">
+                            <h4>🕐 métricas de produto — Visão 24h</h4>
+                            <p>Métricas de longo prazo: CPU busy system/user/iowait, memória total/used/cache/buffer/swap. Análise histórica para identificar padrões de carga.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox(this)">
+                        <img loading="lazy" decoding="async" src="assets/img/laboratório de software/laboratório de software-11.png" alt="métricas automatizadas Targets Health">
+                        <div class="gallery-caption">
+                            <h4>🔍 métricas automatizadas — Target Health</h4>
+                            <p>Status de scraping: prometheus (1/1 UP) e servidor_físico (0/1 DOWN). Monitoramento ativo de endpoints com alertas de context deadline exceeded.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cicd" class="section">
+            <div class="container">
+                <h2 class="section-title loading">CI/CD & Git</h2>
+                <p class="section-desc loading">Gitea self-hosted como forge Git privado, com Actions Runner para pipelines de build, teste e deploy automatizados. Integração com projetos pessoais e acadêmicos.</p>
+
+                <div class="infra-grid loading">
+                    <div class="infra-card">
+                        <div class="infra-card-header">
+                            <div class="infra-icon">🦉</div>
+                            <h3>Gitea — Forge Privado</h3>
+                            <span>60 repos</span>
+                        </div>
+                        <div class="infra-card-body">
+                            <ul>
+                                <li>60 repositórios hospedados</li>
+                                <li>Contribuições visuais (heatmap)</li>
+                                <li>Mirror de GitHub</li>
+                                <li>Organizações e permissões</li>
+                                <li>Webhooks e integrações</li>
+                            </ul>
+                            <div class="tech-row">
+                                <span class="tech-tag">Gitea</span>
+                                <span class="tech-tag">Git</span>
+                                <span class="tech-tag">Self-hosted</span>
+                            </div>
+                        </div>
+                        <div class="infra-img-wrap" onclick="openLightbox(this)">
+                            <img loading="lazy" decoding="async" src="assets/img/laboratório de software/laboratório de software-12.png" alt="Dashboard do Gitea">
+                            <div class="infra-img-overlay"><span>🔍 Clique para ampliar</span></div>
+                        </div>
+                    </div>
+
+                    <div class="infra-card">
+                        <div class="infra-card-header">
+                            <div class="infra-icon">⚙️</div>
+                            <h3>Gitea Actions</h3>
+                            <span>Pipeline</span>
+                        </div>
+                        <div class="infra-card-body">
+                            <ul>
+                                <li>Backend: lint + test + build</li>
+                                <li>Frontend: build automatizado</li>
+                                <li>Docker build (sem push)</li>
+                                <li>Node.js + TypeScript + Jest</li>
+                                <li>Status de jobs em tempo real</li>
+                            </ul>
+                            <div class="tech-row">
+                                <span class="tech-tag">CI/CD</span>
+                                <span class="tech-tag">Node.js</span>
+                                <span class="tech-tag">Docker</span>
+                                <span class="tech-tag">Jest</span>
+                            </div>
+                        </div>
+                        <div class="infra-img-wrap" onclick="openLightbox(this)">
+                            <img loading="lazy" decoding="async" src="assets/img/laboratório de software/laboratório de software-13.png" alt="Gitea Actions Pipeline">
+                            <div class="infra-img-overlay"><span>🔍 Clique para ampliar</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="network-diagram loading inline-style-3">
+                    <h3>🔄 Fluxo de CI/CD</h3>
+                    <div class="net-layer">
+                        <div class="net-node"><span class="icon">💻</span><span class="name">Dev Local</span><span class="ip">git push</span></div>
+                        <div class="net-node"><span class="icon">🦉</span><span class="name">Gitea</span><span class="ip">webhook</span></div>
+                        <div class="net-node"><span class="icon">⚙️</span><span class="name">Runner</span><span class="ip">pipeline</span></div>
+                        <div class="net-node"><span class="icon">🐳</span><span class="name">Docker</span><span class="ip">build</span></div>
+                        <div class="net-node"><span class="icon">🚀</span><span class="name">Deploy</span><span class="ip">laboratório de software</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section inline-style-4">
+            <div class="container">
+                <div class="network-diagram loading inline-style-5">
+                    <h3>🛠️ Stack Completa do Laboratório de software</h3>
+                    <div class="inline-style-6">
+                        <span class="tech-tag inline-style-7">Ubuntu Server 26.04</span>
+                        <span class="tech-tag inline-style-8">ambientes de desenvolvimento VE 9.1.1</span>
+                        <span class="tech-tag inline-style-9">Docker & LXC</span>
+                        <span class="tech-tag inline-style-10">métricas de produto</span>
+                        <span class="tech-tag inline-style-11">métricas automatizadas</span>
+                        <span class="tech-tag inline-style-12">Loki</span>
+                        <span class="tech-tag inline-style-13">OPNsense</span>
+                        <span class="tech-tag inline-style-14">acesso seguro</span>
+                        <span class="tech-tag inline-style-15">BGP EVPN</span>
+                        <span class="tech-tag inline-style-16">TrueNAS SCALE</span>
+                        <span class="tech-tag inline-style-17">Gitea</span>
+                        <span class="tech-tag inline-style-18">Windows Server</span>
+                        <span class="tech-tag inline-style-19">Rocky Linux</span>
+                        <span class="tech-tag inline-style-20">Parrot OS</span>
+                        <span class="tech-tag inline-style-21">Lubuntu</span>
+                        <span class="tech-tag inline-style-22">Metasploitable</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="index.html">início</a>
+                    <a href="#visao-geral">topo ↑</a>
+                </div>
+                <p class="inline-style-23">© 2026 irndevs — laboratório de software documentado com screenshots reais do ambiente de produção.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+        <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+        <img loading="lazy" decoding="async" id="lightboxImg" src="" alt="">
+        <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = { threshold: 0.08, rootMargin: '0px 0px -40px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('loaded');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.loading').forEach(el => observer.observe(el));
+
+        // Lightbox
+        function openLightbox(element) {
+            const img = element.querySelector('img');
+            const caption = element.querySelector('.gallery-caption h4, .gallery-caption p, .infra-card-body');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            const lightboxCaption = document.getElementById('lightboxCaption');
+            lightboxImg.src = img.src;
+            lightboxImg.alt = img.alt;
+            // Try to get caption text
+            let capText = img.alt;
+            const capEl = element.closest('.gallery-item, .infra-card')?.querySelector('.gallery-caption h4, .gallery-caption p');
+            if (capEl) capText = capEl.textContent;
+            lightboxCaption.textContent = capText;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox(e) {
+            if (e.target.id === 'lightbox' || e.target.classList.contains('lightbox-close')) {
+                document.getElementById('lightbox').classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.getElementById('lightbox').classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    </script>
+  <script src="assets/js/site-nav.js" defer></script>
+</body>
+</html>
