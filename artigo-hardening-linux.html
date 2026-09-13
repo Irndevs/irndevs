@@ -73,6 +73,36 @@
   ]
 }
   </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Hardening Linux: SSH, UFW e Fail2ban",
+  "description": "Checklist básico de segurança para servidores Linux expostos.",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Atualizar o sistema",
+      "text": "Aplicar atualizações de segurança do sistema operacional."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "SSH por chave",
+      "text": "Desabilitar login por senha e root via SSH; usar autenticação por chave."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Firewall UFW",
+      "text": "Liberar apenas portas necessárias e ativar UFW."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Fail2ban",
+      "text": "Proteger SSH contra força bruta com Fail2ban."
+    }
+  ]
+}
+  </script>
 </head>
 <body>
 <nav>

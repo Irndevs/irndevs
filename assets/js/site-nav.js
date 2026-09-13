@@ -23,6 +23,8 @@
     { href: 'index.html#projetos', label: 'projetos', ico: '▸' },
     { href: 'servicos.html', label: 'serviços', ico: '⚙' },
     { href: 'blog.html', label: 'blog', ico: '≡' },
+    { href: 'observabilidade.html', label: 'observabilidade', ico: '◉' },
+    { href: 'kubernetes.html', label: 'kubernetes', ico: '⬡' },
     { href: 'blog.html#buscar', label: 'buscar', ico: '⌕' },
     { href: 'sobre.html', label: 'sobre', ico: 'i' },
     { href: 'homelab.html', label: 'homelab', ico: '▣' }
@@ -35,6 +37,8 @@
     { href: 'como-contratar.html', label: 'como contratar', ico: '→' },
     { href: 'sobre.html', label: 'sobre', ico: 'i' },
     { href: 'blog.html', label: 'blog', ico: '≡' },
+    { href: 'observabilidade.html', label: 'observabilidade', ico: '◉' },
+    { href: 'kubernetes.html', label: 'kubernetes', ico: '⬡' },
     { href: 'homelab.html', label: 'homelab', ico: '▣' },
     { href: 'produtividade.html', label: 'produtividade', ico: '⏱' },
     { href: 'jogos.html', label: 'jogos', ico: '▶' },
@@ -46,6 +50,8 @@
   var bottomItems = [
     { href: 'index.html', label: 'início', ico: '⌂' },
     { href: 'blog.html', label: 'blog', ico: '≡' },
+    { href: 'observabilidade.html', label: 'observabilidade', ico: '◉' },
+    { href: 'kubernetes.html', label: 'kubernetes', ico: '⬡' },
     { href: 'produtividade.html', label: 'focus', ico: '⏱' },
     { href: 'jogos.html', label: 'jogos', ico: '▶' },
     { href: 'contato.html', label: 'contato', ico: '@' },

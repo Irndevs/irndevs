@@ -72,3 +72,10 @@ Validar: https://search.google.com/test/rich-results
 3. Rich Results test nos artigos
 4. Substituir depoimentos placeholder
 5. Expandir EN e pilares de conteúdo
+
+## Evolução aplicada (esta rodada)
+- `/en/services.html`, `about.html`, `contact.html`
+- Páginas pilar: `observabilidade.html`, `kubernetes.html`
+- JSON-LD HowTo (hardening), ItemList (blog)
+- security.txt, depoimentos, FAQ/Breadcrumb (rodadas anteriores)
+- CLOUDFLARE.md
