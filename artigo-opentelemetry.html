@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>telemetria de aplicações: Métricas, Logs e Traces — IRN Devs</title>
-<meta name="description" content="telemetria de aplicações como padrão aberto de qualidade e confiabilidade: instrumentação, Collector e métricas de produto.">
+<title>OpenTelemetry: Métricas, Logs e Traces — IRN Devs</title>
+<meta name="description" content="OpenTelemetry como padrão aberto de observabilidade: instrumentação, Collector e Grafana.">
 <meta name="author" content="IRN Devs">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/pages/artigo-opentelemetry.css">
   <link rel="stylesheet" href="assets/css/site-nav.css">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-  <meta property="og:title" content="telemetria de aplicações: Métricas, Logs e Traces — IRN Devs">
-  <meta property="og:description" content="telemetria de aplicações como padrão aberto de qualidade e confiabilidade: instrumentação, Collector e métricas de produto.">
+  <meta property="og:title" content="OpenTelemetry: Métricas, Logs e Traces — IRN Devs">
+  <meta property="og:description" content="OpenTelemetry como padrão aberto de observabilidade: instrumentação, Collector e Grafana.">
   <meta property="og:type" content="article">
   <link rel="canonical" href="https://irndevs.com/artigo-opentelemetry.html">
   <link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-opentelemetry.html">
@@ -23,16 +23,16 @@
   <meta property="og:site_name" content="IRN Devs">
   <meta property="article:published_time" content="2026-07-22">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="telemetria de aplicações: Métricas, Logs e Traces — IRN Devs">
-  <meta name="twitter:description" content="telemetria de aplicações como padrão aberto de qualidade e confiabilidade: instrumentação, Collector e métricas de produto.">
+  <meta name="twitter:title" content="OpenTelemetry: Métricas, Logs e Traces — IRN Devs">
+  <meta name="twitter:description" content="OpenTelemetry como padrão aberto de observabilidade: instrumentação, Collector e Grafana.">
   <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
   <meta name="author" content="IRN Devs">
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "telemetria de aplicações: Métricas, Logs e Traces",
-  "description": "telemetria de aplicações como padrão aberto de qualidade e confiabilidade: instrumentação, Collector e métricas de produto.",
+  "headline": "OpenTelemetry: Métricas, Logs e Traces",
+  "description": "OpenTelemetry como padrão aberto de observabilidade: instrumentação, Collector e Grafana.",
   "datePublished": "2026-07-22",
   "author": {
     "@type": "Organization",
@@ -66,17 +66,17 @@
   </div>
 </nav>
 <div class="wrap crumb">
-  <a href="index.html">~</a> / <a href="blog.html">blog</a> / <span class="inline-style-2">qualidade e confiabilidade</span>
+  <a href="index.html">~</a> / <a href="blog.html">blog</a> / <span class="inline-style-2">observabilidade</span>
 </div>
 <div class="wrap article-head">
   <div class="meta">
     <span>22 jul 2026</span>
-    <span class="tag">qualidade e confiabilidade</span>
+    <span class="tag">observabilidade</span>
     <span>14 min de leitura</span>
   </div>
-  <h1>telemetria de aplicações: Unificando Métricas, Logs e Traces</h1>
-  <p class="excerpt">Introdução ao telemetria de aplicações como padrão aberto. Como instrumentar aplicações e coletar sinais unificados para o métricas de produto.</p>
-  <div class="stack"><span>telemetria de aplicações</span><span>Qualidade e confiabilidade</span><span>métricas de produto</span><span>DevOps</span></div>
+  <h1>OpenTelemetry: Unificando Métricas, Logs e Traces</h1>
+  <p class="excerpt">Introdução ao OpenTelemetry como padrão aberto. Como instrumentar aplicações e coletar sinais unificados para o Grafana.</p>
+  <div class="stack"><span>OpenTelemetry</span><span>Qualidade e confiabilidade</span><span>Grafana</span><span>DevOps</span></div>
 </div>
 <div class="wrap">
   <div class="toc">
@@ -87,13 +87,13 @@
       <li><a href="#arch">SDK + Collector</a></li>
       <li><a href="#instr">Instrumentação</a></li>
       <li><a href="#coll">Collector</a></li>
-      <li><a href="#grafana">métricas de produto</a></li>
+      <li><a href="#grafana">Grafana</a></li>
       <li><a href="#bp">Boas práticas</a></li>
     </ol>
   </div>
   <article class="body">
-    <h2 id="o-que">1. O que é telemetria de aplicações?</h2>
-    <p>Padrão aberto (CNCF) para gerar, coletar e exportar <strong>métricas, logs e traces</strong>. Instrumente uma vez e envie para qualquer backend (métricas automatizadas, Loki, Tempo, Jaeger, etc.).</p>
+    <h2 id="o-que">1. O que é OpenTelemetry?</h2>
+    <p>Padrão aberto (CNCF) para gerar, coletar e exportar <strong>métricas, logs e traces</strong>. Instrumente uma vez e envie para qualquer backend (Prometheus, Loki, Tempo, Jaeger, etc.).</p>
     <h2 id="pilares">2. Os três pilares</h2>
     <ul>
       <li><strong>Métricas</strong> — números agregados (latência p99, taxa de erro)</li>
@@ -148,9 +148,9 @@ service:
       processors: [batch]
       exporters: [loki]
 </code></pre>
-    <h2 id="grafana">6. métricas de produto</h2>
+    <h2 id="grafana">6. Grafana</h2>
     <ul>
-      <li>métricas automatizadas → métricas e alertas</li>
+      <li>Prometheus → métricas e alertas</li>
       <li>Loki → logs (LogQL)</li>
       <li>Tempo/Jaeger → traces</li>
     </ul>
@@ -163,7 +163,7 @@ service:
       <li>Collector próximo das apps (sidecar/DaemonSet)</li>
       <li>Config do Collector como código</li>
     </ul>
-    <p>OTel não é “mais uma ferramenta”: é o padrão que unifica instrumentação e permite trocar de backend. Combinado com métricas de produto/métricas automatizadas/Loki/Tempo, forma base sólida de qualidade e confiabilidade.</p>
+    <p>OTel não é “mais uma ferramenta”: é o padrão que unifica instrumentação e permite trocar de backend. Combinado com Grafana/Prometheus/Loki/Tempo, forma base sólida de observabilidade.</p>
   </article>
   <div class="nav-art">
     <a href="artigo-aws-cloud.html">← aws</a>
@@ -173,7 +173,7 @@ service:
 
 <div class="wrap inline-style-3">
   <div class="inline-style-4">$ next</div>
-  <p class="inline-style-5">Precisa de desenvolvimento de software na prática?</p>
+  <p class="inline-style-5">Precisa de infraestrutura na prática?</p>
   <a href="contato.html" class="inline-style-6">falar com a IRN Devs →</a>
   <span class="inline-style-7"></span>
   <a href="servicos.html" class="inline-style-8">serviços</a>
@@ -183,7 +183,7 @@ service:
   <div class="wrap">
     <div>© 2026 irndevs</div>
     <div class="inline-style-9">
-      <a href="mailto:contato@irndevs.com">formulario de contato</a>
+      <a href="mailto:contato@irndevs.com">contato@irndevs.com</a>
     </div>
   </div>
 </footer>

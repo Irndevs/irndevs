@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AWS Cloud Foundations — IRN Devs</title>
-<meta name="description" content="Conceitos de IAM, VPC, EC2 e S3 e como aplicar do laboratório de software à nuvem AWS.">
+<meta name="description" content="Conceitos de IAM, VPC, EC2 e S3 e como aplicar do homelab à nuvem AWS.">
 <meta name="author" content="IRN Devs">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="assets/css/site-nav.css">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <meta property="og:title" content="AWS Cloud Foundations — IRN Devs">
-  <meta property="og:description" content="Conceitos de IAM, VPC, EC2 e S3 e como aplicar do laboratório de software à nuvem AWS.">
+  <meta property="og:description" content="Conceitos de IAM, VPC, EC2 e S3 e como aplicar do homelab à nuvem AWS.">
   <meta property="og:type" content="article">
   <link rel="canonical" href="https://irndevs.com/artigo-aws-cloud.html">
   <link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-aws-cloud.html">
@@ -24,7 +24,7 @@
   <meta property="article:published_time" content="2026-07-28">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AWS Cloud Foundations — IRN Devs">
-  <meta name="twitter:description" content="Conceitos de IAM, VPC, EC2 e S3 e como aplicar do laboratório de software à nuvem AWS.">
+  <meta name="twitter:description" content="Conceitos de IAM, VPC, EC2 e S3 e como aplicar do homelab à nuvem AWS.">
   <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
   <meta name="author" content="IRN Devs">
   <script type="application/ld+json">
@@ -32,7 +32,7 @@
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "AWS Cloud Foundations",
-  "description": "Conceitos de IAM, VPC, EC2 e S3 e como aplicar do laboratório de software à nuvem AWS.",
+  "description": "Conceitos de IAM, VPC, EC2 e S3 e como aplicar do homelab à nuvem AWS.",
   "datePublished": "2026-07-28",
   "author": {
     "@type": "Organization",
@@ -74,8 +74,8 @@
     <span class="tag">cloud</span>
     <span>10 min de leitura</span>
   </div>
-  <h1>AWS Cloud Foundations: Do Laboratório de software para a Nuvem</h1>
-  <p class="excerpt">Reflexões sobre a certificação AWS Academy Cloud Foundations e como VPC, EC2, S3 e IAM se aplicam à migração do laboratório de software.</p>
+  <h1>AWS Cloud Foundations: Do Homelab para a Nuvem</h1>
+  <p class="excerpt">Reflexões sobre a certificação AWS Academy Cloud Foundations e como VPC, EC2, S3 e IAM se aplicam à migração do homelab.</p>
   <div class="stack"><span>AWS</span><span>EC2</span><span>S3</span><span>IAM</span><span>VPC</span></div>
 </div>
 <div class="wrap">
@@ -87,15 +87,15 @@
       <li><a href="#vpc">VPC</a></li>
       <li><a href="#ec2">EC2</a></li>
       <li><a href="#s3">S3</a></li>
-      <li><a href="#laboratório de software">Laboratório de software como laboratório</a></li>
+      <li><a href="#homelab">Homelab como laboratório</a></li>
       <li><a href="#next">Próximos passos</a></li>
     </ol>
   </div>
   <article class="body">
     <h2 id="por-que">1. Por que Cloud Foundations?</h2>
-    <p>Organiza o mapa mental da nuvem: permissões, onde os recursos vivem, como se comunicam e como se paga. Quem já tem laboratório de software com ambientes de desenvolvimento/plataformas de software chega com vantagem — conceitos análogos, com escala e shared responsibility.</p>
+    <p>Organiza o mapa mental da nuvem: permissões, onde os recursos vivem, como se comunicam e como se paga. Quem já tem homelab com Docker/k3s chega com vantagem — conceitos análogos, com escala e shared responsibility.</p>
     <h2 id="iam">2. IAM</h2>
-    <p>No laboratório de software: usuário sudo + chaves SSH. Na AWS: IAM formal.</p>
+    <p>No homelab: usuário sudo + chaves SSH. Na AWS: IAM formal.</p>
     <ul>
       <li>Users e Groups</li>
       <li>Roles (preferíveis para serviços)</li>
@@ -122,7 +122,7 @@
       <li>Network ACLs (stateless por subnet)</li>
       <li>Route tables</li>
     </ul>
-    <p>No ambientes de desenvolvimento: bridges e firewall. Na AWS: a mesma lógica com mais formalismo multi-tenant.</p>
+    <p>No Docker: bridges e firewall. Na AWS: a mesma lógica com mais formalismo multi-tenant.</p>
     <h2 id="ec2">4. EC2</h2>
     <ul>
       <li>Tipos de instância (famílias e tamanhos)</li>
@@ -140,9 +140,9 @@
       <li>Criptografia (SSE-S3, SSE-KMS)</li>
       <li>Acesso público bloqueado por padrão</li>
     </ul>
-    <h2 id="laboratório de software">6. Laboratório de software como laboratório</h2>
-    <p>Docker Compose, Helm e Ansible no ambientes de desenvolvimento/plataformas de software transferem para CloudFormation, Terraform e CDK. Hardening e métricas automatizadas ajudam a entender CloudWatch e o modelo de responsabilidade compartilhada.</p>
-    <p>Laboratório de software continua sendo o melhor lab: testa sem medo da fatura e sobe para a AWS só o que precisa de elasticidade ou serviços gerenciados.</p>
+    <h2 id="homelab">6. Homelab como laboratório</h2>
+    <p>Docker Compose, Helm e Ansible no Docker/k3s transferem para CloudFormation, Terraform e CDK. Hardening e Prometheus ajudam a entender CloudWatch e o modelo de responsabilidade compartilhada.</p>
+    <p>Homelab continua sendo o melhor lab: testa sem medo da fatura e sobe para a AWS só o que precisa de elasticidade ou serviços gerenciados.</p>
     <h2 id="next">7. Próximos passos</h2>
     <ul>
       <li>Conta Free Tier: VPC + EC2 + S3 na prática</li>
@@ -159,7 +159,7 @@
 
 <div class="wrap inline-style-3">
   <div class="inline-style-4">$ next</div>
-  <p class="inline-style-5">Precisa de desenvolvimento de software na prática?</p>
+  <p class="inline-style-5">Precisa de infraestrutura na prática?</p>
   <a href="contato.html" class="inline-style-6">falar com a IRN Devs →</a>
   <span class="inline-style-7"></span>
   <a href="servicos.html" class="inline-style-8">serviços</a>
@@ -169,7 +169,7 @@
   <div class="wrap">
     <div>© 2026 irndevs</div>
     <div class="inline-style-9">
-      <a href="mailto:contato@irndevs.com">formulario de contato</a>
+      <a href="mailto:contato@irndevs.com">contato@irndevs.com</a>
     </div>
   </div>
 </footer>

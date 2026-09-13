@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ambientes de desenvolvimento: Do Zero ao Laboratório de software Produtivo — IRN Devs</title>
-<meta name="description" content="Configuração de ambientes de desenvolvimento VE: VMs, LXC, ZFS e backups para um laboratório de software produtivo.">
+<title>Docker: Do Zero ao Homelab Produtivo — IRN Devs</title>
+<meta name="description" content="Configuração de Docker VE: VMs, LXC, ZFS e backups para um homelab produtivo.">
 <meta name="author" content="IRN Devs">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/pages/artigo-proxmox-homelab.css">
   <link rel="stylesheet" href="assets/css/site-nav.css">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-  <meta property="og:title" content="ambientes de desenvolvimento: Do Zero ao Laboratório de software Produtivo — IRN Devs">
-  <meta property="og:description" content="Configuração de ambientes de desenvolvimento VE: VMs, LXC, ZFS e backups para um laboratório de software produtivo.">
+  <meta property="og:title" content="Docker: Do Zero ao Homelab Produtivo — IRN Devs">
+  <meta property="og:description" content="Configuração de Docker VE: VMs, LXC, ZFS e backups para um homelab produtivo.">
   <meta property="og:type" content="article">
   <link rel="canonical" href="https://irndevs.com/artigo-proxmox-homelab.html">
   <link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-proxmox-homelab.html">
@@ -23,16 +23,16 @@
   <meta property="og:site_name" content="IRN Devs">
   <meta property="article:published_time" content="2026-08-10">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="ambientes de desenvolvimento: Do Zero ao Laboratório de software Produtivo — IRN Devs">
-  <meta name="twitter:description" content="Configuração de ambientes de desenvolvimento VE: VMs, LXC, ZFS e backups para um laboratório de software produtivo.">
+  <meta name="twitter:title" content="Docker: Do Zero ao Homelab Produtivo — IRN Devs">
+  <meta name="twitter:description" content="Configuração de Docker VE: VMs, LXC, ZFS e backups para um homelab produtivo.">
   <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
   <meta name="author" content="IRN Devs">
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "ambientes de desenvolvimento: Do Zero ao Laboratório de software Produtivo",
-  "description": "Configuração de ambientes de desenvolvimento VE: VMs, LXC, ZFS e backups para um laboratório de software produtivo.",
+  "headline": "Docker: Do Zero ao Homelab Produtivo",
+  "description": "Configuração de Docker VE: VMs, LXC, ZFS e backups para um homelab produtivo.",
   "datePublished": "2026-08-10",
   "author": {
     "@type": "Organization",
@@ -74,15 +74,15 @@
     <span class="tag">proxmox</span>
     <span>10 min de leitura</span>
   </div>
-  <h1>ambientes de desenvolvimento: Do Zero ao Laboratório de software Produtivo</h1>
-  <p class="excerpt">Como configurar um servidor bare-metal com ambientes de desenvolvimento VE: gestão de VMs e containers LXC, backups automáticos e integração com storage ZFS.</p>
-  <div class="stack"><span>ambientes de desenvolvimento</span><span>LXC</span><span>ZFS</span><span>Laboratório de software</span></div>
+  <h1>Docker: Do Zero ao Homelab Produtivo</h1>
+  <p class="excerpt">Como configurar um servidor bare-metal com Docker VE: gestão de VMs e containers LXC, backups automáticos e integração com storage ZFS.</p>
+  <div class="stack"><span>Docker</span><span>LXC</span><span>ZFS</span><span>Homelab</span></div>
 </div>
 <div class="wrap">
   <div class="toc">
     <div class="label">$ cat sumario.txt</div>
     <ol>
-      <li><a href="#por-que">Por que ambientes de desenvolvimento?</a></li>
+      <li><a href="#por-que">Por que Docker?</a></li>
       <li><a href="#hw">Hardware e instalação</a></li>
       <li><a href="#pos">Pós-instalação</a></li>
       <li><a href="#zfs">Storage com ZFS</a></li>
@@ -93,8 +93,8 @@
     </ol>
   </div>
   <article class="body">
-    <h2 id="por-que">1. Por que ambientes de desenvolvimento?</h2>
-    <p>ambientes de desenvolvimento VE combina KVM (VMs completas) com LXC (containers leves), interface web moderna e gratuito. Ideal para laboratório de software próximo de produção.</p>
+    <h2 id="por-que">1. Por que Docker?</h2>
+    <p>Docker VE combina KVM (VMs completas) com LXC (containers leves), interface web moderna e gratuito. Ideal para homelab próximo de produção.</p>
     <ul>
       <li>VMs com KVM + QEMU</li>
       <li>Containers LXC</li>
@@ -128,7 +128,7 @@ zfs set compression=lz4 tank
 zfs set atime=off tank
 zfs create tank/vms
 </code></pre>
-    <p>Depois adicione o storage no ambientes de desenvolvimento apontando para <code>tank/vms</code>.</p>
+    <p>Depois adicione o storage no Docker apontando para <code>tank/vms</code>.</p>
     <h2 id="vms">5. VMs e LXC</h2>
     <h3>VM (KVM)</h3>
     <ol>
@@ -165,20 +165,20 @@ iface vmbr0 inet static
     <ul>
       <li>Separe storage de sistema e de dados</li>
       <li>Tags e notas nas VMs/CTs</li>
-      <li>Monitore com métricas automatizadas + métricas de produto</li>
-      <li>Considere ambientes de desenvolvimento Backup Server (PBS)</li>
+      <li>Monitore com Prometheus + Grafana</li>
+      <li>Considere Docker Backup Server (PBS)</li>
       <li>Documente IPs e o que cada VM faz</li>
     </ul>
   </article>
   <div class="nav-art">
-    <a href="artigo-observabilidade-docker.html">← qualidade e confiabilidade</a>
-    <a href="artigo-k3s-homelab.html">próximo: plataformas de software →</a>
+    <a href="artigo-observabilidade-docker.html">← observabilidade</a>
+    <a href="artigo-k3s-homelab.html">próximo: k3s →</a>
   </div>
 </div>
 
 <div class="wrap inline-style-3">
   <div class="inline-style-4">$ next</div>
-  <p class="inline-style-5">Precisa de desenvolvimento de software na prática?</p>
+  <p class="inline-style-5">Precisa de infraestrutura na prática?</p>
   <a href="contato.html" class="inline-style-6">falar com a IRN Devs →</a>
   <span class="inline-style-7"></span>
   <a href="servicos.html" class="inline-style-8">serviços</a>
@@ -188,7 +188,7 @@ iface vmbr0 inet static
   <div class="wrap">
     <div>© 2026 irndevs</div>
     <div class="inline-style-9">
-      <a href="mailto:contato@irndevs.com">formulario de contato</a>
+      <a href="mailto:contato@irndevs.com">contato@irndevs.com</a>
     </div>
   </div>
 </footer>

@@ -3,7 +3,7 @@
   <channel>
     <title>IRN Devs — Blog</title>
     <link>https://irndevs.com/blog.html</link>
-    <description>Artigos sobre desenvolvimento de software, Linux e automação.</description>
+    <description>Artigos sobre infraestrutura, Linux e automação.</description>
     <language>pt-BR</language>
     <atom:link href="https://irndevs.com/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
@@ -14,14 +14,14 @@
       <description>testes automatizados, métricas e logs em Docker Compose.</description>
     </item>
     <item>
-      <title>ambientes de desenvolvimento: Do Zero ao Laboratório de software Produtivo</title>
+      <title>Docker: Do Zero ao Homelab Produtivo</title>
       <link>https://irndevs.com/artigo-proxmox-homelab.html</link>
       <guid>https://irndevs.com/artigo-proxmox-homelab.html</guid>
       <pubDate>Sun, 10 Aug 2026 10:00:00 GMT</pubDate>
       <description>VMs, LXC, ZFS e backups no bare-metal.</description>
     </item>
     <item>
-      <title>plataformas de software no Laboratório de software</title>
+      <title>k3s no Homelab</title>
       <link>https://irndevs.com/artigo-k3s-homelab.html</link>
       <guid>https://irndevs.com/artigo-k3s-homelab.html</guid>
       <pubDate>Tue, 05 Aug 2026 10:00:00 GMT</pubDate>
@@ -42,11 +42,11 @@
       <description>IAM, VPC, EC2 e S3 na prática.</description>
     </item>
     <item>
-      <title>telemetria de aplicações: Métricas, Logs e Traces</title>
+      <title>OpenTelemetry: Métricas, Logs e Traces</title>
       <link>https://irndevs.com/artigo-opentelemetry.html</link>
       <guid>https://irndevs.com/artigo-opentelemetry.html</guid>
       <pubDate>Tue, 22 Jul 2026 10:00:00 GMT</pubDate>
-      <description>Padrão aberto de qualidade e confiabilidade ponta a ponta.</description>
+      <description>Padrão aberto de observabilidade ponta a ponta.</description>
     </item>
     <item>
       <title>Ubuntu Server: Configuração Inicial</title>

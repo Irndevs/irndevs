@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contato — IRN Devs</title>
-<meta name="description" content="Fale com a IRN Devs sobre projetos de desenvolvimento de software, Kubernetes e automação de plataformas.">
+<meta name="description" content="Fale com a IRN Devs sobre projetos de infraestrutura, Kubernetes e automação de plataformas.">
 <meta name="author" content="IRN Devs">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Contato — IRN Devs">
-<meta property="og:description" content="Fale com a IRN Devs sobre projetos de desenvolvimento de software, Kubernetes e automação de plataformas.">
+<meta property="og:description" content="Fale com a IRN Devs sobre projetos de infraestrutura, Kubernetes e automação de plataformas.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/pages/contato.css">
@@ -23,9 +23,10 @@
   <meta property="og:site_name" content="IRN Devs">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Contato — IRN Devs">
-  <meta name="twitter:description" content="Fale com a IRN Devs sobre projetos de desenvolvimento de software, Kubernetes e automação de plataformas.">
+  <meta name="twitter:description" content="Fale com a IRN Devs sobre projetos de infraestrutura, Kubernetes e automação de plataformas.">
   <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
   <meta name="theme-color" content="#10130f">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
 </head>
 <body>
 
@@ -53,7 +54,7 @@
 <div class="wrap page-head">
   <div class="sec-head"><span class="amber">$</span> cat contato.yaml</div>
   <h1>Entre em Contato</h1>
-  <p>A IRN Devs está aberta a projetos de desenvolvimento de software e automação de plataformas.</p>
+  <p>A IRN Devs está aberta a projetos de infraestrutura e automação de plataformas.</p>
 </div>
 
 <div class="wrap grid">
@@ -63,7 +64,8 @@
         <div class="c-key">email</div>
         <div>
           <div class="c-label">Para oportunidades e projetos</div>
-          <div class="c-val"><a href="mailto:contato@irndevs.com">formulario de contato</a></div>
+          <div class="c-val"><a href="mailto:contato@irndevs.com">contato@irndevs.com</a>
+      <a href="privacidade.html">privacidade</a></div>
         </div>
       </div>
       <div class="c-item">
@@ -91,7 +93,7 @@
 
     <div class="status-box">
       <div class="row"><span class="dot"></span>disponível para oportunidades</div>
-      <p>Disponível para projetos de desenvolvimento de software.</p>
+      <p>Disponível para projetos de infraestrutura.</p>
     </div>
 
     <div class="social-row">
@@ -107,9 +109,10 @@
     <div class="success-message" id="successMessage">✅ mensagem enviada — a IRN Devs retorna em breve.</div>
     <form id="contactForm" action="https://formsubmit.co/contato@irndevs.com" method="POST" novalidate>
       <input type="hidden" name="_subject" value="IRN Devs — contato pelo site">
-      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_captcha" value="true">
       <input type="hidden" name="_template" value="table">
-      <input type="text" name="_honey" class="inline-style-4">
+      <input type="hidden" name="_next" value="https://irndevs.com/contato.html?enviado=1">
+      <input type="text" name="_honey" style="display:none!important" tabindex="-1" autocomplete="off" aria-hidden="true">
       <div class="frow">
         <div class="fgroup">
           <label for="name" class="flabel">nome *</label>
@@ -135,6 +138,11 @@
         <label for="message" class="flabel">mensagem *</label>
         <textarea id="message" name="message" class="ftextarea" placeholder="descreva o projeto ou necessidade..." required></textarea>
       </div>
+      
+      <p class="lgpd-note" style="font-size:12.5px;color:var(--text-faint);font-family:var(--mono);margin:12px 0 16px;line-height:1.5">
+        Ao enviar, você concorda com o tratamento dos dados (nome, e-mail e mensagem) para retorno comercial da IRN Devs.
+        Detalhes: <a href="privacidade.html" style="color:var(--amber)">Política de Privacidade</a>.
+      </p>
       <button type="submit" class="submit-btn">enviar mensagem →</button>
     </form>
   </div>
@@ -144,19 +152,19 @@
   <h2 class="sec-title">Perguntas frequentes</h2>
   <div class="faq-item">
     <button class="faq-q"><span>Qual a disponibilidade da equipe?</span><span class="faq-icon">+</span></button>
-    <div class="faq-a"><div class="faq-a-content">A IRN Devs atua de forma flexível em projetos de desenvolvimento de software, incluindo plantão de monitoramento quando o escopo exigir.</div></div>
+    <div class="faq-a"><div class="faq-a-content">A IRN Devs atua de forma flexível em projetos de infraestrutura, incluindo plantão de monitoramento quando o escopo exigir.</div></div>
   </div>
   <div class="faq-item">
     <button class="faq-q"><span>Atendem remotamente?</span><span class="faq-icon">+</span></button>
-    <div class="faq-a"><div class="faq-a-content">Sim. A IRN Devs opera produtos e sistemas próprios (laboratório de software e cluster plataformas de software) para desenvolvimento, testes e validação antes do deploy em produção.</div></div>
+    <div class="faq-a"><div class="faq-a-content">Sim. A IRN Devs opera produtos e sistemas próprios (homelab e cluster k3s) para desenvolvimento, testes e validação antes do deploy em produção.</div></div>
   </div>
   <div class="faq-item">
-    <button class="faq-q"><span>Qual stack de qualidade e confiabilidade utilizam?</span><span class="faq-icon">+</span></button>
+    <button class="faq-q"><span>Qual stack de observabilidade utilizam?</span><span class="faq-icon">+</span></button>
     <div class="faq-a"><div class="faq-a-content">A stack principal da IRN Devs inclui testes automatizados, métricas e logs, com Alertmanager e dashboards personalizados conforme a necessidade do projeto.</div></div>
   </div>
   <div class="faq-item">
     <button class="faq-q"><span>Entregam documentação técnica?</span><span class="faq-icon">+</span></button>
-    <div class="faq-a"><div class="faq-a-content">Sim. A entrega inclui documentação de desenvolvimento de software e runbooks, alinhada às docs oficiais das ferramentas utilizadas (métricas automatizadas, Kubernetes, telemetria de aplicações, etc.).</div></div>
+    <div class="faq-a"><div class="faq-a-content">Sim. A entrega inclui documentação de infraestrutura e runbooks, alinhada às docs oficiais das ferramentas utilizadas (Prometheus, Kubernetes, OpenTelemetry, etc.).</div></div>
   </div>
 </div>
 
@@ -164,7 +172,7 @@
   <div class="wrap">
     <div>© 2026 irndevs</div>
     <div class="inline-style-5">
-      <a href="mailto:contato@irndevs.com">formulario de contato</a>
+      <a href="mailto:contato@irndevs.com">contato@irndevs.com</a>
     </div>
   </div>
 </footer>
@@ -191,7 +199,7 @@
     submitBtn.textContent = 'enviando...';
     try {
       const data = new FormData(form);
-      const res = await fetch('https://formsubmit.co/ajax/formulario de contato', {
+      const res = await fetch('https://formsubmit.co/ajax/contato@irndevs.com', {
         method: 'POST',
         body: data,
         headers: { 'Accept': 'application/json' }

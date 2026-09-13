@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Serviços — IRN Devs</title>
-<meta name="description" content="Serviços de desenvolvimento de software, Kubernetes, cloud AWS e automação. Diagnóstico, implementação e handoff documentado.">
+<meta name="description" content="Serviços de infraestrutura, Kubernetes, cloud AWS e automação. Diagnóstico, implementação e handoff documentado.">
 <meta name="author" content="IRN Devs">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Serviços — IRN Devs">
-<meta property="og:description" content="Serviços de desenvolvimento de software, Kubernetes, cloud AWS e automação. Diagnóstico, implementação e handoff documentado.">
+<meta property="og:description" content="Serviços de infraestrutura, Kubernetes, cloud AWS e automação. Diagnóstico, implementação e handoff documentado.">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -23,7 +23,7 @@
   <meta property="og:site_name" content="IRN Devs">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Serviços — IRN Devs">
-  <meta name="twitter:description" content="Serviços de desenvolvimento de software, Kubernetes, cloud AWS e automação. Diagnóstico, implementação e handoff documentado.">
+  <meta name="twitter:description" content="Serviços de infraestrutura, Kubernetes, cloud AWS e automação. Diagnóstico, implementação e handoff documentado.">
   <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
   <script type="application/ld+json">
 {
@@ -38,6 +38,7 @@
 }
   </script>
   <meta name="theme-color" content="#10130f">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
 </head>
 <body>
 <nav>
@@ -59,7 +60,7 @@
 <div class="wrap page-head">
   <div class="sec-head"><span class="amber">$</span> cat servicos.yaml</div>
   <h1>Serviços</h1>
-  <p>A IRN Devs entrega desenvolvimento de software orientadas a produção — do diagnóstico ao ambiente estável, documentado e monitorado.</p>
+  <p>A IRN Devs entrega infraestrutura orientadas a produção — do diagnóstico ao ambiente estável, documentado e monitorado.</p>
 </div>
 
 <section>
@@ -68,15 +69,15 @@
     <p class="sec-sub">Escopos típicos. Cada projeto é dimensionado sob medida.</p>
     <div class="svc-grid">
       <div class="svc">
-        <h3>desenvolvimento de software</h3>
-        <p>Linux, ambientes de desenvolvimento, Docker, hardening de acesso (SSH, firewall, VPN/tunnel) e bases sólidas para workloads em produção.</p>
+        <h3>infraestrutura</h3>
+        <p>Linux, Docker, Docker, hardening de acesso (SSH, firewall, VPN/tunnel) e bases sólidas para workloads em produção.</p>
       </div>
       <div class="svc">
-        <h3>kubernetes / plataformas de software</h3>
-        <p>Clusters leves, Ingress, storage, GitOps e pipelines de deploy com foco em laboratório de software corporativo e ambientes de borda.</p>
+        <h3>kubernetes / k3s</h3>
+        <p>Clusters leves, Ingress, storage, GitOps e pipelines de deploy com foco em homelab corporativo e ambientes de borda.</p>
       </div>
       <div class="svc">
-        <h3>qualidade e confiabilidade</h3>
+        <h3>observabilidade</h3>
         <p>Stack métricas, logs e testes de produto: métricas, logs, traces e alertas acionáveis.</p>
       </div>
       <div class="svc">
@@ -101,7 +102,7 @@
     <h2 class="sec-title">Como trabalhamos</h2>
     <p class="sec-sub">Fluxo padrão. Prazos e entregáveis são fechados na proposta.</p>
     <div class="steps">
-      <div class="step"><div class="n">01</div><div><h3>Diagnóstico</h3><p>Entendimento do ambiente, restrições e objetivos. Levantamento de riscos e gaps de qualidade e confiabilidade/segurança.</p></div></div>
+      <div class="step"><div class="n">01</div><div><h3>Diagnóstico</h3><p>Entendimento do ambiente, restrições e objetivos. Levantamento de riscos e gaps de observabilidade/segurança.</p></div></div>
       <div class="step"><div class="n">02</div><div><h3>Proposta</h3><p>Escopo, premissas, entregáveis e janelas de trabalho. Sem surpresa no meio do caminho.</p></div></div>
       <div class="step"><div class="n">03</div><div><h3>Implementação</h3><p>Configuração, automação e validação em ambiente controlado antes de promover a produção.</p></div></div>
       <div class="step"><div class="n">04</div><div><h3>Qualidade e confiabilidade & handoff</h3><p>Dashboards, alertas, documentação e transferência para o time responsável.</p></div></div>
@@ -121,17 +122,17 @@
     </div>
     <div class="case">
       <div class="tag">infra · self-hosted</div>
-      <h3>Laboratório de software + qualidade e confiabilidade</h3>
-      <p><strong>Contexto:</strong> bare-metal com ambientes de desenvolvimento e workloads mistos. <strong>Entrega:</strong> VMs/LXC, backups e stack métricas de produto/métricas automatizadas/Loki/OTel. <strong>Foco:</strong> visibilidade e operação previsível.</p>
+      <h3>Homelab + observabilidade</h3>
+      <p><strong>Contexto:</strong> bare-metal com Docker e workloads mistos. <strong>Entrega:</strong> VMs/LXC, backups e stack Grafana/Prometheus/Loki/OTel. <strong>Foco:</strong> visibilidade e operação previsível.</p>
     </div>
     <div class="case">
       <div class="tag">web · diagnóstico e correção</div>
       <h3>Menu com expansão inconsistente em site estático</h3>
-      <p><strong>Problema:</strong> a expansão do menu falhava apenas na página Laboratório de software. <strong>Diagnóstico:</strong> a página mantinha um menu legado enquanto o menu compartilhado também era carregado, criando dois controladores para o mesmo estado. <strong>Solução:</strong> remoção da duplicidade, validação do JavaScript, integração do histórico remoto e publicação via GitHub Pages. <strong>Resultado:</strong> navegação previsível entre páginas, header fixo e uma única fonte de controle para desktop e mobile.</p>
+      <p><strong>Problema:</strong> a expansão do menu falhava apenas na página Homelab. <strong>Diagnóstico:</strong> a página mantinha um menu legado enquanto o menu compartilhado também era carregado, criando dois controladores para o mesmo estado. <strong>Solução:</strong> remoção da duplicidade, validação do JavaScript, integração do histórico remoto e publicação via GitHub Pages. <strong>Resultado:</strong> navegação previsível entre páginas, header fixo e uma única fonte de controle para desktop e mobile.</p>
     </div>
     <div class="case">
       <div class="tag">kubernetes · gitops</div>
-      <h3>Cluster plataformas de software</h3>
+      <h3>Cluster k3s</h3>
       <p><strong>Contexto:</strong> orquestração leve com CI/CD. <strong>Entrega:</strong> cluster, integrações Gitea/ArgoCD e deploys repetíveis. <strong>Foco:</strong> reduzir atrito entre commit e produção.</p>
     </div>
   </div>
@@ -149,11 +150,11 @@
         <p>testes automatizados, métricas e logs em Compose.</p>
       </div>
       <div class="svc">
-        <h3><a href="artigo-k3s-homelab.html" class="inline-style-4">plataformas de software no laboratório de software</a></h3>
+        <h3><a href="artigo-k3s-homelab.html" class="inline-style-4">k3s no homelab</a></h3>
         <p>Cluster leve, Ingress, Longhorn e Helm.</p>
       </div>
       <div class="svc">
-        <h3><a href="artigo-proxmox-homelab.html" class="inline-style-5">ambientes de desenvolvimento do zero</a></h3>
+        <h3><a href="artigo-proxmox-homelab.html" class="inline-style-5">Docker do zero</a></h3>
         <p>VMs, LXC, ZFS e backups no bare-metal.</p>
       </div>
       <div class="svc">
@@ -165,7 +166,7 @@
         <p>IAM, VPC, EC2 e S3 na prática.</p>
       </div>
       <div class="svc">
-        <h3><a href="artigo-opentelemetry.html" class="inline-style-8">telemetria de aplicações</a></h3>
+        <h3><a href="artigo-opentelemetry.html" class="inline-style-8">OpenTelemetry</a></h3>
         <p>Métricas, logs e traces com padrão aberto.</p>
       </div>
     </div>
@@ -174,7 +175,7 @@
 
 <div class="wrap cta-final">
   <h2>Próximo passo</h2>
-  <p>Conte o problema de desenvolvimento de software. Retornamos com enquadramento de escopo.</p>
+  <p>Conte o problema de infraestrutura. Retornamos com enquadramento de escopo.</p>
   <a class="btn primary" href="contato.html">falar com a IRN Devs</a>
 </div>
 
@@ -184,9 +185,11 @@
     <div class="inline-style-9">
       <a href="jogos.html">jogos</a>
       <a href="produtividade.html">produtividade</a>
-      <a href="mailto:contato@irndevs.com">formulario de contato</a>
+      <a href="mailto:contato@irndevs.com">contato@irndevs.com</a>
+      <a href="privacidade.html">privacidade</a>
     </div>
   </div>
+  <!-- privacy -->
 </footer>
 <script src="assets/js/site-nav.js" defer></script>
 </body>

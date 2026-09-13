@@ -39,7 +39,8 @@
     { href: 'produtividade.html', label: 'produtividade', ico: '⏱' },
     { href: 'jogos.html', label: 'jogos', ico: '▶' },
     { href: 'https://loja.irndevs.com', label: 'loja', ico: '⬡' },
-    { href: 'contato.html', label: 'contato', ico: '@' }
+    { href: 'contato.html', label: 'contato', ico: '@' },
+    { href: 'privacidade.html', label: 'privacidade', ico: '§' }
   ];
 
   var bottomItems = [
@@ -47,7 +48,8 @@
     { href: 'blog.html', label: 'blog', ico: '≡' },
     { href: 'produtividade.html', label: 'focus', ico: '⏱' },
     { href: 'jogos.html', label: 'jogos', ico: '▶' },
-    { href: 'contato.html', label: 'contato', ico: '@' }
+    { href: 'contato.html', label: 'contato', ico: '@' },
+    { href: 'privacidade.html', label: 'privacidade', ico: '§' }
   ];
 
   function mount() {

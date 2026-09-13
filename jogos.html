@@ -110,7 +110,7 @@
   <!-- QUIZ -->
   <div class="game-card">
     <h2>$ terminal-quiz</h2>
-    <p class="desc">Responda perguntas rápidas sobre Linux, redes e qualidade e confiabilidade.</p>
+    <p class="desc">Responda perguntas rápidas sobre Linux, redes e observabilidade.</p>
     <div class="hud">
       <span>score <b class="score" id="quizScore">0</b></span>
       <span>questão <b id="quizNumber">1</b>/5</span>
@@ -131,7 +131,7 @@
     <div>© 2026 irndevs</div>
     <div class="inline-style-3">
       <a href="produtividade.html">produtividade</a>
-      <a href="mailto:contato@irndevs.com">formulario de contato</a>
+      <a href="mailto:contato@irndevs.com">contato@irndevs.com</a>
     </div>
   </div>
 </footer>
@@ -435,9 +435,9 @@
   const questions = [
     { q: 'Qual comando mostra o diretório atual?', options: ['pwd', 'where', 'home', 'dirnow'], answer: 0 },
     { q: 'Qual protocolo é usado para acessar um servidor Linux com segurança?', options: ['FTP', 'SSH', 'SMTP', 'SNMP'], answer: 1 },
-    { q: 'Qual componente coleta métricas no stack clássico?', options: ['métricas automatizadas', 'Loki', 'métricas de produto', 'Nginx'], answer: 0 },
+    { q: 'Qual componente coleta métricas no stack clássico?', options: ['Prometheus', 'Loki', 'Grafana', 'Nginx'], answer: 0 },
     { q: 'Qual comando lista processos em execução?', options: ['ps', 'tree', 'grep', 'touch'], answer: 0 },
-    { q: 'Logs, métricas e traces formam os três sinais de quê?', options: ['backup', 'qualidade e confiabilidade', 'compilação', 'DNS'], answer: 1 }
+    { q: 'Logs, métricas e traces formam os três sinais de quê?', options: ['backup', 'observabilidade', 'compilação', 'DNS'], answer: 1 }
   ];
   const questionEl = document.getElementById('quizQuestion');
   const optionsEl = document.getElementById('quizOptions');

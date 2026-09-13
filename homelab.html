@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laboratório de software — IRN Devs</title>
-    <meta name="description" content="Laboratório de software da IRN Devs: produtos digitais, automação, testes e engenharia de aplicações.">
+    <title>Homelab — IRN Devs</title>
+    <meta name="description" content="Homelab da IRN Devs: produtos digitais, automação, testes e engenharia de aplicações.">
     <meta name="author" content="IRN Devs">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/pages/homelab.css">
   <link rel="stylesheet" href="assets/css/site-nav.css">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-  <meta property="og:title" content="Laboratório de software — IRN Devs">
-    <meta property="og:description" content="Laboratório de software da IRN Devs: produtos digitais, automação, testes e engenharia de aplicações.">
+  <meta property="og:title" content="Homelab — IRN Devs">
+    <meta property="og:description" content="Homelab da IRN Devs: produtos digitais, automação, testes e engenharia de aplicações.">
   <meta property="og:type" content="website">
   <link rel="canonical" href="https://irndevs.com/homelab.html">
   <link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/homelab.html">
@@ -22,9 +22,10 @@
   <meta property="og:locale" content="pt_BR">
   <meta property="og:site_name" content="IRN Devs">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Laboratório de software — IRN Devs">
-    <meta name="twitter:description" content="Laboratório de software da IRN Devs: produtos digitais, automação, testes e engenharia de aplicações.">
+  <meta name="twitter:title" content="Homelab — IRN Devs">
+    <meta name="twitter:description" content="Homelab da IRN Devs: produtos digitais, automação, testes e engenharia de aplicações.">
   <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
 </head>
 <body>
 
@@ -33,12 +34,12 @@
         <section id="visao-geral" class="hero">
             <div class="container">
                 <div class="hero-content loading">
-                    <h1>Laboratório de software</h1>
+                    <h1>Homelab</h1>
                     <p class="tagline">Ambiente próprio para desenvolver, testar e evoluir produtos digitais com automação e qualidade.</p>
                     <div class="hero-badges">
                         <span class="hero-badge">🖥️ Bare-metal</span>
-                        <span class="hero-badge">📦 ambientes de desenvolvimento VE</span>
-                        <span class="hero-badge">📊 métricas de produto + métricas automatizadas</span>
+                        <span class="hero-badge">📦 Docker VE</span>
+                        <span class="hero-badge">📊 Grafana + Prometheus</span>
                         <span class="hero-badge">🔒 OPNsense</span>
                         <span class="hero-badge">🐳 Docker / LXC</span>
                         <span class="hero-badge">🌐 acesso seguro</span>
@@ -112,7 +113,7 @@
                         </div>
                         <div class="infra-card-body">
                             <ul>
-                                <li>VM via QEMU/KVM no ambientes de desenvolvimento</li>
+                                <li>VM via QEMU/KVM no Docker</li>
                                 <li>Server Manager Dashboard</li>
                                 <li>File and Storage Services</li>
                                 <li>Active Directory (planejado)</li>
@@ -134,11 +135,11 @@
 
         <section id="virtualizacao" class="section">
             <div class="container">
-                <h2 class="section-title loading">Virtualização — ambientes de desenvolvimento VE 9.1.1</h2>
+                <h2 class="section-title loading">Virtualização — Docker VE 9.1.1</h2>
                 <p class="section-desc loading">Hypervisor Type-1 gerenciando múltiplas VMs e containers LXC. Topologia de rede com BGP (spine-leaf) para roteamento interno entre as máquinas virtuais.</p>
 
                 <div class="network-diagram loading">
-                    <h3>🗺️ Topologia de VMs no ambientes de desenvolvimento</h3>
+                    <h3>🗺️ Topologia de VMs no Docker</h3>
                     <div class="net-layer">
                         <div class="net-node"><span class="icon">🌐</span><span class="name">spine1</span><span class="ip">201</span></div>
                         <div class="net-node"><span class="icon">🌐</span><span class="name">spine2</span><span class="ip">202</span></div>
@@ -165,7 +166,7 @@
                     <div class="gallery-item">
                         <div class="infra-img-note"><strong>Roteamento entre ambientes</strong><br>Diagrama textual de uma topologia em camadas: núcleo de rede, nós de distribuição e ambientes de aplicação. A separação facilita testar rotas, isolamento e comunicação entre serviços sem expor endereços reais.</div>
                         <div class="gallery-caption">
-                            <h4>🔧 BGP EVPN no ambientes de desenvolvimento</h4>
+                            <h4>🔧 BGP EVPN no Docker</h4>
                             <p>Roteamento L2VPN com AS 65001. Peering ativo via eth0 com vizinho AS 65000. RIB entries e tabela de vizinhos em operação.</p>
                         </div>
                     </div>
@@ -229,7 +230,7 @@
                             <ul>
                                 <li>serv-irn (Linux 7.0.0)</li>
                                 <li>desktop-b8bvrrl (Win 11)</li>
-                                <li>irn (ambientes de desenvolvimento PVE)</li>
+                                <li>irn (Docker PVE)</li>
                                 <li>parrot (Parrot OS)</li>
                                 <li>WireGuard-based, zero-config</li>
                             </ul>
@@ -247,37 +248,37 @@
             </div>
         </section>
 
-        <section id="qualidade e confiabilidade" class="section">
+        <section id="observabilidade" class="section">
             <div class="container">
                 <h2 class="section-title center loading">Qualidade e confiabilidade</h2>
-                <p class="section-desc loading inline-style-2">Stack completa de monitoramento: métricas automatizadas coleta métricas, métricas de produto visualiza dashboards em tempo real e Node Exporter expõe dados do sistema operacional.</p>
+                <p class="section-desc loading inline-style-2">Stack completa de monitoramento: Prometheus coleta métricas, Grafana visualiza dashboards em tempo real e Node Exporter expõe dados do sistema operacional.</p>
 
                 <div class="gallery-grid loading">
                     <div class="gallery-item">
                         <div class="infra-img-note"><strong>Métricas de uso do sistema</strong><br>Painel textual para acompanhar CPU, memória, swap, disco e tempo de atividade. Esses sinais ajudam a identificar saturação, vazamentos de memória e crescimento de armazenamento antes de afetarem o produto.</div>
                         <div class="gallery-caption">
-                            <h4>📊 métricas de produto — Node Exporter Full</h4>
+                            <h4>📊 Grafana — Node Exporter Full</h4>
                             <p>Dashboard completo com gauges de CPU, memória (97.7%), swap (29.3%), rootfs (24.6%), /boot (0%), /tmp (25.3%). Uptime e storage visíveis em tempo real.</p>
                         </div>
                     </div>
                     <div class="gallery-item">
                         <div class="infra-img-note"><strong>Tráfego e entrada/saída de disco</strong><br>Visão combinada de tráfego por interface e operações de leitura e gravação. A comparação ao longo do tempo ajuda a encontrar gargalos de rede, tarefas pesadas e padrões anormais de consumo.</div>
                         <div class="gallery-caption">
-                            <h4>📡 métricas de produto — Network & Disk I/O</h4>
+                            <h4>📡 Grafana — Network & Disk I/O</h4>
                             <p>Monitoramento de tráfego de rede (Rx por interface) e uso de disco por partição (/boot/efi, /boot, /run, /tmp). Timeline de 5 minutos com granularidade detalhada.</p>
                         </div>
                     </div>
                     <div class="gallery-item">
                         <div class="infra-img-note"><strong>Histórico de desempenho</strong><br>Resumo das métricas das últimas horas para comparar carga, memória, espera de CPU e uso de recursos. O histórico apoia decisões de capacidade e investigação de incidentes.</div>
                         <div class="gallery-caption">
-                            <h4>🕐 métricas de produto — Visão 24h</h4>
+                            <h4>🕐 Grafana — Visão 24h</h4>
                             <p>Métricas de longo prazo: CPU busy system/user/iowait, memória total/used/cache/buffer/swap. Análise histórica para identificar padrões de carga.</p>
                         </div>
                     </div>
                     <div class="gallery-item">
                         <div class="infra-img-note"><strong>Saúde das coletas</strong><br>Lista textual dos alvos monitorados e do estado de cada coleta. Quando um alvo falha, o alerta indica que a telemetria precisa ser investigada antes que o problema fique invisível.</div>
                         <div class="gallery-caption">
-                            <h4>🔍 métricas automatizadas — Target Health</h4>
+                            <h4>🔍 Prometheus — Target Health</h4>
                             <p>Status de scraping: prometheus (1/1 UP) e servidor_físico (0/1 DOWN). Monitoramento ativo de endpoints com alertas de context deadline exceeded.</p>
                         </div>
                     </div>
@@ -350,7 +351,7 @@
                         <div class="net-node"><span class="icon">🦉</span><span class="name">Gitea</span><span class="ip">webhook</span></div>
                         <div class="net-node"><span class="icon">⚙️</span><span class="name">Runner</span><span class="ip">pipeline</span></div>
                         <div class="net-node"><span class="icon">🐳</span><span class="name">Docker</span><span class="ip">build</span></div>
-                        <div class="net-node"><span class="icon">🚀</span><span class="name">Deploy</span><span class="ip">laboratório de software</span></div>
+                        <div class="net-node"><span class="icon">🚀</span><span class="name">Deploy</span><span class="ip">homelab</span></div>
                     </div>
                 </div>
             </div>
@@ -359,13 +360,13 @@
         <section class="section inline-style-4">
             <div class="container">
                 <div class="network-diagram loading inline-style-5">
-                    <h3>🛠️ Stack Completa do Laboratório de software</h3>
+                    <h3>🛠️ Stack Completa do Homelab</h3>
                     <div class="inline-style-6">
                         <span class="tech-tag inline-style-7">Ubuntu Server 26.04</span>
-                        <span class="tech-tag inline-style-8">ambientes de desenvolvimento VE 9.1.1</span>
+                        <span class="tech-tag inline-style-8">Docker VE 9.1.1</span>
                         <span class="tech-tag inline-style-9">Docker & LXC</span>
-                        <span class="tech-tag inline-style-10">métricas de produto</span>
-                        <span class="tech-tag inline-style-11">métricas automatizadas</span>
+                        <span class="tech-tag inline-style-10">Grafana</span>
+                        <span class="tech-tag inline-style-11">Prometheus</span>
                         <span class="tech-tag inline-style-12">Loki</span>
                         <span class="tech-tag inline-style-13">OPNsense</span>
                         <span class="tech-tag inline-style-14">acesso seguro</span>
@@ -390,7 +391,7 @@
                     <a href="index.html">início</a>
                     <a href="#visao-geral">topo ↑</a>
                 </div>
-                <p class="inline-style-23">© 2026 irndevs — laboratório de software documentado com screenshots reais do ambiente de produção.</p>
+                <p class="inline-style-23">© 2026 irndevs — homelab documentado com screenshots reais do ambiente de produção.</p>
             </div>
         </div>
     </footer>

@@ -66,17 +66,17 @@
   </div>
 </nav>
 <div class="wrap crumb">
-  <a href="index.html">~</a> / <a href="blog.html">blog</a> / <span class="inline-style-2">qualidade e confiabilidade</span>
+  <a href="index.html">~</a> / <a href="blog.html">blog</a> / <span class="inline-style-2">observabilidade</span>
 </div>
 <div class="wrap article-head">
   <div class="meta">
     <span>15 ago 2026</span>
-    <span class="tag">qualidade e confiabilidade</span>
+    <span class="tag">observabilidade</span>
     <span>12 min de leitura</span>
   </div>
   <h1>Montando uma Stack de Qualidade e confiabilidade Completa com Docker</h1>
   <p class="excerpt">Guia prático para subir testes automatizados, métricas e logs em containers Docker — do zero até dashboards funcionando.</p>
-  <div class="stack"><span>métricas de produto</span><span>métricas automatizadas</span><span>Loki</span><span>telemetria de aplicações</span><span>Docker</span></div>
+  <div class="stack"><span>Grafana</span><span>Prometheus</span><span>Loki</span><span>OpenTelemetry</span><span>Docker</span></div>
 </div>
 <div class="wrap">
   <div class="toc">
@@ -85,10 +85,10 @@
       <li><a href="#intro">Introdução e arquitetura</a></li>
       <li><a href="#req">Pré-requisitos</a></li>
       <li><a href="#struct">Estrutura e docker-compose</a></li>
-      <li><a href="#prom">métricas automatizadas</a></li>
+      <li><a href="#prom">Prometheus</a></li>
       <li><a href="#loki">Loki</a></li>
-      <li><a href="#grafana">métricas de produto + datasources</a></li>
-      <li><a href="#otel">telemetria de aplicações Collector</a></li>
+      <li><a href="#grafana">Grafana + datasources</a></li>
+      <li><a href="#otel">OpenTelemetry Collector</a></li>
       <li><a href="#exp">Exporters</a></li>
       <li><a href="#dash">Dashboards</a></li>
       <li><a href="#fim">Próximos passos</a></li>
@@ -96,12 +96,12 @@
   </div>
   <article class="body">
     <h2 id="intro">1. Introdução e arquitetura</h2>
-    <p>Uma stack de qualidade e confiabilidade responde três perguntas: <strong>o que</strong> está acontecendo (métricas), <strong>por que</strong> (logs) e <strong>onde</strong> (traces). Neste guia montamos tudo com Docker Compose:</p>
+    <p>Uma stack de observabilidade responde três perguntas: <strong>o que</strong> está acontecendo (métricas), <strong>por que</strong> (logs) e <strong>onde</strong> (traces). Neste guia montamos tudo com Docker Compose:</p>
     <ul>
-      <li><strong>métricas automatizadas</strong> — coleta e armazena métricas</li>
-      <li><strong>Loki</strong> — agrega logs (estilo métricas automatizadas)</li>
-      <li><strong>métricas de produto</strong> — visualização unificada</li>
-      <li><strong>telemetria de aplicações Collector</strong> — recebe traces, métricas e logs das apps</li>
+      <li><strong>Prometheus</strong> — coleta e armazena métricas</li>
+      <li><strong>Loki</strong> — agrega logs (estilo Prometheus)</li>
+      <li><strong>Grafana</strong> — visualização unificada</li>
+      <li><strong>OpenTelemetry Collector</strong> — recebe traces, métricas e logs das apps</li>
     </ul>
     <h2 id="req">2. Pré-requisitos</h2>
     <ul>
@@ -110,7 +110,7 @@
       <li>Portas: 3000, 9090, 3100, 4317/4318</li>
     </ul>
     <h2 id="struct">3. Estrutura e docker-compose</h2>
-<pre><code>qualidade e confiabilidade/
+<pre><code>observabilidade/
 ├── docker-compose.yml
 ├── prometheus/prometheus.yml
 ├── loki/loki-config.yml
@@ -177,7 +177,7 @@ volumes:
   loki_data:
   grafana_data:
 </code></pre>
-    <h2 id="prom">4. métricas automatizadas</h2>
+    <h2 id="prom">4. Prometheus</h2>
 <pre><code>global:
   scrape_interval: 15s
   evaluation_interval: 15s
@@ -215,10 +215,10 @@ schema_config:
         prefix: index_
         period: 24h
 </code></pre>
-    <h2 id="grafana">6. métricas de produto + datasources</h2>
+    <h2 id="grafana">6. Grafana + datasources</h2>
 <pre><code>apiVersion: 1
 datasources:
-  - name: métricas automatizadas
+  - name: Prometheus
     type: prometheus
     access: proxy
     url: http://prometheus:9090
@@ -230,10 +230,10 @@ datasources:
 </code></pre>
     <div class="step">
       <div class="n">$ docker compose up -d</div>
-      <p class="inline-style-3">métricas de produto → http://localhost:3000 (admin / admin123)<br>métricas automatizadas → http://localhost:9090</p>
+      <p class="inline-style-3">Grafana → http://localhost:3000 (admin / admin123)<br>Prometheus → http://localhost:9090</p>
     </div>
-    <div class="warn"><strong>warn</strong> · Altere a senha do métricas de produto imediatamente em qualquer ambiente exposto.</div>
-    <h2 id="otel">7. telemetria de aplicações Collector</h2>
+    <div class="warn"><strong>warn</strong> · Altere a senha do Grafana imediatamente em qualquer ambiente exposto.</div>
+    <h2 id="otel">7. OpenTelemetry Collector</h2>
 <pre><code>receivers:
   otlp:
     protocols:
@@ -269,7 +269,7 @@ service:
     <p>Adicione o node-exporter ao compose e o job correspondente no prometheus.yml para métricas de host. Instrumente apps com SDKs OTel apontando para <code>localhost:4318</code> (HTTP) ou <code>:4317</code> (gRPC).</p>
     <h2 id="dash">9. Dashboards</h2>
     <ol>
-      <li>métricas de produto → Dashboards → Import</li>
+      <li>Grafana → Dashboards → Import</li>
       <li>Node Exporter oficial (ID <strong>1860</strong>)</li>
       <li>Crie painéis LogQL no Loki para logs de containers</li>
     </ol>
@@ -277,12 +277,12 @@ service:
     <h2 id="fim">10. Próximos passos</h2>
     <ul>
       <li>Adicionar Tempo/Jaeger para traces</li>
-      <li>Alertas no métricas de produto + Alertmanager</li>
+      <li>Alertas no Grafana + Alertmanager</li>
       <li>Instrumentar aplicações reais</li>
       <li>Reverse proxy com TLS (Traefik/Nginx)</li>
       <li>Versionar configs no Git</li>
     </ul>
-    <p>Stack leve o bastante para laboratório de software e sólida para dev/staging. Em produção, refine retenção, HA e segurança.</p>
+    <p>Stack leve o bastante para homelab e sólida para dev/staging. Em produção, refine retenção, HA e segurança.</p>
   </article>
   <div class="nav-art">
     <a href="blog.html">← blog</a>
@@ -292,7 +292,7 @@ service:
 
 <div class="wrap inline-style-4">
   <div class="inline-style-5">$ next</div>
-  <p class="inline-style-6">Precisa de desenvolvimento de software na prática?</p>
+  <p class="inline-style-6">Precisa de infraestrutura na prática?</p>
   <a href="contato.html" class="inline-style-7">falar com a IRN Devs →</a>
   <span class="inline-style-8"></span>
   <a href="servicos.html" class="inline-style-9">serviços</a>
@@ -302,7 +302,7 @@ service:
   <div class="wrap">
     <div>© 2026 irndevs</div>
     <div class="inline-style-10">
-      <a href="mailto:contato@irndevs.com">formulario de contato</a>
+      <a href="mailto:contato@irndevs.com">contato@irndevs.com</a>
     </div>
   </div>
 </footer>
