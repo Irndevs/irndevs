@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IRN Devs — Desenvolvimento de Software</title>
-<meta name="description" content="IRN Devs: infraestrutura, Kubernetes (k3s), observabilidade (Grafana, Prometheus, Loki, OpenTelemetry) e automação em produção.">
-<meta name="keywords" content="infraestrutura, devops, homelab, kubernetes, k3s, docker, proxmox, grafana, prometheus">
+<meta name="description" content="IRN Devs: desenvolvimento de software, automações e análises de dados — produtos e integrações em produção.">
+<meta name="keywords" content="desenvolvimento de software, automações, análise de dados, APIs, integrações, TypeScript, Python, IA aplicada">
 <meta name="author" content="IRN Devs">
 <meta property="og:type" content="website">
 <meta property="og:title" content="IRN Devs — Desenvolvimento de Software">
-<meta property="og:description" content="IRN Devs: infraestrutura, Kubernetes (k3s), observabilidade (Grafana, Prometheus, Loki, OpenTelemetry) e automação em produção.">
+<meta property="og:description" content="IRN Devs: desenvolvimento de software, automações e análises de dados — produtos e integrações em produção.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/pages/index.css">
@@ -25,7 +25,7 @@
   <meta property="og:site_name" content="IRN Devs">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="IRN Devs — Desenvolvimento de Software">
-  <meta name="twitter:description" content="IRN Devs: infraestrutura, Kubernetes (k3s), observabilidade (Grafana, Prometheus, Loki, OpenTelemetry) e automação em produção.">
+  <meta name="twitter:description" content="IRN Devs: desenvolvimento de software, automações e análises de dados — produtos e integrações em produção.">
   <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
   <script type="application/ld+json">
 {
@@ -113,10 +113,12 @@
       <div><span class="green">irn@serv-irn</span><span class="dim">:~$</span> uptime</div>
       <div class="dim">serv-irn up 41 days · k3s: 6 nodes active · 12 services healthy</div>
       <div class="inline-style-2"><span class="green">irn@serv-irn</span><span class="dim">:~$</span> whoami --role</div>
-      <div class="inline-style-3"><span class="green">irn@serv-irn</span><span class="dim">:~$</span> <span class="cursor"></span></div>
+      <div class="inline-style-3"><span class="green">irn@serv-irn</span><span class="dim">:~$</span> whoami --focus</div>
+      <div class="amber">dev · automações · analytics</div>
+      <div style="margin-top:8px"><span class="green">irn@serv-irn</span><span class="dim">:~$</span> <span class="cursor"></span></div>
     </div>
-    <h1>Infraestrutura e observabilidade em produção — documentadas enquanto são construídas.</h1>
-    <p class="lede">A IRN Devs opera homelab bare-metal, cluster k3s e pipelines de observabilidade — a mesma base usada para entregar projetos a clientes.</p>
+    <h1>Desenvolvimento, automações e dados — do protótipo à produção.</h1>
+    <p class="lede">A IRN Devs cria software, integra sistemas e transforma dados em decisão — com automações que reduzem trabalho manual e produtos que já rodam em produção.</p>
     <div class="cta-row">
       <a class="btn primary" href="#projetos">ver projetos</a>
       <a class="btn ghost" href="contato.html">fale conosco</a>
@@ -134,7 +136,7 @@
 
 <div class="status">
   <div class="wrap">
-    <div class="item"><span class="dot"></span><b>k3s</b> — 6 workloads em produção</div>
+    <div class="item"><span class="dot"></span><b>dev</b> — apps e APIs em produção</div>
     <div class="item"><span class="dot"></span><b>Homelab</b> — Docker, 6 VMs ativas</div>
     <div class="item"><span class="dot"></span><b>Qualidade e confiabilidade</b> — testes automatizados e Grafana</div>
   </div>
@@ -231,11 +233,11 @@
     <div class="tools-grid">
       <div class="tool">
         <div class="tool-name">Homelab + observabilidade</div>
-        <div class="tool-desc"><strong>Antes:</strong> serviços sem métricas centralizadas.<br><strong>Depois:</strong> Grafana + Prometheus + Loki com alertas acionáveis e visão única do bare-metal.</div>
+        <div class="tool-desc"><strong>Antes:</strong> processos manuais e planilhas.<br><strong>Depois:</strong> automações e fluxos integrados com menos retrabalho.</div>
       </div>
       <div class="tool">
         <div class="tool-name">Cluster k3s + GitOps</div>
-        <div class="tool-desc"><strong>Antes:</strong> deploy manual e pouco repetível.<br><strong>Depois:</strong> pipeline commit → build → cluster, com rollback previsível.</div>
+        <div class="tool-desc"><strong>Antes:</strong> dados espalhados sem visão única.<br><strong>Depois:</strong> indicadores e dashboards para decisão operacional.</div>
       </div>
       <div class="tool">
         <div class="tool-name">SaaS em produção</div>
@@ -266,7 +268,7 @@
       </div>
       <div class="tool">
         <div class="tool-desc" style="font-style:italic;color:var(--text-dim)">“Hardening e observabilidade no mesmo pacote. Reduziu ruído de alerta e deu rastreio do que importa em produção.”</div>
-        <div class="tool-name" style="margin-top:12px">— Engenharia · infraestrutura</div>
+        <div class="tool-name" style="margin-top:12px">— Produto · operações</div>
       </div>
     </div>
     <p style="margin-top:16px;font-family:var(--mono);font-size:13px;color:var(--text-faint)">
@@ -311,7 +313,9 @@
     <table class="skills-table">
       <tr><td>sistemas & redes</td><td>Linux, SSH hardening, Cloudflare Tunnels, acesso seguro, UFW, Fail2ban</td></tr>
       <tr><td>virtualização</td><td>Docker, LXC, Docker, Kubernetes (k3s)</td></tr>
-      <tr><td>observabilidade</td><td>Grafana, Prometheus, Loki, OpenTelemetry</td></tr>
+      <tr><td>desenvolvimento</td><td>TypeScript, Node, Python, React/Vite, APIs</td></tr>
+      <tr><td>automações</td><td>Integrações, bots, filas, IA aplicada, webhooks</td></tr>
+      <tr><td>dados</td><td>ETL leve, SQL, dashboards, métricas de produto</td></tr>
       <tr><td>ci/cd</td><td>Gitea Actions, GitHub Actions, Bash, Python</td></tr>
       <tr><td>dados</td><td>PostgreSQL, MySQL, MongoDB, ETL/Pandas</td></tr>
       <tr><td>cloud</td><td>AWS (VPC, EC2, S3, IAM), FastAPI</td></tr>
@@ -321,7 +325,7 @@
 
 <div class="wrap cta-final" id="contato">
   <h2>Vamos trabalhar juntos?</h2>
-  <p>Abertos a novos projetos e parcerias em infraestrutura e automação de plataformas.</p>
+  <p>Abertos a novos projetos em desenvolvimento, automações e análises de dados.</p>
   <div class="inline-style-10">
     <a class="btn primary" href="contato.html">fale conosco</a>
     <a class="btn ghost" href="servicos.html">ver serviços</a>

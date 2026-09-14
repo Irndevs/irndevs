@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contato — IRN Devs</title>
-<meta name="description" content="Fale com a IRN Devs sobre projetos de infraestrutura, Kubernetes e automação de plataformas.">
+<meta name="description" content="Fale com a IRN Devs sobre desenvolvimento, automações e análises de dados.">
 <meta name="author" content="IRN Devs">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Contato — IRN Devs">
-<meta property="og:description" content="Fale com a IRN Devs sobre projetos de infraestrutura, Kubernetes e automação de plataformas.">
+<meta property="og:description" content="Fale com a IRN Devs sobre desenvolvimento, automações e análises de dados.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/pages/contato.css">
@@ -23,7 +23,7 @@
   <meta property="og:site_name" content="IRN Devs">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Contato — IRN Devs">
-  <meta name="twitter:description" content="Fale com a IRN Devs sobre projetos de infraestrutura, Kubernetes e automação de plataformas.">
+  <meta name="twitter:description" content="Fale com a IRN Devs sobre desenvolvimento, automações e análises de dados.">
   <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
   <meta name="theme-color" content="#10130f">
   <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -78,7 +78,7 @@
 <div class="wrap page-head">
   <div class="sec-head"><span class="amber">$</span> cat contato.yaml</div>
   <h1>Entre em Contato</h1>
-  <p>A IRN Devs está aberta a projetos de infraestrutura e automação de plataformas.</p>
+  <p>A IRN Devs está aberta a projetos de desenvolvimento, automações e análises de dados.</p>
 </div>
 
 <div class="wrap grid">
@@ -131,7 +131,7 @@
   <div class="term-form">
     <div class="sec-head"><span class="amber">$</span> ./enviar-mensagem.sh</div>
     <div class="success-message" id="successMessage">✅ mensagem enviada — a IRN Devs retorna em breve.</div>
-    <form id="contactForm" action="https://formsubmit.co/c00239ac25cf752fc479aae59bad391f" method="POST" novalidate>
+    <form id="contactForm" action="https://formsubmit.co/contato@irndevs.com" method="POST" novalidate>
       <input type="hidden" name="_subject" value="IRN Devs — contato pelo site">
       <input type="hidden" name="_captcha" value="true">
       <input type="hidden" name="_template" value="table">
@@ -151,9 +151,9 @@
         <label for="subject" class="flabel">assunto *</label>
         <select id="subject" name="subject" class="fselect" required>
           <option value="">selecione o assunto</option>
-          <option value="infra">Projeto de Desenvolvimento de software</option>
-          <option value="obs">Qualidade e confiabilidade</option>
-          <option value="k8s">arquitetura de aplicações</option>
+          <option value="dev">Projeto de Desenvolvimento de software</option>
+          <option value="auto">Qualidade e confiabilidade</option>
+          <option value="dados">análises de dados</option>
           <option value="cloud">Cloud (AWS)</option>
           <option value="outro">Outro</option>
         </select>
@@ -223,7 +223,7 @@
     submitBtn.textContent = 'enviando...';
     try {
       const data = new FormData(form);
-      const res = await fetch('https://formsubmit.co/ajax/c00239ac25cf752fc479aae59bad391f', {
+      const res = await fetch('https://formsubmit.co/ajax/contato@irndevs.com', {
         method: 'POST',
         body: data,
         headers: { 'Accept': 'application/json' }
