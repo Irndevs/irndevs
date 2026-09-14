@@ -15,7 +15,8 @@
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/pages/index.css">
-  <link rel="stylesheet" href="assets/css/site-nav.css">
+  <link rel="stylesheet" href="assets/css/site-nav.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="assets/css/site-nav.css"></noscript>
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="canonical" href="https://irndevs.com/">
   <link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/">
@@ -89,6 +90,8 @@
   </script>
 </head>
 <body>
+<a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+<main id="conteudo">
 
 <nav>
   <div class="wrap">
@@ -157,7 +160,7 @@
       <div class="proj-desc">SaaS multi-tenant de agendamento via WhatsApp com IA generativa local (migrado de Gemini pra Gemma via serviços de IA), arquitetura type-safe ponta a ponta.</div>
       <div class="stack"><span>Node.js</span><span>tRPC</span><span>TypeScript</span><span>TiDB Cloud</span><span>Render</span></div>
       <div class="proj-links">
-        <a class="proj-link" href="https://zapagendador-ia.onrender.com" target="_blank" rel="noopener noreferrer">ver projeto →</a>
+        <a class="proj-link" href="https://zapagendador-ia.onrender.com" target="_blank" rel="noopener noreferrer">ver ZapAgendador IA →</a>
         <a class="proj-link" href="https://github.com/iri-afk/zapagendador-ia" target="_blank" rel="noopener noreferrer">repositório →</a>
       </div>
     </div></div>
@@ -167,7 +170,7 @@
       <div class="proj-desc">Sistema bancário fullstack simulando operações reais — contas, transferências, extrato — com IA local via serviços de IA e deploy replicado no cluster próprio.</div>
       <div class="stack"><span>Python</span><span>Flask</span><span>SQLite</span><span>serviços de IA</span><span>k3s</span></div>
       <div class="proj-links">
-        <a class="proj-link" href="https://neobankirn.irndevs.com" target="_blank" rel="noopener noreferrer">ver projeto →</a>
+        <a class="proj-link" href="https://neobankirn.irndevs.com" target="_blank" rel="noopener noreferrer">ver NeoBank →</a>
         <a class="proj-link" href="https://github.com/iri-afk/neobank" target="_blank" rel="noopener noreferrer">repositório →</a>
       </div>
     </div></div>
@@ -186,7 +189,7 @@
       <div class="proj-desc">Busca vagas em múltiplas fontes públicas e usa LLM pra calcular compatibilidade com o perfil do candidato, com ranking explicado.</div>
       <div class="stack"><span>FastAPI</span><span>SQLAlchemy</span><span>serviços de IA</span><span>Postgres</span></div>
       <div class="proj-links">
-        <a class="proj-link" href="https://job.irndevs.com" target="_blank" rel="noopener noreferrer">ver projeto →</a>
+        <a class="proj-link" href="https://job.irndevs.com" target="_blank" rel="noopener noreferrer">ver EcoMonitor →</a>
       </div>
     </div></div>
 
@@ -195,7 +198,7 @@
       <div class="proj-desc">Servidor bare-metal com Docker orquestrando VMs e containers Docker/LXC. Monitoramento completo com testes automatizados, métricas e logs.</div>
       <div class="stack"><span>Docker</span><span>Docker</span><span>LXC</span><span>Grafana</span></div>
       <div class="proj-links">
-        <a class="proj-link" href="homelab.html">ver projeto →</a>
+        <a class="proj-link" href="homelab.html">ver Homelab Self-hosted →</a>
       </div>
     </div></div>
 
@@ -297,7 +300,7 @@
     <div class="sec-head"><span class="amber">$</span> architecture --overview</div>
     <h2 class="sec-title">Visão da stack</h2>
     <p class="sec-sub">Do bare-metal à observabilidade — o mesmo modelo usado nos projetos.</p>
-    <img src="assets/img/diagram-stack.svg" alt="Diagrama da stack IRN Devs: Docker, k3s, apps e observabilidade" width="720" height="320" loading="lazy" class="inline-style-9">
+    <img src="assets/img/diagram-stack.svg" alt="Diagrama da stack IRN Devs" width="720" height="320" style="width:100%;max-width:720px;height:auto;aspect-ratio:720/320" loading="lazy" class="inline-style-9">
   </div>
 </section>
 
@@ -362,6 +365,7 @@
     </div>
   </div>
 </footer>
+</main>
 
 <script>
 const siteSearch = document.getElementById('siteSearch');
