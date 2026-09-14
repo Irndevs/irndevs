@@ -44,14 +44,12 @@
   .cta{margin-top:28px;padding-top:20px;border-top:1px solid var(--line);color:var(--dim);font-size:14px}
 </style>
 </head>
-<body class="auth-gate">
-<script>document.documentElement.classList.add("auth-pending");</script>
-<style>html.auth-pending body.auth-gate{visibility:hidden!important}</style>
+<body>
 <div class="wrap">
   <p class="crumb"><a href="index.html">~</a> / ferramenta-checklist</p>
   <div class="sec-head"><span class="amber">$</span> ./checklist --generate</div>
   <h1>Checklist grátis</h1>
-  <p class="lede">Escolha o tipo, marque o que já existe no seu cenário e gere um plano objetivo. Tudo roda no navegador — nada é enviado para nossos servidores.</p>
+  <p class="lede">Escolha o tipo, marque o que já existe no seu cenário e gere um plano objetivo. Use grátis no navegador. Faça login só se quiser salvar o checklist na sua conta.</p>
 
   <div class="tabs">
     <button type="button" class="tab active" data-tab="auto">Automação de processo</button>
@@ -81,14 +79,9 @@
 <script src="assets/js/supabase-config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="assets/js/auth.js"></script>
-<script src="assets/js/site-nav.js?v=20260914d" defer></script>
+<script src="assets/js/site-nav.js?v=20260914e" defer></script>
 <script>
-(async function(){
-  // Ferramenta restrita a usuários logados
-  var gate = await IRNAuth.requireAuth({ next: 'ferramenta-checklist.html' });
-  if (!gate) return;
-  document.documentElement.classList.remove('auth-pending');
-
+(function(){
   const AUTO = [
     {id:'a1', t:'Processo mapeado (passos, responsáveis, sistemas)', h:'Sem mapa, a automação vira gambiarra.'},
     {id:'a2', t:'Gatilho claro (form, webhook, horário, evento)', h:'O que inicia o fluxo?'},
@@ -188,11 +181,17 @@
   if (btnSave) btnSave.addEventListener('click', async function () {
     if (!out.textContent) document.getElementById('btnGen').click();
     try {
-      if (!window.IRNAuth || !IRNAuth.ready()) { alert('Configure o Supabase (AUTH-SUPABASE.md) ou use copiar.'); return; }
+      if (!window.IRNAuth || !IRNAuth.ready()) {
+        alert('Configure o Supabase (AUTH-SUPABASE.md) ou use copiar.');
+        return;
+      }
       var u = await IRNAuth.user();
-      if (!u) { location.href = 'login.html'; return; }
+      if (!u) {
+        location.href = 'login.html?next=' + encodeURIComponent('ferramenta-checklist.html');
+        return;
+      }
       await IRNAuth.saveChecklist(mode === 'auto' ? 'auto' : 'dados', out.textContent);
-      alert('Checklist salvo na sua conta.');
+      alert('Checklist salvo na sua conta. Veja em Minha conta → checklists.');
     } catch (err) { alert(err.message || err); }
   });
 

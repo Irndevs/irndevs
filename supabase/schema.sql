@@ -74,3 +74,51 @@ drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
+
+-- ---- Área do cliente: pedidos e orçamentos ----
+
+create table if not exists public.quotes (
+  id bigserial primary key,
+  user_id uuid not null references auth.users (id) on delete cascade,
+  title text not null,
+  status text not null default 'rascunho'
+    check (status in ('rascunho', 'enviado', 'em_analise', 'aprovado', 'recusado', 'expirado')),
+  amount_cents integer,
+  currency text default 'BRL',
+  notes text,
+  payload jsonb default '{}'::jsonb,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+create table if not exists public.orders (
+  id bigserial primary key,
+  user_id uuid not null references auth.users (id) on delete cascade,
+  quote_id bigint references public.quotes (id) on delete set null,
+  title text not null,
+  status text not null default 'aberto'
+    check (status in ('aberto', 'em_andamento', 'aguardando_cliente', 'entregue', 'cancelado')),
+  amount_cents integer,
+  currency text default 'BRL',
+  notes text,
+  payload jsonb default '{}'::jsonb,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+alter table public.quotes enable row level security;
+alter table public.orders enable row level security;
+
+create policy "quotes_select_own" on public.quotes
+  for select using (auth.uid() = user_id);
+create policy "quotes_insert_own" on public.quotes
+  for insert with check (auth.uid() = user_id);
+create policy "quotes_update_own" on public.quotes
+  for update using (auth.uid() = user_id);
+
+create policy "orders_select_own" on public.orders
+  for select using (auth.uid() = user_id);
+create policy "orders_insert_own" on public.orders
+  for insert with check (auth.uid() = user_id);
+create policy "orders_update_own" on public.orders
+  for update using (auth.uid() = user_id);

@@ -39,6 +39,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12l2.5 2.5L16 9"/></svg>
         checklists <span class="count" id="checklistCount"></span>
       </button>
+      <button class="dash-tab" data-tab="cliente" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h10M4 17h14"/></svg>
+        área cliente
+      </button>
     </nav>
 
     <div class="dash-content">
@@ -113,21 +117,48 @@
         </div>
       </section>
 
+      <section class="dash-panel" data-panel="cliente" hidden>
+        <div class="stat-row">
+          <a class="stat-card" href="pedidos.html" style="text-decoration:none;color:inherit">
+            <div class="stat-value" id="statOrders">—</div>
+            <div class="stat-label">pedidos</div>
+          </a>
+          <a class="stat-card" href="orcamentos.html" style="text-decoration:none;color:inherit">
+            <div class="stat-value" id="statQuotes">—</div>
+            <div class="stat-label">orçamentos</div>
+          </a>
+          <a class="stat-card" href="area-cliente.html" style="text-decoration:none;color:inherit">
+            <div class="stat-value">→</div>
+            <div class="stat-label">abrir portal</div>
+          </a>
+        </div>
+        <div class="card">
+          <p class="note">Acompanhe pedidos e orçamentos na área do cliente.</p>
+          <p class="foot" style="margin-top:12px">
+            <a href="area-cliente.html">área do cliente →</a> ·
+            <a href="pedidos.html">pedidos</a> ·
+            <a href="orcamentos.html">orçamentos</a>
+          </p>
+        </div>
+      </section>
+
     </div>
   </div>
 </div>
   <script src="assets/js/supabase-config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/js/auth.js"></script>
-  <script src="assets/js/site-nav.js?v=20260914d" defer></script>
+  <script src="assets/js/auth-gates.js"></script>
+  <script src="assets/js/site-nav.js?v=20260914e" defer></script>
 <script>
 (async function () {
+  if (!(await IRNAuthGates.guardPage())) return;
   if (!IRNAuth.ready()) {
     document.getElementById('hello').textContent = 'Auth não configurado (AUTH-SUPABASE.md).';
     return;
   }
   var u = await IRNAuth.user();
-  if (!u) { location.replace('login.html'); return; }
+  if (!u) { location.replace('login.html?next=conta.html'); return; }
 
   var since = u.created_at
     ? new Date(u.created_at).toLocaleDateString('pt-BR', { month: '2-digit', year: 'numeric' })
@@ -268,6 +299,15 @@
     }
   }
   loadList();
+
+  try {
+    var orders = await IRNAuth.listOrders();
+    var quotes = await IRNAuth.listQuotes();
+    var so = document.getElementById('statOrders');
+    var sq = document.getElementById('statQuotes');
+    if (so) so.textContent = orders.length;
+    if (sq) sq.textContent = quotes.length;
+  } catch (e) {}
 
   document.getElementById('form').addEventListener('submit', async function (e) {
     e.preventDefault();

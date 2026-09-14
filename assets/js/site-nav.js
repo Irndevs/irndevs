@@ -45,6 +45,9 @@
     { href: 'login.html', label: 'entrar', ico: '⚿' },
     { href: 'cadastro.html', label: 'cadastro', ico: '+' },
     { href: 'conta.html', label: 'conta', ico: '●' },
+    { href: 'area-cliente.html', label: 'área do cliente', ico: '◆' },
+    { href: 'pedidos.html', label: 'pedidos', ico: '☰' },
+    { href: 'orcamentos.html', label: 'orçamentos', ico: '▤' },
     { href: 'contato.html', label: 'contato', ico: '@' },
     { href: 'privacidade.html', label: 'privacidade', ico: '§' }
   ];

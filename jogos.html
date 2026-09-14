@@ -28,9 +28,7 @@
   <meta name="twitter:description" content="Snake, Memory, Reflexo e Quiz no estilo terminal. Minijogos leves da IRN Devs, 100% no navegador.">
   <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
 </head>
-<body class="auth-gate">
-<script>document.documentElement.classList.add("auth-pending");</script>
-<style>html.auth-pending body.auth-gate{visibility:hidden!important}</style>
+<body>
 
 <!-- nav: site-nav.js -->
 
@@ -491,16 +489,6 @@
   build();
 })();
 </script>
-  <script src="assets/js/supabase-config.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="assets/js/auth.js"></script>
-  <script src="assets/js/site-nav.js?v=20260914d" defer></script>
-  <script>
-  (async function () {
-    var gate = await IRNAuth.requireAuth({ next: 'jogos.html' });
-    if (!gate) return;
-    document.documentElement.classList.remove('auth-pending');
-  })();
-  </script>
+  <script src="assets/js/site-nav.js?v=20260914e" defer></script>
 </body>
 </html>

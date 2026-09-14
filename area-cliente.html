@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Área do cliente — IRN Devs</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://irndevs.com/area-cliente.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site-nav.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/auth.css">
+</head>
+<body>
+<div class="wrap wide dash">
+  <p class="crumb"><a href="index.html">~</a> / <a href="conta.html">conta</a> / área do cliente</p>
+  <div class="sec-head"><span class="amber">$</span> client portal</div>
+  <h1>Área do cliente</h1>
+  <p class="lede" id="hello">Carregando…</p>
+
+  <div class="stat-row">
+    <a class="stat-card" href="pedidos.html" style="text-decoration:none;color:inherit">
+      <div class="stat-value" id="statOrders">—</div>
+      <div class="stat-label">pedidos</div>
+    </a>
+    <a class="stat-card" href="orcamentos.html" style="text-decoration:none;color:inherit">
+      <div class="stat-value" id="statQuotes">—</div>
+      <div class="stat-label">orçamentos</div>
+    </a>
+    <a class="stat-card" href="conta.html#checklists" style="text-decoration:none;color:inherit">
+      <div class="stat-value" id="statChecklists">—</div>
+      <div class="stat-label">checklists</div>
+    </a>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="widget-title" style="margin-bottom:12px">atalhos</div>
+    <p class="note" style="margin-bottom:10px">
+      <a href="pedidos.html">ver pedidos →</a><br>
+      <a href="orcamentos.html">ver orçamentos →</a><br>
+      <a href="conta.html">perfil e segurança →</a><br>
+      <a href="ferramenta-checklist.html">gerar checklist →</a><br>
+      <a href="contato.html">falar com a IRN →</a>
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="widget-title" style="margin-bottom:12px">atividade recente</div>
+    <div class="list" id="activity"></div>
+  </div>
+</div>
+<script src="assets/js/supabase-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/auth-gates.js"></script>
+<script src="assets/js/site-nav.js?v=20260914e" defer></script>
+<script>
+(async function () {
+  if (!(await IRNAuthGates.guardPage())) return;
+
+  var u = await IRNAuth.user();
+  document.getElementById('hello').textContent =
+    'Olá' + (u && u.email ? ', ' + u.email : '') + '. Acompanhe pedidos, orçamentos e entregas.';
+
+  var orders = [], quotes = [], checks = [];
+  try { orders = await IRNAuth.listOrders(); } catch (e) {}
+  try { quotes = await IRNAuth.listQuotes(); } catch (e) {}
+  try { checks = await IRNAuth.listChecklists(); } catch (e) {}
+
+  document.getElementById('statOrders').textContent = orders.length;
+  document.getElementById('statQuotes').textContent = quotes.length;
+  document.getElementById('statChecklists').textContent = checks.length;
+
+  var items = [];
+  orders.slice(0, 5).forEach(function (o) {
+    items.push({ t: o.created_at, label: '[pedido] ' + o.title + ' · ' + o.status });
+  });
+  quotes.slice(0, 5).forEach(function (q) {
+    items.push({ t: q.created_at, label: '[orçamento] ' + q.title + ' · ' + q.status });
+  });
+  checks.slice(0, 5).forEach(function (c) {
+    items.push({ t: c.created_at, label: '[checklist] ' + c.kind });
+  });
+  items.sort(function (a, b) { return new Date(b.t) - new Date(a.t); });
+
+  var box = document.getElementById('activity');
+  if (!items.length) {
+    box.innerHTML = '<p class="note">Nenhuma atividade ainda. Quando houver pedidos ou orçamentos, eles aparecem aqui.</p>';
+    return;
+  }
+  items.slice(0, 10).forEach(function (it) {
+    var d = document.createElement('div');
+    d.className = 'item';
+    d.innerHTML = '<div class="item-head"><span>' +
+      (it.t ? new Date(it.t).toLocaleString('pt-BR') : '') +
+      '</span></div><div class="item-body">' + it.label + '</div>';
+    box.appendChild(d);
+  });
+})();
+</script>
+</body>
+</html>

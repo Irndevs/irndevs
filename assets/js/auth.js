@@ -113,6 +113,24 @@
     return res.data || [];
   }
 
+  async function listQuotes() {
+    var sb = getClient();
+    var u = await user();
+    if (!sb || !u) return [];
+    var res = await sb.from('quotes').select('*').order('created_at', { ascending: false }).limit(50);
+    if (res.error) throw res.error;
+    return res.data || [];
+  }
+
+  async function listOrders() {
+    var sb = getClient();
+    var u = await user();
+    if (!sb || !u) return [];
+    var res = await sb.from('orders').select('*').order('created_at', { ascending: false }).limit(50);
+    if (res.error) throw res.error;
+    return res.data || [];
+  }
+
   async function changePassword(newPassword) {
     var sb = getClient();
     if (!sb) throw new Error('Auth não configurado.');
@@ -207,6 +225,8 @@
     changePassword: changePassword,
     saveChecklist: saveChecklist,
     listChecklists: listChecklists,
+    listQuotes: listQuotes,
+    listOrders: listOrders,
     requireAuth: requireAuth,
     paintNavAuth: paintNavAuth,
     setMsg: setMsg

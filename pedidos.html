@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedidos — IRN Devs</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://irndevs.com/pedidos.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site-nav.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/auth.css">
+</head>
+<body>
+<div class="wrap wide dash">
+  <p class="crumb"><a href="index.html">~</a> / <a href="area-cliente.html">área do cliente</a> / pedidos</p>
+  <div class="sec-head"><span class="amber">$</span> orders</div>
+  <h1>Pedidos</h1>
+  <p class="lede">Acompanhe o status dos trabalhos em andamento e entregues.</p>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-value" id="statTotal">—</div>
+      <div class="stat-label">total</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="statOpen">—</div>
+      <div class="stat-label">em aberto</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="statDone">—</div>
+      <div class="stat-label">entregues</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="list" id="list"></div>
+    <p class="foot">
+      <a href="orcamentos.html">orçamentos</a> ·
+      <a href="area-cliente.html">área do cliente</a> ·
+      <a href="contato.html">solicitar novo trabalho</a>
+    </p>
+  </div>
+</div>
+<script src="assets/js/supabase-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/auth-gates.js"></script>
+<script src="assets/js/site-nav.js?v=20260914e" defer></script>
+<script>
+(async function () {
+  if (!(await IRNAuthGates.guardPage())) return;
+
+  var box = document.getElementById('list');
+  var rows = [];
+  try {
+    rows = await IRNAuth.listOrders();
+  } catch (e) {
+    box.innerHTML = '<p class="note">Erro ao carregar: ' + (e.message || e) +
+      '. Se as tabelas ainda não existem, rode o SQL atualizado em <code>supabase/schema.sql</code>.</p>';
+    return;
+  }
+
+  var open = rows.filter(function (r) {
+    return r.status === 'aberto' || r.status === 'em_andamento' || r.status === 'aguardando_cliente';
+  }).length;
+  var done = rows.filter(function (r) { return r.status === 'entregue'; }).length;
+  document.getElementById('statTotal').textContent = rows.length;
+  document.getElementById('statOpen').textContent = open;
+  document.getElementById('statDone').textContent = done;
+
+  if (!rows.length) {
+    box.innerHTML = '<p class="note">Nenhum pedido ainda. Quando um orçamento for aprovado, o pedido aparece aqui.</p>';
+    return;
+  }
+
+  function money(cents, cur) {
+    if (cents == null) return '—';
+    try {
+      return (cents / 100).toLocaleString('pt-BR', { style: 'currency', currency: cur || 'BRL' });
+    } catch (e) {
+      return (cents / 100).toFixed(2) + ' ' + (cur || 'BRL');
+    }
+  }
+
+  rows.forEach(function (r) {
+    var d = document.createElement('div');
+    d.className = 'item';
+    d.innerHTML =
+      '<div class="item-head">' +
+        '<span>#' + r.id + ' · ' + (r.status || '') + '</span>' +
+        '<span class="item-pct">' + money(r.amount_cents, r.currency) + '</span>' +
+      '</div>' +
+      '<div class="item-body">' +
+        (r.title || '') +
+        (r.notes ? '\n' + r.notes : '') +
+        '\n' + (r.created_at ? new Date(r.created_at).toLocaleString('pt-BR') : '') +
+      '</div>';
+    box.appendChild(d);
+  });
+})();
+</script>
+</body>
+</html>
