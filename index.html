@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/pages/index.css">
+<link rel="stylesheet" href="assets/css/pages/index.css?v=20260914g">
   <link rel="stylesheet" href="assets/css/site-nav.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="assets/css/site-nav.css"></noscript>
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
@@ -97,29 +97,39 @@
 
 <header class="hero">
   <div class="wrap">
-    <div class="term">
-      <div><span class="green">irn@serv-irn</span><span class="dim">:~$</span> uptime</div>
-      <div class="dim">serv-irn up 41 days · k3s: 6 nodes active · 12 services healthy</div>
-      <div class="inline-style-2"><span class="green">irn@serv-irn</span><span class="dim">:~$</span> whoami --role</div>
-      <div class="inline-style-3"><span class="green">irn@serv-irn</span><span class="dim">:~$</span> whoami --focus</div>
-      <div class="amber">dev · automações · analytics</div>
-      <div style="margin-top:8px"><span class="green">irn@serv-irn</span><span class="dim">:~$</span> <span class="cursor"></span></div>
-    </div>
-    <h1>Desenvolvimento, automações e dados — do protótipo à produção.</h1>
-    <p class="lede">A IRN Devs cria software, integra sistemas e transforma dados em decisão — com automações que reduzem trabalho manual e produtos que já rodam em produção.</p>
-    <div class="cta-row">
-      <a class="btn primary" href="#projetos">ver projetos</a>
-      <a class="btn ghost" href="pacotes.html">pacotes</a>
-      <a class="btn ghost" href="ferramenta-checklist.html">checklist grátis</a>
-      <a class="btn ghost" href="contato.html">fale conosco</a>
-    </div>
-    <div class="home-search" id="buscar">
-      <label for="siteSearch"><span class="amber">$</span> buscar</label>
-      <div class="search-row">
-        <input id="siteSearch" type="search" placeholder="projetos, k3s, grafana, contato, blog..." autocomplete="off" enterkeyhint="search">
-        <span id="siteSearchCount" aria-live="polite"></span>
+    <div class="hero-grid">
+      <div>
+        <div class="hero-badge"><span class="pulse"></span> produção · k3s · observabilidade</div>
+        <h1>Software, automações e dados <span>em produção</span>.</h1>
+        <p class="lede">A IRN Devs cria produtos, integra sistemas e transforma dados em decisão — com automações que cortam trabalho manual e stacks que já rodam de verdade.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="#projetos">ver projetos →</a>
+          <a class="btn ghost" href="pacotes.html">pacotes</a>
+          <a class="btn ghost" href="ferramenta-checklist.html">checklist grátis</a>
+          <a class="btn ghost" href="contato.html">contato</a>
+        </div>
+        <div class="home-search" id="buscar">
+          <label for="siteSearch"><span class="amber">$</span> buscar no site</label>
+          <div class="search-row">
+            <input id="siteSearch" type="search" placeholder="k3s, grafana, pacotes, blog..." autocomplete="off" enterkeyhint="search">
+            <span id="siteSearchCount" aria-live="polite"></span>
+          </div>
+          <div id="siteSearchPages" class="search-pages" hidden></div>
+        </div>
       </div>
-      <div id="siteSearchPages" class="search-pages" hidden></div>
+      <div class="term-card" aria-hidden="true">
+        <div class="term-bar">
+          <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+          <span class="term-title">irn@serv-irn — zsh</span>
+        </div>
+        <div class="term-body">
+          <div><span class="green">irn@serv-irn</span><span class="dim">:~$</span> uptime</div>
+          <div class="dim">up 41 days · k3s 6 nodes · 12 services ok</div>
+          <div><span class="green">irn@serv-irn</span><span class="dim">:~$</span> whoami --focus</div>
+          <div class="amber">dev · automações · analytics</div>
+          <div style="margin-top:10px"><span class="green">irn@serv-irn</span><span class="dim">:~$</span> <span class="cursor"></span></div>
+        </div>
+      </div>
     </div>
   </div>
 </header>
@@ -135,10 +145,10 @@
 <section id="projetos">
   <div class="wrap">
     <div class="sec-head"><span class="amber">$</span> ls -la projetos/ --status</div>
-    <h2 class="sec-title">Projetos</h2>
-    <p class="sec-sub">Separados por status real de deploy — não é portfólio de maquete, é o que está de pé agora.</p>
-
-    <div class="proj fade-in"><div class="status-tag live">● produção</div><div>
+    <h2 class="sec-title">Projetos em produção</h2>
+    <p class="sec-sub">Status real de deploy — o que está de pé agora, não maquete de portfólio.</p>
+    <div class="proj-grid">
+    <div class="proj-card fade-in"><div class="status-tag live">● produção</div><div>
       <div class="proj-name">ZapAgendador IA</div>
       <div class="proj-desc">SaaS multi-tenant de agendamento via WhatsApp com IA generativa local (migrado de Gemini pra Gemma via serviços de IA), arquitetura type-safe ponta a ponta.</div>
       <div class="stack"><span>Node.js</span><span>tRPC</span><span>TypeScript</span><span>TiDB Cloud</span><span>Render</span></div>
@@ -148,7 +158,7 @@
       </div>
     </div></div>
 
-    <div class="proj fade-in"><div class="status-tag live">● produção</div><div>
+    <div class="proj-card fade-in"><div class="status-tag live">● produção</div><div>
       <div class="proj-name">NeoBank</div>
       <div class="proj-desc">Sistema bancário fullstack simulando operações reais — contas, transferências, extrato — com IA local via serviços de IA e deploy replicado no cluster próprio.</div>
       <div class="stack"><span>Python</span><span>Flask</span><span>SQLite</span><span>serviços de IA</span><span>k3s</span></div>
@@ -158,7 +168,7 @@
       </div>
     </div></div>
 
-    <div class="proj fade-in"><div class="status-tag live">● produção</div><div>
+    <div class="proj-card fade-in"><div class="status-tag live">● produção</div><div>
       <div class="proj-name">EcoMonitor</div>
       <div class="proj-desc">Plataforma colaborativa de monitoramento ambiental em tempo real, com CI/CD no Gitea buildando e reimplantando no k3s a cada push.</div>
       <div class="stack"><span>Vite/React</span><span>Node.js</span><span>Docker</span><span>Gitea CI/CD</span></div>
@@ -167,7 +177,7 @@
       </div>
     </div></div>
 
-    <div class="proj fade-in"><div class="status-tag live">● funcional</div><div>
+    <div class="proj-card fade-in"><div class="status-tag live">● funcional</div><div>
       <div class="proj-name">Job Hunter Inteligente</div>
       <div class="proj-desc">Busca vagas em múltiplas fontes públicas e usa LLM pra calcular compatibilidade com o perfil do candidato, com ranking explicado.</div>
       <div class="stack"><span>FastAPI</span><span>SQLAlchemy</span><span>serviços de IA</span><span>Postgres</span></div>
@@ -176,7 +186,7 @@
       </div>
     </div></div>
 
-    <div class="proj fade-in"><div class="status-tag live">● produção</div><div>
+    <div class="proj-card fade-in"><div class="status-tag live">● produção</div><div>
       <div class="proj-name">Homelab Self-hosted</div>
       <div class="proj-desc">Servidor bare-metal com Docker orquestrando VMs e containers Docker/LXC. Monitoramento completo com testes automatizados, métricas e logs.</div>
       <div class="stack"><span>Docker</span><span>Docker</span><span>LXC</span><span>Grafana</span></div>
@@ -185,7 +195,7 @@
       </div>
     </div></div>
 
-    <div class="proj fade-in"><div class="status-tag live">● produção</div><div>
+    <div class="proj-card fade-in"><div class="status-tag live">● produção</div><div>
       <div class="proj-name">Cluster Kubernetes (k3s)</div>
       <div class="proj-desc">Orquestração de workloads em cluster k3s leve, integrado com Gitea Actions Runner e ArgoCD (GitOps) para CI/CD.</div>
       <div class="stack"><span>k3s</span><span>Gitea</span><span>ArgoCD</span><span>Bash</span></div>
@@ -195,7 +205,7 @@
       </div>
     </div></div>
 
-    <div class="proj fade-in"><div class="status-tag build">● em build</div><div>
+    <div class="proj-card fade-in"><div class="status-tag build">● em build</div><div>
       <div class="proj-name">Find My Device</div>
       <div class="proj-desc">MQTT + backend + app Android pra rastreamento de dispositivo próprio. Broker e API já respondendo.</div>
       <div class="stack"><span>Mosquitto</span><span>Postgres</span><span>JWT</span><span>Kotlin</span></div>
@@ -204,13 +214,14 @@
       </div>
     </div></div>
 
-    <div class="proj fade-in"><div class="status-tag build">● estudo</div><div>
+    <div class="proj-card fade-in"><div class="status-tag build">● estudo</div><div>
       <div class="proj-name">meubanco</div>
       <div class="proj-desc">Banco de dados construído do zero em Python — storage engine, índice, WAL e parser SQL próprio.</div>
       <div class="stack"><span>Python</span><span>WAL</span><span>SQL parser</span></div>
       <div class="proj-links">
       </div>
     </div></div>
+    </div><!-- /proj-grid -->
   </div>
 </section>
 
@@ -423,6 +434,6 @@ const siteSearch = document.getElementById('siteSearch');
   document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
 </script>
 
-  <script src="assets/js/site-nav.js?v=20260914f" defer></script>
+  <script src="assets/js/site-nav.js?v=20260914g" defer></script>
 </body>
 </html>
