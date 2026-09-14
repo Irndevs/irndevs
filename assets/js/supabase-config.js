@@ -6,13 +6,8 @@
  * 4) Rode o SQL em supabase/schema.sql no SQL Editor
  */
 window.IRN_SUPABASE = {
-<<<<<<< HEAD
-  url: 'https://SEU_PROJETO.supabase.co',
-  anonKey: 'SUA_ANON_KEY_AQUI',
-=======
   url: 'https://mdbpjvawzerziwphtkkt.supabase.co',
   anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1kYnBqdmF3emVyeml3cGh0a2t0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkzOTcwNTgsImV4cCI6MjEwNDk3MzA1OH0.0RW6AGsUmFT0YMigrKvqCdLi63oRg93YwZSm1U0pOf4',
->>>>>>> 82a424ff50cc15dd7c5e465acd6038d1333fc6b9
   /** true só depois de preencher url/key e rodar o schema */
   enabled: true
 };

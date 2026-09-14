@@ -26,7 +26,8 @@
     { href: 'ferramenta-checklist.html', label: 'checklist', ico: '✓' },
     { href: 'blog.html', label: 'blog', ico: '≡' },
     { href: 'sobre.html', label: 'sobre', ico: 'i' },
-    { href: 'login.html', label: 'entrar', ico: '⚿' }
+    { href: 'login.html', label: 'entrar', ico: '⚿' },
+    { href: 'cadastro.html', label: 'cadastro', ico: '+' }
   ];
 
   var drawerItems = [
@@ -42,6 +43,7 @@
     { href: 'produtividade.html', label: 'produtividade', ico: '⏱' },
     { href: 'jogos.html', label: 'jogos', ico: '▶' },
     { href: 'login.html', label: 'entrar', ico: '⚿' },
+    { href: 'cadastro.html', label: 'cadastro', ico: '+' },
     { href: 'conta.html', label: 'conta', ico: '●' },
     { href: 'contato.html', label: 'contato', ico: '@' },
     { href: 'privacidade.html', label: 'privacidade', ico: '§' }

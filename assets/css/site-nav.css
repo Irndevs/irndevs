@@ -142,7 +142,8 @@ body.has-site-nav { padding-top: var(--nav-top-h); }
 }
 
 @media (max-width: 899px) {
-  .sn-top-links,
+  /* No mobile o menu superior de links some — usa drawer (☰) + bottom nav */
+  .sn-top-links { display: none; }
   .sn-top .sn-logo img { height: 32px; }
   .sn-top-cta { padding: 8px 12px !important; font-size: 12px; }
 }
