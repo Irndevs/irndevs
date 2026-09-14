@@ -122,9 +122,12 @@
       <a class="btn ghost" href="contato.html">fale conosco</a>
     </div>
     <div class="home-search" id="buscar">
-      <label for="siteSearch">buscar no site</label>
-      <input id="siteSearch" type="search" placeholder="ex.: TypeScript, automação, produtos..." autocomplete="off">
-      <span id="siteSearchCount" aria-live="polite">24 resultados</span>
+      <label for="siteSearch"><span class="amber">$</span> buscar</label>
+      <div class="search-row">
+        <input id="siteSearch" type="search" placeholder="projetos, k3s, grafana, contato, blog..." autocomplete="off" enterkeyhint="search">
+        <span id="siteSearchCount" aria-live="polite"></span>
+      </div>
+      <div id="siteSearchPages" class="search-pages" hidden></div>
     </div>
   </div>
 </header>
@@ -339,23 +342,66 @@
 </footer>
 
 <script>
-  const siteSearch = document.getElementById('siteSearch');
+const siteSearch = document.getElementById('siteSearch');
   const siteSearchCount = document.getElementById('siteSearchCount');
+  const siteSearchPages = document.getElementById('siteSearchPages');
   const searchableItems = document.querySelectorAll('.proj, .tool, .skills-table tr');
-
+  const pageIndex = [
+    { q: 'início home index', href: 'index.html', label: 'Início' },
+    { q: 'serviços services infra kubernetes observabilidade', href: 'servicos.html', label: 'Serviços' },
+    { q: 'como contratar proposta', href: 'como-contratar.html', label: 'Como contratar' },
+    { q: 'sobre about empresa', href: 'sobre.html', label: 'Sobre' },
+    { q: 'blog artigos posts', href: 'blog.html', label: 'Blog' },
+    { q: 'contato contact email', href: 'contato.html', label: 'Contato' },
+    { q: 'homelab lab proxmox', href: 'homelab.html', label: 'Homelab' },
+    { q: 'observabilidade grafana prometheus loki', href: 'observabilidade.html', label: 'Observabilidade' },
+    { q: 'kubernetes k3s cluster', href: 'kubernetes.html', label: 'Kubernetes / k3s' },
+    { q: 'produtividade pomodoro todo', href: 'produtividade.html', label: 'Produtividade' },
+    { q: 'jogos games', href: 'jogos.html', label: 'Jogos' },
+    { q: 'privacidade lgpd', href: 'privacidade.html', label: 'Privacidade' },
+    { q: 'docker observabilidade stack', href: 'artigo-observabilidade-docker.html', label: 'Artigo: Observabilidade Docker' },
+    { q: 'proxmox homelab', href: 'artigo-proxmox-homelab.html', label: 'Artigo: Proxmox' },
+    { q: 'k3s kubernetes', href: 'artigo-k3s-homelab.html', label: 'Artigo: k3s' },
+    { q: 'hardening linux ssh ufw', href: 'artigo-hardening-linux.html', label: 'Artigo: Hardening Linux' },
+    { q: 'aws cloud', href: 'artigo-aws-cloud.html', label: 'Artigo: AWS' },
+    { q: 'opentelemetry otel', href: 'artigo-opentelemetry.html', label: 'Artigo: OpenTelemetry' },
+    { q: 'ubuntu server', href: 'artigo-ubuntu-server.html', label: 'Artigo: Ubuntu Server' }
+  ];
   function searchHome() {
+    if (!siteSearch) return;
     const query = siteSearch.value.trim().toLowerCase();
     let visible = 0;
     searchableItems.forEach(item => {
-      const matches = !query || item.textContent.toLowerCase().includes(query);
-      item.hidden = !matches;
-      if (matches) visible++;
+      const text = (item.textContent || '').toLowerCase();
+      const show = !query || text.includes(query);
+      item.style.display = show ? '' : 'none';
+      if (show) visible++;
     });
-    siteSearchCount.textContent = visible + (visible === 1 ? ' resultado' : ' resultados');
+    if (siteSearchCount) {
+      siteSearchCount.textContent = query ? (visible + (visible === 1 ? ' na página' : ' na página')) : '';
+    }
+    if (siteSearchPages) {
+      if (!query || query.length < 2) {
+        siteSearchPages.hidden = true;
+        siteSearchPages.innerHTML = '';
+      } else {
+        const hits = pageIndex.filter(p => p.q.includes(query) || p.label.toLowerCase().includes(query));
+        if (hits.length) {
+          siteSearchPages.hidden = false;
+          siteSearchPages.innerHTML = hits.slice(0, 8).map(p =>
+            '<a href="' + p.href + '">' + p.label + '<span>→</span></a>'
+          ).join('');
+        } else {
+          siteSearchPages.hidden = false;
+          siteSearchPages.innerHTML = '<a href="blog.html">Nada direto — ver blog <span>→</span></a>';
+        }
+      }
+    }
   }
-
-  siteSearch.addEventListener('input', searchHome);
-  searchHome();
+  if (siteSearch) {
+    siteSearch.addEventListener('input', searchHome);
+    searchHome();
+  }
 
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {

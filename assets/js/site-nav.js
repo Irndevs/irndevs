@@ -23,9 +23,6 @@
     { href: 'index.html#projetos', label: 'projetos', ico: '▸' },
     { href: 'servicos.html', label: 'serviços', ico: '⚙' },
     { href: 'blog.html', label: 'blog', ico: '≡' },
-    { href: 'observabilidade.html', label: 'observabilidade', ico: '◉' },
-    { href: 'kubernetes.html', label: 'kubernetes', ico: '⬡' },
-    { href: 'blog.html#buscar', label: 'buscar', ico: '⌕' },
     { href: 'sobre.html', label: 'sobre', ico: 'i' },
     { href: 'homelab.html', label: 'homelab', ico: '▣' }
   ];
