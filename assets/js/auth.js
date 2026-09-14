@@ -170,45 +170,50 @@
     var u = null;
     try { u = await user(); } catch (e) {}
 
-    document.querySelectorAll('[data-auth-slot]').forEach(function (node) {
-      if (u) {
-        node.innerHTML = '<a href="conta.html">conta</a>';
-      } else {
-        node.innerHTML = '<a href="login.html">entrar</a> · <a href="cadastro.html">cadastro</a>';
-      }
-    });
+    function fillSlots() {
+      document.querySelectorAll('[data-auth-slot]').forEach(function (node) {
+        if (node.classList.contains('dash-topbar-user')) {
+          // área interna: link de volta + conta
+          if (u) {
+            node.innerHTML = '<span style="opacity:.7">' + (u.email || 'conta') + '</span>' +
+              '<a href="conta.html">conta</a><a href="index.html">← site</a>';
+          } else {
+            node.innerHTML = '<a href="login.html">entrar</a><a href="index.html">← site</a>';
+          }
+          return;
+        }
+        if (u) {
+          node.innerHTML = '<a href="conta.html">conta</a><a href="area-cliente.html">portal</a>';
+        } else {
+          node.innerHTML = '<a href="login.html">entrar</a><a class="sn-auth-primary" href="cadastro.html">cadastro</a>';
+        }
+      });
+    }
 
-    // Ajusta links do menu injetado por site-nav.js
-    function rewriteNav() {
+    function rewriteDrawerAuth() {
       var root = document.getElementById('siteNavRoot');
       if (!root) return false;
-      root.querySelectorAll('a[href="login.html"], a[href="cadastro.html"], a[href="conta.html"]').forEach(function (a) {
-        var label = a.querySelector('.label');
+      fillSlots();
+      // no drawer, esconde o par oposto login/cadastro vs conta
+      root.querySelectorAll('.sn-drawer a[href="login.html"], .sn-drawer a[href="cadastro.html"], .sn-drawer a[href="conta.html"], .sn-drawer a[href="area-cliente.html"]').forEach(function (a) {
         var href = (a.getAttribute('href') || '').toLowerCase();
         if (u) {
-          if (href.indexOf('login') !== -1 || href.indexOf('cadastro') !== -1) {
-            a.setAttribute('href', 'conta.html');
-            if (label) label.textContent = 'conta';
-            var ico = a.querySelector('.ico');
-            if (ico) ico.textContent = '●';
-          }
-        } else if (href.indexOf('conta') !== -1) {
-          a.setAttribute('href', 'login.html');
-          if (label) label.textContent = 'entrar';
-          var ico2 = a.querySelector('.ico');
-          if (ico2) ico2.textContent = '⚿';
+          if (href.indexOf('login') !== -1 || href.indexOf('cadastro') !== -1) a.style.display = 'none';
+          else a.style.display = '';
+        } else {
+          if (href.indexOf('conta') !== -1 || href.indexOf('area-cliente') !== -1) a.style.display = 'none';
+          else a.style.display = '';
         }
       });
       return true;
     }
 
-    if (!rewriteNav()) {
-      // site-nav.js é defer — tenta de novo após montar
+    if (!rewriteDrawerAuth()) {
       var tries = 0;
-      var t = setInterval(function () {
+      var timer = setInterval(function () {
         tries += 1;
-        if (rewriteNav() || tries > 20) clearInterval(t);
-      }, 50);
+        if (rewriteDrawerAuth() || tries > 25) clearInterval(timer);
+      }, 40);
     }
   }
 

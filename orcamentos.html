@@ -9,93 +9,72 @@
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site-nav.css" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="assets/css/auth.css">
+<link rel="stylesheet" href="assets/css/dash-shell.css">
 </head>
-<body>
-<div class="wrap wide dash">
-  <p class="crumb"><a href="index.html">~</a> / <a href="area-cliente.html">área do cliente</a> / orçamentos</p>
-  <div class="sec-head"><span class="amber">$</span> quotes</div>
-  <h1>Orçamentos</h1>
-  <p class="lede">Propostas enviadas e status de cada uma.</p>
-
-  <div class="stat-row">
-    <div class="stat-card">
-      <div class="stat-value" id="statTotal">—</div>
-      <div class="stat-label">total</div>
+<body class="dash-app">
+<div class="dash-shell">
+  <aside class="dash-side">
+    <div class="dash-side-brand"><span>$</span> portal</div>
+    <a href="area-cliente.html">visão geral</a>
+    <a  href="pedidos.html">pedidos</a>
+    <a class="active" href="orcamentos.html">orçamentos</a>
+    <a href="conta.html">minha conta</a>
+    <div class="dash-side-group">
+      <a href="index.html">← site público</a>
     </div>
-    <div class="stat-card">
-      <div class="stat-value" id="statOpen">—</div>
-      <div class="stat-label">em análise</div>
+  </aside>
+  <main class="dash-main">
+    <p class="dash-crumb"><a href="area-cliente.html">portal</a> / orcamentos</p>
+    <h1 class="dash-h1">Orçamentos</h1>
+    <p class="dash-lede">Acompanhe status e histórico.</p>
+    <div class="dash-stats">
+      <div class="dash-stat"><div class="dash-stat-value" id="statTotal">—</div><div class="dash-stat-label">total</div></div>
+      <div class="dash-stat"><div class="dash-stat-value" id="statA">—</div><div class="dash-stat-label">ativos</div></div>
+      <div class="dash-stat"><div class="dash-stat-value" id="statB">—</div><div class="dash-stat-label">concluídos</div></div>
     </div>
-    <div class="stat-card">
-      <div class="stat-value" id="statOk">—</div>
-      <div class="stat-label">aprovados</div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="list" id="list"></div>
-    <p class="foot">
-      <a href="pedidos.html">pedidos</a> ·
-      <a href="area-cliente.html">área do cliente</a> ·
-      <a href="contato.html">pedir orçamento</a>
-    </p>
-  </div>
+    <div class="dash-card"><div id="list"></div></div>
+  </main>
 </div>
 <script src="assets/js/supabase-config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="assets/js/auth.js"></script>
 <script src="assets/js/auth-gates.js"></script>
-<script src="assets/js/site-nav.js?v=20260914e" defer></script>
+<script src="assets/js/site-nav.js?v=20260914f" defer></script>
 <script>
 (async function () {
   if (!(await IRNAuthGates.guardPage())) return;
-
   var box = document.getElementById('list');
   var rows = [];
-  try {
-    rows = await IRNAuth.listQuotes();
-  } catch (e) {
-    box.innerHTML = '<p class="note">Erro ao carregar: ' + (e.message || e) +
-      '. Se as tabelas ainda não existem, rode o SQL atualizado em <code>supabase/schema.sql</code>.</p>';
+  try { rows = await IRNAuth.listQuotes(); }
+  catch (e) {
+    box.innerHTML = '<p style="color:#e88;font-family:var(--dash-mono);font-size:13px">Erro: ' + (e.message||e) + '. Rode supabase/schema.sql se as tabelas não existirem.</p>';
     return;
   }
-
-  var open = rows.filter(function (r) {
-    return r.status === 'enviado' || r.status === 'em_analise' || r.status === 'rascunho';
-  }).length;
-  var ok = rows.filter(function (r) { return r.status === 'aprovado'; }).length;
   document.getElementById('statTotal').textContent = rows.length;
-  document.getElementById('statOpen').textContent = open;
-  document.getElementById('statOk').textContent = ok;
-
+  var active = rows.filter(function (r) {
+    return ['aberto','em_andamento','aguardando_cliente','enviado','em_analise','rascunho'].indexOf(r.status) !== -1;
+  }).length;
+  var done = rows.filter(function (r) {
+    return ['entregue','aprovado'].indexOf(r.status) !== -1;
+  }).length;
+  document.getElementById('statA').textContent = active;
+  document.getElementById('statB').textContent = done;
   if (!rows.length) {
-    box.innerHTML = '<p class="note">Nenhum orçamento ainda. Peça pelo <a href="contato.html">contato</a> ou pelos pacotes — quando enviarmos a proposta, ela aparece aqui.</p>';
+    box.innerHTML = '<p style="color:var(--dash-faint);font-family:var(--dash-mono);font-size:13px">Nenhum registro ainda.</p>';
     return;
   }
-
-  function money(cents, cur) {
-    if (cents == null) return '—';
-    try {
-      return (cents / 100).toLocaleString('pt-BR', { style: 'currency', currency: cur || 'BRL' });
-    } catch (e) {
-      return (cents / 100).toFixed(2) + ' ' + (cur || 'BRL');
-    }
+  function money(c, cur) {
+    if (c == null) return '—';
+    try { return (c/100).toLocaleString('pt-BR',{style:'currency',currency:cur||'BRL'}); }
+    catch(e){ return (c/100).toFixed(2); }
   }
-
   rows.forEach(function (r) {
     var d = document.createElement('div');
-    d.className = 'item';
-    d.innerHTML =
-      '<div class="item-head">' +
-        '<span>#' + r.id + ' · ' + (r.status || '') + '</span>' +
-        '<span class="item-pct">' + money(r.amount_cents, r.currency) + '</span>' +
-      '</div>' +
-      '<div class="item-body">' +
-        (r.title || '') +
-        (r.notes ? '\n' + r.notes : '') +
-        '\n' + (r.created_at ? new Date(r.created_at).toLocaleString('pt-BR') : '') +
-      '</div>';
+    d.className = 'dash-list-item';
+    d.innerHTML = '<div class="dash-list-head"><span>#' + r.id + ' · ' + (r.status||'') + '</span><span>' +
+      money(r.amount_cents, r.currency) + '</span></div><div class="dash-list-body">' +
+      (r.title||'') + (r.notes ? '\n' + r.notes : '') + '\n' +
+      (r.created_at ? new Date(r.created_at).toLocaleString('pt-BR') : '') + '</div>';
     box.appendChild(d);
   });
 })();
