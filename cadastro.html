@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Criar conta — IRN Devs</title>
+<meta name="description" content="Cadastro IRN Devs: salve checklists e dados de contato.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://irndevs.com/cadastro.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site-nav.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/auth.css">
+</head>
+<body>
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / cadastro</p>
+  <div class="sec-head"><span class="amber">$</span> auth signup</div>
+  <h1>Criar conta</h1>
+  <p class="lede">Registro para salvar checklists e facilitar propostas. Ao continuar, você aceita a <a href="privacidade.html">política de privacidade</a>.</p>
+  <div class="card">
+    <div id="msg" class="auth-msg" hidden></div>
+    <form id="form">
+      <label for="name">nome</label>
+      <input id="name" type="text" required autocomplete="name" placeholder="Nome ou empresa">
+      <label for="email">email</label>
+      <input id="email" type="email" required autocomplete="email" placeholder="voce@empresa.com">
+      <label for="password">senha (mín. 6)</label>
+      <input id="password" type="password" required autocomplete="new-password" minlength="6" placeholder="••••••••">
+      <button class="btn" type="submit">criar conta →</button>
+    </form>
+    <p class="note" id="cfgNote" hidden>Auth ainda não configurado. Veja AUTH-SUPABASE.md</p>
+  </div>
+  <p class="foot">Já tem conta? <a href="login.html">entrar</a></p>
+</div>
+  <script src="assets/js/supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/site-nav.js?v=20260914b" defer></script>
+<script>
+(function () {
+  if (!window.IRNAuth || !IRNAuth.ready()) document.getElementById('cfgNote').hidden = false;
+  document.getElementById('form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var btn = e.target.querySelector('button');
+    btn.disabled = true;
+    try {
+      var data = await IRNAuth.signUp(
+        document.getElementById('email').value.trim(),
+        document.getElementById('password').value,
+        document.getElementById('name').value.trim()
+      );
+      if (data.session) {
+        IRNAuth.setMsg('msg', 'Conta criada. Indo para sua área…', true);
+        location.href = 'conta.html';
+      } else {
+        IRNAuth.setMsg('msg', 'Conta criada. Verifique seu e-mail para confirmar, depois faça login.', true);
+        btn.disabled = false;
+      }
+    } catch (err) {
+      IRNAuth.setMsg('msg', (err && err.message) || 'Falha no cadastro', false);
+      btn.disabled = false;
+    }
+  });
+})();
+</script>
+</body>
+</html>

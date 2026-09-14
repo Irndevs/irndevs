@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minha conta — IRN Devs</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://irndevs.com/conta.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site-nav.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/auth.css">
+</head>
+<body>
+<div class="wrap wide">
+  <p class="crumb"><a href="index.html">~</a> / conta</p>
+  <div class="sec-head"><span class="amber">$</span> whoami</div>
+  <h1>Minha conta</h1>
+  <p class="lede" id="hello">Carregando…</p>
+  <div class="card">
+    <div id="msg" class="auth-msg" hidden></div>
+    <form id="form">
+      <label for="full_name">nome</label>
+      <input id="full_name" type="text" autocomplete="name">
+      <label for="company">empresa</label>
+      <input id="company" type="text" autocomplete="organization">
+      <label for="phone">telefone</label>
+      <input id="phone" type="tel" autocomplete="tel">
+      <label for="email">email</label>
+      <input id="email" type="email" disabled>
+      <button class="btn" type="submit">salvar perfil →</button>
+      <button class="btn ghost" type="button" id="btnOut">sair</button>
+    </form>
+  </div>
+  <h2 style="margin-top:28px;font-size:16px;font-family:var(--mono);color:var(--amber)">checklists salvos</h2>
+  <div class="list" id="list"></div>
+  <p class="foot"><a href="ferramenta-checklist.html">gerar novo checklist</a> · <a href="pacotes.html">pacotes</a></p>
+</div>
+  <script src="assets/js/supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/site-nav.js?v=20260914b" defer></script>
+<script>
+(async function () {
+  if (!IRNAuth.ready()) {
+    document.getElementById('hello').textContent = 'Auth não configurado (AUTH-SUPABASE.md).';
+    return;
+  }
+  var u = await IRNAuth.user();
+  if (!u) { location.replace('login.html'); return; }
+  document.getElementById('hello').textContent = 'Logado como ' + (u.email || u.id);
+  document.getElementById('email').value = u.email || '';
+  try {
+    var prof = await IRNAuth.getProfile();
+    if (prof) {
+      document.getElementById('full_name').value = prof.full_name || '';
+      document.getElementById('company').value = prof.company || '';
+      document.getElementById('phone').value = prof.phone || '';
+    }
+  } catch (e) {}
+  async function loadList() {
+    var box = document.getElementById('list');
+    box.innerHTML = '';
+    try {
+      var rows = await IRNAuth.listChecklists();
+      if (!rows.length) { box.innerHTML = '<p class="note">Nenhum checklist salvo ainda.</p>'; return; }
+      rows.forEach(function (r) {
+        var d = document.createElement('div');
+        d.className = 'item';
+        d.textContent = '[' + r.kind + '] ' + new Date(r.created_at).toLocaleString('pt-BR') + '\n' + (r.content || '').slice(0, 400);
+        box.appendChild(d);
+      });
+    } catch (e) {
+      box.innerHTML = '<p class="note">Erro ao listar: ' + (e.message || e) + '</p>';
+    }
+  }
+  loadList();
+  document.getElementById('form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    try {
+      await IRNAuth.updateProfile({
+        full_name: document.getElementById('full_name').value.trim(),
+        company: document.getElementById('company').value.trim(),
+        phone: document.getElementById('phone').value.trim()
+      });
+      IRNAuth.setMsg('msg', 'Perfil salvo.', true);
+    } catch (err) {
+      IRNAuth.setMsg('msg', err.message || 'Erro', false);
+    }
+  });
+  document.getElementById('btnOut').onclick = async function () {
+    await IRNAuth.signOut();
+    location.href = 'index.html';
+  };
+})();
+</script>
+</body>
+</html>

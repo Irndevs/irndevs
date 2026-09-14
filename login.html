@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrar — IRN Devs</title>
+<meta name="description" content="Acesse sua conta IRN Devs.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://irndevs.com/login.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site-nav.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/auth.css">
+</head>
+<body>
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / login</p>
+  <div class="sec-head"><span class="amber">$</span> auth login</div>
+  <h1>Entrar</h1>
+  <p class="lede">Acesse para salvar checklists e acompanhar pedidos.</p>
+  <div class="card">
+    <div id="msg" class="auth-msg" hidden></div>
+    <form id="form">
+      <label for="email">email</label>
+      <input id="email" type="email" required autocomplete="email" placeholder="voce@empresa.com">
+      <label for="password">senha</label>
+      <input id="password" type="password" required autocomplete="current-password" minlength="6" placeholder="••••••••">
+      <button class="btn" type="submit">entrar →</button>
+    </form>
+    <p class="note" id="cfgNote" hidden>Auth ainda não configurado. Veja AUTH-SUPABASE.md</p>
+  </div>
+  <p class="foot">Não tem conta? <a href="cadastro.html">criar conta</a></p>
+</div>
+  <script src="assets/js/supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/site-nav.js?v=20260914b" defer></script>
+<script>
+(function () {
+  var note = document.getElementById('cfgNote');
+  if (!window.IRNAuth || !IRNAuth.ready()) note.hidden = false;
+  IRNAuth.user().then(function (u) { if (u) location.replace('conta.html'); });
+  document.getElementById('form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var btn = e.target.querySelector('button');
+    btn.disabled = true;
+    try {
+      await IRNAuth.signIn(
+        document.getElementById('email').value.trim(),
+        document.getElementById('password').value
+      );
+      IRNAuth.setMsg('msg', 'Ok. Redirecionando…', true);
+      location.href = 'conta.html';
+    } catch (err) {
+      IRNAuth.setMsg('msg', (err && err.message) || 'Falha no login', false);
+      btn.disabled = false;
+    }
+  });
+})();
+</script>
+</body>
+</html>

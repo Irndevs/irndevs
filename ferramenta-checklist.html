@@ -66,6 +66,7 @@
     <button type="button" class="btn primary" id="btnGen">gerar checklist em texto</button>
     <button type="button" class="btn" id="btnCopy">copiar</button>
     <button type="button" class="btn" id="btnReset">limpar</button>
+    <button type="button" class="btn" id="btnSaveCloud">salvar na conta</button>
   </div>
   <pre class="out" id="out"></pre>
 
@@ -75,6 +76,9 @@
     <a href="#" id="btnContact">enviar checklist no contato →</a>
   </div>
 </div>
+<script src="assets/js/supabase-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/auth.js"></script>
 <script src="assets/js/site-nav.js?v=20260914" defer></script>
 <script>
 (function(){
@@ -172,7 +176,20 @@
   update();
 
   var btnC = document.getElementById('btnContact');
-  if (btnC) btnC.addEventListener('click', function (e) {
+  
+  var btnSave = document.getElementById('btnSaveCloud');
+  if (btnSave) btnSave.addEventListener('click', async function () {
+    if (!out.textContent) document.getElementById('btnGen').click();
+    try {
+      if (!window.IRNAuth || !IRNAuth.ready()) { alert('Configure o Supabase (AUTH-SUPABASE.md) ou use copiar.'); return; }
+      var u = await IRNAuth.user();
+      if (!u) { location.href = 'login.html'; return; }
+      await IRNAuth.saveChecklist(mode === 'auto' ? 'auto' : 'dados', out.textContent);
+      alert('Checklist salvo na sua conta.');
+    } catch (err) { alert(err.message || err); }
+  });
+
+  if (btnC) btnC.addEventListener('click' , function (e) {
     e.preventDefault();
     if (!out.textContent) document.getElementById('btnGen').click();
     var assunto = mode === 'auto' ? 'Checklist automacao' : 'Checklist dados';
