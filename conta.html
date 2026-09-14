@@ -12,29 +12,109 @@
 <link rel="stylesheet" href="assets/css/auth.css">
 </head>
 <body>
-<div class="wrap wide">
+<div class="wrap wide dash">
   <p class="crumb"><a href="index.html">~</a> / conta</p>
   <div class="sec-head"><span class="amber">$</span> whoami</div>
   <h1>Minha conta</h1>
-  <p class="lede" id="hello">Carregando…</p>
-  <div class="card">
-    <div id="msg" class="auth-msg" hidden></div>
-    <form id="form">
-      <label for="full_name">nome</label>
-      <input id="full_name" type="text" autocomplete="name">
-      <label for="company">empresa</label>
-      <input id="company" type="text" autocomplete="organization">
-      <label for="phone">telefone</label>
-      <input id="phone" type="tel" autocomplete="tel">
-      <label for="email">email</label>
-      <input id="email" type="email" disabled>
-      <button class="btn" type="submit">salvar perfil →</button>
-      <button class="btn ghost" type="button" id="btnOut">sair</button>
-    </form>
+  <div class="head-card card">
+    <div class="avatar avatar-lg" id="avatar">?</div>
+    <div class="head-info">
+      <div class="head-name" id="headName">—</div>
+      <div class="head-sub" id="hello">Carregando…</div>
+    </div>
+    <button class="btn ghost head-edit" type="button" id="btnEditProfile">editar perfil →</button>
   </div>
-  <h2 style="margin-top:28px;font-size:16px;font-family:var(--mono);color:var(--amber)">checklists salvos</h2>
-  <div class="list" id="list"></div>
-  <p class="foot"><a href="ferramenta-checklist.html">gerar novo checklist</a> · <a href="pacotes.html">pacotes</a></p>
+
+  <div class="dash-grid">
+    <nav class="dash-nav" id="dashNav">
+      <button class="dash-tab active" data-tab="perfil" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+        perfil
+      </button>
+      <button class="dash-tab" data-tab="seguranca" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+        segurança
+      </button>
+      <button class="dash-tab" data-tab="checklists" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12l2.5 2.5L16 9"/></svg>
+        checklists <span class="count" id="checklistCount"></span>
+      </button>
+    </nav>
+
+    <div class="dash-content">
+
+      <section class="dash-panel" data-panel="perfil">
+        <div class="stat-row">
+          <div class="stat-card">
+            <div class="stat-value" id="statChecklists">—</div>
+            <div class="stat-label">checklists salvos</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="statSince">—</div>
+            <div class="stat-label">membro desde</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="statLastLogin">—</div>
+            <div class="stat-label">último acesso</div>
+          </div>
+        </div>
+        <div class="widget-row">
+          <div class="card widget-donut">
+            <svg viewBox="0 0 120 120" class="donut">
+              <circle cx="60" cy="60" r="50" class="donut-track"/>
+              <circle cx="60" cy="60" r="50" class="donut-fill" id="donutFill"/>
+            </svg>
+            <div class="donut-center">
+              <div class="donut-pct" id="donutPct">—</div>
+              <div class="donut-label">concluído</div>
+            </div>
+          </div>
+          <div class="card widget-kinds">
+            <div class="widget-title">checklists por tipo</div>
+            <div id="kindBars"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div id="msg" class="auth-msg" hidden></div>
+          <form id="form">
+            <label for="full_name">nome</label>
+            <input id="full_name" type="text" autocomplete="name">
+            <label for="company">empresa</label>
+            <input id="company" type="text" autocomplete="organization">
+            <label for="phone">telefone</label>
+            <input id="phone" type="tel" autocomplete="tel">
+            <label for="email">email</label>
+            <input id="email" type="email" disabled>
+            <button class="btn" type="submit">salvar perfil →</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="dash-panel" data-panel="seguranca" hidden>
+        <div class="card">
+          <div id="secMsg" class="auth-msg" hidden></div>
+          <form id="pwForm">
+            <label for="newpass">nova senha (mín. 6)</label>
+            <input id="newpass" type="password" minlength="6" required autocomplete="new-password" placeholder="••••••••">
+            <button class="btn" type="submit">alterar senha →</button>
+          </form>
+          <div class="danger">
+            <p class="note">Encerrar sessão neste dispositivo, ou solicitar exclusão da conta.</p>
+            <button class="btn ghost" type="button" id="btnOut">sair</button>
+            <a class="danger-link" href="contato.html">solicitar exclusão de conta →</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="dash-panel" data-panel="checklists" hidden>
+        <div class="card">
+          <div class="list" id="list"></div>
+          <p class="foot"><a href="ferramenta-checklist.html">gerar novo checklist</a> · <a href="pacotes.html">pacotes</a></p>
+        </div>
+      </section>
+
+    </div>
+  </div>
 </div>
   <script src="assets/js/supabase-config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -48,26 +128,139 @@
   }
   var u = await IRNAuth.user();
   if (!u) { location.replace('login.html'); return; }
-  document.getElementById('hello').textContent = 'Logado como ' + (u.email || u.id);
+
+  var since = u.created_at
+    ? new Date(u.created_at).toLocaleDateString('pt-BR', { month: '2-digit', year: 'numeric' })
+    : '';
+  document.getElementById('hello').textContent =
+    'Logado como ' + (u.email || u.id) + (since ? ' · membro desde ' + since : '');
   document.getElementById('email').value = u.email || '';
+
+  document.getElementById('statSince').textContent = u.created_at
+    ? new Date(u.created_at).toLocaleDateString('pt-BR')
+    : '—';
+  document.getElementById('statLastLogin').textContent = u.last_sign_in_at
+    ? new Date(u.last_sign_in_at).toLocaleDateString('pt-BR')
+    : '—';
+
+  function initials(s) {
+    s = (s || '').trim();
+    if (!s) return '?';
+    var parts = s.split(/\s+/).filter(Boolean);
+    if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+    return s.slice(0, 2).toUpperCase();
+  }
+  document.getElementById('avatar').textContent = initials(u.email);
+  document.getElementById('headName').textContent = u.email || u.id;
+
+  document.getElementById('btnEditProfile').addEventListener('click', function () {
+    activate('perfil');
+    document.getElementById('full_name').focus();
+  });
+
+  // navegação por abas
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.dash-tab'));
+  var panels = Array.prototype.slice.call(document.querySelectorAll('.dash-panel'));
+  function activate(name) {
+    tabs.forEach(function (t) { t.classList.toggle('active', t.dataset.tab === name); });
+    panels.forEach(function (p) { p.hidden = p.dataset.panel !== name; });
+  }
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () { activate(t.dataset.tab); });
+  });
+  if (location.hash) {
+    var initial = location.hash.replace('#', '');
+    if (tabs.some(function (t) { return t.dataset.tab === initial; })) activate(initial);
+  }
+
   try {
     var prof = await IRNAuth.getProfile();
     if (prof) {
       document.getElementById('full_name').value = prof.full_name || '';
       document.getElementById('company').value = prof.company || '';
       document.getElementById('phone').value = prof.phone || '';
+      if (prof.full_name) {
+        document.getElementById('avatar').textContent = initials(prof.full_name);
+        document.getElementById('headName').textContent = prof.full_name;
+      }
     }
   } catch (e) {}
+
+  function parseProgress(content) {
+    var text = content || '';
+    var done = (text.match(/\[x\]/gi) || []).length;
+    var total = done + (text.match(/\[ \]/g) || []).length;
+    return { done: done, total: total };
+  }
+
   async function loadList() {
     var box = document.getElementById('list');
+    var countEl = document.getElementById('checklistCount');
     box.innerHTML = '';
     try {
       var rows = await IRNAuth.listChecklists();
+      if (countEl) countEl.textContent = rows.length ? '(' + rows.length + ')' : '';
+      document.getElementById('statChecklists').textContent = rows.length;
+
+      var donut = { done: 0, total: 0 };
+      var kindCounts = {};
+      rows.forEach(function (r) {
+        var p = parseProgress(r.content);
+        donut.done += p.done;
+        donut.total += p.total;
+        kindCounts[r.kind] = (kindCounts[r.kind] || 0) + 1;
+      });
+      var pct = donut.total ? Math.round((donut.done / donut.total) * 100) : 0;
+      document.getElementById('donutPct').textContent = donut.total ? pct + '%' : '—';
+      var circumference = 2 * Math.PI * 50;
+      var fillEl = document.getElementById('donutFill');
+      fillEl.style.strokeDasharray = circumference;
+      fillEl.style.strokeDashoffset = circumference * (1 - pct / 100);
+
+      var kindsBox = document.getElementById('kindBars');
+      kindsBox.innerHTML = '';
+      var kindKeys = Object.keys(kindCounts);
+      if (!kindKeys.length) {
+        kindsBox.innerHTML = '<p class="note">Sem dados ainda.</p>';
+      } else {
+        var maxCount = Math.max.apply(null, kindKeys.map(function (k) { return kindCounts[k]; }));
+        kindKeys.forEach(function (k) {
+          var count = kindCounts[k];
+          var w = Math.round((count / maxCount) * 100);
+          var row = document.createElement('div');
+          row.className = 'kind-row';
+          row.innerHTML = '<span class="kind-label">' + k + '</span>' +
+            '<div class="kind-bar"><div class="kind-bar-fill" style="width:' + w + '%"></div></div>' +
+            '<span class="kind-count">' + count + '</span>';
+          kindsBox.appendChild(row);
+        });
+      }
+
       if (!rows.length) { box.innerHTML = '<p class="note">Nenhum checklist salvo ainda.</p>'; return; }
       rows.forEach(function (r) {
         var d = document.createElement('div');
         d.className = 'item';
-        d.textContent = '[' + r.kind + '] ' + new Date(r.created_at).toLocaleString('pt-BR') + '\n' + (r.content || '').slice(0, 400);
+        var p = parseProgress(r.content);
+        var pct = p.total ? Math.round((p.done / p.total) * 100) : 0;
+
+        var head = document.createElement('div');
+        head.className = 'item-head';
+        head.innerHTML = '<span>[' + r.kind + '] ' + new Date(r.created_at).toLocaleString('pt-BR') + '</span>' +
+          (p.total ? '<span class="item-pct">' + p.done + '/' + p.total + '</span>' : '');
+        d.appendChild(head);
+
+        if (p.total) {
+          var bar = document.createElement('div');
+          bar.className = 'item-bar';
+          bar.innerHTML = '<div class="item-bar-fill" style="width:' + pct + '%"></div>';
+          d.appendChild(bar);
+        }
+
+        var body = document.createElement('div');
+        body.className = 'item-body';
+        body.textContent = (r.content || '').slice(0, 400);
+        d.appendChild(body);
+
         box.appendChild(d);
       });
     } catch (e) {
@@ -75,6 +268,7 @@
     }
   }
   loadList();
+
   document.getElementById('form').addEventListener('submit', async function (e) {
     e.preventDefault();
     try {
@@ -88,6 +282,18 @@
       IRNAuth.setMsg('msg', err.message || 'Erro', false);
     }
   });
+
+  document.getElementById('pwForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    try {
+      await IRNAuth.changePassword(document.getElementById('newpass').value);
+      IRNAuth.setMsg('secMsg', 'Senha alterada.', true);
+      e.target.reset();
+    } catch (err) {
+      IRNAuth.setMsg('secMsg', err.message || 'Erro', false);
+    }
+  });
+
   document.getElementById('btnOut').onclick = async function () {
     await IRNAuth.signOut();
     location.href = 'index.html';
