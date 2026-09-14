@@ -22,6 +22,7 @@
   var topLinks = [
     { href: 'index.html#projetos', label: 'projetos', ico: '▸' },
     { href: 'servicos.html', label: 'serviços', ico: '⚙' },
+    { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
     { href: 'blog.html', label: 'blog', ico: '≡' },
     { href: 'sobre.html', label: 'sobre', ico: 'i' },
     { href: 'homelab.html', label: 'homelab', ico: '▣' }
@@ -31,12 +32,14 @@
     { href: 'index.html', label: 'início', ico: '⌂' },
     { href: 'index.html#projetos', label: 'projetos', ico: '▸' },
     { href: 'servicos.html', label: 'serviços', ico: '⚙' },
+    { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
     { href: 'como-contratar.html', label: 'como contratar', ico: '→' },
     { href: 'sobre.html', label: 'sobre', ico: 'i' },
     { href: 'blog.html', label: 'blog', ico: '≡' },
     { href: 'observabilidade.html', label: 'observabilidade', ico: '◉' },
     { href: 'kubernetes.html', label: 'kubernetes', ico: '⬡' },
     { href: 'homelab.html', label: 'homelab', ico: '▣' },
+    { href: 'ferramenta-checklist.html', label: 'checklist grátis', ico: '✓' },
     { href: 'produtividade.html', label: 'produtividade', ico: '⏱' },
     { href: 'jogos.html', label: 'jogos', ico: '▶' },
     { href: 'https://loja.irndevs.com', label: 'loja', ico: '⬡' },

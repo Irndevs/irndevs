@@ -245,6 +245,20 @@
   });
 </script>
 
-  <script src="assets/js/site-nav.js" defer></script>
+  <script src="assets/js/site-nav.js" defer>
+  try {
+    const q = new URLSearchParams(location.search).get('assunto');
+    if (q) {
+      const sel = document.getElementById('subject');
+      const msg = document.getElementById('message');
+      if (sel) {
+        const opt = document.createElement('option');
+        opt.value = q; opt.textContent = q; opt.selected = true;
+        sel.appendChild(opt);
+      }
+      if (msg && !msg.value) msg.placeholder = 'Sobre: ' + q + ' — descreva o contexto...';
+    }
+  } catch (e) {}
+</script>
 </body>
 </html>
