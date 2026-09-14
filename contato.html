@@ -138,6 +138,11 @@
         <label for="subject" class="flabel">assunto *</label>
         <select id="subject" name="subject" class="fselect" required>
           <option value="">selecione o assunto</option>
+          <option value="MVP web">MVP web</option>
+          <option value="Automação de processo">Automação de processo</option>
+          <option value="Dashboard de indicadores">Dashboard de indicadores</option>
+          <option value="Checklist automacao">Checklist — automação</option>
+          <option value="Checklist dados">Checklist — dados</option>
           <option value="dev">Projeto de Desenvolvimento de software</option>
           <option value="auto">Qualidade e confiabilidade</option>
           <option value="dados">análises de dados</option>
@@ -198,6 +203,56 @@
     });
   });
 
+  
+  // Prefill from ?assunto=&msg= (pacotes / checklist)
+  (function prefillFromQuery() {
+    try {
+      var params = new URLSearchParams(location.search);
+      var assunto = params.get('assunto') || params.get('subject') || '';
+      var msg = params.get('msg') || params.get('message') || '';
+      var sel = document.getElementById('subject');
+      var ta = document.getElementById('message');
+      var templates = {
+        'MVP web': 'Olá, IRN Devs.\n\nTenho interesse no pacote MVP web.\n\nContexto do produto/ideia:\n-\n\nPrazo desejado:\n-\n\nOrçamento aproximado (opcional):\n-\n',
+        'Automacao de processo': 'Olá, IRN Devs.\n\nTenho interesse no pacote Automação de processo.\n\nProcesso atual (passos manuais):\n-\n\nSistemas envolvidos:\n-\n\nVolume aproximado (ex.: N casos/semana):\n-\n',
+        'Automação de processo': 'Olá, IRN Devs.\n\nTenho interesse no pacote Automação de processo.\n\nProcesso atual (passos manuais):\n-\n\nSistemas envolvidos:\n-\n\nVolume aproximado (ex.: N casos/semana):\n-\n',
+        'Dashboard de indicadores': 'Olá, IRN Devs.\n\nTenho interesse no pacote Dashboard de indicadores.\n\nFontes de dados:\n-\n\nIndicadores que preciso ver:\n-\n\nQuem usa o painel:\n-\n',
+        'Checklist automacao': 'Olá, IRN Devs.\n\nGerei o checklist de automação no site e gostaria de ajuda para implementar os itens pendentes.\n\n(Cole aqui o texto do checklist, se quiser.)\n\n',
+        'Checklist dados': 'Olá, IRN Devs.\n\nGerei o checklist de pipeline de dados no site e gostaria de ajuda para implementar os itens pendentes.\n\n(Cole aqui o texto do checklist, se quiser.)\n\n'
+      };
+      if (sel && assunto) {
+        var found = false;
+        for (var i = 0; i < sel.options.length; i++) {
+          var o = sel.options[i];
+          if (o.value === assunto || o.textContent === assunto || (o.textContent && o.textContent.indexOf(assunto) !== -1)) {
+            o.selected = true;
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          var opt = document.createElement('option');
+          opt.value = assunto;
+          opt.textContent = assunto;
+          opt.selected = true;
+          sel.appendChild(opt);
+        }
+        var hidden = document.querySelector('input[name="_subject"]');
+        if (hidden) hidden.value = 'IRN Devs — ' + assunto;
+      }
+      if (ta) {
+        if (msg) {
+          try { ta.value = decodeURIComponent(msg); } catch (e2) { ta.value = msg; }
+        } else if (assunto && templates[assunto]) {
+          ta.value = templates[assunto];
+        }
+      }
+      if (ta && ta.value) {
+        try { ta.focus(); } catch (e3) {}
+      }
+    } catch (e) {}
+  })();
+
   document.getElementById('contactForm').addEventListener('submit', async function (e) {
     e.preventDefault();
     const form = e.target;
@@ -233,19 +288,7 @@
 </script>
 
   <script src="assets/js/site-nav.js?v=20260914" defer>
-  try {
-    const q = new URLSearchParams(location.search).get('assunto');
-    if (q) {
-      const sel = document.getElementById('subject');
-      const msg = document.getElementById('message');
-      if (sel) {
-        const opt = document.createElement('option');
-        opt.value = q; opt.textContent = q; opt.selected = true;
-        sel.appendChild(opt);
-      }
-      if (msg && !msg.value) msg.placeholder = 'Sobre: ' + q + ' — descreva o contexto...';
-    }
-  } catch (e) {}
+  
 </script>
 </body>
 </html>

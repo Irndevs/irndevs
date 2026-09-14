@@ -71,7 +71,8 @@
 
   <div class="cta">
     Quer que a IRN Devs implemente o que faltou?
-    <a href="pacotes.html">ver pacotes</a> · <a href="contato.html">contato</a>
+    <a href="pacotes.html">ver pacotes</a> ·
+    <a href="#" id="btnContact">enviar checklist no contato →</a>
   </div>
 </div>
 <script src="assets/js/site-nav.js?v=20260914" defer></script>
@@ -169,6 +170,15 @@
     update();
   };
   update();
+
+  var btnC = document.getElementById('btnContact');
+  if (btnC) btnC.addEventListener('click', function (e) {
+    e.preventDefault();
+    if (!out.textContent) document.getElementById('btnGen').click();
+    var assunto = mode === 'auto' ? 'Checklist automacao' : 'Checklist dados';
+    var msg = out.textContent || '';
+    location.href = 'contato.html?assunto=' + encodeURIComponent(assunto) + '&msg=' + encodeURIComponent(msg.slice(0, 1800));
+  });
 })();
 </script>
 </body>
