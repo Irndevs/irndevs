@@ -31,14 +31,26 @@
     </form>
     <p class="note" id="cfgNote" hidden>Auth ainda não configurado. Veja AUTH-SUPABASE.md</p>
   </div>
-  <p class="foot">Já tem conta? <a href="login.html">entrar</a></p>
+  <p class="foot">Já tem conta? <a href="login.html" id="linkLogin">entrar</a></p>
 </div>
   <script src="assets/js/supabase-config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/js/auth.js"></script>
-  <script src="assets/js/site-nav.js?v=20260914c" defer></script>
+  <script src="assets/js/site-nav.js?v=20260914d" defer></script>
 <script>
 (function () {
+  function safeNext() {
+    var q = new URLSearchParams(location.search).get('next') || '';
+    if (!q || q.indexOf('://') !== -1 || (q.charAt(0) === '/' && q.charAt(1) === '/')) return 'conta.html';
+    if (q.indexOf('..') !== -1) return 'conta.html';
+    return q || 'conta.html';
+  }
+  var next = safeNext();
+  var link = document.getElementById('linkLogin');
+  if (link && next !== 'conta.html') {
+    link.href = 'login.html?next=' + encodeURIComponent(next);
+  }
+
   if (!window.IRNAuth || !IRNAuth.ready()) document.getElementById('cfgNote').hidden = false;
   document.getElementById('form').addEventListener('submit', async function (e) {
     e.preventDefault();
@@ -51,8 +63,8 @@
         document.getElementById('name').value.trim()
       );
       if (data.session) {
-        IRNAuth.setMsg('msg', 'Conta criada. Indo para sua área…', true);
-        location.href = 'conta.html';
+        IRNAuth.setMsg('msg', 'Conta criada. Indo para a ferramenta…', true);
+        location.href = next;
       } else {
         IRNAuth.setMsg('msg', 'Conta criada. Verifique seu e-mail para confirmar, depois faça login.', true);
         btn.disabled = false;
