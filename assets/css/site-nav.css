@@ -470,6 +470,10 @@ body.has-site-nav > nav:not(.sn-bottom) {
   background: #25D366;
   color: #fff;
 }
+.irn-float-email {
+  background: var(--nav-amber, #e8a33d);
+  color: #10130f;
+}
 .irn-float-ico { font-size: 16px; line-height: 1; }
 .irn-float-txt { letter-spacing: 0.02em; }
 @media (max-width: 899px) {

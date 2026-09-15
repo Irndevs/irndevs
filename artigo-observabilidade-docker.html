@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/pages/artigo-observabilidade-docker.css">
+<link rel="stylesheet" href="assets/css/pages/artigo-base.css">
   <link rel="stylesheet" href="assets/css/site-nav.css">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <meta property="og:title" content="Stack de Qualidade e confiabilidade com Docker — IRN Devs">
@@ -75,6 +75,7 @@
   ]
 }
   </script>
+  <link rel="stylesheet" href="assets/css/motion.css">
 </head>
 <body>
 <!-- nav: site-nav.js -->
@@ -243,7 +244,7 @@ datasources:
 </code></pre>
     <div class="step">
       <div class="n">$ docker compose up -d</div>
-      <p class="inline-style-3">Grafana → http://localhost:3000 (admin / admin123)<br>Prometheus → http://localhost:9090</p>
+      <p class="obs-style-1">Grafana → http://localhost:3000 (admin / admin123)<br>Prometheus → http://localhost:9090</p>
     </div>
     <div class="warn"><strong>warn</strong> · Altere a senha do Grafana imediatamente em qualquer ambiente exposto.</div>
     <h2 id="otel">7. OpenTelemetry Collector</h2>
@@ -303,18 +304,18 @@ service:
   </div>
 </div>
 
-<div class="wrap inline-style-4">
-  <div class="inline-style-5">$ next</div>
-  <p class="inline-style-6">Precisa de infraestrutura na prática?</p>
-  <a href="contato.html" class="inline-style-7">falar com a IRN Devs →</a>
-  <span class="inline-style-8"></span>
-  <a href="servicos.html" class="inline-style-9">serviços</a>
+<div class="wrap obs-style-2">
+  <div class="obs-style-3">$ next</div>
+  <p class="obs-style-4">Precisa de infraestrutura na prática?</p>
+  <a href="contato.html" class="obs-style-5">falar com a IRN Devs →</a>
+  <span class="obs-style-6"></span>
+  <a href="servicos.html" class="obs-style-7">serviços</a>
 </div>
 
 <footer>
   <div class="wrap">
     <div>© 2026 irndevs</div>
-    <div class="inline-style-10">
+    <div class="obs-style-8">
       <a href="mailto:contato@irndevs.com">contato@irndevs.com</a>
     </div>
   </div>

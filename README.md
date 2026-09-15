@@ -41,25 +41,21 @@ Um portfolio moderno e interativo desenvolvido com HTML, CSS e JavaScript vanill
 ## 📁 Estrutura do Projeto
 
 ```
-portfolio-melhorado/
-├── index.html                 # Página principal
-├── assets/
-│   ├── css/
-│   │   └── shared.css        # Estilos compartilhados
-│   ├── js/
-│   │   └── shared.js         # JavaScript compartilhado
-│   └── images/               # Imagens do projeto
-├── sobre/
-│   └── index.html            # Página sobre mim
-├── blog/
-│   └── index.html            # Página do blog
-├── contato/
-│   └── index.html            # Página de contato
-├── projetos/
-│   ├── ecommerce/
-│   │   └── index.html        # Projeto detalhado
-│   └── [outros-projetos]/    # Outros projetos
-└── README.md                 # Documentação
+irndevs/
+├── index.html                  # Página principal
+├── servicos.html               # Serviços e soluções
+├── pacotes.html                # Pacotes de contratação
+├── contato.html                # Formulário de contato
+├── blog.html                   # Índice do blog
+├── artigo-*.html               # Artigos individuais
+├── cursos.html                 # Índice dos cursos
+├── curso-python-modulo-*.html  # Módulos do curso
+├── assets/css/                 # Estilos compartilhados e por página
+├── assets/js/                  # Navegação, autenticação e interações
+├── assets/img/                 # Logos, diagramas e imagens
+├── supabase/schema.sql         # Estrutura e políticas do banco
+├── scripts/validate-site.py    # Validação de HTML, links e metadados
+└── README.md                   # Documentação
 ```
 
 ## 🎯 Melhorias Implementadas
@@ -267,10 +263,10 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para de
 
 ## 📞 Contato
 
-- **Email**: contato@exemplo.com
-- **LinkedIn**: [linkedin.com/in/desenvolvedor](https://linkedin.com/in/desenvolvedor)
-- **GitHub**: [github.com/desenvolvedor](https://github.com/desenvolvedor)
-- **Portfolio**: [portfolio-url.com](#)
+- **Email**: contato@irndevs.com
+- **LinkedIn**: configure o link real antes de publicar
+- **GitHub**: https://github.com/iri-afk
+- **Portfolio**: https://irndevs.com/
 
 ---
 

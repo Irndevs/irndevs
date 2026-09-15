@@ -229,9 +229,9 @@
       float.innerHTML =
         '<a href="contato.html" class="irn-float-btn irn-float-chat" title="Falar / Contato" aria-label="Abrir contato">' +
         '<span class="irn-float-ico">💬</span><span class="irn-float-txt">Falar</span></a>' +
-        '<a href="https://wa.me/5500000000000?text=Ol%C3%A1%2C%20vim%20pelo%20site%20IRN%20Devs%20e%20gostaria%20de%20falar%20sobre%20um%20projeto" ' +
-        'class="irn-float-btn irn-float-wa" target="_blank" rel="noopener noreferrer" title="WhatsApp" aria-label="WhatsApp">' +
-        '<span class="irn-float-ico">↗</span><span class="irn-float-txt">WhatsApp</span></a>';
+        '<a href="mailto:contato@irndevs.com?subject=Projeto%20com%20a%20IRN%20Devs" ' +
+        'class="irn-float-btn irn-float-email" title="Enviar e-mail" aria-label="Enviar e-mail">' +
+        '<span class="irn-float-ico">@</span><span class="irn-float-txt">E-mail</span></a>';
       document.body.appendChild(float);
     }
   }

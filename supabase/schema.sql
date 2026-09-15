@@ -47,11 +47,16 @@ create policy "checklists_insert_own" on public.checklists_saved
 create policy "checklists_delete_own" on public.checklists_saved
   for delete using (auth.uid() = user_id);
 
--- leads: insert autenticado ou anônimo (opcional)
-create policy "leads_insert_auth" on public.leads_extra
-  for insert with check (true);
+-- leads: somente usuários autenticados podem criar e consultar os próprios registros.
+-- O formulário público usa Formsubmit; não exponha INSERT anônimo nesta tabela.
+drop policy if exists "leads_insert_auth" on public.leads_extra;
+drop policy if exists "leads_select_own" on public.leads_extra;
+create policy "leads_insert_own" on public.leads_extra
+  for insert to authenticated
+  with check (auth.uid() = user_id);
 create policy "leads_select_own" on public.leads_extra
-  for select using (auth.uid() = user_id);
+  for select to authenticated
+  using (auth.uid() = user_id);
 
 -- Cria profile ao registrar
 create or replace function public.handle_new_user()

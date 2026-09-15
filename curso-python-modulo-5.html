@@ -3,13 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Módulo 5 — E-mails, arquivos e organização automática | Automações em Python | IRN Devs</title>
+<title>Python 5 — E-mails e arquivos | IRN Devs</title>
+<link rel="canonical" href="https://irndevs.com/curso-python-modulo-5.html">
 <meta name="description" content="Módulo 5 do curso Automações em Python: envio de e-mails com smtplib, anexos MIME e monitoramento de pastas com watchdog.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/pages/curso-python.css">
 <link rel="stylesheet" href="assets/css/site-nav.css">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/motion.css">
+
+<meta property="og:title" content="Python 5 — E-mails e arquivos | IRN Devs">
+<meta property="og:description" content="Módulo 5 do curso Automações em Python: envio de e-mails com smtplib, anexos MIME e monitoramento de pastas com watchdog.">
+<meta property="og:url" content="https://irndevs.com/curso-python-modulo-5.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:site_name" content="IRN Devs">
 </head>
 <body>
 
@@ -34,6 +43,7 @@
 import smtplib
 from email.message import EmailMessage
 from pathlib import Path
+import os
 
 def enviar_relatorio(destinatario, caminho_anexo):
     msg = EmailMessage()
@@ -50,8 +60,11 @@ def enviar_relatorio(destinatario, caminho_anexo):
         filename=anexo.name,
     )
 
-    with smtplib.SMTP_SSL("smtp.exemplo.com", 465) as servidor:
-        servidor.login("robo@irndevs.com", "senha_do_app")
+    smtp_host = os.environ["SMTP_HOST"]
+    smtp_user = os.environ["SMTP_USER"]
+    smtp_password = os.environ["SMTP_PASSWORD"]
+    with smtplib.SMTP_SSL(smtp_host, 465) as servidor:
+        servidor.login(smtp_user, smtp_password)
         servidor.send_message(msg)
 
     print(f"E-mail enviado para {destinatario} com {anexo.name}")

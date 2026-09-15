@@ -1,14 +1,12 @@
 /**
- * IRN Devs — Chat Bot + redirecionamento WhatsApp
+ * IRN Devs — Chat Bot + redirecionamento para contato
  * Inclua com: <script src="assets/js/chat-bot.js?v=1" defer></script>
  *
- * Configure o número do WhatsApp abaixo (somente dígitos, com DDI).
  */
 (function () {
   'use strict';
 
   // ====== CONFIGURE AQUI ======
-  var IRN_WA = '5500000000000'; // Ex: 5511987654321
   var IRN_NOME = 'IRN Devs';
   // ============================
 
@@ -168,10 +166,10 @@
     var low = t.toLowerCase();
 
     if (/humano|atendente|pessoa|falar com|whatsapp|suporte/.test(low)) {
-      botMsg('Perfeito! Abrindo o WhatsApp...');
+      botMsg('Perfeito! Abrindo o contato...');
       setTimeout(function () {
         window.open(
-          'https://wa.me/' + IRN_WA + '?text=' + encodeURIComponent('Olá! Vim do site IRN Devs e gostaria de atendimento.'),
+          'contato.html?assunto=Atendimento',
           '_blank'
         );
         closeChat();
@@ -203,8 +201,7 @@
         div.className = 'irn-msg bot';
         div.innerHTML =
           'Quer continuar com um humano?<br>' +
-          '<a href="https://wa.me/' + IRN_WA + '?text=' + encodeURIComponent('Olá! Vim do site IRN Devs e gostaria de atendimento.') +
-          '" target="_blank" rel="noopener noreferrer" class="irn-wa-btn">📱 Abrir WhatsApp</a>';
+          '<a href="contato.html?assunto=Atendimento" class="irn-wa-btn">✉️ Abrir contato</a>';
         box.appendChild(div);
         box.scrollTop = box.scrollHeight;
         div.querySelector('a').addEventListener('click', closeChat);

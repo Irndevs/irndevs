@@ -10,9 +10,11 @@ MAX_PAGE_BYTES = 500_000
 errors = []
 warnings = []
 
-for page in sorted(ROOT.glob("*.html")):
-    text = page.read_text(encoding="utf-8")
+for page in sorted(list(ROOT.glob('*.html')) + list((ROOT / 'en').glob('*.html'))):
     relative = page.relative_to(ROOT)
+    if page.name.startswith('google') and page.suffix == '.html':
+        continue
+    text = page.read_text(encoding="utf-8")
 
     if "<title>" not in text:
         errors.append(f"{relative}: missing <title>")
@@ -33,7 +35,7 @@ for page in sorted(ROOT.glob("*.html")):
         if target.endswith((".html", ".xml")) and not (page.parent / target).exists():
             errors.append(f"{relative}: broken local link '{href}'")
 
-    if 'href="https://linkedin.com"' in text:
+    if 'href="https://linkedin.com"' in text or 'linkedin.com/in/desenvolvedor' in text:
         errors.append(f"{relative}: generic LinkedIn URL")
     if page.name == "jogos.html" and "Snake e Memory" in text:
         errors.append(f"{relative}: stale two-game description")
@@ -51,6 +53,6 @@ if warnings:
 if errors:
     sys.exit(1)
 
-print(f"Validated {len(list(ROOT.glob('*.html')))} HTML pages: OK")
+print(f"Validated {len(list(ROOT.glob('*.html')) + list((ROOT / 'en').glob('*.html')))} HTML pages: OK")
 if warnings:
     print(f"{len(warnings)} performance warning(s) remain")

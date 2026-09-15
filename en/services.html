@@ -1,193 +1,48 @@
-/**
- * IRN Devs — menu lateral + menu superior + menu inferior
- * Inclua: <link rel="stylesheet" href="assets/css/site-nav.css">
- *         <script src="assets/js/site-nav.js" defer></script>
- */
-(function () {
-  var path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services — IRN Devs</title>
+<meta name="description" content="IRN Devs services for software development, process automation, data dashboards and reliable infrastructure.">
+<link rel="canonical" href="https://irndevs.com/en/services.html">
+<link rel="alternate" hreflang="en" href="https://irndevs.com/en/services.html">
+<link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/servicos.html">
+<link rel="alternate" hreflang="x-default" href="https://irndevs.com/servicos.html">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--green:#7fae6a;--text:#eae6d9;--dim:#8f9587;--mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0} body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55} a{color:var(--amber);text-decoration:none} a:hover{text-decoration:underline}.wrap{max-width:840px;margin:0 auto;padding:40px 28px 64px}.lang{font-family:var(--mono);font-size:13px;color:var(--dim);margin-bottom:24px}h1{font-size:32px;margin:8px 0 12px}h2{font:600 16px var(--mono);color:var(--amber);margin:28px 0 10px}p,li{color:var(--dim);font-size:15px;margin-bottom:10px}ul{padding-left:1.2em}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:22px}.card{background:var(--raised);border:1px solid var(--border);padding:18px}.card h3{font:600 15px var(--mono);color:var(--amber);margin-bottom:8px}.btn{display:inline-block;margin-top:20px;font:600 13px var(--mono);background:var(--amber);color:#10130f;padding:10px 16px}.nav{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px;font:13px var(--mono)}@media(max-width:620px){.grid{grid-template-columns:1fr}.wrap{padding:28px 20px 48px}}
+</style>
+  <link rel="stylesheet" href="../assets/css/motion.css">
 
-  function isActive(href) {
-    var h = (href.split('/').pop() || '').split('#')[0].toLowerCase();
-    if (!h || h === '#') return false;
-    if (path === h) return true;
-    if ((path === '' || path === 'index.html') && (h === 'index.html')) return true;
-    if (path.indexOf('artigo-') === 0 && h === 'blog.html') return true;
-    return false;
-  }
-
-  function cls(href) {
-    return isActive(href) ? ' active' : '';
-  }
-
-  var topLinks = [
-    { href: 'index.html#projetos', label: 'projetos', ico: '▸' },
-    { href: 'servicos.html', label: 'serviços', ico: '⚙' },
-    { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
-    { href: 'ferramenta-checklist.html', label: 'checklist', ico: '✓' },
-    { href: 'blog.html', label: 'blog', ico: '≡' },
-    { href: 'sobre.html', label: 'sobre', ico: 'i' }
-  ];
-
-  var drawerItems = [
-    { href: 'index.html', label: 'início', ico: '⌂' },
-    { href: 'index.html#projetos', label: 'projetos', ico: '▸' },
-    { href: 'servicos.html', label: 'serviços', ico: '⚙' },
-    { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
-    { href: 'ferramenta-checklist.html', label: 'checklist grátis', ico: '✓' },
-    { href: 'como-contratar.html', label: 'como contratar', ico: '→' },
-    { href: 'blog.html', label: 'blog', ico: '≡' },
-    { href: 'sobre.html', label: 'sobre', ico: 'i' },
-    { href: 'homelab.html', label: 'homelab', ico: '▣' },
-    { href: 'produtividade.html', label: 'produtividade', ico: '⏱' },
-    { href: 'jogos.html', label: 'jogos', ico: '▶' },
-    { href: 'contato.html', label: 'contato', ico: '@' },
-    { href: 'privacidade.html', label: 'privacidade', ico: '§' }
-  ];
-
-  var bottomItems = [
-    { href: 'index.html', label: 'início', ico: '⌂' },
-    { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
-    { href: 'ferramenta-checklist.html', label: 'checklist', ico: '✓' },
-    { href: 'blog.html', label: 'blog', ico: '≡' },
-    { href: 'contato.html', label: 'contato', ico: '@' }
-  ];
-
-  function mount() {
-    document.querySelectorAll('nav').forEach(function (legacyNav) {
-      if (legacyNav.closest('#siteNavRoot')) return;
-      if (legacyNav.classList.contains('sn-bottom') || legacyNav.classList.contains('sn-top-links') || legacyNav.classList.contains('sn-drawer-links')) return;
-      legacyNav.remove();
-    });
-    document.body.classList.add('has-site-nav');
-
-    var topLinksHtml = topLinks.map(function (l) {
-      return '<a href="' + l.href + '" class="' + cls(l.href).trim() + '"><span class="ico">' + l.ico + '</span><span class="label">' + l.label + '</span></a>';
-    }).join('');
-
-    var drawerHtml = drawerItems.map(function (l) {
-      return '<a href="' + l.href + '" class="' + cls(l.href).trim() + '"><span class="ico">' + l.ico + '</span><span class="label">' + l.label + '</span></a>';
-    }).join('');
-
-    var bottomHtml = bottomItems.map(function (l) {
-      return '<a href="' + l.href + '" class="' + cls(l.href).trim() + '"><span class="ico">' + l.ico + '</span><span class="label">' + l.label + '</span></a>';
-    }).join('');
-
-    var root = document.createElement('div');
-    root.id = 'siteNavRoot';
-    root.innerHTML =
-      '<header class="sn-top" role="banner">' +
-      '<button type="button" class="sn-burger" id="snBurger" aria-label="Abrir/fixar menu">☰</button>' +
-      '<a href="index.html" class="sn-logo" aria-label="IRN Devs">' +
-      '<img src="assets/img/logo-irndevs.svg" alt="~/irndevs $" width="160" height="32" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline\'">' +
-      '<span class="sn-logo-text" style="display:none">~/irndevs <span>$</span></span>' +
-      '</a>' +
-      '<nav class="sn-top-links" aria-label="Principal">' + topLinksHtml + '</nav>' +
-      '<a href="contato.html" class="sn-top-cta">contato</a>' +
-      '</header>' +
-      '<div class="sn-overlay" id="snOverlay" hidden></div>' +
-      '<aside class="sn-drawer" id="snDrawer" aria-hidden="true">' +
-      '<div class="sn-drawer-head">' +
-      '<a href="index.html" class="brand"><span class="brand-full">~/irndevs <span>$</span></span><span class="brand-mini">$</span></a>' +
-      '<button type="button" class="sn-close" id="snClose" aria-label="Fechar">✕</button>' +
-      '</div>' +
-      '<div class="sn-drawer-label">$ menu</div>' +
-      '<nav class="sn-drawer-links">' + drawerHtml + '</nav>' +
-      '</aside>' +
-      '<nav class="sn-bottom" aria-label="Atalhos">' + bottomHtml + '</nav>';
-
-    document.body.insertBefore(root, document.body.firstChild);
-
-    var drawer = document.getElementById('snDrawer');
-    var overlay = document.getElementById('snOverlay');
-    var burger = document.getElementById('snBurger');
-    var closeBtn = document.getElementById('snClose');
-    var MOBILE_QUERY = window.matchMedia('(max-width: 899px)');
-    var pinned = false;
-
-    // --- Mobile: drawer off-canvas com overlay (comportamento original) ---
-    function openMobile() {
-      drawer.classList.add('open');
-      overlay.classList.add('open');
-      overlay.hidden = false;
-      drawer.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeMobile() {
-      drawer.classList.remove('open');
-      overlay.classList.remove('open');
-      overlay.hidden = true;
-      drawer.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-    }
-
-    // --- Desktop: sidebar fixa em modo ícone, expande só com clique no ☰ ---
-    // quando expandida (fixada), empurra o conteúdo em vez de cobri-lo
-    function updateExpandedState() {
-      document.body.classList.toggle('nav-expanded', pinned && !MOBILE_QUERY.matches);
-    }
-
-    function setPinned(v) {
-      pinned = v;
-      drawer.classList.toggle('pinned', pinned);
-      burger.setAttribute('aria-pressed', pinned ? 'true' : 'false');
-      updateExpandedState();
-    }
-
-    function handleBurgerClick() {
-      if (MOBILE_QUERY.matches) {
-        drawer.classList.contains('open') ? closeMobile() : openMobile();
-      } else {
-        setPinned(!pinned);
-      }
-    }
-
-    burger.addEventListener('click', handleBurgerClick);
-    closeBtn.addEventListener('click', function () {
-      if (MOBILE_QUERY.matches) {
-        closeMobile();
-      } else {
-        setPinned(false);
-      }
-    });
-    overlay.addEventListener('click', closeMobile);
-    drawer.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        if (MOBILE_QUERY.matches) closeMobile();
-      });
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key !== 'Escape') return;
-      if (MOBILE_QUERY.matches) closeMobile();
-      else setPinned(false);
-    });
-
-    // aria-hidden correto ao trocar de breakpoint
-    MOBILE_QUERY.addEventListener('change', function (e) {
-      if (e.matches) {
-        drawer.classList.remove('pinned');
-        drawer.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('nav-expanded');
-      } else {
-        closeMobile();
-        drawer.setAttribute('aria-hidden', 'false');
-      }
-      updateExpandedState();
-    });
-    drawer.setAttribute('aria-hidden', MOBILE_QUERY.matches ? 'true' : 'false');
-
-    // ao voltar/avançar pelo histórico, o navegador pode restaurar a página
-    // do cache (bfcache) com o menu preso no estado em que você saiu — reseta
-    window.addEventListener('pageshow', function (e) {
-      if (!e.persisted) return;
-      setPinned(false);
-      closeMobile();
-      updateExpandedState();
-    });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', mount);
-  } else {
-    mount();
-  }
-})();
+<meta property="og:title" content="Services — IRN Devs">
+<meta property="og:description" content="IRN Devs services for software development, process automation, data dashboards and reliable infrastructure.">
+<meta property="og:url" content="https://irndevs.com/en/services.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:site_name" content="IRN Devs">
+</head>
+<body>
+<main class="wrap">
+  <p class="lang"><a href="../servicos.html">PT</a> · <strong>EN</strong></p>
+  <h1>Services</h1>
+  <p>We build software, automate manual operations and improve the reliability of systems that need to run in production.</p>
+  <div class="grid">
+    <section class="card"><h3>Software development</h3><p>Web products, APIs and internal tools with practical architecture, clear scope and maintainable code.</p></section>
+    <section class="card"><h3>Process automation</h3><p>Integrations between forms, spreadsheets, ERPs, messaging channels, webhooks and internal systems.</p></section>
+    <section class="card"><h3>Data and dashboards</h3><p>Centralized operational indicators and dashboards that turn scattered data into a decision-ready view.</p></section>
+    <section class="card"><h3>Infrastructure and observability</h3><p>Containers, Kubernetes/k3s, CI/CD, monitoring, logs, runbooks and hardening for more reliable operation.</p></section>
+  </div>
+  <h2>How to start</h2>
+  <p>Tell us about the current process, the systems involved and the outcome you need. We reply with scoping questions and a practical next step.</p>
+  <a class="btn" href="../contato.html">contact IRN Devs →</a>
+  <nav class="nav" aria-label="English navigation">
+    <a href="index.html">home</a><a href="services.html">services</a><a href="about.html">about</a><a href="contact.html">contact</a><a href="../blog.html">blog (PT)</a>
+  </nav>
+</main>
+</body>
+</html>

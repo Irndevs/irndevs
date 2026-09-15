@@ -13,6 +13,14 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site-nav.css" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="assets/css/auth.css">
+  <link rel="stylesheet" href="assets/css/motion.css">
+
+<meta property="og:title" content="Entrar — IRN Devs">
+<meta property="og:description" content="Acesse sua conta IRN Devs.">
+<meta property="og:url" content="https://irndevs.com/login.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:site_name" content="IRN Devs">
 </head>
 <body>
 <div class="wrap">
@@ -34,16 +42,15 @@
   <p class="foot">Não tem conta? <a href="cadastro.html" id="linkCadastro">criar conta</a></p>
 </div>
   <script src="assets/js/supabase-config.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" integrity="sha384-GFr3yTh5lJznCbZfpTtXnwboFsxqtTQoeTZCRHhE0579KrRmlCzen5AA8ohaB5ug" crossorigin="anonymous"></script>
   <script src="assets/js/auth.js"></script>
   <script src="assets/js/site-nav.js?v=20260914f" defer></script>
 <script>
 (function () {
   function safeNext() {
     var q = new URLSearchParams(location.search).get('next') || '';
-    if (!q || q.indexOf('://') !== -1 || (q.charAt(0) === '/' && q.charAt(1) === '/')) return 'conta.html';
-    if (q.indexOf('..') !== -1) return 'conta.html';
-    return q || 'conta.html';
+    var allowed = ['conta.html', 'area-cliente.html', 'pedidos.html', 'orcamentos.html'];
+    return allowed.indexOf(q) !== -1 ? q : 'conta.html';
   }
   var next = safeNext();
   var cad = document.getElementById('linkCadastro');
