@@ -1,18 +1,37 @@
-body{background:#10130f;color:#e8e6e0;font-family:"IBM Plex Sans",system-ui,sans-serif;margin:0}
+:root{--bg:#10130f;--card:#1a1f18;--border:#3a4a32;--amber:#e8a33d;--text:#e8e6e0;--dim:#8a9a7a}
+body{background:var(--bg);color:var(--text);font-family:"IBM Plex Sans",system-ui,sans-serif;margin:0}
 .wrap{max-width:820px;margin:0 auto;padding:0 20px}
-.amber{color:#e8a33d}
+.amber{color:var(--amber)}
 .breadcrumb{font-family:"IBM Plex Mono",monospace;font-size:13px;margin:32px 0}
-.breadcrumb a{color:#8a9a7a;text-decoration:none}
-.breadcrumb a:hover{color:#e8a33d}
-h1{font-size:clamp(26px,4vw,38px)}
-.lede{color:#8a9a7a}
-h2{margin-top:36px;border-bottom:1px solid #3a4a32;padding-bottom:8px}
+.breadcrumb a{color:var(--dim);text-decoration:none}
+.breadcrumb a:hover{color:var(--amber)}
+.sec-head{font-family:"IBM Plex Mono",monospace;color:var(--dim);font-size:13px}
+h1{font-size:clamp(26px,4vw,38px);margin:10px 0 12px}
+.lede{color:var(--dim);font-size:16px;line-height:1.6;max-width:640px}
+h2{margin-top:44px;margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border);font-size:19px}
+
+/* lista "o que você vai aprender" */
+ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+ul li{position:relative;padding-left:28px;color:var(--text);line-height:1.55}
+ul li::before{content:"→";position:absolute;left:0;color:var(--amber);font-family:"IBM Plex Mono",monospace}
+
 code,pre{font-family:"IBM Plex Mono",monospace}
-pre{background:#0e120c;border:1px solid #3a4a32;border-radius:10px;padding:18px;overflow-x:auto;font-size:13.5px}
+pre{background:#0e120c;border:1px solid var(--border);border-radius:10px;padding:18px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+
+/* sumário do curso — grade de cards, não mais lista de links azuis */
+.mod-sumario{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.mod-card{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--text);transition:border-color .15s,transform .15s,background .15s}
+.mod-card:hover{border-color:var(--amber);transform:translateY(-2px)}
+.mod-card .mod-card-n{flex-shrink:0;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:#0e120c;border:1px solid var(--border);font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--dim)}
+.mod-card .mod-card-name{font-size:14px;line-height:1.35}
+.mod-card[aria-current="page"]{background:rgba(232,163,61,.1);border-color:var(--amber)}
+.mod-card[aria-current="page"] .mod-card-n{background:var(--amber);border-color:var(--amber);color:var(--bg)}
+.mod-card[aria-current="page"] .mod-card-name{color:var(--amber);font-weight:600}
+
 .aula-progress{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:48px 0 64px;flex-wrap:wrap}
 .btn{padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600}
-.btn.primary{background:#e8a33d;color:#10130f}
-.btn.ghost{border:1px solid #3a4a32;color:#e8e6e0}
+.btn.primary{background:var(--amber);color:var(--bg)}
+.btn.ghost{border:1px solid var(--border);color:var(--text)}
 .dots{display:flex;gap:6px}
-.dots b{width:10px;height:10px;border-radius:50%;background:#3a4a32}
-.dots b.on{background:#e8a33d}
+.dots b{width:10px;height:10px;border-radius:50%;background:var(--border);display:block}
+.dots b.on{background:var(--amber)}
