@@ -1,0 +1,1 @@
+const o=new IntersectionObserver(e=>{e.forEach(r=>{r.isIntersecting&&(r.target.classList.add("in"),o.unobserve(r.target))})},{threshold:.1,rootMargin:"0px 0px -40px 0px"});document.querySelectorAll(".fade-in").forEach(e=>o.observe(e));

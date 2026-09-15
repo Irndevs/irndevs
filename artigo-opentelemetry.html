@@ -1,207 +1,79 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OpenTelemetry: Métricas, Logs e Traces — IRN Devs</title>
-<meta name="description" content="OpenTelemetry como padrão aberto de observabilidade: instrumentação, Collector e Grafana.">
-<meta name="author" content="IRN Devs">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="dns-prefetch" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/pages/artigo-base.css">
-  <link rel="stylesheet" href="assets/css/site-nav.css">
-  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-  <meta property="og:title" content="OpenTelemetry: Métricas, Logs e Traces — IRN Devs">
-  <meta property="og:description" content="OpenTelemetry como padrão aberto de observabilidade: instrumentação, Collector e Grafana.">
-  <meta property="og:type" content="article">
-  <link rel="canonical" href="https://irndevs.com/artigo-opentelemetry.html">
-  <link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-opentelemetry.html">
-  <link rel="alternate" hreflang="x-default" href="https://irndevs.com/artigo-opentelemetry.html">
-  <meta property="og:url" content="https://irndevs.com/artigo-opentelemetry.html">
-  <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
-  <meta property="og:locale" content="pt_BR">
-  <meta property="og:site_name" content="IRN Devs">
-  <meta property="article:published_time" content="2026-07-22">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="OpenTelemetry: Métricas, Logs e Traces — IRN Devs">
-  <meta name="twitter:description" content="OpenTelemetry como padrão aberto de observabilidade: instrumentação, Collector e Grafana.">
-  <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
-  <meta name="author" content="IRN Devs">
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "OpenTelemetry: Métricas, Logs e Traces",
-  "description": "OpenTelemetry como padrão aberto de observabilidade: instrumentação, Collector e Grafana.",
-  "datePublished": "2026-07-22",
-  "author": {
-    "@type": "Organization",
-    "name": "IRN Devs"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "IRN Devs",
-    "url": "https://irndevs.com"
-  },
-  "mainEntityOfPage": "https://irndevs.com/artigo-opentelemetry.html",
-  "inLanguage": "pt-BR"
-}
-  </script>
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Início",
-      "item": "https://irndevs.com/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Blog",
-      "item": "https://irndevs.com/blog.html"
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "OpenTelemetry: Métricas, Logs e Traces",
-      "item": "https://irndevs.com/artigo-opentelemetry.html"
-    }
-  ]
-}
-  </script>
-  <link rel="stylesheet" href="assets/css/motion.css">
-</head>
-<body>
-<!-- nav: site-nav.js -->
-<div class="wrap crumb">
-  <a href="index.html">~</a> / <a href="blog.html">blog</a> / <span class="inline-style-2">observabilidade</span>
-</div>
-<div class="wrap article-head">
-  <div class="meta">
-    <span>22 jul 2026</span>
-    <span class="tag">observabilidade</span>
-    <span>14 min de leitura</span>
-  </div>
-  <h1>OpenTelemetry: Unificando Métricas, Logs e Traces</h1>
-  <p class="excerpt">Introdução ao OpenTelemetry como padrão aberto. Como instrumentar aplicações e coletar sinais unificados para o Grafana.</p>
-  <div class="stack"><span>OpenTelemetry</span><span>Qualidade e confiabilidade</span><span>Grafana</span><span>DevOps</span></div>
-</div>
-<div class="wrap">
-  <div class="toc">
-    <div class="label">$ cat sumario.txt</div>
-    <ol>
-      <li><a href="#o-que">O que é OTel?</a></li>
-      <li><a href="#pilares">Os três pilares</a></li>
-      <li><a href="#arch">SDK + Collector</a></li>
-      <li><a href="#instr">Instrumentação</a></li>
-      <li><a href="#coll">Collector</a></li>
-      <li><a href="#grafana">Grafana</a></li>
-      <li><a href="#bp">Boas práticas</a></li>
-    </ol>
-  </div>
-  <article class="body">
-    <h2 id="o-que">1. O que é OpenTelemetry?</h2>
-    <p>Padrão aberto (CNCF) para gerar, coletar e exportar <strong>métricas, logs e traces</strong>. Instrumente uma vez e envie para qualquer backend (Prometheus, Loki, Tempo, Jaeger, etc.).</p>
-    <h2 id="pilares">2. Os três pilares</h2>
-    <ul>
-      <li><strong>Métricas</strong> — números agregados (latência p99, taxa de erro)</li>
-      <li><strong>Logs</strong> — eventos discretos com contexto</li>
-      <li><strong>Traces</strong> — caminho de uma requisição entre serviços (spans)</li>
-    </ul>
-    <p>O poder está em correlacionar os três via trace_id / request_id.</p>
-    <h2 id="arch">3. SDK + Collector</h2>
-    <p>A app usa o SDK (ou auto-instrumentação) e exporta OTLP para o Collector. O Collector processa (batch, filter, sample) e exporta para os backends.</p>
-    <div class="tip"><strong>tip</strong> · A app não precisa saber o destino final. Você muda o pipeline no Collector sem redeploy.</div>
-    <h2 id="instr">4. Instrumentação (Node.js)</h2>
-<pre><code>const { NodeSDK } = require('@opentelemetry/sdk-node');
-const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumentations-node');
-const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-http');
-
-const sdk = new NodeSDK({
-  traceExporter: new OTLPTraceExporter({
-    url: 'http://localhost:4318/v1/traces',
-  }),
-  instrumentations: [getNodeAutoInstrumentations()],
-});
-sdk.start();
-</code></pre>
-    <p>Python, Java, Go e .NET seguem o mesmo padrão: SDK + exporter OTLP.</p>
-    <h2 id="coll">5. Collector</h2>
-<pre><code>receivers:
-  otlp:
-    protocols:
-      grpc:
-      http:
-processors:
-  batch:
-exporters:
-  otlp/tempo:
-    endpoint: tempo:4317
-  prometheus:
-    endpoint: "0.0.0.0:8889"
-  loki:
-    endpoint: http://loki:3100/loki/api/v1/push
-service:
-  pipelines:
-    traces:
-      receivers: [otlp]
-      processors: [batch]
-      exporters: [otlp/tempo]
-    metrics:
-      receivers: [otlp]
-      processors: [batch]
-      exporters: [prometheus]
-    logs:
-      receivers: [otlp]
-      processors: [batch]
-      exporters: [loki]
-</code></pre>
-    <h2 id="grafana">6. Grafana</h2>
-    <ul>
-      <li>Prometheus → métricas e alertas</li>
-      <li>Loki → logs (LogQL)</li>
-      <li>Tempo/Jaeger → traces</li>
-    </ul>
-    <p>Configure as três data sources e use correlação (métrica → trace → logs).</p>
-    <h2 id="bp">7. Boas práticas</h2>
-    <ul>
-      <li>Semantic conventions (http.method, http.status_code…)</li>
-      <li>Propagar contexto entre serviços</li>
-      <li>Sampling inteligente em produção</li>
-      <li>Collector próximo das apps (sidecar/DaemonSet)</li>
-      <li>Config do Collector como código</li>
-    </ul>
-    <p>OTel não é “mais uma ferramenta”: é o padrão que unifica instrumentação e permite trocar de backend. Combinado com Grafana/Prometheus/Loki/Tempo, forma base sólida de observabilidade.</p>
-  </article>
-  <div class="nav-art">
-    <a href="artigo-aws-cloud.html">← aws</a>
-    <a href="artigo-ubuntu-server.html">próximo: ubuntu →</a>
-  </div>
-</div>
-
-<div class="wrap inline-style-3">
-  <div class="inline-style-4">$ next</div>
-  <p class="inline-style-5">Precisa de infraestrutura na prática?</p>
-  <a href="contato.html" class="inline-style-6">falar com a IRN Devs →</a>
-  <span class="inline-style-7"></span>
-  <a href="servicos.html" class="inline-style-8">serviços</a>
-</div>
-
-<footer>
-  <div class="wrap">
-    <div>© 2026 irndevs</div>
-    <div class="inline-style-9">
-      <a href="mailto:contato@irndevs.com">contato@irndevs.com</a>
-    </div>
-  </div>
-</footer>
-  <script src="assets/js/site-nav.js?v=20260914f" defer></script>
-  <script src="assets/js/chat-bot.js?v=20260915" defer></script>
-</body>
-</html>
+<!DOCTYPE html><html lang="pt-BR"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>OpenTelemetry: Métricas, Logs e Traces — IRN Devs</title><meta name="description" content="OpenTelemetry como padrão aberto de observabilidade: instrumentação, Collector e Grafana."><meta name="author" content="IRN Devs"><meta name="theme-color" content="#10130f"><meta name="referrer" content="strict-origin-when-cross-origin"><meta http-equiv="X-Content-Type-Options" content="nosniff"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/css/pages/artigo-base.css"><link rel="stylesheet" href="/assets/css/site-nav.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="/assets/css/site-nav.css"></noscript><link rel="stylesheet" href="/assets/css/motion.css"><link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml"><link rel="canonical" href="https://irndevs.com/artigo-opentelemetry.html"><link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-opentelemetry.html"><link rel="alternate" hreflang="x-default" href="https://irndevs.com/artigo-opentelemetry.html"><meta property="og:type" content="article"><meta property="og:title" content="OpenTelemetry: Métricas, Logs e Traces — IRN Devs"><meta property="og:description" content="OpenTelemetry como padrão aberto de observabilidade: instrumentação, Collector e Grafana."><meta property="og:url" content="https://irndevs.com/artigo-opentelemetry.html"><meta property="og:image" content="https://irndevs.com/assets/img/og-default.png"><meta property="og:locale" content="pt_BR"><meta property="og:site_name" content="IRN Devs"><meta property="article:published_time" content="2026-07-22"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="OpenTelemetry: Métricas, Logs e Traces — IRN Devs"><meta name="twitter:description" content="OpenTelemetry como padrão aberto de observabilidade: instrumentação, Collector e Grafana."><meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png"><link rel="alternate" type="application/rss+xml" title="IRN Devs Blog" href="https://irndevs.com/feed.xml"></head> <body> <a class="skip-link" href="#conteudo">Ir para o conteúdo</a> <main id="conteudo">   <header class="article-hero"> <div class="wrap"> <p class="eyebrow">// blog</p> <h1>OpenTelemetry: Métricas, Logs e Traces</h1> <p class="lead">OpenTelemetry como padrão aberto de observabilidade: instrumentação, Collector e Grafana.</p> <div class="meta"> <time datetime="2026-07-22">2026-07-22</time>  </div> </div> </header> <div class="wrap article-grid"> <aside class="toc"> <div class="label">$ cat sumario.txt</div> <ol> <li><a href="#1-o-que-é-opentelemetry">1. O que é OpenTelemetry?</a></li><li><a href="#2-os-três-pilares">2. Os três pilares</a></li><li><a href="#3-sdk--collector">3. SDK + Collector</a></li><li><a href="#4-instrumentação-nodejs">4. Instrumentação (Node.js)</a></li><li><a href="#5-collector">5. Collector</a></li><li><a href="#6-grafana">6. Grafana</a></li><li><a href="#7-boas-práticas">7. Boas práticas</a></li> </ol> </aside> <article class="body">   <h2 id="1-o-que-é-opentelemetry">1. O que é OpenTelemetry?</h2>
+<p>Padrão aberto (CNCF) para gerar, coletar e exportar <strong>métricas, logs e traces</strong>. Instrumente uma vez e envie para qualquer backend (Prometheus, Loki, Tempo, Jaeger, etc.).</p>
+<h2 id="2-os-três-pilares">2. Os três pilares</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>  - **Métricas** — números agregados (latência p99, taxa de erro)</span></span>
+<span class="line"><span>  - **Logs** — eventos discretos com contexto</span></span>
+<span class="line"><span>  - **Traces** — caminho de uma requisição entre serviços (spans)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<p>O poder está em correlacionar os três via trace_id / request_id.</p>
+<h2 id="3-sdk--collector">3. SDK + Collector</h2>
+<p>A app usa o SDK (ou auto-instrumentação) e exporta OTLP para o Collector. O Collector processa (batch, filter, sample) e exporta para os backends.</p>
+<blockquote>
+<p><strong>tip</strong> · A app não precisa saber o destino final. Você muda o pipeline no Collector sem redeploy.</p>
+</blockquote>
+<h2 id="4-instrumentação-nodejs">4. Instrumentação (Node.js)</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>const { NodeSDK } = require('@opentelemetry/sdk-node');</span></span>
+<span class="line"><span>const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumentations-node');</span></span>
+<span class="line"><span>const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-http');</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>const sdk = new NodeSDK({</span></span>
+<span class="line"><span>  traceExporter: new OTLPTraceExporter({</span></span>
+<span class="line"><span>    url: 'http://localhost:4318/v1/traces',</span></span>
+<span class="line"><span>  }),</span></span>
+<span class="line"><span>  instrumentations: [getNodeAutoInstrumentations()],</span></span>
+<span class="line"><span>});</span></span>
+<span class="line"><span>sdk.start();</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<p>Python, Java, Go e .NET seguem o mesmo padrão: SDK + exporter OTLP.</p>
+<h2 id="5-collector">5. Collector</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>receivers:</span></span>
+<span class="line"><span>  otlp:</span></span>
+<span class="line"><span>    protocols:</span></span>
+<span class="line"><span>      grpc:</span></span>
+<span class="line"><span>      http:</span></span>
+<span class="line"><span>processors:</span></span>
+<span class="line"><span>  batch:</span></span>
+<span class="line"><span>exporters:</span></span>
+<span class="line"><span>  otlp/tempo:</span></span>
+<span class="line"><span>    endpoint: tempo:4317</span></span>
+<span class="line"><span>  prometheus:</span></span>
+<span class="line"><span>    endpoint: "0.0.0.0:8889"</span></span>
+<span class="line"><span>  loki:</span></span>
+<span class="line"><span>    endpoint: http://loki:3100/loki/api/v1/push</span></span>
+<span class="line"><span>service:</span></span>
+<span class="line"><span>  pipelines:</span></span>
+<span class="line"><span>    traces:</span></span>
+<span class="line"><span>      receivers: [otlp]</span></span>
+<span class="line"><span>      processors: [batch]</span></span>
+<span class="line"><span>      exporters: [otlp/tempo]</span></span>
+<span class="line"><span>    metrics:</span></span>
+<span class="line"><span>      receivers: [otlp]</span></span>
+<span class="line"><span>      processors: [batch]</span></span>
+<span class="line"><span>      exporters: [prometheus]</span></span>
+<span class="line"><span>    logs:</span></span>
+<span class="line"><span>      receivers: [otlp]</span></span>
+<span class="line"><span>      processors: [batch]</span></span>
+<span class="line"><span>      exporters: [loki]</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<h2 id="6-grafana">6. Grafana</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>  - Prometheus → métricas e alertas</span></span>
+<span class="line"><span>  - Loki → logs (LogQL)</span></span>
+<span class="line"><span>  - Tempo/Jaeger → traces</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<p>Configure as três data sources e use correlação (métrica → trace → logs).</p>
+<h2 id="7-boas-práticas">7. Boas práticas</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>  - Semantic conventions (http.method, http.status_code…)</span></span>
+<span class="line"><span>  - Propagar contexto entre serviços</span></span>
+<span class="line"><span>  - Sampling inteligente em produção</span></span>
+<span class="line"><span>  - Collector próximo das apps (sidecar/DaemonSet)</span></span>
+<span class="line"><span>  - Config do Collector como código</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<p>OTel não é “mais uma ferramenta”: é o padrão que unifica instrumentação e permite trocar de backend. Combinado com Grafana/Prometheus/Loki/Tempo, forma base sólida de observabilidade.</p>  </article> </div>  </main> <script src="/assets/js/site-nav.js" defer></script> </body> </html>

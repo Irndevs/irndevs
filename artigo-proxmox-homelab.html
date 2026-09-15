@@ -1,212 +1,94 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Docker: Do Zero ao Homelab Produtivo — IRN Devs</title>
-<meta name="description" content="Configuração de Docker VE: VMs, LXC, ZFS e backups para um homelab produtivo.">
-<meta name="author" content="IRN Devs">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="dns-prefetch" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/pages/artigo-base.css">
-  <link rel="stylesheet" href="assets/css/site-nav.css">
-  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-  <meta property="og:title" content="Docker: Do Zero ao Homelab Produtivo — IRN Devs">
-  <meta property="og:description" content="Configuração de Docker VE: VMs, LXC, ZFS e backups para um homelab produtivo.">
-  <meta property="og:type" content="article">
-  <link rel="canonical" href="https://irndevs.com/artigo-proxmox-homelab.html">
-  <link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-proxmox-homelab.html">
-  <link rel="alternate" hreflang="x-default" href="https://irndevs.com/artigo-proxmox-homelab.html">
-  <meta property="og:url" content="https://irndevs.com/artigo-proxmox-homelab.html">
-  <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
-  <meta property="og:locale" content="pt_BR">
-  <meta property="og:site_name" content="IRN Devs">
-  <meta property="article:published_time" content="2026-08-10">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Docker: Do Zero ao Homelab Produtivo — IRN Devs">
-  <meta name="twitter:description" content="Configuração de Docker VE: VMs, LXC, ZFS e backups para um homelab produtivo.">
-  <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
-  <meta name="author" content="IRN Devs">
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "Docker: Do Zero ao Homelab Produtivo",
-  "description": "Configuração de Docker VE: VMs, LXC, ZFS e backups para um homelab produtivo.",
-  "datePublished": "2026-08-10",
-  "author": {
-    "@type": "Organization",
-    "name": "IRN Devs"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "IRN Devs",
-    "url": "https://irndevs.com"
-  },
-  "mainEntityOfPage": "https://irndevs.com/artigo-proxmox-homelab.html",
-  "inLanguage": "pt-BR"
-}
-  </script>
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Início",
-      "item": "https://irndevs.com/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Blog",
-      "item": "https://irndevs.com/blog.html"
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "Docker: Do Zero ao Homelab Produtivo",
-      "item": "https://irndevs.com/artigo-proxmox-homelab.html"
-    }
-  ]
-}
-  </script>
-  <link rel="stylesheet" href="assets/css/motion.css">
-</head>
-<body>
-<!-- nav: site-nav.js -->
-<div class="wrap crumb">
-  <a href="index.html">~</a> / <a href="blog.html">blog</a> / <span class="inline-style-2">proxmox</span>
-</div>
-<div class="wrap article-head">
-  <div class="meta">
-    <span>10 ago 2026</span>
-    <span class="tag">proxmox</span>
-    <span>10 min de leitura</span>
-  </div>
-  <h1>Docker: Do Zero ao Homelab Produtivo</h1>
-  <p class="excerpt">Como configurar um servidor bare-metal com Docker VE: gestão de VMs e containers LXC, backups automáticos e integração com storage ZFS.</p>
-  <div class="stack"><span>Docker</span><span>LXC</span><span>ZFS</span><span>Homelab</span></div>
-</div>
-<div class="wrap">
-  <div class="toc">
-    <div class="label">$ cat sumario.txt</div>
-    <ol>
-      <li><a href="#por-que">Por que Docker?</a></li>
-      <li><a href="#hw">Hardware e instalação</a></li>
-      <li><a href="#pos">Pós-instalação</a></li>
-      <li><a href="#zfs">Storage com ZFS</a></li>
-      <li><a href="#vms">VMs e LXC</a></li>
-      <li><a href="#rede">Rede</a></li>
-      <li><a href="#backup">Backups</a></li>
-      <li><a href="#dicas">Dicas</a></li>
-    </ol>
-  </div>
-  <article class="body">
-    <h2 id="por-que">1. Por que Docker?</h2>
-    <p>Docker VE combina KVM (VMs completas) com LXC (containers leves), interface web moderna e gratuito. Ideal para homelab próximo de produção.</p>
-    <ul>
-      <li>VMs com KVM + QEMU</li>
-      <li>Containers LXC</li>
-      <li>Storage local (ZFS, LVM) e remoto (NFS, Ceph)</li>
-      <li>Cluster e backups nativos</li>
-    </ul>
-    <h2 id="hw">2. Hardware e instalação</h2>
-    <p>x86_64 com VT-x/AMD-V. Ideal: 16 GB+ RAM, SSD/NVMe, dois discos para mirror ZFS.</p>
-    <div class="step"><div class="n">$ # baixe a ISO oficial e grave no pendrive</div></div>
-    <ul>
-      <li>Boot pelo pendrive</li>
-      <li>Escolha disco (ou ZFS no root)</li>
-      <li>Hostname, IP estático, gateway, DNS</li>
-      <li>Senha root + e-mail de notificações</li>
-    </ul>
-    <div class="warn"><strong>warn</strong> · A instalação apaga o disco escolhido. Backup antes.</div>
-    <h2 id="pos">3. Pós-instalação</h2>
-    <p>Acesse <code>https://SEU-IP:8006</code>.</p>
-<pre><code>apt update && apt full-upgrade -y
-
-# repositório no-subscription (sem enterprise)
-echo "deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription" \
-  > /etc/apt/sources.list.d/pve-no-subscription.list
-# comente a linha do enterprise em pve-enterprise.list
-apt update && apt full-upgrade -y
-</code></pre>
-    <div class="tip"><strong>tip</strong> · Configure SSH com chave e desabilite login root por senha.</div>
-    <h2 id="zfs">4. Storage com ZFS</h2>
-<pre><code>zpool create -f tank mirror /dev/sdb /dev/sdc
-zfs set compression=lz4 tank
-zfs set atime=off tank
-zfs create tank/vms
-</code></pre>
-    <p>Depois adicione o storage no Docker apontando para <code>tank/vms</code>.</p>
-    <h2 id="vms">5. VMs e LXC</h2>
-    <h3>VM (KVM)</h3>
-    <ol>
-      <li>Create VM → ID, nome, ISO</li>
-      <li>CPU, memória, disco no pool ZFS</li>
-      <li>Rede: bridge vmbr0</li>
-      <li>Inicie e instale o SO</li>
-    </ol>
-    <h3>Container LXC</h3>
-    <ol>
-      <li>Baixe template (CT Templates)</li>
-      <li>Create CT → template, hostname, recursos</li>
-      <li>Ideal para serviços isolados leves</li>
-    </ol>
-    <div class="tip"><strong>tip</strong> · LXC para serviços sem kernel próprio; VM quando precisar isolamento total.</div>
-    <h2 id="rede">6. Rede</h2>
-<pre><code>auto vmbr0
-iface vmbr0 inet static
-    address endereco interno omitido/24
-    gateway endereco interno omitido
-    bridge-ports enp3s0
-    bridge-stp off
-    bridge-fd 0
-</code></pre>
-    <h2 id="backup">7. Backups</h2>
-    <p>Datacenter → Backup → Add. Defina horário, storage de destino, retenção e VMs/CTs.</p>
-    <ul>
-      <li>Mode: Snapshot (se o storage suportar)</li>
-      <li>Compression: zstd</li>
-      <li>Retention: diários + semanais</li>
-    </ul>
-    <div class="warn"><strong>warn</strong> · Teste o restore periodicamente. Backup que não restaura não é backup.</div>
-    <h2 id="dicas">8. Dicas</h2>
-    <ul>
-      <li>Separe storage de sistema e de dados</li>
-      <li>Tags e notas nas VMs/CTs</li>
-      <li>Monitore com Prometheus + Grafana</li>
-      <li>Considere Docker Backup Server (PBS)</li>
-      <li>Documente IPs e o que cada VM faz</li>
-    </ul>
-  </article>
-  <div class="nav-art">
-    <a href="artigo-observabilidade-docker.html">← observabilidade</a>
-    <a href="artigo-k3s-homelab.html">próximo: k3s →</a>
-  </div>
-</div>
-
-<div class="wrap inline-style-3">
-  <div class="inline-style-4">$ next</div>
-  <p class="inline-style-5">Precisa de infraestrutura na prática?</p>
-  <a href="contato.html" class="inline-style-6">falar com a IRN Devs →</a>
-  <span class="inline-style-7"></span>
-  <a href="servicos.html" class="inline-style-8">serviços</a>
-</div>
-
-<footer>
-  <div class="wrap">
-    <div>© 2026 irndevs</div>
-    <div class="inline-style-9">
-      <a href="mailto:contato@irndevs.com">contato@irndevs.com</a>
-    </div>
-  </div>
-</footer>
-  <script src="assets/js/site-nav.js?v=20260914f" defer></script>
-  <script src="assets/js/chat-bot.js?v=20260915" defer></script>
-</body>
-</html>
+<!DOCTYPE html><html lang="pt-BR"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Docker: Do Zero ao Homelab Produtivo — IRN Devs</title><meta name="description" content="Configuração de Docker VE: VMs, LXC, ZFS e backups para um homelab produtivo."><meta name="author" content="IRN Devs"><meta name="theme-color" content="#10130f"><meta name="referrer" content="strict-origin-when-cross-origin"><meta http-equiv="X-Content-Type-Options" content="nosniff"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/css/pages/artigo-base.css"><link rel="stylesheet" href="/assets/css/site-nav.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="/assets/css/site-nav.css"></noscript><link rel="stylesheet" href="/assets/css/motion.css"><link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml"><link rel="canonical" href="https://irndevs.com/artigo-proxmox-homelab.html"><link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-proxmox-homelab.html"><link rel="alternate" hreflang="x-default" href="https://irndevs.com/artigo-proxmox-homelab.html"><meta property="og:type" content="article"><meta property="og:title" content="Docker: Do Zero ao Homelab Produtivo — IRN Devs"><meta property="og:description" content="Configuração de Docker VE: VMs, LXC, ZFS e backups para um homelab produtivo."><meta property="og:url" content="https://irndevs.com/artigo-proxmox-homelab.html"><meta property="og:image" content="https://irndevs.com/assets/img/og-default.png"><meta property="og:locale" content="pt_BR"><meta property="og:site_name" content="IRN Devs"><meta property="article:published_time" content="2026-08-10"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Docker: Do Zero ao Homelab Produtivo — IRN Devs"><meta name="twitter:description" content="Configuração de Docker VE: VMs, LXC, ZFS e backups para um homelab produtivo."><meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png"><link rel="alternate" type="application/rss+xml" title="IRN Devs Blog" href="https://irndevs.com/feed.xml"></head> <body> <a class="skip-link" href="#conteudo">Ir para o conteúdo</a> <main id="conteudo">   <header class="article-hero"> <div class="wrap"> <p class="eyebrow">// blog</p> <h1>Docker: Do Zero ao Homelab Produtivo</h1> <p class="lead">Configuração de Docker VE: VMs, LXC, ZFS e backups para um homelab produtivo.</p> <div class="meta"> <time datetime="2026-08-10">2026-08-10</time>  </div> </div> </header> <div class="wrap article-grid"> <aside class="toc"> <div class="label">$ cat sumario.txt</div> <ol> <li><a href="#1-por-que-docker">1. Por que Docker?</a></li><li><a href="#2-hardware-e-instalação">2. Hardware e instalação</a></li><li><a href="#3-pós-instalação">3. Pós-instalação</a></li><li><a href="#4-storage-com-zfs">4. Storage com ZFS</a></li><li><a href="#5-vms-e-lxc">5. VMs e LXC</a></li><li><a href="#6-rede">6. Rede</a></li><li><a href="#7-backups">7. Backups</a></li><li><a href="#8-dicas">8. Dicas</a></li> </ol> </aside> <article class="body">   <h2 id="1-por-que-docker">1. Por que Docker?</h2>
+<p>Docker VE combina KVM (VMs completas) com LXC (containers leves), interface web moderna e gratuito. Ideal para homelab próximo de produção.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>  - VMs com KVM + QEMU</span></span>
+<span class="line"><span>  - Containers LXC</span></span>
+<span class="line"><span>  - Storage local (ZFS, LVM) e remoto (NFS, Ceph)</span></span>
+<span class="line"><span>  - Cluster e backups nativos</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<h2 id="2-hardware-e-instalação">2. Hardware e instalação</h2>
+<p>x86_64 com VT-x/AMD-V. Ideal: 16 GB+ RAM, SSD/NVMe, dois discos para mirror ZFS.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>$ # baixe a ISO oficial e grave no pendrive</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>  - Boot pelo pendrive</span></span>
+<span class="line"><span>  - Escolha disco (ou ZFS no root)</span></span>
+<span class="line"><span>  - Hostname, IP estático, gateway, DNS</span></span>
+<span class="line"><span>  - Senha root + e-mail de notificações</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<blockquote>
+<p><strong>warn</strong> · A instalação apaga o disco escolhido. Backup antes.</p>
+</blockquote>
+<h2 id="3-pós-instalação">3. Pós-instalação</h2>
+<p>Acesse <code>https://SEU-IP:8006</code>.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>apt update &#x26;&#x26; apt full-upgrade -y</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># repositório no-subscription (sem enterprise)</span></span>
+<span class="line"><span>echo "deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription" \</span></span>
+<span class="line"><span>  > /etc/apt/sources.list.d/pve-no-subscription.list</span></span>
+<span class="line"><span># comente a linha do enterprise em pve-enterprise.list</span></span>
+<span class="line"><span>apt update &#x26;&#x26; apt full-upgrade -y</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<blockquote>
+<p><strong>tip</strong> · Configure SSH com chave e desabilite login root por senha.</p>
+</blockquote>
+<h2 id="4-storage-com-zfs">4. Storage com ZFS</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>zpool create -f tank mirror /dev/sdb /dev/sdc</span></span>
+<span class="line"><span>zfs set compression=lz4 tank</span></span>
+<span class="line"><span>zfs set atime=off tank</span></span>
+<span class="line"><span>zfs create tank/vms</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<p>Depois adicione o storage no Docker apontando para <code>tank/vms</code>.</p>
+<h2 id="5-vms-e-lxc">5. VMs e LXC</h2>
+<h3 id="vm-kvm">VM (KVM)</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>  - Create VM → ID, nome, ISO</span></span>
+<span class="line"><span>  - CPU, memória, disco no pool ZFS</span></span>
+<span class="line"><span>  - Rede: bridge vmbr0</span></span>
+<span class="line"><span>  - Inicie e instale o SO</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<h3 id="container-lxc">Container LXC</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>  - Baixe template (CT Templates)</span></span>
+<span class="line"><span>  - Create CT → template, hostname, recursos</span></span>
+<span class="line"><span>  - Ideal para serviços isolados leves</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<blockquote>
+<p><strong>tip</strong> · LXC para serviços sem kernel próprio; VM quando precisar isolamento total.</p>
+</blockquote>
+<h2 id="6-rede">6. Rede</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>auto vmbr0</span></span>
+<span class="line"><span>iface vmbr0 inet static</span></span>
+<span class="line"><span>    address endereco interno omitido/24</span></span>
+<span class="line"><span>    gateway endereco interno omitido</span></span>
+<span class="line"><span>    bridge-ports enp3s0</span></span>
+<span class="line"><span>    bridge-stp off</span></span>
+<span class="line"><span>    bridge-fd 0</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<h2 id="7-backups">7. Backups</h2>
+<p>Datacenter → Backup → Add. Defina horário, storage de destino, retenção e VMs/CTs.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>  - Mode: Snapshot (se o storage suportar)</span></span>
+<span class="line"><span>  - Compression: zstd</span></span>
+<span class="line"><span>  - Retention: diários + semanais</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<blockquote>
+<p><strong>warn</strong> · Teste o restore periodicamente. Backup que não restaura não é backup.</p>
+</blockquote>
+<h2 id="8-dicas">8. Dicas</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>  - Separe storage de sistema e de dados</span></span>
+<span class="line"><span>  - Tags e notas nas VMs/CTs</span></span>
+<span class="line"><span>  - Monitore com Prometheus + Grafana</span></span>
+<span class="line"><span>  - Considere Docker Backup Server (PBS)</span></span>
+<span class="line"><span>  - Documente IPs e o que cada VM faz</span></span>
+<span class="line"><span></span></span></code></pre>  </article> </div>  </main> <script src="/assets/js/site-nav.js" defer></script> </body> </html>

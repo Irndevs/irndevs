@@ -1,232 +1,81 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hardening Linux: SSH, UFW e Fail2ban — IRN Devs</title>
-<meta name="description" content="Checklist de segurança: autenticação por chave SSH, firewall UFW e proteção com Fail2ban.">
-<meta name="author" content="IRN Devs">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="dns-prefetch" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/pages/artigo-base.css">
-  <link rel="stylesheet" href="assets/css/site-nav.css">
-  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-  <meta property="og:title" content="Hardening Linux: SSH, UFW e Fail2ban — IRN Devs">
-  <meta property="og:description" content="Checklist de segurança: autenticação por chave SSH, firewall UFW e proteção com Fail2ban.">
-  <meta property="og:type" content="article">
-  <link rel="canonical" href="https://irndevs.com/artigo-hardening-linux.html">
-  <link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-hardening-linux.html">
-  <link rel="alternate" hreflang="x-default" href="https://irndevs.com/artigo-hardening-linux.html">
-  <meta property="og:url" content="https://irndevs.com/artigo-hardening-linux.html">
-  <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
-  <meta property="og:locale" content="pt_BR">
-  <meta property="og:site_name" content="IRN Devs">
-  <meta property="article:published_time" content="2026-08-01">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Hardening Linux: SSH, UFW e Fail2ban — IRN Devs">
-  <meta name="twitter:description" content="Checklist de segurança: autenticação por chave SSH, firewall UFW e proteção com Fail2ban.">
-  <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
-  <meta name="author" content="IRN Devs">
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "Hardening Linux: SSH, UFW e Fail2ban",
-  "description": "Checklist de segurança: autenticação por chave SSH, firewall UFW e proteção com Fail2ban.",
-  "datePublished": "2026-08-01",
-  "author": {
-    "@type": "Organization",
-    "name": "IRN Devs"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "IRN Devs",
-    "url": "https://irndevs.com"
-  },
-  "mainEntityOfPage": "https://irndevs.com/artigo-hardening-linux.html",
-  "inLanguage": "pt-BR"
-}
-  </script>
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Início",
-      "item": "https://irndevs.com/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Blog",
-      "item": "https://irndevs.com/blog.html"
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "Hardening Linux: SSH, UFW e Fail2ban",
-      "item": "https://irndevs.com/artigo-hardening-linux.html"
-    }
-  ]
-}
-  </script>
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "HowTo",
-  "name": "Hardening Linux: SSH, UFW e Fail2ban",
-  "description": "Checklist básico de segurança para servidores Linux expostos.",
-  "step": [
-    {
-      "@type": "HowToStep",
-      "name": "Atualizar o sistema",
-      "text": "Aplicar atualizações de segurança do sistema operacional."
-    },
-    {
-      "@type": "HowToStep",
-      "name": "SSH por chave",
-      "text": "Desabilitar login por senha e root via SSH; usar autenticação por chave."
-    },
-    {
-      "@type": "HowToStep",
-      "name": "Firewall UFW",
-      "text": "Liberar apenas portas necessárias e ativar UFW."
-    },
-    {
-      "@type": "HowToStep",
-      "name": "Fail2ban",
-      "text": "Proteger SSH contra força bruta com Fail2ban."
-    }
-  ]
-}
-  </script>
-  <link rel="stylesheet" href="assets/css/motion.css">
-</head>
-<body>
-<!-- nav: site-nav.js -->
-<div class="wrap crumb">
-  <a href="index.html">~</a> / <a href="blog.html">blog</a> / <span class="inline-style-2">segurança</span>
-</div>
-<div class="wrap article-head">
-  <div class="meta">
-    <span>01 ago 2026</span>
-    <span class="tag">segurança</span>
-    <span>8 min de leitura</span>
-  </div>
-  <h1>Hardening de Servidor Linux: SSH, UFW e Fail2ban</h1>
-  <p class="excerpt">Checklist prático de segurança para servidores expostos: chave SSH, hardening do sshd, firewall UFW e proteção contra brute force.</p>
-  <div class="stack"><span>Linux</span><span>SSH</span><span>UFW</span><span>Fail2ban</span></div>
-</div>
-<div class="wrap">
-  <div class="toc">
-    <div class="label">$ cat sumario.txt</div>
-    <ol>
-      <li><a href="#update">Atualização e usuário</a></li>
-      <li><a href="#chave">SSH só com chave</a></li>
-      <li><a href="#sshd">Hardening do sshd</a></li>
-      <li><a href="#ufw">UFW</a></li>
-      <li><a href="#f2b">Fail2ban</a></li>
-      <li><a href="#check">Checklist</a></li>
-    </ol>
-  </div>
-  <article class="body">
-    <h2 id="update">1. Atualização e usuário</h2>
-<pre><code>sudo apt update && sudo apt full-upgrade -y
-sudo adduser admin
-sudo usermod -aG sudo admin
-</code></pre>
-    <p>Teste o sudo com o novo usuário antes de seguir.</p>
-    <h2 id="chave">2. SSH só com chave</h2>
-    <div class="step"><div class="n">$ # na máquina local</div></div>
-<pre><code>ssh-keygen -t ed25519 -C "seu-email"
-ssh-copy-id admin@IP-DO-SERVIDOR
-</code></pre>
-    <p>Em <code>/etc/ssh/sshd_config</code>:</p>
-<pre><code>PermitRootLogin no
-PasswordAuthentication no
-PubkeyAuthentication yes
-ChallengeResponseAuthentication no
-UsePAM yes
-</code></pre>
-<pre><code>sudo systemctl restart ssh
-</code></pre>
-    <div class="warn"><strong>warn</strong> · Mantenha uma sessão aberta enquanto testa. Se travar, use o console do provedor.</div>
-    <h2 id="sshd">3. Hardening do sshd</h2>
-<pre><code>Port 2222
-KexAlgorithms curve25519-sha256
-Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com
-MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com
-AllowUsers admin
-ClientAliveInterval 300
-ClientAliveCountMax 2
-MaxAuthTries 3
-</code></pre>
-    <h2 id="ufw">4. UFW</h2>
-<pre><code>sudo apt install ufw -y
-sudo ufw default deny incoming
-sudo ufw default allow outgoing
-sudo ufw allow 2222/tcp comment 'SSH'
-sudo ufw allow 80/tcp
-sudo ufw allow 443/tcp
-sudo ufw enable
-sudo ufw status verbose
-</code></pre>
-    <div class="tip"><strong>tip</strong> · Em backend, libere só o necessário.</div>
-    <h2 id="f2b">5. Fail2ban</h2>
-<pre><code>sudo apt install fail2ban -y
-sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
-</code></pre>
-<pre><code>[sshd]
-enabled = true
-port = 2222
-filter = sshd
-logpath = /var/log/auth.log
-maxretry = 3
-bantime = 1h
-findtime = 10m
-</code></pre>
-<pre><code>sudo systemctl enable --now fail2ban
-sudo fail2ban-client status sshd
-</code></pre>
-    <h2 id="check">6. Checklist</h2>
-    <ul>
-      <li>Sistema atualizado</li>
-      <li>Usuário sudo; root sem login SSH</li>
-      <li>SSH só por chave</li>
-      <li>Porta SSH restrita no UFW</li>
-      <li>UFW default deny</li>
-      <li>Fail2ban no SSH</li>
-      <li>unattended-upgrades para patches</li>
-    </ul>
-  </article>
-  <div class="nav-art">
-    <a href="artigo-k3s-homelab.html">← k3s</a>
-    <a href="artigo-aws-cloud.html">próximo: aws →</a>
-  </div>
-</div>
-
-<div class="wrap inline-style-3">
-  <div class="inline-style-4">$ next</div>
-  <p class="inline-style-5">Precisa de infraestrutura na prática?</p>
-  <a href="contato.html" class="inline-style-6">falar com a IRN Devs →</a>
-  <span class="inline-style-7"></span>
-  <a href="servicos.html" class="inline-style-8">serviços</a>
-</div>
-
-<footer>
-  <div class="wrap">
-    <div>© 2026 irndevs</div>
-    <div class="inline-style-9">
-      <a href="mailto:contato@irndevs.com">contato@irndevs.com</a>
-    </div>
-  </div>
-</footer>
-  <script src="assets/js/site-nav.js?v=20260914f" defer></script>
-  <script src="assets/js/chat-bot.js?v=20260915" defer></script>
-</body>
-</html>
+<!DOCTYPE html><html lang="pt-BR"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Hardening Linux: SSH, UFW e Fail2ban — IRN Devs</title><meta name="description" content="Checklist de segurança: autenticação por chave SSH, firewall UFW e proteção com Fail2ban."><meta name="author" content="IRN Devs"><meta name="theme-color" content="#10130f"><meta name="referrer" content="strict-origin-when-cross-origin"><meta http-equiv="X-Content-Type-Options" content="nosniff"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/css/pages/artigo-base.css"><link rel="stylesheet" href="/assets/css/site-nav.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="/assets/css/site-nav.css"></noscript><link rel="stylesheet" href="/assets/css/motion.css"><link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml"><link rel="canonical" href="https://irndevs.com/artigo-hardening-linux.html"><link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-hardening-linux.html"><link rel="alternate" hreflang="x-default" href="https://irndevs.com/artigo-hardening-linux.html"><meta property="og:type" content="article"><meta property="og:title" content="Hardening Linux: SSH, UFW e Fail2ban — IRN Devs"><meta property="og:description" content="Checklist de segurança: autenticação por chave SSH, firewall UFW e proteção com Fail2ban."><meta property="og:url" content="https://irndevs.com/artigo-hardening-linux.html"><meta property="og:image" content="https://irndevs.com/assets/img/og-default.png"><meta property="og:locale" content="pt_BR"><meta property="og:site_name" content="IRN Devs"><meta property="article:published_time" content="2026-08-01"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Hardening Linux: SSH, UFW e Fail2ban — IRN Devs"><meta name="twitter:description" content="Checklist de segurança: autenticação por chave SSH, firewall UFW e proteção com Fail2ban."><meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png"><link rel="alternate" type="application/rss+xml" title="IRN Devs Blog" href="https://irndevs.com/feed.xml"></head> <body> <a class="skip-link" href="#conteudo">Ir para o conteúdo</a> <main id="conteudo">   <header class="article-hero"> <div class="wrap"> <p class="eyebrow">// blog</p> <h1>Hardening Linux: SSH, UFW e Fail2ban</h1> <p class="lead">Checklist de segurança: autenticação por chave SSH, firewall UFW e proteção com Fail2ban.</p> <div class="meta"> <time datetime="2026-08-01">2026-08-01</time>  </div> </div> </header> <div class="wrap article-grid"> <aside class="toc"> <div class="label">$ cat sumario.txt</div> <ol> <li><a href="#1-atualização-e-usuário">1. Atualização e usuário</a></li><li><a href="#2-ssh-só-com-chave">2. SSH só com chave</a></li><li><a href="#3-hardening-do-sshd">3. Hardening do sshd</a></li><li><a href="#4-ufw">4. UFW</a></li><li><a href="#5-fail2ban">5. Fail2ban</a></li><li><a href="#6-checklist">6. Checklist</a></li> </ol> </aside> <article class="body">   <h2 id="1-atualização-e-usuário">1. Atualização e usuário</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>sudo apt update &#x26;&#x26; sudo apt full-upgrade -y</span></span>
+<span class="line"><span>sudo adduser admin</span></span>
+<span class="line"><span>sudo usermod -aG sudo admin</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<p>Teste o sudo com o novo usuário antes de seguir.</p>
+<h2 id="2-ssh-só-com-chave">2. SSH só com chave</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>$ # na máquina local</span></span>
+<span class="line"><span></span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ssh-keygen -t ed25519 -C "seu-email"</span></span>
+<span class="line"><span>ssh-copy-id admin@IP-DO-SERVIDOR</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<p>Em <code>/etc/ssh/sshd_config</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>PermitRootLogin no</span></span>
+<span class="line"><span>PasswordAuthentication no</span></span>
+<span class="line"><span>PubkeyAuthentication yes</span></span>
+<span class="line"><span>ChallengeResponseAuthentication no</span></span>
+<span class="line"><span>UsePAM yes</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>sudo systemctl restart ssh</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<blockquote>
+<p><strong>warn</strong> · Mantenha uma sessão aberta enquanto testa. Se travar, use o console do provedor.</p>
+</blockquote>
+<h2 id="3-hardening-do-sshd">3. Hardening do sshd</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Port 2222</span></span>
+<span class="line"><span>KexAlgorithms curve25519-sha256</span></span>
+<span class="line"><span>Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com</span></span>
+<span class="line"><span>MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com</span></span>
+<span class="line"><span>AllowUsers admin</span></span>
+<span class="line"><span>ClientAliveInterval 300</span></span>
+<span class="line"><span>ClientAliveCountMax 2</span></span>
+<span class="line"><span>MaxAuthTries 3</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<h2 id="4-ufw">4. UFW</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>sudo apt install ufw -y</span></span>
+<span class="line"><span>sudo ufw default deny incoming</span></span>
+<span class="line"><span>sudo ufw default allow outgoing</span></span>
+<span class="line"><span>sudo ufw allow 2222/tcp comment 'SSH'</span></span>
+<span class="line"><span>sudo ufw allow 80/tcp</span></span>
+<span class="line"><span>sudo ufw allow 443/tcp</span></span>
+<span class="line"><span>sudo ufw enable</span></span>
+<span class="line"><span>sudo ufw status verbose</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<blockquote>
+<p><strong>tip</strong> · Em backend, libere só o necessário.</p>
+</blockquote>
+<h2 id="5-fail2ban">5. Fail2ban</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>sudo apt install fail2ban -y</span></span>
+<span class="line"><span>sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[sshd]</span></span>
+<span class="line"><span>enabled = true</span></span>
+<span class="line"><span>port = 2222</span></span>
+<span class="line"><span>filter = sshd</span></span>
+<span class="line"><span>logpath = /var/log/auth.log</span></span>
+<span class="line"><span>maxretry = 3</span></span>
+<span class="line"><span>bantime = 1h</span></span>
+<span class="line"><span>findtime = 10m</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>sudo systemctl enable --now fail2ban</span></span>
+<span class="line"><span>sudo fail2ban-client status sshd</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<h2 id="6-checklist">6. Checklist</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>  - Sistema atualizado</span></span>
+<span class="line"><span>  - Usuário sudo; root sem login SSH</span></span>
+<span class="line"><span>  - SSH só por chave</span></span>
+<span class="line"><span>  - Porta SSH restrita no UFW</span></span>
+<span class="line"><span>  - UFW default deny</span></span>
+<span class="line"><span>  - Fail2ban no SSH</span></span>
+<span class="line"><span>  - unattended-upgrades para patches</span></span>
+<span class="line"><span></span></span></code></pre>  </article> </div>  </main> <script src="/assets/js/site-nav.js" defer></script> </body> </html>

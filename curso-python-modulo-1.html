@@ -1,80 +1,35 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Python 1 — Setup e primeiros scripts | IRN Devs</title>
-<link rel="canonical" href="https://irndevs.com/curso-python-modulo-1.html">
-<meta name="description" content="Módulo 1 do curso Automações em Python: instalação, ambiente virtual e primeiros scripts.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/pages/curso-python.css">
-<link rel="stylesheet" href="assets/css/site-nav.css">
-<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/motion.css">
-
-<meta property="og:title" content="Python 1 — Setup e primeiros scripts | IRN Devs">
-<meta property="og:description" content="Módulo 1 do curso Automações em Python: instalação, ambiente virtual e primeiros scripts.">
-<meta property="og:url" content="https://irndevs.com/curso-python-modulo-1.html">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
-<meta property="og:site_name" content="IRN Devs">
-</head>
-<body>
-
-<!-- nav: site-nav.js -->
-
-<article class="wrap">
-  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#python">automações em python</a> / módulo 1</nav>
-
-  <div class="sec-head"><span class="amber">$</span> python modulo_1.py</div>
-  <h1>Setup e primeiros scripts</h1>
-  <p class="lede">Python instalado, ambiente virtual configurado e o primeiro script útil rodando em 15 minutos.</p>
-
-  <h2>O que você vai aprender</h2>
-  <ul>
-    <li>Instalar Python 3 no Linux, Windows e Mac</li>
-    <li>venv e pip sem dor de cabeça</li>
-    <li>Primeiro script: renomear e organizar 500 arquivos automaticamente</li>
-  </ul>
-
-  <h2>Código da aula</h2>
-  <pre><code># organiza_fotos.py — padroniza nomes de arquivos numa pasta
-from pathlib import Path
-
-pasta = Path("fotos")
-for i, arq in enumerate(sorted(pasta.glob("*.jpg")), start=1):
-    novo = pasta / f"foto_{i:03d}.jpg"
-    arq.rename(novo)
-    print(f"{arq.name} -&gt; {novo.name}")</code></pre>
-
-  <h2>Sumário do curso</h2>
-  <div class="mod-sumario">
-    <a class="mod-card" href="curso-python-modulo-1.html" aria-current="page"><span class="mod-card-n">01</span><span class="mod-card-name">Setup e primeiros scripts</span></a>
-    <a class="mod-card" href="curso-python-modulo-2.html"><span class="mod-card-n">02</span><span class="mod-card-name">Web scraping</span></a>
-    <a class="mod-card" href="curso-python-modulo-3.html"><span class="mod-card-n">03</span><span class="mod-card-name">Automação de navegador</span></a>
-    <a class="mod-card" href="curso-python-modulo-4.html"><span class="mod-card-n">04</span><span class="mod-card-name">Planilhas e dados</span></a>
-    <a class="mod-card" href="curso-python-modulo-5.html"><span class="mod-card-n">05</span><span class="mod-card-name">E-mails e arquivos</span></a>
-    <a class="mod-card" href="curso-python-modulo-6.html"><span class="mod-card-n">06</span><span class="mod-card-name">APIs e webhooks</span></a>
-    <a class="mod-card" href="curso-python-modulo-7.html"><span class="mod-card-n">07</span><span class="mod-card-name">Agendamento e deploy</span></a>
-    <a class="mod-card" href="curso-python-modulo-8.html"><span class="mod-card-n">08</span><span class="mod-card-name">Projeto final</span></a>
-  </div>
-
-  <div class="aula-progress">
-    <a class="btn ghost" href="cursos.html">← todos os cursos</a>
-    <span class="dots"><b class="on"></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></span>
-    <a class="btn primary" href="curso-python-modulo-2.html">próximo: Web scraping →</a>
-  </div>
-</article>
-
-<footer>
-  <div class="wrap">
-    <div>© 2026 irndevs</div>
-    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
-  </div>
-</footer>
-
-<script src="assets/js/site-nav.js?v=20260914f" defer></script>
-<script src="assets/js/chat-bot.js?v=20260915" defer></script>
-</body>
-</html>
+<!DOCTYPE html><html lang="pt-BR"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Python 1 — Setup e primeiros scripts | IRN Devs</title><meta name="description" content="Módulo 1 do curso Automações em Python: instalação, ambiente virtual e primeiros scripts."><meta name="author" content="IRN Devs"><meta name="theme-color" content="#10130f"><meta name="referrer" content="strict-origin-when-cross-origin"><meta http-equiv="X-Content-Type-Options" content="nosniff"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/css/pages/curso-python.css"><link rel="stylesheet" href="/assets/css/site-nav.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="/assets/css/site-nav.css"></noscript><link rel="stylesheet" href="/assets/css/motion.css"><link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml"><link rel="canonical" href="https://irndevs.com/curso-python-modulo-1.html"><link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/curso-python-modulo-1.html"><link rel="alternate" hreflang="x-default" href="https://irndevs.com/curso-python-modulo-1.html"><meta property="og:type" content="website"><meta property="og:title" content="Python 1 — Setup e primeiros scripts | IRN Devs"><meta property="og:description" content="Módulo 1 do curso Automações em Python: instalação, ambiente virtual e primeiros scripts."><meta property="og:url" content="https://irndevs.com/curso-python-modulo-1.html"><meta property="og:image" content="https://irndevs.com/assets/img/og-default.png"><meta property="og:locale" content="pt_BR"><meta property="og:site_name" content="IRN Devs"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Python 1 — Setup e primeiros scripts | IRN Devs"><meta name="twitter:description" content="Módulo 1 do curso Automações em Python: instalação, ambiente virtual e primeiros scripts."><meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png"><link rel="alternate" type="application/rss+xml" title="IRN Devs Blog" href="https://irndevs.com/feed.xml"></head> <body> <a class="skip-link" href="#conteudo">Ir para o conteúdo</a> <main id="conteudo">  <div class="wrap"> <p class="eyebrow">// curso python · módulo 1</p> <h1>Python 1 — Setup e primeiros scripts | IRN Devs</h1> <p class="lead">Módulo 1 do curso Automações em Python: instalação, ambiente virtual e primeiros scripts.</p> <article class="body"> <p><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#python">automações em python</a> / módulo 1</p>
+<p>$ python modulo_1.py
+Setup e primeiros scripts
+Python instalado, ambiente virtual configurado e o primeiro script útil rodando em 15 minutos.</p>
+<h2 id="o-que-você-vai-aprender">O que você vai aprender</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>- Instalar Python 3 no Linux, Windows e Mac</span></span>
+<span class="line"><span>- venv e pip sem dor de cabeça</span></span>
+<span class="line"><span>- Primeiro script: renomear e organizar 500 arquivos automaticamente</span></span>
+<span class="line"><span></span></span></code></pre>
+<h2 id="código-da-aula">Código da aula</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span># organiza_fotos.py — padroniza nomes de arquivos numa pasta</span></span>
+<span class="line"><span>from pathlib import Path</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>pasta = Path("fotos")</span></span>
+<span class="line"><span>for i, arq in enumerate(sorted(pasta.glob("*.jpg")), start=1):</span></span>
+<span class="line"><span>    novo = pasta / f"foto_{i:03d}.jpg"</span></span>
+<span class="line"><span>    arq.rename(novo)</span></span>
+<span class="line"><span>    print(f"{arq.name} -&#x26;gt; {novo.name}")</span></span>
+<span class="line"><span></span></span></code></pre>
+<h2 id="sumário-do-curso">Sumário do curso</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>01Setup e primeiros scripts</span></span>
+<span class="line"><span>02Web scraping</span></span>
+<span class="line"><span>03Automação de navegador</span></span>
+<span class="line"><span>04Planilhas e dados</span></span>
+<span class="line"><span>05E-mails e arquivos</span></span>
+<span class="line"><span>06APIs e webhooks</span></span>
+<span class="line"><span>07Agendamento e deploy</span></span>
+<span class="line"><span>08Projeto final</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>← todos os cursos</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>próximo: Web scraping →</span></span>
+<span class="line"><span></span></span></code></pre> </article> </div>  </main> <script src="/assets/js/site-nav.js" defer></script> </body> </html>
