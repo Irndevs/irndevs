@@ -433,3 +433,47 @@ body.has-site-nav > nav:not(.sn-bottom) {
   .sn-auth-slot { margin-right: 0; }
   .sn-auth-slot a { padding: 6px 10px; font-size: 12px; }
 }
+
+/* Floating CTA + Chat */
+#irn-float-cta {
+  position: fixed;
+  right: 16px;
+  bottom: 20px;
+  z-index: 9990;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+.irn-float-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 999px;
+  font-family: var(--mono, "IBM Plex Mono", monospace);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  transition: transform .2s, box-shadow .2s, background .2s;
+}
+.irn-float-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+}
+.irn-float-chat {
+  background: var(--nav-amber, #e8a33d);
+  color: #10130f;
+}
+.irn-float-wa {
+  background: #25D366;
+  color: #fff;
+}
+.irn-float-ico { font-size: 16px; line-height: 1; }
+.irn-float-txt { letter-spacing: 0.02em; }
+@media (max-width: 899px) {
+  #irn-float-cta { bottom: 72px; right: 12px; } /* above bottom nav */
+  .irn-float-btn { padding: 11px 14px; font-size: 12.5px; }
+}
+/* keep both buttons on all sizes */

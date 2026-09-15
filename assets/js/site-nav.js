@@ -30,10 +30,10 @@
   }
 
   var topLinks = [
+    { href: 'index.html#projetos', label: 'projetos', ico: '▸' },
     { href: 'servicos.html', label: 'serviços', ico: '⚙' },
     { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
-    { href: 'ferramenta-checklist.html', label: 'checklist', ico: '✓' },
-    { href: 'blog.html', label: 'blog', ico: '≡' }
+    { href: 'homelab.html', label: 'homelab', ico: '▣' }
   ];
 
   var drawerGroups = [
@@ -83,9 +83,9 @@
 
   var bottomItems = [
     { href: 'index.html', label: 'início', ico: '⌂' },
+    { href: 'index.html#projetos', label: 'projetos', ico: '▸' },
     { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
-    { href: 'ferramenta-checklist.html', label: 'checklist', ico: '✓' },
-    { href: 'blog.html', label: 'blog', ico: '≡' },
+    { href: 'homelab.html', label: 'homelab', ico: '▣' },
     { href: 'contato.html', label: 'contato', ico: '@' }
   ];
 
@@ -216,6 +216,19 @@
       closeMobile();
       updateExpandedState();
     });
+
+    /* Floating CTA + Chat (mobile sticky + desktop) */
+    if (!document.getElementById('irn-float-cta')) {
+      var float = document.createElement('div');
+      float.id = 'irn-float-cta';
+      float.innerHTML =
+        '<a href="contato.html" class="irn-float-btn irn-float-chat" title="Falar / Contato" aria-label="Abrir contato">' +
+        '<span class="irn-float-ico">💬</span><span class="irn-float-txt">Falar</span></a>' +
+        '<a href="https://wa.me/5500000000000?text=Ol%C3%A1%2C%20vim%20pelo%20site%20IRN%20Devs%20e%20gostaria%20de%20falar%20sobre%20um%20projeto" ' +
+        'class="irn-float-btn irn-float-wa" target="_blank" rel="noopener noreferrer" title="WhatsApp" aria-label="WhatsApp">' +
+        '<span class="irn-float-ico">↗</span><span class="irn-float-txt">WhatsApp</span></a>';
+      document.body.appendChild(float);
+    }
   }
 
   if (document.readyState === 'loading') {

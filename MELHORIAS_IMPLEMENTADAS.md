@@ -190,3 +190,43 @@ Seu portfolio agora é um **site completo e profissional** com:
 - 🚀 **Pronto para impressionar** recrutadores e clientes
 
 **Tudo mantendo o estilo visual que você já tinha, apenas expandindo e melhorando!** 🎯
+
+---
+
+## 2026-09-15 — Auditoria + Otimizações (menu, skills, CTAs, chat)
+
+### Correções
+- **skills.yaml**: unificadas as duas entradas duplicadas de "dados" em uma só (ETL + bancos).
+- **virtualização**: removida duplicata "Docker".
+- **Job Hunter**: link corrigido (antes apontava para "EcoMonitor").
+- **Homelab stack** no card: removida duplicata Docker e adicionado Prometheus.
+
+### Menu / Arquitetura de Informação
+- Top links: Projetos · Serviços · Pacotes · Homelab (mais essencial).
+- Bottom nav (mobile): alinhado com a mesma prioridade.
+- Drawer continua com grupos (produto / ferramentas / conteúdo / conta / contato).
+
+### Cards de Projetos (Home)
+- Adicionada linha de **valor de negócio** em cada card principal (`.proj-value`):
+  - ZapAgendador: ~12 h/semana a menos
+  - NeoBank: API type-safe + deploy estável
+  - EcoMonitor: CI/CD → redeploy automático
+  - Job Hunter: ranking com LLM
+  - Homelab: ambiente documentado 24/7
+- Hover dos cards reforçado (borda âmbar + glow).
+
+### Conversão / Chat
+- **Floating CTA** (botão "Falar" âmbar + botão WhatsApp verde) em todas as páginas públicas via `site-nav.js`.
+- CTA final da home: botão WhatsApp adicionado ao lado de "fale conosco".
+- **IMPORTANTE**: substituir o número placeholder `5500000000000` pelo WhatsApp real em:
+  - `assets/js/site-nav.js` (link wa.me)
+  - `index.html` (CTA final)
+
+### Contraste
+- `--text-dim` e `--text-faint` levemente mais claros para melhor legibilidade em OLED/monitores.
+
+### Próximos passos sugeridos
+1. Colocar número real do WhatsApp.
+2. Homelab: transformar seções longas em acordeões.
+3. Testimonials reais.
+4. Página Sobre mais humana (opcional).

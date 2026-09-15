@@ -151,6 +151,7 @@
     <div class="proj-card fade-in"><div class="status-tag live">● produção</div><div>
       <div class="proj-name">ZapAgendador IA</div>
       <div class="proj-desc">SaaS multi-tenant de agendamento via WhatsApp com IA generativa local (migrado de Gemini pra Gemma via serviços de IA), arquitetura type-safe ponta a ponta.</div>
+      <div class="proj-value">~12 h/semana a menos de trabalho manual em agenda e confirmações</div>
       <div class="stack"><span>Node.js</span><span>tRPC</span><span>TypeScript</span><span>TiDB Cloud</span><span>Render</span></div>
       <div class="proj-links">
         <a class="proj-link" href="https://zapagendador-ia.onrender.com" target="_blank" rel="noopener noreferrer">ver ZapAgendador IA →</a>
@@ -161,6 +162,7 @@
     <div class="proj-card fade-in"><div class="status-tag live">● produção</div><div>
       <div class="proj-name">NeoBank</div>
       <div class="proj-desc">Sistema bancário fullstack simulando operações reais — contas, transferências, extrato — com IA local via serviços de IA e deploy replicado no cluster próprio.</div>
+      <div class="proj-value">API type-safe + deploy no cluster próprio com operação estável</div>
       <div class="stack"><span>Python</span><span>Flask</span><span>SQLite</span><span>serviços de IA</span><span>k3s</span></div>
       <div class="proj-links">
         <a class="proj-link" href="https://neobankirn.irndevs.com" target="_blank" rel="noopener noreferrer">ver NeoBank →</a>
@@ -171,6 +173,7 @@
     <div class="proj-card fade-in"><div class="status-tag live">● produção</div><div>
       <div class="proj-name">EcoMonitor</div>
       <div class="proj-desc">Plataforma colaborativa de monitoramento ambiental em tempo real, com CI/CD no Gitea buildando e reimplantando no k3s a cada push.</div>
+      <div class="proj-value">CI/CD no Gitea → redeploy automático no k3s a cada push</div>
       <div class="stack"><span>Vite/React</span><span>Node.js</span><span>Docker</span><span>Gitea CI/CD</span></div>
       <div class="proj-links">
         <span class="proj-link inline-style-4">deploy interno</span>
@@ -180,16 +183,18 @@
     <div class="proj-card fade-in"><div class="status-tag live">● funcional</div><div>
       <div class="proj-name">Job Hunter Inteligente</div>
       <div class="proj-desc">Busca vagas em múltiplas fontes públicas e usa LLM pra calcular compatibilidade com o perfil do candidato, com ranking explicado.</div>
+      <div class="proj-value">Ranking de compatibilidade com LLM + fontes públicas</div>
       <div class="stack"><span>FastAPI</span><span>SQLAlchemy</span><span>serviços de IA</span><span>Postgres</span></div>
       <div class="proj-links">
-        <a class="proj-link" href="https://job.irndevs.com" target="_blank" rel="noopener noreferrer">ver EcoMonitor →</a>
+        <a class="proj-link" href="https://job.irndevs.com" target="_blank" rel="noopener noreferrer">ver Job Hunter →</a>
       </div>
     </div></div>
 
     <div class="proj-card fade-in"><div class="status-tag live">● produção</div><div>
       <div class="proj-name">Homelab Self-hosted</div>
       <div class="proj-desc">Servidor bare-metal com Docker orquestrando VMs e containers Docker/LXC. Monitoramento completo com testes automatizados, métricas e logs.</div>
-      <div class="stack"><span>Docker</span><span>Docker</span><span>LXC</span><span>Grafana</span></div>
+      <div class="proj-value">Ambiente documentado 24/7 com Grafana + Prometheus</div>
+      <div class="stack"><span>Docker</span><span>LXC</span><span>Grafana</span><span>Prometheus</span></div>
       <div class="proj-links">
         <a class="proj-link" href="homelab.html">ver Homelab Self-hosted →</a>
       </div>
@@ -198,6 +203,7 @@
     <div class="proj-card fade-in"><div class="status-tag live">● produção</div><div>
       <div class="proj-name">Cluster Kubernetes (k3s)</div>
       <div class="proj-desc">Orquestração de workloads em cluster k3s leve, integrado com Gitea Actions Runner e ArgoCD (GitOps) para CI/CD.</div>
+      <div class="proj-value">GitOps com ArgoCD — commit → produção repetível</div>
       <div class="stack"><span>k3s</span><span>Gitea</span><span>ArgoCD</span><span>Bash</span></div>
       <div class="proj-links">
         <a class="proj-link" href="artigo-k3s-homelab.html">ler artigo →</a>
@@ -327,12 +333,11 @@
     <h2 class="sec-title">Stack</h2>
     <table class="skills-table">
       <tr><td>sistemas & redes</td><td>Linux, SSH hardening, Cloudflare Tunnels, acesso seguro, UFW, Fail2ban</td></tr>
-      <tr><td>virtualização</td><td>Docker, LXC, Docker, Kubernetes (k3s)</td></tr>
+      <tr><td>virtualização</td><td>Docker, LXC, Kubernetes (k3s)</td></tr>
       <tr><td>desenvolvimento</td><td>TypeScript, Node, Python, React/Vite, APIs</td></tr>
       <tr><td>automações</td><td>Integrações, bots, filas, IA aplicada, webhooks</td></tr>
-      <tr><td>dados</td><td>ETL leve, SQL, dashboards, métricas de produto</td></tr>
+      <tr><td>dados</td><td>ETL leve, SQL, PostgreSQL, MySQL, MongoDB, Pandas, dashboards, métricas de produto</td></tr>
       <tr><td>ci/cd</td><td>Gitea Actions, GitHub Actions, Bash, Python</td></tr>
-      <tr><td>dados</td><td>PostgreSQL, MySQL, MongoDB, ETL/Pandas</td></tr>
       <tr><td>cloud</td><td>AWS (VPC, EC2, S3, IAM), FastAPI</td></tr>
     </table>
   </div>
@@ -343,6 +348,7 @@
   <p>Abertos a novos projetos em desenvolvimento, automações e análises de dados.</p>
   <div class="inline-style-10">
     <a class="btn primary" href="contato.html">fale conosco</a>
+    <a class="btn ghost" href="https://wa.me/5500000000000?text=Ol%C3%A1%2C%20vim%20pelo%20site%20IRN%20Devs%20e%20gostaria%20de%20falar%20sobre%20um%20projeto" target="_blank" rel="noopener noreferrer">WhatsApp</a>
     <a class="btn ghost" href="servicos.html">ver serviços</a>
   </div>
 </div>
