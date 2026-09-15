@@ -15,10 +15,10 @@
   if (document.getElementById('irn-chat-btn')) return; // já carregado
 
   var css = [
-    '#irn-chat-btn{position:fixed;bottom:24px;right:24px;width:56px;height:56px;background:#1a1f18;border:1px solid #3a4a32;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.4);transition:transform .2s,border-color .2s}',
+    '#irn-chat-btn{position:fixed;bottom:132px;right:24px;width:56px;height:56px;background:#1a1f18;border:1px solid #3a4a32;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.4);transition:transform .2s,border-color .2s}',
     '#irn-chat-btn:hover{transform:scale(1.08);border-color:#c9a227}',
     '#irn-chat-btn svg{width:26px;height:26px;fill:#c9a227}',
-    '#irn-chat-win{position:fixed;bottom:92px;right:24px;width:360px;max-width:calc(100vw - 32px);height:500px;background:#121610;border:1px solid #2a3326;border-radius:12px;display:none;flex-direction:column;overflow:hidden;z-index:9999;font-family:"IBM Plex Sans",system-ui,sans-serif;box-shadow:0 12px 40px rgba(0,0,0,.5)}',
+    '#irn-chat-win{position:fixed;bottom:200px;right:24px;width:360px;max-width:calc(100vw - 32px);height:500px;background:#121610;border:1px solid #2a3326;border-radius:12px;display:none;flex-direction:column;overflow:hidden;z-index:9999;font-family:"IBM Plex Sans",system-ui,sans-serif;box-shadow:0 12px 40px rgba(0,0,0,.5)}',
     '#irn-chat-win.open{display:flex}',
     '#irn-chat-head{background:#1a1f18;border-bottom:1px solid #2a3326;padding:14px 16px;display:flex;align-items:center;gap:12px}',
     '#irn-chat-head .av{width:38px;height:38px;background:#252b22;border:1px solid #3a4a32;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px}',
@@ -41,7 +41,8 @@
     '#irn-chat-send{width:40px;height:40px;background:#252b22;border:1px solid #3a4a32;border-radius:8px;color:#c9a227;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}',
     '#irn-chat-send:hover{background:#c9a227;color:#121610;border-color:#c9a227}',
     '.irn-wa-btn{display:inline-flex;align-items:center;gap:8px;background:#1f2a1a;border:1px solid #3a4a32;color:#c9a227;padding:9px 14px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:500;margin-top:8px;transition:all .15s}',
-    '.irn-wa-btn:hover{background:#c9a227;color:#121610;border-color:#c9a227}'
+    '.irn-wa-btn:hover{background:#c9a227;color:#121610;border-color:#c9a227}',
+    '@media (max-width:899px){#irn-chat-btn{bottom:178px}#irn-chat-win{bottom:246px;height:min(500px,calc(100dvh - 270px))}}'
   ].join('');
 
   var style = document.createElement('style');
