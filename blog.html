@@ -1,1 +1,256 @@
-<!DOCTYPE html><html lang="pt-BR"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Blog — IRN Devs | Desenvolvimento de software e Qualidade e confiabilidade</title><meta name="description" content="Artigos técnicos sobre Docker, k3s, Grafana, Prometheus, OpenTelemetry, Linux e hardening de servidores."><meta name="author" content="IRN Devs"><meta name="theme-color" content="#10130f"><meta name="referrer" content="strict-origin-when-cross-origin"><meta http-equiv="X-Content-Type-Options" content="nosniff"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/css/pages/blog.css"><link rel="stylesheet" href="/assets/css/site-nav.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="/assets/css/site-nav.css"></noscript><link rel="stylesheet" href="/assets/css/motion.css"><link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml"><link rel="canonical" href="https://irndevs.com/blog.html"><link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/blog.html"><link rel="alternate" hreflang="x-default" href="https://irndevs.com/blog.html"><meta property="og:type" content="website"><meta property="og:title" content="Blog — IRN Devs | Desenvolvimento de software e Qualidade e confiabilidade"><meta property="og:description" content="Artigos técnicos sobre Docker, k3s, Grafana, Prometheus, OpenTelemetry, Linux e hardening de servidores."><meta property="og:url" content="https://irndevs.com/blog.html"><meta property="og:image" content="https://irndevs.com/assets/img/og-default.png"><meta property="og:locale" content="pt_BR"><meta property="og:site_name" content="IRN Devs"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Blog — IRN Devs | Desenvolvimento de software e Qualidade e confiabilidade"><meta name="twitter:description" content="Artigos técnicos sobre Docker, k3s, Grafana, Prometheus, OpenTelemetry, Linux e hardening de servidores."><meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png"><link rel="alternate" type="application/rss+xml" title="IRN Devs Blog" href="https://irndevs.com/feed.xml"><script type="module" src="/_astro/hoisted.B-vtV16w.js"></script></head> <body> <a class="skip-link" href="#conteudo">Ir para o conteúdo</a> <main id="conteudo">   <div class="wrap crumb"> <a href="index.html">~</a> / <span class="inline-style-2">blog</span> </div> <div class="wrap page-head"> <div class="sec-head"><span class="amber">$</span> ls posts/ --recent</div> <h1>Blog</h1> <p>Artigos sobre infraestrutura, Linux e automação — do que é testado no homelab pra o que entra em produção.</p> <div class="search-box" id="buscar"> <label for="postSearch"><span aria-hidden="true">$</span> buscar artigos</label> <input id="postSearch" type="search" placeholder="ex.: Docker, Linux, Kubernetes..." autocomplete="off"> <span id="searchCount" aria-live="polite">7 artigos</span> </div> <div class="filters"> <button class="filter-btn active" data-category="all">todos</button> <button class="filter-btn" data-category="observabilidade">observabilidade</button> <button class="filter-btn" data-category="linux">linux</button> <button class="filter-btn" data-category="kubernetes">kubernetes</button> <button class="filter-btn" data-category="proxmox">proxmox</button> <button class="filter-btn" data-category="seguranca">segurança</button> <button class="filter-btn" data-category="cloud">cloud</button> </div> </div> <div class="wrap posts" id="postsList"> <div class="post featured" data-category="observabilidade"> <div class="post-meta-col"> <span class="date">15 ago 2026</span> <span class="post-tag">observabilidade</span> </div> <div> <div class="featured-flag">✨ destaque · 12 min de leitura</div> <div class="post-title"><a href="artigo-observabilidade-docker.html">Montando uma Stack de Qualidade e confiabilidade Completa com Docker</a></div> <p class="post-excerpt">Guia prático para subir testes automatizados, métricas e logs em containers Docker. Desde a configuração dos exporters até a criação de dashboards eficientes para monitoramento de infraestrutura e aplicações.</p> <div class="post-stack"><span>Grafana</span><span>Prometheus</span><span>Loki</span><span>OpenTelemetry</span><span>Docker</span></div> <a class="read-more" href="artigo-observabilidade-docker.html">ler artigo →</a> </div> </div> <div class="post" data-category="proxmox"> <div class="post-meta-col"> <span class="date">10 ago 2026</span> <span class="post-tag">proxmox</span> </div> <div> <div class="post-title"><a href="artigo-proxmox-homelab.html">Docker: Do Zero ao Homelab Produtivo</a></div> <p class="post-excerpt">Como configurar um servidor bare-metal com Docker VE: gestão de VMs e containers LXC, backups automáticos e integração com storage ZFS.</p> <div class="post-stack"><span>Docker</span><span>LXC</span><span>ZFS</span><span>Homelab</span></div> <a class="read-more" href="artigo-proxmox-homelab.html">ler artigo → · 10 min</a> </div> </div> <div class="post" data-category="kubernetes"> <div class="post-meta-col"> <span class="date">05 ago 2026</span> <span class="post-tag">kubernetes</span> </div> <div> <div class="post-title"><a href="artigo-k3s-homelab.html">k3s no Homelab: Kubernetes Leve para Produção</a></div> <p class="post-excerpt">Por que k3s no homelab: instalação, configuração de Ingress, persistent volumes com Longhorn e deploy de aplicações com Helm.</p> <div class="post-stack"><span>k3s</span><span>Kubernetes</span><span>Helm</span><span>Longhorn</span></div> <a class="read-more" href="artigo-k3s-homelab.html">ler artigo → · 15 min</a> </div> </div> <div class="post" data-category="seguranca"> <div class="post-meta-col"> <span class="date">01 ago 2026</span> <span class="post-tag">segurança</span> </div> <div> <div class="post-title"><a href="artigo-hardening-linux.html">Hardening de Servidor Linux: SSH, UFW e Fail2ban</a></div> <p class="post-excerpt">Checklist prático de segurança para servidores expostos à internet. Configuração de autenticação por chave, hardening do SSH, firewall UFW e proteção contra brute force.</p> <div class="post-stack"><span>Linux</span><span>SSH</span><span>UFW</span><span>Fail2ban</span></div> <a class="read-more" href="artigo-hardening-linux.html">ler artigo → · 8 min</a> </div> </div> <div class="post" data-category="cloud"> <div class="post-meta-col"> <span class="date">28 jul 2026</span> <span class="post-tag">cloud</span> </div> <div> <div class="post-title"><a href="artigo-aws-cloud.html">AWS Cloud Foundations: Do Homelab para a Nuvem</a></div> <p class="post-excerpt">Reflexões sobre a certificação AWS Academy Cloud Foundations e como os conceitos de VPC, EC2, S3 e IAM se aplicam à migração de workloads do homelab para a nuvem AWS.</p> <div class="post-stack"><span>AWS</span><span>EC2</span><span>S3</span><span>IAM</span><span>VPC</span></div> <a class="read-more" href="artigo-aws-cloud.html">ler artigo → · 10 min</a> </div> </div> <div class="post" data-category="observabilidade"> <div class="post-meta-col"> <span class="date">22 jul 2026</span> <span class="post-tag">observabilidade</span> </div> <div> <div class="post-title"><a href="artigo-opentelemetry.html">OpenTelemetry: Unificando Métricas, Logs e Traces</a></div> <p class="post-excerpt">Introdução ao OpenTelemetry como padrão aberto para observabilidade. Como instrumentar aplicações e coletar sinais unificados para análise no Grafana.</p> <div class="post-stack"><span>OpenTelemetry</span><span>Qualidade e confiabilidade</span><span>Grafana</span><span>DevOps</span></div> <a class="read-more" href="artigo-opentelemetry.html">ler artigo → · 14 min</a> </div> </div> <div class="post" data-category="linux"> <div class="post-meta-col"> <span class="date">18 jul 2026</span> <span class="post-tag">linux</span> </div> <div> <div class="post-title"><a href="artigo-ubuntu-server.html">Ubuntu Server: Configuração Inicial Essencial</a></div> <p class="post-excerpt">Passo a passo da configuração inicial de um servidor Ubuntu: atualizações, criação de usuário, configuração de rede, timezone, NTP e preparação para instalação de serviços.</p> <div class="post-stack"><span>Ubuntu</span><span>Linux</span><span>Server</span><span>Sysadmin</span></div> <a class="read-more" href="artigo-ubuntu-server.html">ler artigo → · 7 min</a> </div> </div> </div> <footer> <div class="wrap"> <div>© 2026 irndevs</div> <div class="inline-style-3"> <a href="mailto:contato@irndevs.com">contato@irndevs.com</a> <a href="privacidade.html">privacidade</a> </div> </div> <!-- privacy --> </footer>   </main> <script src="/assets/js/site-nav.js" defer></script> </body> </html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — IRN Devs | Desenvolvimento de software e Qualidade e confiabilidade</title>
+<meta name="description" content="Artigos técnicos sobre Docker, k3s, Grafana, Prometheus, OpenTelemetry, Linux e hardening de servidores.">
+<meta name="keywords" content="blog, infraestrutura, devops, homelab, kubernetes, k3s, docker, proxmox, grafana, prometheus">
+<meta name="author" content="IRN Devs">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Blog — IRN Devs | Desenvolvimento de software e Qualidade e confiabilidade">
+<meta property="og:description" content="Artigos técnicos sobre Docker, k3s, Grafana, Prometheus, OpenTelemetry, Linux e hardening de servidores.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/blog.css">
+  <link rel="stylesheet" href="assets/css/site-nav.css">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://irndevs.com/blog.html">
+  <link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/blog.html">
+  <link rel="alternate" hreflang="x-default" href="https://irndevs.com/blog.html">
+  <meta property="og:url" content="https://irndevs.com/blog.html">
+  <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="IRN Devs">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Blog — IRN Devs | Desenvolvimento de software e Qualidade e confiabilidade">
+  <meta name="twitter:description" content="Artigos técnicos sobre Docker, k3s, Grafana, Prometheus, OpenTelemetry, Linux e hardening de servidores.">
+  <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta name="theme-color" content="#10130f">
+  <link rel="alternate" type="application/rss+xml" title="IRN Devs Blog" href="https://irndevs.com/feed.xml">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "url": "https://irndevs.com/artigo-observabilidade-docker.html",
+      "name": "Stack de Observabilidade com Docker"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "url": "https://irndevs.com/artigo-proxmox-homelab.html",
+      "name": "Proxmox: Do Zero ao Homelab"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "url": "https://irndevs.com/artigo-k3s-homelab.html",
+      "name": "k3s no Homelab"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "url": "https://irndevs.com/artigo-hardening-linux.html",
+      "name": "Hardening Linux"
+    },
+    {
+      "@type": "ListItem",
+      "position": 5,
+      "url": "https://irndevs.com/artigo-aws-cloud.html",
+      "name": "AWS Cloud Foundations"
+    },
+    {
+      "@type": "ListItem",
+      "position": 6,
+      "url": "https://irndevs.com/artigo-opentelemetry.html",
+      "name": "OpenTelemetry"
+    },
+    {
+      "@type": "ListItem",
+      "position": 7,
+      "url": "https://irndevs.com/artigo-ubuntu-server.html",
+      "name": "Ubuntu Server"
+    }
+  ]
+}
+  </script>
+  <link rel="stylesheet" href="assets/css/motion.css">
+</head>
+<body>
+
+<!-- nav: site-nav.js -->
+
+<div class="wrap crumb">
+  <a href="index.html">~</a> / <span class="inline-style-2">blog</span>
+</div>
+
+<div class="wrap page-head">
+  <div class="sec-head"><span class="amber">$</span> ls posts/ --recent</div>
+  <h1>Blog</h1>
+  <p>Artigos sobre infraestrutura, Linux e automação — do que é testado no homelab pra o que entra em produção.</p>
+  <div class="search-box" id="buscar">
+    <label for="postSearch"><span aria-hidden="true">$</span> buscar artigos</label>
+     <input id="postSearch" type="search" placeholder="ex.: Docker, Linux, Kubernetes..." autocomplete="off">
+     <span id="searchCount" aria-live="polite">7 artigos</span>
+   </div>
+  <div class="filters">
+    <button class="filter-btn active" data-category="all">todos</button>
+    <button class="filter-btn" data-category="observabilidade">observabilidade</button>
+    <button class="filter-btn" data-category="linux">linux</button>
+    <button class="filter-btn" data-category="kubernetes">kubernetes</button>
+    <button class="filter-btn" data-category="proxmox">proxmox</button>
+    <button class="filter-btn" data-category="seguranca">segurança</button>
+    <button class="filter-btn" data-category="cloud">cloud</button>
+  </div>
+</div>
+
+<div class="wrap posts" id="postsList">
+
+  <div class="post featured" data-category="observabilidade">
+    <div class="post-meta-col">
+      <span class="date">15 ago 2026</span>
+      <span class="post-tag">observabilidade</span>
+    </div>
+    <div>
+      <div class="featured-flag">✨ destaque · 12 min de leitura</div>
+      <div class="post-title"><a href="artigo-observabilidade-docker.html">Montando uma Stack de Qualidade e confiabilidade Completa com Docker</a></div>
+      <p class="post-excerpt">Guia prático para subir testes automatizados, métricas e logs em containers Docker. Desde a configuração dos exporters até a criação de dashboards eficientes para monitoramento de infraestrutura e aplicações.</p>
+      <div class="post-stack"><span>Grafana</span><span>Prometheus</span><span>Loki</span><span>OpenTelemetry</span><span>Docker</span></div>
+      <a class="read-more" href="artigo-observabilidade-docker.html">ler artigo →</a>
+    </div>
+  </div>
+
+  <div class="post" data-category="proxmox">
+    <div class="post-meta-col">
+      <span class="date">10 ago 2026</span>
+      <span class="post-tag">proxmox</span>
+    </div>
+    <div>
+      <div class="post-title"><a href="artigo-proxmox-homelab.html">Docker: Do Zero ao Homelab Produtivo</a></div>
+      <p class="post-excerpt">Como configurar um servidor bare-metal com Docker VE: gestão de VMs e containers LXC, backups automáticos e integração com storage ZFS.</p>
+      <div class="post-stack"><span>Docker</span><span>LXC</span><span>ZFS</span><span>Homelab</span></div>
+      <a class="read-more" href="artigo-proxmox-homelab.html">ler artigo → · 10 min</a>
+    </div>
+  </div>
+
+  <div class="post" data-category="kubernetes">
+    <div class="post-meta-col">
+      <span class="date">05 ago 2026</span>
+      <span class="post-tag">kubernetes</span>
+    </div>
+    <div>
+      <div class="post-title"><a href="artigo-k3s-homelab.html">k3s no Homelab: Kubernetes Leve para Produção</a></div>
+      <p class="post-excerpt">Por que k3s no homelab: instalação, configuração de Ingress, persistent volumes com Longhorn e deploy de aplicações com Helm.</p>
+      <div class="post-stack"><span>k3s</span><span>Kubernetes</span><span>Helm</span><span>Longhorn</span></div>
+      <a class="read-more" href="artigo-k3s-homelab.html">ler artigo → · 15 min</a>
+    </div>
+  </div>
+
+  <div class="post" data-category="seguranca">
+    <div class="post-meta-col">
+      <span class="date">01 ago 2026</span>
+      <span class="post-tag">segurança</span>
+    </div>
+    <div>
+      <div class="post-title"><a href="artigo-hardening-linux.html">Hardening de Servidor Linux: SSH, UFW e Fail2ban</a></div>
+      <p class="post-excerpt">Checklist prático de segurança para servidores expostos à internet. Configuração de autenticação por chave, hardening do SSH, firewall UFW e proteção contra brute force.</p>
+      <div class="post-stack"><span>Linux</span><span>SSH</span><span>UFW</span><span>Fail2ban</span></div>
+      <a class="read-more" href="artigo-hardening-linux.html">ler artigo → · 8 min</a>
+    </div>
+  </div>
+
+  <div class="post" data-category="cloud">
+    <div class="post-meta-col">
+      <span class="date">28 jul 2026</span>
+      <span class="post-tag">cloud</span>
+    </div>
+    <div>
+      <div class="post-title"><a href="artigo-aws-cloud.html">AWS Cloud Foundations: Do Homelab para a Nuvem</a></div>
+      <p class="post-excerpt">Reflexões sobre a certificação AWS Academy Cloud Foundations e como os conceitos de VPC, EC2, S3 e IAM se aplicam à migração de workloads do homelab para a nuvem AWS.</p>
+      <div class="post-stack"><span>AWS</span><span>EC2</span><span>S3</span><span>IAM</span><span>VPC</span></div>
+      <a class="read-more" href="artigo-aws-cloud.html">ler artigo → · 10 min</a>
+    </div>
+  </div>
+
+  <div class="post" data-category="observabilidade">
+    <div class="post-meta-col">
+      <span class="date">22 jul 2026</span>
+      <span class="post-tag">observabilidade</span>
+    </div>
+    <div>
+      <div class="post-title"><a href="artigo-opentelemetry.html">OpenTelemetry: Unificando Métricas, Logs e Traces</a></div>
+      <p class="post-excerpt">Introdução ao OpenTelemetry como padrão aberto para observabilidade. Como instrumentar aplicações e coletar sinais unificados para análise no Grafana.</p>
+      <div class="post-stack"><span>OpenTelemetry</span><span>Qualidade e confiabilidade</span><span>Grafana</span><span>DevOps</span></div>
+      <a class="read-more" href="artigo-opentelemetry.html">ler artigo → · 14 min</a>
+    </div>
+  </div>
+
+  <div class="post" data-category="linux">
+    <div class="post-meta-col">
+      <span class="date">18 jul 2026</span>
+      <span class="post-tag">linux</span>
+    </div>
+    <div>
+      <div class="post-title"><a href="artigo-ubuntu-server.html">Ubuntu Server: Configuração Inicial Essencial</a></div>
+      <p class="post-excerpt">Passo a passo da configuração inicial de um servidor Ubuntu: atualizações, criação de usuário, configuração de rede, timezone, NTP e preparação para instalação de serviços.</p>
+      <div class="post-stack"><span>Ubuntu</span><span>Linux</span><span>Server</span><span>Sysadmin</span></div>
+      <a class="read-more" href="artigo-ubuntu-server.html">ler artigo → · 7 min</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div class="inline-style-3">
+      <a href="mailto:contato@irndevs.com">contato@irndevs.com</a>
+      <a href="privacidade.html">privacidade</a>
+    </div>
+  </div>
+  <!-- privacy -->
+</footer>
+
+<script>
+  const buttons = document.querySelectorAll('.filter-btn');
+  const posts = document.querySelectorAll('.post');
+ const searchInput = document.getElementById('postSearch');
+ const searchCount = document.getElementById('searchCount');
+ let activeCategory = 'all';
+
+ function applyFilters() {
+   const query = searchInput.value.trim().toLowerCase();
+   let visible = 0;
+   posts.forEach(post => {
+     const categoryMatch = activeCategory === 'all' || post.getAttribute('data-category') === activeCategory;
+     const textMatch = !query || post.textContent.toLowerCase().includes(query);
+     const show = categoryMatch && textMatch;
+     post.hidden = !show;
+     if (show) visible++;
+   });
+   searchCount.textContent = visible + (visible === 1 ? ' artigo' : ' artigos');
+ }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+     activeCategory = btn.getAttribute('data-category');
+     applyFilters();
+    });
+  });
+ searchInput.addEventListener('input', applyFilters);
+ applyFilters();
+</script>
+
+  <script src="assets/js/site-nav.js?v=20260914f" defer></script>
+  <script src="assets/js/chat-bot.js?v=20260915" defer></script>
+</body>
+</html>
