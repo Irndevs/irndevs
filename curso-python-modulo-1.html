@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Módulo 1 — Setup e primeiros scripts | Automações em Python | IRN Devs</title>
+<meta name="description" content="Módulo 1 do curso Automações em Python: instalação, ambiente virtual e primeiros scripts.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/curso-python.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<!-- nav: site-nav.js -->
+
+<article class="wrap">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#python">automações em python</a> / módulo 1</nav>
+
+  <div class="sec-head"><span class="amber">$</span> python modulo_1.py</div>
+  <h1>Setup e primeiros scripts</h1>
+  <p class="lede">Python instalado, ambiente virtual configurado e o primeiro script útil rodando em 15 minutos.</p>
+
+  <h2>O que você vai aprender</h2>
+  <ul>
+    <li>Instalar Python 3 no Linux, Windows e Mac</li>
+    <li>venv e pip sem dor de cabeça</li>
+    <li>Primeiro script: renomear e organizar 500 arquivos automaticamente</li>
+  </ul>
+
+  <h2>Código da aula</h2>
+  <pre><code># organiza_fotos.py — padroniza nomes de arquivos numa pasta
+from pathlib import Path
+
+pasta = Path("fotos")
+for i, arq in enumerate(sorted(pasta.glob("*.jpg")), start=1):
+    novo = pasta / f"foto_{i:03d}.jpg"
+    arq.rename(novo)
+    print(f"{arq.name} -&gt; {novo.name}")</code></pre>
+
+  <h2>Sumário do curso</h2>
+  <div class="mod-sumario">
+    <a href="curso-python-modulo-1.html"><span class="n">01</span> Setup e primeiros scripts</a>
+    <a href="curso-python-modulo-2.html"><span class="n">02</span> Web scraping</a>
+    <a href="curso-python-modulo-3.html"><span class="n">03</span> Automação de navegador</a>
+    <a href="curso-python-modulo-4.html"><span class="n">04</span> Planilhas e dados</a>
+    <a href="curso-python-modulo-5.html"><span class="n">05</span> E-mails e arquivos</a>
+    <a href="curso-python-modulo-6.html"><span class="n">06</span> APIs e webhooks</a>
+    <a href="curso-python-modulo-7.html"><span class="n">07</span> Agendamento e deploy</a>
+    <a href="curso-python-modulo-8.html"><span class="n">08</span> Projeto final</a>
+  </div>
+
+  <div class="aula-progress">
+    <a class="btn ghost" href="cursos.html">← todos os cursos</a>
+    <span class="dots"><b class="on"></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></span>
+    <a class="btn primary" href="curso-python-modulo-2.html">próximo: Web scraping →</a>
+  </div>
+</article>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+
+<script src="assets/js/site-nav.js?v=20260914f" defer></script>
+<script src="assets/js/chat-bot.js?v=20260915" defer></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Módulo 4 — Planilhas e dados com pandas e openpyxl | Automações em Python | IRN Devs</title>
+<meta name="description" content="Módulo 4 do curso Automações em Python: DataFrame, merge, groupby e exportação para Excel com pandas e openpyxl.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/curso-python.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<!-- nav: site-nav.js -->
+
+<article class="wrap">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#python">automações em python</a> / módulo 4</nav>
+
+  <div class="sec-head"><span class="amber">$</span> python modulo_4.py</div>
+  <h1>Planilhas e dados com pandas e openpyxl</h1>
+  <p class="lede">Chega de planilha manual: consolide dezenas de arquivos em um único relatório em poucos segundos.</p>
+
+  <h2>O que você vai aprender</h2>
+  <ul>
+    <li>Ler e combinar múltiplos arquivos com DataFrame e merge</li>
+    <li>Agrupar e resumir dados com groupby</li>
+    <li>Exportar relatórios formatados para Excel com openpyxl</li>
+  </ul>
+
+  <h2>Código da aula</h2>
+  <pre><code># consolida_relatorios.py — junta 12 planilhas mensais em 1 relatório
+from pathlib import Path
+import pandas as pd
+
+pasta = Path("relatorios_mensais")
+arquivos = sorted(pasta.glob("*.xlsx"))
+
+tabelas = [pd.read_excel(arquivo) for arquivo in arquivos]
+dados = pd.concat(tabelas, ignore_index=True)
+
+resumo = (
+    dados.groupby("categoria")["valor"]
+    .sum()
+    .reset_index()
+    .sort_values("valor", ascending=False)
+)
+
+with pd.ExcelWriter("relatorio_consolidado.xlsx", engine="openpyxl") as escritor:
+    dados.to_excel(escritor, sheet_name="Dados brutos", index=False)
+    resumo.to_excel(escritor, sheet_name="Resumo por categoria", index=False)
+
+print(f"{len(arquivos)} arquivos consolidados em relatorio_consolidado.xlsx")</code></pre>
+
+  <h2>Sumário do curso</h2>
+  <div class="mod-sumario">
+    <a href="curso-python-modulo-1.html"><span class="n">01</span> Setup e primeiros scripts</a>
+    <a href="curso-python-modulo-2.html"><span class="n">02</span> Web scraping</a>
+    <a href="curso-python-modulo-3.html"><span class="n">03</span> Automação de navegador</a>
+    <a href="curso-python-modulo-4.html"><span class="n">04</span> Planilhas e dados</a>
+    <a href="curso-python-modulo-5.html"><span class="n">05</span> E-mails e arquivos</a>
+    <a href="curso-python-modulo-6.html"><span class="n">06</span> APIs e webhooks</a>
+    <a href="curso-python-modulo-7.html"><span class="n">07</span> Agendamento e deploy</a>
+    <a href="curso-python-modulo-8.html"><span class="n">08</span> Projeto final</a>
+  </div>
+
+  <div class="aula-progress">
+    <a class="btn ghost" href="cursos.html">← todos os cursos</a>
+    <span class="dots"><b></b><b></b><b></b><b class="on"></b><b></b><b></b><b></b><b></b></span>
+    <a class="btn primary" href="curso-python-modulo-5.html">próximo: E-mails e arquivos →</a>
+  </div>
+</article>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+
+<script src="assets/js/site-nav.js?v=20260914f" defer></script>
+<script src="assets/js/chat-bot.js?v=20260915" defer></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Módulo 8 — Projeto final: robô completo em produção | Automações em Python | IRN Devs</title>
+<meta name="description" content="Módulo 8 do curso Automações em Python: arquitetura de projeto, tratamento de erro, logging e monitoramento de uma pipeline em produção.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/curso-python.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<!-- nav: site-nav.js -->
+
+<article class="wrap">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#python">automações em python</a> / módulo 8</nav>
+
+  <div class="sec-head"><span class="amber">$</span> python modulo_8.py</div>
+  <h1>Projeto final: robô completo em produção</h1>
+  <p class="lede">Uma pipeline completa, do zero à produção: coleta de dados, processamento e envio de relatório, com logs e tratamento de erro de verdade.</p>
+
+  <h2>O que você vai aprender</h2>
+  <ul>
+    <li>Estruturar um projeto de automação com arquitetura clara e reutilizável</li>
+    <li>Tratar erros e falhas sem derrubar a automação inteira</li>
+    <li>Registrar logs e monitorar a execução da pipeline em produção</li>
+  </ul>
+
+  <h2>Código da aula</h2>
+  <pre><code># pipeline.py — coleta, processa e envia relatório, com logging
+import logging
+
+from scraper_cotacoes import coletar_cotacoes, salvar_csv
+from email_relatorio import enviar_relatorio
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    filename="pipeline.log",
+)
+
+def rodar_pipeline():
+    try:
+        logging.info("Iniciando coleta de dados")
+        dados = coletar_cotacoes()
+
+        logging.info("Salvando dados coletados")
+        salvar_csv(dados, "cotacoes.csv")
+
+        logging.info("Enviando relatório por e-mail")
+        enviar_relatorio("time@empresa.com", "cotacoes.csv")
+
+        logging.info("Pipeline concluída com sucesso")
+    except Exception as erro:
+        logging.error(f"Falha na pipeline: {erro}")
+        raise
+
+if __name__ == "__main__":
+    rodar_pipeline()</code></pre>
+
+  <h2>Sumário do curso</h2>
+  <div class="mod-sumario">
+    <a href="curso-python-modulo-1.html"><span class="n">01</span> Setup e primeiros scripts</a>
+    <a href="curso-python-modulo-2.html"><span class="n">02</span> Web scraping</a>
+    <a href="curso-python-modulo-3.html"><span class="n">03</span> Automação de navegador</a>
+    <a href="curso-python-modulo-4.html"><span class="n">04</span> Planilhas e dados</a>
+    <a href="curso-python-modulo-5.html"><span class="n">05</span> E-mails e arquivos</a>
+    <a href="curso-python-modulo-6.html"><span class="n">06</span> APIs e webhooks</a>
+    <a href="curso-python-modulo-7.html"><span class="n">07</span> Agendamento e deploy</a>
+    <a href="curso-python-modulo-8.html"><span class="n">08</span> Projeto final</a>
+  </div>
+
+  <div class="aula-progress">
+    <a class="btn ghost" href="cursos.html">← todos os cursos</a>
+    <span class="dots"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b class="on"></b></span>
+    <a class="btn primary" href="cursos.html">concluir curso →</a>
+  </div>
+</article>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+
+<script src="assets/js/site-nav.js?v=20260914f" defer></script>
+<script src="assets/js/chat-bot.js?v=20260915" defer></script>
+</body>
+</html>

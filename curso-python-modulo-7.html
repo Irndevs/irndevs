@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Módulo 7 — Agendamento e deploy com cron e Docker | Automações em Python | IRN Devs</title>
+<meta name="description" content="Módulo 7 do curso Automações em Python: agendamento com cron e systemd, empacotamento com Dockerfile e monitoramento de logs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/curso-python.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<!-- nav: site-nav.js -->
+
+<article class="wrap">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#python">automações em python</a> / módulo 7</nav>
+
+  <div class="sec-head"><span class="amber">$</span> python modulo_7.py</div>
+  <h1>Agendamento e deploy com cron e Docker</h1>
+  <p class="lede">Coloque o robô para rodar 24 horas por dia, sem depender do seu computador ligado.</p>
+
+  <h2>O que você vai aprender</h2>
+  <ul>
+    <li>Agendar execuções com cron e systemd timers</li>
+    <li>Empacotar uma automação Python em um Dockerfile</li>
+    <li>Configurar logs para acompanhar a execução do container</li>
+  </ul>
+
+  <h2>Código da aula</h2>
+  <pre><code># Dockerfile — empacota o scraper agendado
+FROM python:3.12-slim
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY scraper_cotacoes.py .
+
+# crontab: roda a cada hora e registra log
+RUN echo "0 * * * * python /app/scraper_cotacoes.py &gt;&gt; /var/log/cron.log 2&gt;&amp;1" &gt; /etc/cron.d/scraper
+RUN chmod 0644 /etc/cron.d/scraper &amp;&amp; crontab /etc/cron.d/scraper
+
+CMD ["cron", "-f"]</code></pre>
+
+  <h2>Sumário do curso</h2>
+  <div class="mod-sumario">
+    <a href="curso-python-modulo-1.html"><span class="n">01</span> Setup e primeiros scripts</a>
+    <a href="curso-python-modulo-2.html"><span class="n">02</span> Web scraping</a>
+    <a href="curso-python-modulo-3.html"><span class="n">03</span> Automação de navegador</a>
+    <a href="curso-python-modulo-4.html"><span class="n">04</span> Planilhas e dados</a>
+    <a href="curso-python-modulo-5.html"><span class="n">05</span> E-mails e arquivos</a>
+    <a href="curso-python-modulo-6.html"><span class="n">06</span> APIs e webhooks</a>
+    <a href="curso-python-modulo-7.html"><span class="n">07</span> Agendamento e deploy</a>
+    <a href="curso-python-modulo-8.html"><span class="n">08</span> Projeto final</a>
+  </div>
+
+  <div class="aula-progress">
+    <a class="btn ghost" href="cursos.html">← todos os cursos</a>
+    <span class="dots"><b></b><b></b><b></b><b></b><b></b><b></b><b class="on"></b><b></b></span>
+    <a class="btn primary" href="curso-python-modulo-8.html">próximo: Projeto final →</a>
+  </div>
+</article>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+
+<script src="assets/js/site-nav.js?v=20260914f" defer></script>
+<script src="assets/js/chat-bot.js?v=20260915" defer></script>
+</body>
+</html>

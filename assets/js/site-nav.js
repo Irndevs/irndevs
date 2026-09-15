@@ -22,6 +22,7 @@
     if (path === h) return true;
     if ((path === '' || path === 'index.html') && h === 'index.html') return true;
     if (path.indexOf('artigo-') === 0 && h === 'blog.html') return true;
+	if (path.indexOf('curso-python-') === 0 && h === 'cursos.html') return true;
     return false;
   }
 
@@ -33,6 +34,7 @@
     { href: 'index.html#projetos', label: 'projetos', ico: '▸' },
     { href: 'servicos.html', label: 'serviços', ico: '⚙' },
     { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
+	{ href: 'cursos.html', label: 'cursos', ico: '◈' },
     { href: 'homelab.html', label: 'homelab', ico: '▣' }
   ];
 
@@ -59,6 +61,7 @@
       label: 'conteúdo',
       items: [
         { href: 'blog.html', label: 'blog', ico: '≡' },
+		{ href: 'cursos.html', label: 'cursos', ico: '◈' },
         { href: 'homelab.html', label: 'homelab', ico: '▣' },
         { href: 'sobre.html', label: 'sobre', ico: 'i' }
       ]
@@ -86,7 +89,9 @@
     { href: 'index.html#projetos', label: 'projetos', ico: '▸' },
     { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
     { href: 'homelab.html', label: 'homelab', ico: '▣' },
+	{ href: 'cursos.html', label: 'cursos', ico: '◈' },
     { href: 'contato.html', label: 'contato', ico: '@' }
+	
   ];
 
   function linkHtml(l) {
