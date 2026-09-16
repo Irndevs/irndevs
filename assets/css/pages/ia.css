@@ -6,8 +6,8 @@
   --ia-green: #83c98a;
   --ia-text: #e8e6e0;
   --ia-dim: #96a38f;
-  --ia-mono: "IBM Plex Mono", monospace;
-  --ia-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --ia-mono: ui-monospace, monospace;
+  --ia-sans: system-ui, system-ui, sans-serif;
 }
 
 * { box-sizing: border-box; }

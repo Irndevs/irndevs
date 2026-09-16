@@ -3,24 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RAG com pgvector: assistente com documentos da empresa — IRN Devs</title>
+<title>IA: RAG com pgvector — assistente com documentos da empresa — IRN Devs</title>
 <meta name="description" content="Guia prático de Retrieval-Augmented Generation usando PostgreSQL + pgvector. Chunking, embeddings, retrieval e geração com citações — do zero ao protótipo funcional.">
 <meta name="author" content="IRN Devs">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/pages/artigo-base.css">
 <link rel="stylesheet" href="assets/css/site-nav.css">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="/manifest.json">
-<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
 <meta property="og:title" content="RAG com pgvector — IRN Devs">
 <meta property="og:description" content="Como alimentar uma IA com PDFs e bases internas usando PostgreSQL + pgvector. Chunking, embeddings e retrieval com citações.">
 <meta property="og:type" content="article">
 <link rel="canonical" href="https://irndevs.com/artigo-rag-pgvector.html">
 <meta property="og:url" content="https://irndevs.com/artigo-rag-pgvector.html">
-<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
 <meta property="og:site_name" content="IRN Devs">
 <meta property="article:published_time" content="2026-09-16">
 <meta name="twitter:card" content="summary_large_image">
@@ -28,15 +25,17 @@
 {
   "@context":"https://schema.org",
   "@type":"BlogPosting",
-  "headline":"RAG com pgvector: assistente com documentos da empresa",
+  "headline":"IA: RAG com pgvector — assistente com documentos da empresa",
   "description":"Guia prático de Retrieval-Augmented Generation usando PostgreSQL + pgvector.",
-  "datePublished":"2026-09-16",
+  "datePublished":"2026-09-16","dateModified":"2026-09-16",
   "author":{"@type":"Organization","name":"IRN Devs"},
   "publisher":{"@type":"Organization","name":"IRN Devs","url":"https://irndevs.com"},
   "mainEntityOfPage":"https://irndevs.com/artigo-rag-pgvector.html",
   "inLanguage":"pt-BR"
 }
 </script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"IA: RAG com pgvector","step":[{"@type":"HowToStep","name":"Setup Postgres + pgvector","text":"Instale extensão e crie tabela"},{"@type":"HowToStep","name":"Gerar embeddings","text":"Processe documentos"},{"@type":"HowToStep","name":"Implementar retrieval","text":"Query por similaridade"},{"@type":"HowToStep","name":"Integrar LLM","text":"Monte o prompt RAG"},{"@type":"HowToStep","name":"Testar e otimizar","text":"Avalie respostas"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"O que é RAG com pgvector?","acceptedAnswer":{"@type":"Answer","text":"RAG (Retrieval-Augmented Generation) com pgvector é uma técnica que combina busca semântica em PostgreSQL com um LLM para responder perguntas com base em documentos da empresa."}},{"@type":"Question","name":"Por que usar pgvector em vez de um vector database dedicado?","acceptedAnswer":{"@type":"Answer","text":"pgvector permite manter tudo no PostgreSQL, simplificando a stack, reduzindo custos e aproveitando transações e backups já existentes."}},{"@type":"Question","name":"Qual o tamanho mínimo de chunks recomendado?","acceptedAnswer":{"@type":"Answer","text":"Em geral 300–800 tokens com overlap de 10–20%. O ideal depende do tipo de documento e do modelo de embedding."}},{"@type":"Question","name":"Como avaliar a qualidade do RAG em produção?","acceptedAnswer":{"@type":"Answer","text":"Use métricas como hit rate, MRR, faithfulness e relevância humana. Monitore também latência e taxa de alucinação."}}]}</script>
 </head>
 <body>
 <!-- nav: site-nav.js -->
@@ -46,11 +45,11 @@
 
 <div class="wrap article-head">
   <div class="meta">
-    <span>16 set 2026</span>
+    <span>Atualizado em 16 set 2026</span>
     <span class="tag">ia</span>
     <span>14 min de leitura</span>
   </div>
-  <h1>RAG com pgvector: assistente com documentos da empresa</h1>
+  <h1>IA: RAG com pgvector — assistente com documentos da empresa</h1>
   <p class="excerpt">Retrieval-Augmented Generation permite que o modelo responda com base em PDFs, wikis e bancos internos — com citações e menos alucinações. Este guia monta um protótipo funcional usando PostgreSQL + pgvector.</p>
   <div class="stack"><span>RAG</span><span>pgvector</span><span>PostgreSQL</span><span>embeddings</span><span>OpenAI</span></div>
 </div>
@@ -188,8 +187,10 @@ Pergunta do usuário: {pergunta}</code></pre>
     <p>Com esse esqueleto você já tem um assistente interno utilizável. O resto é iteração sobre qualidade dos chunks, modelo de embedding e prompt de geração.</p>
     <p class="next-link"><a href="ia.html">← voltar ao hub de IA</a> · <a href="artigo-ollama-local.html">próximo: Copilot local com Ollama →</a></p>
   </article>
+<div class="wrap" style="margin-top:2rem"><h2>Leia também</h2><ul><li><a href="artigo-checklist-rag.html">IA: Checklist de produção para RAG</a></li><li><a href="artigo-hybrid-search.html">IA: Busca semântica e hybrid search</a></li><li><a href="artigo-ollama-local.html">IA: Ollama local</a></li><li><a href="ia.html">Hub de IA</a></li></ul></div>
 </div>
 
+<div class="wrap" style="margin-top:2.5rem;padding:1.5rem;border:1px solid var(--border,#2a3126);border-radius:12px;background:var(--bg-raised,#171b16)"><h2 style="margin-bottom:0.5rem">Quer implementar isso na sua empresa?</h2><p style="color:var(--text-dim,#8f9587);margin-bottom:1rem">Ajudamos times a colocar RAG, agentes e modelos locais em produção com segurança e observabilidade.</p><p><a href="contato.html" style="display:inline-block;background:#e8a33d;color:#10130f;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600;margin-right:12px">Falar com a IRN Devs</a> <a href="como-contratar.html" style="color:#e8a33d;text-decoration:underline">Como contratar →</a></p></div>
 <footer>
   <div class="wrap">
     <div>© 2026 irndevs</div>

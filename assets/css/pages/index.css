@@ -11,8 +11,8 @@
   --text: #eeeae0;
   --text-dim: #a8ada0;
   --text-faint: #7a8074;
-  --mono: 'IBM Plex Mono', monospace;
-  --sans: 'IBM Plex Sans', sans-serif;
+  --mono: ui-monospace, monospace;
+  --sans: system-ui, sans-serif;
   --radius: 14px;
   --radius-sm: 10px;
 }

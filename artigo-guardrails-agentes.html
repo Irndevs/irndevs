@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IA: Guardrails e segurança em agentes — IRN Devs</title>
+<meta name="description" content="Como colocar guardrails em agentes de IA: validação de ferramentas, limites de custo, timeouts, sandbox, human-in-the-loop e prevenção de prompt injection.">
+<meta name="author" content="IRN Devs">
+<link rel="stylesheet" href="assets/css/pages/artigo-base.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
+<meta property="og:title" content="IA: Guardrails e segurança em agentes — IRN Devs">
+<meta property="og:description" content="Timeouts, validação de tools, sandbox e human-in-the-loop para agentes seguros.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://irndevs.com/artigo-guardrails-agentes.html">
+<meta property="og:url" content="https://irndevs.com/artigo-guardrails-agentes.html">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
+<meta property="og:site_name" content="IRN Devs">
+<meta property="article:published_time" content="2026-09-16">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"IA: Guardrails e segurança em agentes","description":"Como colocar guardrails em agentes de IA para uso em produção.","datePublished":"2026-09-16","dateModified":"2026-09-16","author":{"@type":"Organization","name":"IRN Devs"},"publisher":{"@type":"Organization","name":"IRN Devs","url":"https://irndevs.com"},"mainEntityOfPage":"https://irndevs.com/artigo-guardrails-agentes.html","inLanguage":"pt-BR"}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HowTo","name":"IA: Guardrails e segurança em agentes","step":[{"@type":"HowToStep","name":"Limitar ferramentas","text":"Whitelist de tools e validação de parâmetros"},{"@type":"HowToStep","name":"Timeouts e orçamento","text":"Defina limites de tempo e tokens"},{"@type":"HowToStep","name":"Sandbox","text":"Isole execução de código e efeitos colaterais"},{"@type":"HowToStep","name":"Human-in-the-loop","text":"Exija aprovação em ações críticas"},{"@type":"HowToStep","name":"Observabilidade","text":"Logue todas as decisões e tool calls"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"O que são guardrails em agentes de IA?","acceptedAnswer":{"@type":"Answer","text":"São restrições e validações que limitam o que o agente pode fazer: tools permitidas, orçamento de tokens, timeouts e aprovação humana em ações sensíveis."}},{"@type":"Question","name":"Como evitar prompt injection em agentes?","acceptedAnswer":{"@type":"Answer","text":"Separe instruções de sistema de dados do usuário, valide saídas de tools, use structured output e nunca execute comandos diretamente a partir de texto não confiável."}},{"@type":"Question","name":"Quando usar human-in-the-loop?","acceptedAnswer":{"@type":"Answer","text":"Em qualquer ação irreversível ou de alto impacto: envio de e-mail, alteração de dados, pagamentos, deploy ou acesso a sistemas críticos."}}]}
+</script>
+</head>
+<body>
+<div class="wrap crumb">
+  <a href="index.html">~</a> / <a href="blog.html">blog</a> / <a href="ia.html">ia</a> / <span>guardrails-agentes</span>
+</div>
+
+<div class="wrap article-head">
+  <div class="meta">
+    <span>Atualizado em 16 set 2026</span>
+    <span class="tag">ia</span>
+    <span>10 min de leitura</span>
+  </div>
+  <h1>IA: Guardrails e segurança em agentes</h1>
+  <p class="excerpt">Agentes que chamam ferramentas sem limites são um risco operacional. Este guia mostra como colocar barreiras práticas antes de abrir o agente para usuários reais.</p>
+  <div class="stack"><span>agentes</span><span>segurança</span><span>guardrails</span><span>LangChain</span><span>produção</span></div>
+</div>
+
+<div class="wrap">
+  <div class="toc">
+    <div class="label">$ cat sumario.txt</div>
+    <ol>
+      <li><a href="#riscos">Principais riscos</a></li>
+      <li><a href="#tools">Controle de ferramentas</a></li>
+      <li><a href="#limites">Timeouts e orçamento</a></li>
+      <li><a href="#sandbox">Sandbox e isolamento</a></li>
+      <li><a href="#hitl">Human-in-the-loop</a></li>
+      <li><a href="#injection">Prompt injection</a></li>
+      <li><a href="#obs">Observabilidade</a></li>
+    </ol>
+  </div>
+
+  <article class="body">
+    <h2 id="riscos">1. Principais riscos de agentes</h2>
+    <ul>
+      <li>Loops infinitos de tool calls (custo e latência)</li>
+      <li>Ações irreversíveis (apagar dados, enviar e-mail, deploy)</li>
+      <li>Prompt injection via conteúdo recuperado ou input do usuário</li>
+      <li>Vazamento de dados sensíveis em logs ou respostas</li>
+      <li>Uso de ferramentas com parâmetros maliciosos ou inválidos</li>
+    </ul>
+
+    <h2 id="tools">2. Controle de ferramentas</h2>
+    <p>Use whitelist explícita de tools. Valide todos os parâmetros com schema (Pydantic / Zod). Nunca permita execução de SQL ou shell arbitrário sem sanitização forte.</p>
+    <pre><code># Exemplo conceitual
+allowed_tools = {"search_docs", "get_ticket", "create_draft"}
+# Nunca: "run_sql", "execute_shell" sem revisão humana
+</code></pre>
+
+    <h2 id="limites">3. Timeouts e orçamento</h2>
+    <ul>
+      <li>Máximo de iterações por run (ex: 8–12)</li>
+      <li>Timeout global (ex: 60–120s)</li>
+      <li>Limite de tokens / custo por usuário / por dia</li>
+      <li>Circuit breaker quando a taxa de erro sobe</li>
+    </ul>
+
+    <h2 id="sandbox">4. Sandbox e isolamento</h2>
+    <p>Código gerado pelo agente deve rodar em ambiente isolado (container efêmero, sem rede ou com allowlist). Efeitos colaterais (escrever em produção) só depois de aprovação.</p>
+
+    <h2 id="hitl">5. Human-in-the-loop</h2>
+    <p>Exija confirmação humana para:</p>
+    <ul>
+      <li>Envio de mensagens externas</li>
+      <li>Alteração de dados mestres</li>
+      <li>Ações financeiras</li>
+      <li>Mudanças de infraestrutura</li>
+    </ul>
+
+    <h2 id="injection">6. Prompt injection</h2>
+    <ul>
+      <li>Separe system prompt de dados do usuário e de documentos recuperados</li>
+      <li>Trate conteúdo externo como não confiável</li>
+      <li>Use structured output (JSON schema) sempre que possível</li>
+      <li>Valide a intenção antes de executar tools de alto impacto</li>
+    </ul>
+
+    <h2 id="obs">7. Observabilidade</h2>
+    <p>Logue: prompt, tool calls, argumentos, resultados, tokens e decisão final. Sem trilha de auditoria você não consegue debugar nem provar o que aconteceu.</p>
+  </article>
+
+  <div class="wrap" style="margin-top:2rem"><h2>Leia também</h2><ul>
+    <li><a href="artigo-agentes-langchain.html">IA: Agentes com LangChain</a></li>
+    <li><a href="artigo-checklist-rag.html">IA: Checklist de produção para RAG</a></li>
+    <li><a href="artigo-avaliacao-rag.html">IA: Avaliação de RAG em produção</a></li>
+    <li><a href="ia.html">Hub de IA</a></li>
+  </ul></div>
+</div>
+
+<div class="wrap" style="margin-top:2.5rem;padding:1.5rem;border:1px solid var(--border,#2a3126);border-radius:12px;background:var(--bg-raised,#171b16)">
+  <h2 style="margin-bottom:0.5rem">Quer implementar isso na sua empresa?</h2>
+  <p style="color:var(--text-dim,#8f9587);margin-bottom:1rem">Ajudamos times a colocar RAG, agentes e modelos locais em produção com segurança e observabilidade.</p>
+  <p><a href="contato.html" style="display:inline-block;background:#e8a33d;color:#10130f;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600;margin-right:12px">Falar com a IRN Devs</a> <a href="como-contratar.html" style="color:#e8a33d;text-decoration:underline">Como contratar →</a></p>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260916d" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916e" defer></script>
+</body>
+</html>

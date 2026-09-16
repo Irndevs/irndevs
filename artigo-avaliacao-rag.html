@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IA: Avaliação de RAG em produção — métricas e framework — IRN Devs</title>
+<meta name="description" content="Como avaliar RAG em produção: hit rate, MRR, faithfulness, relevância humana, latência e um framework prático de continuous evaluation.">
+<meta name="author" content="IRN Devs">
+<link rel="stylesheet" href="assets/css/pages/artigo-base.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
+<meta property="og:title" content="IA: Avaliação de RAG em produção — IRN Devs">
+<meta property="og:description" content="Métricas, golden set e continuous evaluation para RAG confiável.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://irndevs.com/artigo-avaliacao-rag.html">
+<meta property="og:url" content="https://irndevs.com/artigo-avaliacao-rag.html">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
+<meta property="og:site_name" content="IRN Devs">
+<meta property="article:published_time" content="2026-09-16">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"IA: Avaliação de RAG em produção — métricas e framework","description":"Como avaliar RAG em produção com métricas objetivas e framework de continuous evaluation.","datePublished":"2026-09-16","dateModified":"2026-09-16","author":{"@type":"Organization","name":"IRN Devs"},"publisher":{"@type":"Organization","name":"IRN Devs","url":"https://irndevs.com"},"mainEntityOfPage":"https://irndevs.com/artigo-avaliacao-rag.html","inLanguage":"pt-BR"}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HowTo","name":"IA: Avaliação de RAG em produção","step":[{"@type":"HowToStep","name":"Criar golden set","text":"Monte um conjunto de perguntas e respostas esperadas"},{"@type":"HowToStep","name":"Medir retrieval","text":"Calcule hit rate, MRR e nDCG"},{"@type":"HowToStep","name":"Avaliar geração","text":"Meça faithfulness e relevância"},{"@type":"HowToStep","name":"Automatizar","text":"Coloque avaliação no CI e em produção"},{"@type":"HowToStep","name":"Monitorar drift","text":"Acompanhe degradação ao longo do tempo"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Quais métricas usar para avaliar RAG?","acceptedAnswer":{"@type":"Answer","text":"Hit rate, MRR, nDCG para retrieval; faithfulness, answer relevance e context precision para geração. Combine com avaliação humana."}},{"@type":"Question","name":"O que é um golden set em RAG?","acceptedAnswer":{"@type":"Answer","text":"Um conjunto de perguntas reais com respostas esperadas e documentos de referência, usado para medir qualidade de forma repetível."}},{"@type":"Question","name":"Como fazer continuous evaluation de RAG?","acceptedAnswer":{"@type":"Answer","text":"Rode o golden set no CI a cada mudança de prompt/embedding e monitore uma amostra de tráfego real com LLM-as-judge + feedback humano."}}]}
+</script>
+</head>
+<body>
+<div class="wrap crumb">
+  <a href="index.html">~</a> / <a href="blog.html">blog</a> / <a href="ia.html">ia</a> / <span>avaliacao-rag</span>
+</div>
+
+<div class="wrap article-head">
+  <div class="meta">
+    <span>Atualizado em 16 set 2026</span>
+    <span class="tag">ia</span>
+    <span>11 min de leitura</span>
+  </div>
+  <h1>IA: Avaliação de RAG em produção — métricas e framework</h1>
+  <p class="excerpt">Sem métricas você só tem “parece bom”. Este guia mostra como medir retrieval e geração de forma objetiva e como colocar avaliação contínua no fluxo de desenvolvimento.</p>
+  <div class="stack"><span>RAG</span><span>avaliação</span><span>métricas</span><span>produção</span><span>LLM-as-judge</span></div>
+</div>
+
+<div class="wrap">
+  <div class="toc">
+    <div class="label">$ cat sumario.txt</div>
+    <ol>
+      <li><a href="#porque">Por que avaliar</a></li>
+      <li><a href="#golden">Golden set</a></li>
+      <li><a href="#retrieval">Métricas de retrieval</a></li>
+      <li><a href="#geracao">Métricas de geração</a></li>
+      <li><a href="#llm-judge">LLM-as-judge</a></li>
+      <li><a href="#continuous">Continuous evaluation</a></li>
+      <li><a href="#checklist">Checklist prático</a></li>
+    </ol>
+  </div>
+
+  <article class="body">
+    <h2 id="porque">1. Por que avaliar RAG</h2>
+    <p>Um protótipo que responde bem a 10 perguntas manuais pode falhar em 40% do tráfego real. Avaliação transforma “achismo” em números e permite detectar regressões quando você muda chunk size, embedding ou prompt.</p>
+
+    <h2 id="golden">2. Golden set</h2>
+    <p>Monte 50–200 perguntas reais (ou realistas) com:</p>
+    <ul>
+      <li>Resposta esperada (ou critérios de aceitação)</li>
+      <li>Documentos de referência que deveriam ser recuperados</li>
+      <li>Categoria (fácil / difícil / ambígua / fora do escopo)</li>
+    </ul>
+    <p>Atualize o golden set quando o domínio mudar. Sem isso, as métricas envelhecem.</p>
+
+    <h2 id="retrieval">3. Métricas de retrieval</h2>
+    <ul>
+      <li><strong>Hit Rate @k</strong> — percentual de queries em que pelo menos 1 documento relevante aparece no top-k</li>
+      <li><strong>MRR</strong> — Mean Reciprocal Rank (posição do primeiro relevante)</li>
+      <li><strong>nDCG</strong> — considera relevância graduada e posição</li>
+      <li><strong>Context Precision / Recall</strong> — o quanto do contexto recuperado é realmente útil</li>
+    </ul>
+
+    <h2 id="geracao">4. Métricas de geração</h2>
+    <ul>
+      <li><strong>Faithfulness</strong> — a resposta é suportada pelo contexto?</li>
+      <li><strong>Answer Relevance</strong> — a resposta responde à pergunta?</li>
+      <li><strong>Context Relevance</strong> — o contexto recuperado era adequado?</li>
+    </ul>
+    <p>Ferramentas como RAGAS e DeepEval automatizam parte disso.</p>
+
+    <h2 id="llm-judge">5. LLM-as-judge</h2>
+    <p>Use um modelo forte (ex: GPT-4o ou Claude) com prompt estruturado para avaliar faithfulness e relevância em escala. Sempre calibre com uma amostra humana para evitar bias do juiz.</p>
+
+    <h2 id="continuous">6. Continuous evaluation</h2>
+    <ol>
+      <li>Golden set no CI (quebra o build se hit rate cair &gt; X%)</li>
+      <li>Amostra de produção (1–5%) avaliada diariamente</li>
+      <li>Feedback explícito do usuário (👍/👎 + motivo)</li>
+      <li>Alerta quando latência p95 ou taxa de “não sei” sobe</li>
+    </ol>
+
+    <h2 id="checklist">7. Checklist prático</h2>
+    <ul>
+      <li>[ ] Golden set versionado no repositório</li>
+      <li>[ ] Métricas de retrieval e geração rodando no CI</li>
+      <li>[ ] LLM-as-judge calibrado com amostra humana</li>
+      <li>[ ] Dashboard com tendência semanal</li>
+      <li>[ ] Processo de análise de falhas (root cause)</li>
+    </ul>
+  </article>
+
+  <div class="wrap" style="margin-top:2rem"><h2>Leia também</h2><ul>
+    <li><a href="artigo-checklist-rag.html">IA: Checklist de produção para RAG</a></li>
+    <li><a href="artigo-rag-pgvector.html">IA: RAG com pgvector</a></li>
+    <li><a href="artigo-hybrid-search.html">IA: Hybrid search</a></li>
+    <li><a href="ia.html">Hub de IA</a></li>
+  </ul></div>
+</div>
+
+<div class="wrap" style="margin-top:2.5rem;padding:1.5rem;border:1px solid var(--border,#2a3126);border-radius:12px;background:var(--bg-raised,#171b16)">
+  <h2 style="margin-bottom:0.5rem">Quer implementar isso na sua empresa?</h2>
+  <p style="color:var(--text-dim,#8f9587);margin-bottom:1rem">Ajudamos times a colocar RAG, agentes e modelos locais em produção com segurança e observabilidade.</p>
+  <p><a href="contato.html" style="display:inline-block;background:#e8a33d;color:#10130f;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600;margin-right:12px">Falar com a IRN Devs</a> <a href="como-contratar.html" style="color:#e8a33d;text-decoration:underline">Como contratar →</a></p>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260916d" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916e" defer></script>
+</body>
+</html>

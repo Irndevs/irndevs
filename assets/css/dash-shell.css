@@ -13,8 +13,8 @@
   --dash-dim: #8f9587;
   --dash-faint: #6b7166;
   --dash-green: #7fae6a;
-  --dash-mono: 'IBM Plex Mono', monospace;
-  --dash-sans: 'IBM Plex Sans', sans-serif;
+  --dash-mono: ui-monospace, 'Cascadia Code', Menlo, Consolas, monospace;
+  --dash-sans: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   --dash-side: 240px;
   --dash-top: 56px;
 }

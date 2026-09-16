@@ -2,7 +2,7 @@
     --bg: #10130f; --bg-raised: #171b16; --bg-line: #1f251d; --border: #2a3126;
     --amber: #e8a33d; --amber-dim: #b3801f; --green: #7fae6a;
     --text: #eae6d9; --text-dim: #8f9587; --text-faint: #5c6157;
-    --mono: 'IBM Plex Mono', monospace; --sans: 'IBM Plex Sans', sans-serif;
+    --mono: ui-monospace, monospace; --sans: system-ui, sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--text); font-family: var(--sans); line-height: 1.55; -webkit-font-smoothing: antialiased; }

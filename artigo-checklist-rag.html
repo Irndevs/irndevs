@@ -3,24 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Checklist de produção para RAG — IRN Devs</title>
+<title>IA: Checklist de produção para RAG — IRN Devs</title>
 <meta name="description" content="Checklist prático para colocar RAG em produção: dados, retrieval, geração, segurança, custo, observabilidade e rollback.">
 <meta name="author" content="IRN Devs">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/pages/artigo-base.css">
 <link rel="stylesheet" href="assets/css/site-nav.css">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="/manifest.json">
-<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
-<meta property="og:title" content="Checklist de produção para RAG — IRN Devs">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
+<meta property="og:title" content="IA: Checklist de produção para RAG — IRN Devs">
 <meta property="og:description" content="Dados, retrieval, geração, segurança, custo e observabilidade.">
 <meta property="og:type" content="article">
 <link rel="canonical" href="https://irndevs.com/artigo-checklist-rag.html">
 <meta property="og:url" content="https://irndevs.com/artigo-checklist-rag.html">
-<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
 <meta property="og:site_name" content="IRN Devs">
 <meta property="article:published_time" content="2026-09-16">
 <meta name="twitter:card" content="summary_large_image">
@@ -28,15 +25,17 @@
 {
   "@context":"https://schema.org",
   "@type":"BlogPosting",
-  "headline":"Checklist de produção para RAG",
+  "headline":"IA: Checklist de produção para RAG",
   "description":"Checklist prático para colocar RAG em produção.",
-  "datePublished":"2026-09-16",
+  "datePublished":"2026-09-16","dateModified":"2026-09-16",
   "author":{"@type":"Organization","name":"IRN Devs"},
   "publisher":{"@type":"Organization","name":"IRN Devs","url":"https://irndevs.com"},
   "mainEntityOfPage":"https://irndevs.com/artigo-checklist-rag.html",
   "inLanguage":"pt-BR"
 }
 </script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"IA: Checklist de produção para RAG","step":[{"@type":"HowToStep","name":"Preparar dados","text":"Limpe e estruture documentos"},{"@type":"HowToStep","name":"Escolher embeddings","text":"Selecione modelo de embedding adequado"},{"@type":"HowToStep","name":"Indexar com pgvector","text":"Crie índices e teste retrieval"},{"@type":"HowToStep","name":"Avaliar qualidade","text":"Meça precisão e latência"},{"@type":"HowToStep","name":"Monitorar em produção","text":"Logs, alertas e feedback"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Quais são os itens críticos de um checklist de RAG em produção?","acceptedAnswer":{"@type":"Answer","text":"Dados limpos, embeddings consistentes, avaliação de retrieval, monitoramento de latência, fallback e controle de alucinações."}},{"@type":"Question","name":"Preciso de um vector database separado?","acceptedAnswer":{"@type":"Answer","text":"Não necessariamente. pgvector no PostgreSQL atende bem a maioria dos casos até dezenas de milhões de vetores."}},{"@type":"Question","name":"Como evitar alucinações no RAG?","acceptedAnswer":{"@type":"Answer","text":"Use prompts que forçam citação de fontes, filtre por score de similaridade e implemente guardrails de verificação."}}]}</script>
 </head>
 <body>
 <!-- nav: site-nav.js -->
@@ -46,11 +45,11 @@
 
 <div class="wrap article-head">
   <div class="meta">
-    <span>16 set 2026</span>
+    <span>Atualizado em 16 set 2026</span>
     <span class="tag">ia</span>
     <span>8 min de leitura</span>
   </div>
-  <h1>Checklist de produção para RAG</h1>
+  <h1>IA: Checklist de produção para RAG</h1>
   <p class="excerpt">Protótipo funciona no notebook. Produção exige isolamento de tenant, avaliação, limites de custo e plano de rollback. Use esta lista antes de abrir o assistente para usuários reais.</p>
   <div class="stack"><span>RAG</span><span>produção</span><span>checklist</span><span>segurança</span><span>observabilidade</span></div>
 </div>
@@ -138,8 +137,10 @@
     <p>Se a maior parte dos itens ainda estiver aberta, o sistema é um protótipo útil — não um produto. Feche segurança e isolamento de tenant antes de escala de usuários.</p>
     <p class="next-link"><a href="artigo-rag-pgvector.html">← RAG com pgvector</a> · <a href="artigo-hybrid-search.html">hybrid search</a> · <a href="ia.html">hub de IA</a></p>
   </article>
+<div class="wrap" style="margin-top:2rem"><h2>Leia também</h2><ul><li><a href="artigo-rag-pgvector.html">IA: RAG com pgvector</a></li><li><a href="artigo-checklist-rag.html">IA: Checklist RAG</a></li><li><a href="artigo-hybrid-search.html">IA: Hybrid search</a></li><li><a href="ia.html">Hub de IA</a></li></ul></div>
 </div>
 
+<div class="wrap" style="margin-top:2.5rem;padding:1.5rem;border:1px solid var(--border,#2a3126);border-radius:12px;background:var(--bg-raised,#171b16)"><h2 style="margin-bottom:0.5rem">Quer implementar isso na sua empresa?</h2><p style="color:var(--text-dim,#8f9587);margin-bottom:1rem">Ajudamos times a colocar RAG, agentes e modelos locais em produção com segurança e observabilidade.</p><p><a href="contato.html" style="display:inline-block;background:#e8a33d;color:#10130f;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600;margin-right:12px">Falar com a IRN Devs</a> <a href="como-contratar.html" style="color:#e8a33d;text-decoration:underline">Como contratar →</a></p></div>
 <footer>
   <div class="wrap">
     <div>© 2026 irndevs</div>

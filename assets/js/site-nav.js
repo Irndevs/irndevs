@@ -121,7 +121,7 @@
       '<header class="sn-top" role="banner">' +
       (isInternal ? '' : '<button type="button" class="sn-burger" id="snBurger" aria-label="Abrir menu">☰</button>') +
       '<a href="index.html" class="sn-logo" aria-label="IRN Devs">' +
-      '<img src="assets/img/logo-irndevs.svg" alt="~/irndevs $" width="160" height="32" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline\'">' +
+      '<img src="assets/img/logo-irndevs.svg" alt="~/irndevs $" width="160" height="32" loading="eager" decoding="async" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline\'">' +
       '<span class="sn-logo-text" style="display:none">~/irndevs <span>$</span></span>' +
       '</a>' +
       (isInternal

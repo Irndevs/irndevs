@@ -3,7 +3,7 @@
             --bg: #10130f; --bg-raised: #171b16; --bg-line: #1f251d; --border: #2a3126;
             --amber: #e8a33d; --amber-dim: #b3801f; --green: #7fae6a;
             --text: #eae6d9; --text-dim: #8f9587; --text-faint: #5c6157;
-            --mono: 'IBM Plex Mono', monospace; --sans: 'IBM Plex Sans', sans-serif;
+            --mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace; --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             /* legacy aliases so existing component CSS below can reuse the new palette */
             --primary: var(--amber); --secondary: var(--amber-dim); --accent: var(--green);
             --dark: var(--bg); --light: var(--text); --gray: var(--text-dim);
