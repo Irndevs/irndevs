@@ -22,14 +22,14 @@
   <link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-aws-cloud.html">
   <link rel="alternate" hreflang="x-default" href="https://irndevs.com/artigo-aws-cloud.html">
   <meta property="og:url" content="https://irndevs.com/artigo-aws-cloud.html">
-  <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta property="og:image" content="https://irndevs.com/assets/img/og-aws-cloud.png">
   <meta property="og:locale" content="pt_BR">
   <meta property="og:site_name" content="IRN Devs">
   <meta property="article:published_time" content="2026-07-28">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AWS Cloud Foundations — IRN Devs">
   <meta name="twitter:description" content="Conceitos de IAM, VPC, EC2 e S3 e como aplicar do homelab à nuvem AWS.">
-  <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta name="twitter:image" content="https://irndevs.com/assets/img/og-aws-cloud.png">
   <meta name="author" content="IRN Devs">
   <script type="application/ld+json">
 {
@@ -73,6 +73,41 @@
       "position": 3,
       "name": "AWS Cloud Foundations",
       "item": "https://irndevs.com/artigo-aws-cloud.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Do homelab aos fundamentos da AWS",
+  "description": "Roteiro para migrar conceitos de homelab para os fundamentos de IAM, VPC, EC2 e S3 na AWS.",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Organizar o IAM",
+      "text": "Trocar o sudo + chaves SSH do homelab por Users, Groups, Roles e Policies formais na AWS."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Desenhar a VPC",
+      "text": "Definir subnets públicas/privadas, Internet Gateway, Security Groups e Network ACLs."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Subir instâncias EC2",
+      "text": "Escolher AMI e tipo de instância, usar EBS com snapshots e configurar Elastic IP/Auto Scaling."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Organizar dados no S3",
+      "text": "Criar buckets com versionamento, lifecycle, criptografia e acesso público bloqueado por padrão."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Levar o homelab para a nuvem",
+      "text": "Migrar o que já roda em Docker/k3s/Ansible para CloudFormation, Terraform ou CDK conforme a necessidade de elasticidade."
     }
   ]
 }

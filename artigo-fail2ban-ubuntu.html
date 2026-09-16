@@ -18,8 +18,84 @@
 <meta property="og:description" content="Proteger SSH e serviços web contra força bruta com jails e ban time sensatos.">
 <meta property="og:url" content="https://irndevs.com/artigo-fail2ban-ubuntu.html">
 <meta property="og:type" content="article">
-<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-fail2ban-ubuntu.png">
 <meta property="og:site_name" content="IRN Devs">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Fail2ban no Ubuntu Server em 10 minutos",
+  "description": "Proteger SSH e serviços web contra força bruta com jails e ban time sensatos.",
+  "datePublished": "2026-09",
+  "author": {
+    "@type": "Organization",
+    "name": "IRN Devs"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "IRN Devs",
+    "url": "https://irndevs.com"
+  },
+  "mainEntityOfPage": "https://irndevs.com/artigo-fail2ban-ubuntu.html",
+  "inLanguage": "pt-BR"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Início",
+      "item": "https://irndevs.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://irndevs.com/blog.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Fail2ban no Ubuntu Server em 10 minutos",
+      "item": "https://irndevs.com/artigo-fail2ban-ubuntu.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Configurar o Fail2ban no Ubuntu Server",
+  "description": "Passo a passo para instalar o Fail2ban e proteger o SSH contra força bruta.",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Instalar o Fail2ban",
+      "text": "Instalar e habilitar o serviço fail2ban no Ubuntu Server."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Criar jail local para SSH",
+      "text": "Configurar jail.local com maxretry, bantime e findtime para o serviço SSH."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Reiniciar e verificar",
+      "text": "Reiniciar o fail2ban e checar o status da jail sshd."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Evitar autobloqueio",
+      "text": "Garantir acesso por console ou IP allowlist antes de aplicar em produção."
+    }
+  ]
+}
+  </script>
 </head>
 <body>
 <!-- nav: site-nav.js -->

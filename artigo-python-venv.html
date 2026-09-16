@@ -18,8 +18,84 @@
 <meta property="og:description" content="Ambientes virtuais isolam dependências e tornam deploys reproduzíveis.">
 <meta property="og:url" content="https://irndevs.com/artigo-python-venv.html">
 <meta property="og:type" content="article">
-<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-python-venv.png">
 <meta property="og:site_name" content="IRN Devs">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Por que todo projeto Python precisa de venv",
+  "description": "Ambientes virtuais isolam dependências, evitam quebrar o sistema e tornam deploys reproduzíveis. Guia prático.",
+  "datePublished": "2026",
+  "author": {
+    "@type": "Organization",
+    "name": "IRN Devs"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "IRN Devs",
+    "url": "https://irndevs.com"
+  },
+  "mainEntityOfPage": "https://irndevs.com/artigo-python-venv.html",
+  "inLanguage": "pt-BR"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Início",
+      "item": "https://irndevs.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://irndevs.com/blog.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Por que todo projeto Python precisa de venv",
+      "item": "https://irndevs.com/artigo-python-venv.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Criar e usar um ambiente virtual Python",
+  "description": "Passo a passo para isolar dependências de um projeto Python com venv.",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Criar o ambiente virtual",
+      "text": "Rodar python3 -m venv .venv na raiz do projeto."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Ativar o ambiente",
+      "text": "Ativar com source .venv/bin/activate no Linux/macOS ou .venv\\Scripts\\Activate.ps1 no Windows."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Instalar dependências",
+      "text": "Instalar com pip install -r requirements.txt dentro do ambiente já ativado."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Fixar versões e ignorar no Git",
+      "text": "Gerar o requirements.txt com pip freeze e adicionar .venv/ ao .gitignore."
+    }
+  ]
+}
+  </script>
 </head>
 <body>
 <!-- nav: site-nav.js -->

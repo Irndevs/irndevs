@@ -18,8 +18,84 @@
 <meta property="og:description" content="Pipeline mínimo para build e deploy no GitHub Pages com cache e branch main.">
 <meta property="og:url" content="https://irndevs.com/artigo-github-actions-pages.html">
 <meta property="og:type" content="article">
-<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-github-actions-pages.png">
 <meta property="og:site_name" content="IRN Devs">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "GitHub Actions para publicar site estático",
+  "description": "Pipeline mínimo para build e deploy no GitHub Pages com cache e branch main.",
+  "datePublished": "2026-09",
+  "author": {
+    "@type": "Organization",
+    "name": "IRN Devs"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "IRN Devs",
+    "url": "https://irndevs.com"
+  },
+  "mainEntityOfPage": "https://irndevs.com/artigo-github-actions-pages.html",
+  "inLanguage": "pt-BR"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Início",
+      "item": "https://irndevs.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://irndevs.com/blog.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "GitHub Actions para publicar site estático",
+      "item": "https://irndevs.com/artigo-github-actions-pages.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Publicar um site estático com GitHub Actions",
+  "description": "Passo a passo para montar um workflow de deploy no GitHub Pages.",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Criar o workflow",
+      "text": "Adicionar um arquivo de workflow disparado no push para a branch main."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Validar antes do deploy",
+      "text": "Rodar o validador do site como etapa do job antes do upload."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Publicar no GitHub Pages",
+      "text": "Usar upload-pages-artifact e deploy-pages para publicar o conteúdo."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Ajustar concorrência",
+      "text": "Usar concurrency para cancelar deploys antigos em pushes seguidos."
+    }
+  ]
+}
+  </script>
 </head>
 <body>
 <!-- nav: site-nav.js -->

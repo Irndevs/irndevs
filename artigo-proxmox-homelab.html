@@ -22,14 +22,14 @@
   <link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-proxmox-homelab.html">
   <link rel="alternate" hreflang="x-default" href="https://irndevs.com/artigo-proxmox-homelab.html">
   <meta property="og:url" content="https://irndevs.com/artigo-proxmox-homelab.html">
-  <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta property="og:image" content="https://irndevs.com/assets/img/og-proxmox-homelab.png">
   <meta property="og:locale" content="pt_BR">
   <meta property="og:site_name" content="IRN Devs">
   <meta property="article:published_time" content="2026-08-10">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Docker: Do Zero ao Homelab Produtivo — IRN Devs">
   <meta name="twitter:description" content="Configuração de Docker VE: VMs, LXC, ZFS e backups para um homelab produtivo.">
-  <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta name="twitter:image" content="https://irndevs.com/assets/img/og-proxmox-homelab.png">
   <meta name="author" content="IRN Devs">
   <script type="application/ld+json">
 {
@@ -73,6 +73,46 @@
       "position": 3,
       "name": "Docker: Do Zero ao Homelab Produtivo",
       "item": "https://irndevs.com/artigo-proxmox-homelab.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Montar um homelab produtivo com Docker",
+  "description": "Passo a passo para sair do zero até um homelab com VMs, LXC e backups funcionando.",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Escolher hardware e instalar",
+      "text": "Preparar o host e instalar o Docker/hypervisor escolhido."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Fazer a pós-instalação",
+      "text": "Aplicar as configurações iniciais recomendadas após o setup."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Configurar storage com ZFS",
+      "text": "Criar os pools de armazenamento em ZFS para VMs e containers."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Criar VMs e containers LXC",
+      "text": "Provisionar as máquinas virtuais e containers LXC do homelab."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Configurar a rede",
+      "text": "Definir bridges e regras de rede entre os serviços do homelab."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Configurar backups",
+      "text": "Agendar backups das VMs e containers para um destino externo."
     }
   ]
 }

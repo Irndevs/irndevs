@@ -18,3 +18,5 @@
 5. **SSL Labs + securityheaders.com** no domínio em produção
 6. **Cloudflare** (opcional) na frente do DNS
 7. Analytics — só se quiser, e atualizar a política de privacidade
+8. **Depoimentos reais**: a seção de exemplo foi removida do `index.html`; quando tiver depoimentos reais com autorização, me passa que eu recrio a seção
+9. **Self-host das fontes Google (IBM Plex)**: não deu para baixar `fonts.googleapis.com`/`fonts.gstatic.com`/registro npm nesta sessão — domínios fora da allowlist de rede do ambiente. Segue carregando via Google Fonts por enquanto; dá para retomar numa sessão com esses domínios liberados nas configurações de rede

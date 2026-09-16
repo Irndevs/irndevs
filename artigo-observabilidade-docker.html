@@ -22,14 +22,14 @@
   <link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-observabilidade-docker.html">
   <link rel="alternate" hreflang="x-default" href="https://irndevs.com/artigo-observabilidade-docker.html">
   <meta property="og:url" content="https://irndevs.com/artigo-observabilidade-docker.html">
-  <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta property="og:image" content="https://irndevs.com/assets/img/og-observabilidade-docker.png">
   <meta property="og:locale" content="pt_BR">
   <meta property="og:site_name" content="IRN Devs">
   <meta property="article:published_time" content="2026-08-15">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Stack de Qualidade e confiabilidade com Docker — IRN Devs">
   <meta name="twitter:description" content="Guia prático: testes automatizados, métricas e logs em Docker Compose. Do zero aos dashboards.">
-  <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta name="twitter:image" content="https://irndevs.com/assets/img/og-observabilidade-docker.png">
   <meta name="author" content="IRN Devs">
   <script type="application/ld+json">
 {
@@ -73,6 +73,46 @@
       "position": 3,
       "name": "Stack de Qualidade e confiabilidade com Docker",
       "item": "https://irndevs.com/artigo-observabilidade-docker.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Montar uma stack de observabilidade com Docker",
+  "description": "Passo a passo para subir métricas, logs e dashboards com Docker Compose.",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Preparar os pré-requisitos",
+      "text": "Ter Docker e Docker Compose instalados e definir a estrutura de pastas do projeto."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Montar o docker-compose",
+      "text": "Declarar os serviços da stack (Prometheus, Loki, Grafana, Collector, exporters) no compose."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Configurar o Prometheus",
+      "text": "Definir os targets e regras de coleta de métricas."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Configurar o Loki",
+      "text": "Centralizar a coleta de logs dos containers."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Ligar o Grafana aos datasources",
+      "text": "Adicionar Prometheus e Loki como datasources e montar os dashboards."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Adicionar o OpenTelemetry Collector",
+      "text": "Configurar exporters e o Collector para unificar métricas, logs e traces."
     }
   ]
 }

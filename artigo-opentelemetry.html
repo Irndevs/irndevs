@@ -22,14 +22,14 @@
   <link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/artigo-opentelemetry.html">
   <link rel="alternate" hreflang="x-default" href="https://irndevs.com/artigo-opentelemetry.html">
   <meta property="og:url" content="https://irndevs.com/artigo-opentelemetry.html">
-  <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta property="og:image" content="https://irndevs.com/assets/img/og-opentelemetry.png">
   <meta property="og:locale" content="pt_BR">
   <meta property="og:site_name" content="IRN Devs">
   <meta property="article:published_time" content="2026-07-22">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="OpenTelemetry: Métricas, Logs e Traces — IRN Devs">
   <meta name="twitter:description" content="OpenTelemetry como padrão aberto de observabilidade: instrumentação, Collector e Grafana.">
-  <meta name="twitter:image" content="https://irndevs.com/assets/img/og-default.png">
+  <meta name="twitter:image" content="https://irndevs.com/assets/img/og-opentelemetry.png">
   <meta name="author" content="IRN Devs">
   <script type="application/ld+json">
 {
@@ -73,6 +73,36 @@
       "position": 3,
       "name": "OpenTelemetry: Métricas, Logs e Traces",
       "item": "https://irndevs.com/artigo-opentelemetry.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Instrumentar uma aplicação com OpenTelemetry",
+  "description": "Passo a passo para unificar métricas, logs e traces com OpenTelemetry e Collector.",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Entender os três pilares",
+      "text": "Mapear métricas, logs e traces como as três dimensões que o OTel padroniza."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Instrumentar a aplicação",
+      "text": "Adicionar o SDK do OpenTelemetry ao código para gerar os dados de telemetria."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Configurar o Collector",
+      "text": "Receber, processar e exportar os dados coletados via OpenTelemetry Collector."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Visualizar no Grafana",
+      "text": "Conectar o Collector a um backend compatível e montar dashboards no Grafana."
     }
   ]
 }

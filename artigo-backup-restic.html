@@ -18,8 +18,84 @@
 <meta property="og:description" content="Estratégia 3-2-1 prática: snapshots incrementais criptografados e cópia offsite.">
 <meta property="og:url" content="https://irndevs.com/artigo-backup-restic.html">
 <meta property="og:type" content="article">
-<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-backup-restic.png">
 <meta property="og:site_name" content="IRN Devs">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Backup automatizado com restic e rsync",
+  "description": "Estratégia 3-2-1 prática: snapshots incrementais criptografados e cópia offsite.",
+  "datePublished": "2026-09",
+  "author": {
+    "@type": "Organization",
+    "name": "IRN Devs"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "IRN Devs",
+    "url": "https://irndevs.com"
+  },
+  "mainEntityOfPage": "https://irndevs.com/artigo-backup-restic.html",
+  "inLanguage": "pt-BR"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Início",
+      "item": "https://irndevs.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://irndevs.com/blog.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Backup automatizado com restic e rsync",
+      "item": "https://irndevs.com/artigo-backup-restic.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Configurar backup automatizado com restic",
+  "description": "Passo a passo para instalar, inicializar e agendar backups com restic.",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Instalar o restic",
+      "text": "Instalar o restic via apt e definir as variáveis de repositório e senha."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Inicializar o repositório",
+      "text": "Rodar restic init para criar o repositório de backup."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Fazer o backup",
+      "text": "Rodar restic backup nos diretórios desejados, excluindo caches desnecessários."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Agendar e reter",
+      "text": "Agendar via crontab e definir a política de retenção com restic forget --prune."
+    }
+  ]
+}
+  </script>
 </head>
 <body>
 <!-- nav: site-nav.js -->

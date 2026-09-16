@@ -18,8 +18,84 @@
 <meta property="og:description" content="Expor várias apps Docker na porta 80/443 com upstream, headers e TLS.">
 <meta property="og:url" content="https://irndevs.com/artigo-nginx-reverse-proxy.html">
 <meta property="og:type" content="article">
-<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-nginx-reverse-proxy.png">
 <meta property="og:site_name" content="IRN Devs">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Nginx como reverse proxy para containers",
+  "description": "Expor várias apps Docker na porta 80/443 com upstream, headers e TLS.",
+  "datePublished": "2026-09",
+  "author": {
+    "@type": "Organization",
+    "name": "IRN Devs"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "IRN Devs",
+    "url": "https://irndevs.com"
+  },
+  "mainEntityOfPage": "https://irndevs.com/artigo-nginx-reverse-proxy.html",
+  "inLanguage": "pt-BR"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Início",
+      "item": "https://irndevs.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://irndevs.com/blog.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Nginx como reverse proxy para containers",
+      "item": "https://irndevs.com/artigo-nginx-reverse-proxy.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Configurar o Nginx como reverse proxy para containers",
+  "description": "Passo a passo para centralizar TLS e roteamento na frente de containers Docker.",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Definir o upstream",
+      "text": "Declarar o serviço de destino no bloco upstream do Nginx."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Configurar o server block",
+      "text": "Rotear a porta 80 para o upstream, repassando os headers Host, X-Real-IP e X-Forwarded-*."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Montar no Compose",
+      "text": "Montar a config como volume read-only e usar a rede interna, sem publicar a porta do serviço no host."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Adicionar TLS",
+      "text": "Colocar Certbot ou Caddy na frente do Nginx para servir HTTPS."
+    }
+  ]
+}
+  </script>
 </head>
 <body>
 <!-- nav: site-nav.js -->
