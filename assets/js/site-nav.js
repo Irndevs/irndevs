@@ -289,3 +289,25 @@
     if (btn) btn.remove();
   });
 })();
+
+/* ------------------------------------------------------------------
+ * Analytics centralizado — roda em TODAS as páginas que carregam site-nav.js
+ * Para ativar: crie a conta no Plausible/Umami e defina
+ *   window.IRN_ANALYTICS = { enabled: true, src: '...', domain: 'irndevs.com' }
+ * antes deste script, ou edite o default abaixo.
+ * A política de privacidade (privacidade.html) já prevê analytics sem cookies.
+ * ------------------------------------------------------------------ */
+(function () {
+  var cfg = window.IRN_ANALYTICS || {};
+  var enabled = cfg.enabled === true;
+  var src = cfg.src || 'https://plausible.io/js/script.js';
+  var domain = cfg.domain || 'irndevs.com';
+  if (!enabled) return; // inativo até você criar a conta e ligar
+  if (document.querySelector('script[data-irn-analytics]')) return;
+  var s = document.createElement('script');
+  s.defer = true;
+  s.dataset.domain = domain;
+  s.dataset.irnAnalytics = '1';
+  s.src = src;
+  document.head.appendChild(s);
+})();

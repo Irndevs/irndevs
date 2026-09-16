@@ -37,3 +37,26 @@ Antes do deploy, execute:
 ```bash
 python3 scripts/validate-site.py
 ```
+
+
+---
+
+## 2026-09-16 (tarde) — Merge: pacote "melhorias" + fixes de review
+
+### Já presentes neste pacote (confirmado)
+- 12 imagens OG únicas (1200×630) — `assets/img/og-*.png` — e `og:image`/`twitter:image` apontados por artigo
+- `BlogPosting` + `HowTo` JSON-LD em todos os 12 artigos
+- Datas visíveis nos artigos; seção de depoimentos reescrita (removido o "testimonials --sample")
+
+### Aplicado neste merge
+- **defer** nos 4 scripts de auth (supabase-config, SDK CDN, auth.js, auth-gates.js) nas 7 páginas que os carregam — parse do HTML não bloqueia mais (`auth.js` já usava DOMContentLoaded; ordem entre scripts defer é preservada)
+- **sitemap.xml**: `<lastmod>` completo em 39/39 URLs (25 receberam agora)
+- **Analytics centralizado**: injetor no `site-nav.js` (57 páginas), ativado por `window.IRN_ANALYTICS = { enabled: true, ... }` — desligado por padrão até criar conta Plausible/Umami
+- **Cache-bust**: `site-nav.js` uniformizado para `?v=20260916c` (52 páginas; restavam `20260914f`/`20260914g`)
+
+### Ainda pendentes (dependem de você)
+- WhatsApp real — zero links `wa.me` no site; botão "falar com humano" do chat só abre o formulário
+- Fontes Google ainda externas — self-host das IBM Plex pendente
+- ebookIA*.jpg (4 imagens) ainda órfãs — decidir: apagar ou criar página de captura de leads
+- Conta duplicada: loja Next.js é projeto Supabase separado — decidir estratégia (magic link, ou unificar projetos)
+- Criar conta Plausible/Umami e ligar `IRN_ANALYTICS.enabled`
