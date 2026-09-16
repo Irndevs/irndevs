@@ -233,9 +233,9 @@
         '<span class="irn-float-ico">◎</span><span class="irn-float-txt">Instagram</span></a>' +
         '<a href="https://linkedin.com/company/irndevs" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="LinkedIn da IRN Devs" aria-label="LinkedIn da IRN Devs">' +
         '<span class="irn-float-ico">in</span><span class="irn-float-txt">LinkedIn</span></a>' +
-        '<a href="https://github.com/iri-afk" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="GitHub da IRN Devs" aria-label="GitHub da IRN Devs">' +
+        '<a href="https://github.com/#" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="GitHub da IRN Devs" aria-label="GitHub da IRN Devs">' +
         '<span class="irn-float-ico">⌘</span><span class="irn-float-txt">GitHub</span></a>' +
-        '<a href="https://youtube.com/@irndevs" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="YouTube da IRN Devs" aria-label="YouTube da IRN Devs">' +
+        '<a href="https://youtube.com/@irn-devs" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="YouTube da IRN Devs" aria-label="YouTube da IRN Devs">' +
         '<span class="irn-float-ico">▶</span><span class="irn-float-txt">YouTube</span></a>' +
         '<a href="https://x.com/irndevs" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="X da IRN Devs" aria-label="X da IRN Devs">' +
         '<span class="irn-float-ico">𝕏</span><span class="irn-float-txt">X</span></a></div>';
