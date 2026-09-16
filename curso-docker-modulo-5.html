@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Docker 5 — Healthchecks e logs | IRN Devs</title>
+<link rel="canonical" href="https://irndevs.com/curso-docker-modulo-5.html">
+<meta name="description" content="Módulo 5 do curso Docker em Produção: Healthchecks e logs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/curso-python.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/motion.css">
+<meta property="og:title" content="Docker 5 — Healthchecks e logs | IRN Devs">
+<meta property="og:description" content="Módulo 5: Healthchecks e logs.">
+<meta property="og:url" content="https://irndevs.com/curso-docker-modulo-5.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:site_name" content="IRN Devs">
+</head>
+<body data-course="docker">
+<!-- nav: site-nav.js -->
+<article class="wrap">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#docker">docker em produção</a> / módulo 5</nav>
+  <div class="sec-head"><span class="amber">$</span> docker modulo_5</div>
+  <h1>Healthchecks e logs</h1>
+  <p class="lede">Healthcheck nativo, logs estruturados e o mínimo de observabilidade sem stack pesada.</p>
+  <div id="irn-progress-bar" data-progress="docker"></div>
+  <h2>O que você vai aprender</h2>
+  <ul>
+    <li>HEALTHCHECK no Dockerfile e no Compose</li>
+    <li>json-file e rotação de logs</li>
+    <li>Expor /health na aplicação</li>
+    <li>Quando subir Prometheus/Grafana</li>
+  </ul>
+
+  <h2>1. Healthcheck</h2>
+  <pre><code>HEALTHCHECK --interval=30s --timeout=3s --retries=3 \
+  CMD curl -f http://localhost:8000/health || exit 1</code></pre>
+  <pre><code># compose
+healthcheck:
+  test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+  interval: 30s
+  timeout: 3s
+  retries: 3</code></pre>
+
+  <h2>2. Logs com rotação</h2>
+  <pre><code>logging:
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"</code></pre>
+
+
+  <div class="exercise" data-solution="Adicione healthcheck e logging ao compose. Force falha no /health e veja o status unhealthy.">
+    <strong>EXERCÍCIO</strong>
+    Adicione healthcheck e logging ao compose. Force falha no /health e veja o status unhealthy.
+  </div>
+  <h2>Sumário do curso</h2>
+  <div class="mod-sumario">
+    <a class="mod-card" href="curso-docker-modulo-1.html"><span class="mod-card-n">01</span><span class="mod-card-name">Conceitos e instalação</span></a>
+    <a class="mod-card" href="curso-docker-modulo-2.html"><span class="mod-card-n">02</span><span class="mod-card-name">Dockerfile e imagens</span></a>
+    <a class="mod-card" href="curso-docker-modulo-3.html"><span class="mod-card-n">03</span><span class="mod-card-name">Volumes, redes e Compose</span></a>
+    <a class="mod-card" href="curso-docker-modulo-4.html"><span class="mod-card-n">04</span><span class="mod-card-name">Segurança e boas práticas</span></a>
+    <a class="mod-card" href="curso-docker-modulo-5.html" aria-current="page"><span class="mod-card-n">05</span><span class="mod-card-name">Healthchecks e logs</span></a>
+    <a class="mod-card" href="curso-docker-modulo-6.html"><span class="mod-card-n">06</span><span class="mod-card-name">Projeto final: app + proxy</span></a>
+  </div>
+  <div class="aula-progress">
+    <a class="btn ghost" href="curso-docker-modulo-4.html">← anterior</a>
+    <span class="dots"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b></b></span>
+    <a class="btn primary" href="curso-docker-modulo-6.html">próximo →</a>
+  </div>
+</article>
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260914f" defer></script>
+<script src="assets/js/curso-progress.js?v=20260916b" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916" defer></script>
+</body>
+</html>

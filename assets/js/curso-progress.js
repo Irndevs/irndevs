@@ -1,61 +1,73 @@
 /**
- * IRN Devs — progresso do curso + botão copiar código + gabarito
+ * IRN Devs — progresso multi-curso + copiar código + gabarito
  */
 (function () {
   'use strict';
-  var KEY = 'irn_python_progress';
-  var TOTAL = 8;
 
-  function load() {
-    try {
-      return JSON.parse(localStorage.getItem(KEY) || '{}');
-    } catch (e) {
-      return {};
+  var COURSES = {
+    python: { key: 'irn_python_progress', total: 8, pattern: /curso-python-modulo-(\d)/, cert: 'certificado-python.html', label: 'Python' },
+    docker: { key: 'irn_docker_progress', total: 6, pattern: /curso-docker-modulo-(\d)/, cert: 'certificado-docker.html', label: 'Docker' }
+  };
+
+  function detectCourse() {
+    var path = location.pathname;
+    for (var id in COURSES) {
+      if (COURSES[id].pattern.test(path)) return id;
     }
-  }
-  function save(data) {
-    localStorage.setItem(KEY, JSON.stringify(data));
+    var el = document.body.getAttribute('data-course');
+    if (el && COURSES[el]) return el;
+    return null;
   }
 
-  function modNumFromPath() {
-    var m = location.pathname.match(/curso-python-modulo-(\d)/);
+  function load(courseId) {
+    var c = COURSES[courseId];
+    if (!c) return {};
+    try { return JSON.parse(localStorage.getItem(c.key) || '{}'); } catch (e) { return {}; }
+  }
+  function save(courseId, data) {
+    var c = COURSES[courseId];
+    if (!c) return;
+    localStorage.setItem(c.key, JSON.stringify(data));
+  }
+  function countDone(courseId, data) {
+    var total = COURSES[courseId].total;
+    var n = 0;
+    for (var i = 1; i <= total; i++) if (data[i]) n++;
+    return n;
+  }
+  function modNum(courseId) {
+    var m = location.pathname.match(COURSES[courseId].pattern);
     return m ? parseInt(m[1], 10) : 0;
   }
 
-  function countDone(data) {
-    var n = 0;
-    for (var i = 1; i <= TOTAL; i++) if (data[i]) n++;
-    return n;
-  }
-
-  // Barra de progresso
-  function renderProgressBar(container) {
-    if (!container) return;
-    var data = load();
-    var done = countDone(data);
-    var pct = Math.round((done / TOTAL) * 100);
+  function renderProgressBar(container, courseId) {
+    if (!container || !courseId) return;
+    var data = load(courseId);
+    var done = countDone(courseId, data);
+    var total = COURSES[courseId].total;
+    var pct = Math.round((done / total) * 100);
     container.innerHTML =
       '<div class="progress-bar-wrap"><div class="progress-bar" style="width:' + pct + '%"></div></div>' +
-      '<div class="progress-label">' + done + ' de ' + TOTAL + ' módulos concluídos (' + pct + '%)</div>';
+      '<div class="progress-label">' + COURSES[courseId].label + ': ' + done + ' de ' + total + ' módulos (' + pct + '%)</div>';
   }
 
-  // Marcar cards concluídos no sumário
-  function markCards() {
-    var data = load();
+  function markCards(courseId) {
+    if (!courseId) return;
+    var data = load(courseId);
+    var re = COURSES[courseId].pattern;
     document.querySelectorAll('.mod-card').forEach(function (card) {
       var href = card.getAttribute('href') || '';
-      var m = href.match(/modulo-(\d)/);
+      var m = href.match(re);
       if (m && data[m[1]]) card.classList.add('done');
     });
   }
 
-  // Checkbox "marcar como concluído"
-  function setupMarkDone() {
-    var num = modNumFromPath();
+  function setupMarkDone(courseId) {
+    var num = modNum(courseId);
     if (!num) return;
     var article = document.querySelector('article.wrap');
     if (!article) return;
-    var data = load();
+    var data = load(courseId);
     var box = document.createElement('label');
     box.className = 'mark-done';
     box.innerHTML = '<input type="checkbox" id="irn-mark-done"' + (data[num] ? ' checked' : '') + '> Marcar este módulo como concluído';
@@ -64,24 +76,24 @@
     else article.appendChild(box);
 
     box.querySelector('input').addEventListener('change', function (e) {
-      var d = load();
+      var d = load(courseId);
       if (e.target.checked) d[num] = true;
       else delete d[num];
-      save(d);
-      markCards();
+      save(courseId, d);
+      markCards(courseId);
       var bar = document.getElementById('irn-progress-bar');
-      if (bar) renderProgressBar(bar);
-      if (e.target.checked && num === TOTAL) {
+      if (bar) renderProgressBar(bar, courseId);
+      var total = COURSES[courseId].total;
+      if (e.target.checked && num === total) {
         setTimeout(function () {
-          if (confirm('Parabéns! Você concluiu os 8 módulos. Gerar certificado?')) {
-            location.href = 'certificado-python.html';
+          if (confirm('Parabéns! Curso concluído. Gerar certificado?')) {
+            location.href = COURSES[courseId].cert;
           }
         }, 300);
       }
     });
   }
 
-  // Botões copiar em cada <pre>
   function setupCopy() {
     document.querySelectorAll('pre').forEach(function (pre) {
       if (pre.closest('.code-block')) return;
@@ -98,21 +110,15 @@
         navigator.clipboard.writeText(text).then(function () {
           btn.textContent = 'copiado!';
           btn.classList.add('copied');
-          setTimeout(function () {
-            btn.textContent = 'copiar';
-            btn.classList.remove('copied');
-          }, 1600);
-        }).catch(function () {
-          btn.textContent = 'erro';
-        });
+          setTimeout(function () { btn.textContent = 'copiar'; btn.classList.remove('copied'); }, 1600);
+        }).catch(function () { btn.textContent = 'erro'; });
       });
       wrap.appendChild(btn);
     });
   }
 
-  // Gabaritos (botão toggle em .exercise com data-solution)
   function setupSolutions() {
-    document.querySelectorAll('.exercise').forEach(function (ex, idx) {
+    document.querySelectorAll('.exercise').forEach(function (ex) {
       var solText = ex.getAttribute('data-solution');
       if (!solText) return;
       var btn = document.createElement('button');
@@ -132,20 +138,26 @@
   }
 
   function init() {
-    var barHost = document.getElementById('irn-progress-bar');
-    if (barHost) renderProgressBar(barHost);
-    markCards();
-    setupMarkDone();
+    var courseId = detectCourse();
+    // páginas de índice podem ter várias barras
+    document.querySelectorAll('[data-progress]').forEach(function (el) {
+      renderProgressBar(el, el.getAttribute('data-progress'));
+    });
+    var bar = document.getElementById('irn-progress-bar');
+    if (bar) {
+      var cid = bar.getAttribute('data-progress') || courseId;
+      if (cid) renderProgressBar(bar, cid);
+    }
+    if (courseId) {
+      markCards(courseId);
+      setupMarkDone(courseId);
+    }
     setupCopy();
     setupSolutions();
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
 
-  // export para cursos.html
-  window.IRNProgress = { load: load, countDone: countDone, TOTAL: TOTAL, renderProgressBar: renderProgressBar };
+  window.IRNProgress = { COURSES: COURSES, load: load, countDone: countDone, renderProgressBar: renderProgressBar };
 })();

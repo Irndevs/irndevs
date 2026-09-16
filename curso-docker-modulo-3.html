@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Docker 3 — Volumes, redes e Compose | IRN Devs</title>
+<link rel="canonical" href="https://irndevs.com/curso-docker-modulo-3.html">
+<meta name="description" content="Módulo 3 do curso Docker em Produção: Volumes, redes e Compose.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/curso-python.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/motion.css">
+<meta property="og:title" content="Docker 3 — Volumes, redes e Compose | IRN Devs">
+<meta property="og:description" content="Módulo 3: Volumes, redes e Compose.">
+<meta property="og:url" content="https://irndevs.com/curso-docker-modulo-3.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:site_name" content="IRN Devs">
+</head>
+<body data-course="docker">
+<!-- nav: site-nav.js -->
+<article class="wrap">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#docker">docker em produção</a> / módulo 3</nav>
+  <div class="sec-head"><span class="amber">$</span> docker modulo_3</div>
+  <h1>Volumes, redes e Compose</h1>
+  <p class="lede">Persistir dados, conectar serviços e orquestrar tudo com docker compose.</p>
+  <div id="irn-progress-bar" data-progress="docker"></div>
+  <h2>O que você vai aprender</h2>
+  <ul>
+    <li>Volumes nomeados vs bind mounts</li>
+    <li>Redes bridge e DNS interno</li>
+    <li>docker-compose.yml de verdade</li>
+    <li>depends_on e restart policies</li>
+  </ul>
+
+  <h2>1. Volume para dados</h2>
+  <pre><code>docker volume create pgdata
+docker run -d --name db \
+  -e POSTGRES_PASSWORD=secret \
+  -v pgdata:/var/lib/postgresql/data \
+  postgres:16-alpine</code></pre>
+
+  <h2>2. Compose completo</h2>
+  <pre><code>services:
+  api:
+    build: .
+    ports: ["8000:8000"]
+    environment:
+      DATABASE_URL: postgres://app:secret@db:5432/app
+    depends_on: [db]
+    restart: unless-stopped
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: app
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+volumes:
+  pgdata:</code></pre>
+  <pre><code>docker compose up -d --build
+docker compose logs -f api
+docker compose down</code></pre>
+
+
+  <div class="exercise" data-solution="Suba api+db com compose. Entre no container da api e faça ping no hostname db.">
+    <strong>EXERCÍCIO</strong>
+    Suba api+db com compose. Entre no container da api e faça ping no hostname db.
+  </div>
+  <h2>Sumário do curso</h2>
+  <div class="mod-sumario">
+    <a class="mod-card" href="curso-docker-modulo-1.html"><span class="mod-card-n">01</span><span class="mod-card-name">Conceitos e instalação</span></a>
+    <a class="mod-card" href="curso-docker-modulo-2.html"><span class="mod-card-n">02</span><span class="mod-card-name">Dockerfile e imagens</span></a>
+    <a class="mod-card" href="curso-docker-modulo-3.html" aria-current="page"><span class="mod-card-n">03</span><span class="mod-card-name">Volumes, redes e Compose</span></a>
+    <a class="mod-card" href="curso-docker-modulo-4.html"><span class="mod-card-n">04</span><span class="mod-card-name">Segurança e boas práticas</span></a>
+    <a class="mod-card" href="curso-docker-modulo-5.html"><span class="mod-card-n">05</span><span class="mod-card-name">Healthchecks e logs</span></a>
+    <a class="mod-card" href="curso-docker-modulo-6.html"><span class="mod-card-n">06</span><span class="mod-card-name">Projeto final: app + proxy</span></a>
+  </div>
+  <div class="aula-progress">
+    <a class="btn ghost" href="curso-docker-modulo-2.html">← anterior</a>
+    <span class="dots"><b class="on"></b><b class="on"></b><b class="on"></b><b></b><b></b><b></b></span>
+    <a class="btn primary" href="curso-docker-modulo-4.html">próximo →</a>
+  </div>
+</article>
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260914f" defer></script>
+<script src="assets/js/curso-progress.js?v=20260916b" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916" defer></script>
+</body>
+</html>

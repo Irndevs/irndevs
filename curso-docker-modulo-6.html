@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Docker 6 — Projeto final: app + proxy | IRN Devs</title>
+<link rel="canonical" href="https://irndevs.com/curso-docker-modulo-6.html">
+<meta name="description" content="Módulo 6 do curso Docker em Produção: Projeto final: app + proxy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/curso-python.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/motion.css">
+<meta property="og:title" content="Docker 6 — Projeto final: app + proxy | IRN Devs">
+<meta property="og:description" content="Módulo 6: Projeto final: app + proxy.">
+<meta property="og:url" content="https://irndevs.com/curso-docker-modulo-6.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:site_name" content="IRN Devs">
+</head>
+<body data-course="docker">
+<!-- nav: site-nav.js -->
+<article class="wrap">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#docker">docker em produção</a> / módulo 6</nav>
+  <div class="sec-head"><span class="amber">$</span> docker modulo_6</div>
+  <h1>Projeto final: app + proxy</h1>
+  <p class="lede">API containerizada atrás de Nginx, com volume, healthcheck e restart — pronta para VPS.</p>
+  <div id="irn-progress-bar" data-progress="docker"></div>
+  <h2>O que você vai aprender</h2>
+  <ul>
+    <li>Compose com api + nginx</li>
+    <li>Reverse proxy e headers</li>
+    <li>Deploy em VPS com docker compose</li>
+    <li>Checklist de produção</li>
+  </ul>
+
+  <h2>Arquitetura</h2>
+  <pre><code>services:
+  api:
+    build: ./api
+    expose: ["8000"]
+    env_file: .env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+    restart: unless-stopped
+  proxy:
+    image: nginx:1.27-alpine
+    ports: ["80:80"]
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped</code></pre>
+
+  <h2>Checklist de entrega</h2>
+  <ul>
+    <li>Imagens com tags fixas</li>
+    <li>Non-root + .env fora do git</li>
+    <li>Healthcheck e restart</li>
+    <li>Logs rotativos</li>
+    <li>README com docker compose up -d</li>
+  </ul>
+  <div class="exercise" data-solution="Monte a pasta api/ + nginx.conf + compose. Suba, acesse via :80 e confirme health no docker ps.">
+    <strong>DESAFIO FINAL</strong>
+    Publique o repositório no GitHub com o compose completo e um README de 1 página.
+  </div>
+
+
+  <h2>Sumário do curso</h2>
+  <div class="mod-sumario">
+    <a class="mod-card" href="curso-docker-modulo-1.html"><span class="mod-card-n">01</span><span class="mod-card-name">Conceitos e instalação</span></a>
+    <a class="mod-card" href="curso-docker-modulo-2.html"><span class="mod-card-n">02</span><span class="mod-card-name">Dockerfile e imagens</span></a>
+    <a class="mod-card" href="curso-docker-modulo-3.html"><span class="mod-card-n">03</span><span class="mod-card-name">Volumes, redes e Compose</span></a>
+    <a class="mod-card" href="curso-docker-modulo-4.html"><span class="mod-card-n">04</span><span class="mod-card-name">Segurança e boas práticas</span></a>
+    <a class="mod-card" href="curso-docker-modulo-5.html"><span class="mod-card-n">05</span><span class="mod-card-name">Healthchecks e logs</span></a>
+    <a class="mod-card" href="curso-docker-modulo-6.html" aria-current="page"><span class="mod-card-n">06</span><span class="mod-card-name">Projeto final: app + proxy</span></a>
+  </div>
+  <div class="aula-progress">
+    <a class="btn ghost" href="curso-docker-modulo-5.html">← anterior</a>
+    <span class="dots"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b></span>
+    <a class="btn primary" href="cursos.html">voltar aos cursos →</a>
+  </div>
+</article>
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260914f" defer></script>
+<script src="assets/js/curso-progress.js?v=20260916b" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916" defer></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nginx como reverse proxy para containers | IRN Devs</title>
+<meta name="description" content="Expor várias apps Docker na porta 80/443 com upstream, headers e TLS.">
+<link rel="canonical" href="https://irndevs.com/artigo-nginx-reverse-proxy.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/artigo-base.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/motion.css">
+<meta property="og:title" content="Nginx como reverse proxy para containers | IRN Devs">
+<meta property="og:description" content="Expor várias apps Docker na porta 80/443 com upstream, headers e TLS.">
+<meta property="og:url" content="https://irndevs.com/artigo-nginx-reverse-proxy.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:site_name" content="IRN Devs">
+</head>
+<body>
+<!-- nav: site-nav.js -->
+<article class="wrap artigo">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="blog.html">blog</a> / artigo</nav>
+  <h1>Nginx como reverse proxy para containers</h1>
+  <p class="meta">IRN Devs · set 2026</p>
+
+  <p>Em vez de publicar a porta de cada container, um Nginx na frente centraliza TLS e roteamento.</p>
+  <h2>Config básica</h2>
+  <pre><code>upstream api {
+  server api:8000;
+}
+server {
+  listen 80;
+  server_name exemplo.com;
+  location / {
+    proxy_pass http://api;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+  }
+}</code></pre>
+  <h2>No Compose</h2>
+  <p>Monte o conf como volume read-only e use a rede interna para o serviço <code>api</code> (sem publicar 8000 no host).</p>
+  <p>Próximo passo: TLS com Certbot ou Caddy. Veja o <a href="curso-docker-modulo-6.html">módulo final do curso Docker</a>.</p>
+
+  <p><a href="blog.html">← voltar ao blog</a> · <a href="cursos.html">cursos</a></p>
+</article>
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260914f" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916" defer></script>
+</body>
+</html>

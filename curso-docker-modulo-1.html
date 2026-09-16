@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Docker 1 — Conceitos e instalação | IRN Devs</title>
+<link rel="canonical" href="https://irndevs.com/curso-docker-modulo-1.html">
+<meta name="description" content="Módulo 1 do curso Docker em Produção: Conceitos e instalação.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/curso-python.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/motion.css">
+<meta property="og:title" content="Docker 1 — Conceitos e instalação | IRN Devs">
+<meta property="og:description" content="Módulo 1: Conceitos e instalação.">
+<meta property="og:url" content="https://irndevs.com/curso-docker-modulo-1.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:site_name" content="IRN Devs">
+</head>
+<body data-course="docker">
+<!-- nav: site-nav.js -->
+<article class="wrap">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#docker">docker em produção</a> / módulo 1</nav>
+  <div class="sec-head"><span class="amber">$</span> docker modulo_1</div>
+  <h1>Conceitos e instalação</h1>
+  <p class="lede">O que é container, diferença de VM, instalar Docker no Linux e primeiros comandos sem medo.</p>
+  <div id="irn-progress-bar" data-progress="docker"></div>
+  <h2>O que você vai aprender</h2>
+  <ul>
+    <li>Diferença entre imagem, container e volume</li>
+    <li>Instalar Docker Engine no Ubuntu/Debian</li>
+    <li>docker run, ps, logs, exec e stop</li>
+    <li>Boas práticas de permissão (grupo docker)</li>
+  </ul>
+
+  <h2>1. Container vs máquina virtual</h2>
+  <p>VM virtualiza hardware. Container compartilha o kernel do host e isola processos com namespaces e cgroups. Resultado: sobe em segundos e gasta bem menos RAM.</p>
+
+  <h2>2. Instalação (Ubuntu 22.04+)</h2>
+  <pre><code>sudo apt update
+sudo apt install ca-certificates curl -y
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo $VERSION_CODENAME) stable" | sudo tee /etc/apt/sources.list.d/docker.list
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
+sudo usermod -aG docker $USER
+# faça logout/login para o grupo valer</code></pre>
+
+  <h2>3. Primeiros comandos</h2>
+  <pre><code>docker run --rm hello-world
+docker run -d --name web -p 8080:80 nginx:alpine
+docker ps
+docker logs web
+docker exec -it web sh
+docker stop web &amp;&amp; docker rm web</code></pre>
+
+  <div class="tip"><strong>DICA</strong> Sempre prefira tags explícitas (<code>nginx:1.27-alpine</code>) em vez de <code>latest</code> em produção.</div>
+
+
+  <div class="exercise" data-solution="Rode hello-world e nginx. Confirme com docker ps e acesse localhost:8080. Se permission denied, confira o grupo docker.">
+    <strong>EXERCÍCIO</strong>
+    Rode hello-world e nginx. Confirme com docker ps e acesse localhost:8080. Se permission denied, confira o grupo docker.
+  </div>
+  <h2>Sumário do curso</h2>
+  <div class="mod-sumario">
+    <a class="mod-card" href="curso-docker-modulo-1.html" aria-current="page"><span class="mod-card-n">01</span><span class="mod-card-name">Conceitos e instalação</span></a>
+    <a class="mod-card" href="curso-docker-modulo-2.html"><span class="mod-card-n">02</span><span class="mod-card-name">Dockerfile e imagens</span></a>
+    <a class="mod-card" href="curso-docker-modulo-3.html"><span class="mod-card-n">03</span><span class="mod-card-name">Volumes, redes e Compose</span></a>
+    <a class="mod-card" href="curso-docker-modulo-4.html"><span class="mod-card-n">04</span><span class="mod-card-name">Segurança e boas práticas</span></a>
+    <a class="mod-card" href="curso-docker-modulo-5.html"><span class="mod-card-n">05</span><span class="mod-card-name">Healthchecks e logs</span></a>
+    <a class="mod-card" href="curso-docker-modulo-6.html"><span class="mod-card-n">06</span><span class="mod-card-name">Projeto final: app + proxy</span></a>
+  </div>
+  <div class="aula-progress">
+    <a class="btn ghost" href="cursos.html">← todos os cursos</a>
+    <span class="dots"><b class="on"></b><b></b><b></b><b></b><b></b><b></b></span>
+    <a class="btn primary" href="curso-docker-modulo-2.html">próximo →</a>
+  </div>
+</article>
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260914f" defer></script>
+<script src="assets/js/curso-progress.js?v=20260916b" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916" defer></script>
+</body>
+</html>

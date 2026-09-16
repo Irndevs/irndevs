@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backup automatizado com restic e rsync | IRN Devs</title>
+<meta name="description" content="Estratégia 3-2-1 prática: snapshots incrementais criptografados e cópia offsite.">
+<link rel="canonical" href="https://irndevs.com/artigo-backup-restic.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/artigo-base.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/motion.css">
+<meta property="og:title" content="Backup automatizado com restic e rsync | IRN Devs">
+<meta property="og:description" content="Estratégia 3-2-1 prática: snapshots incrementais criptografados e cópia offsite.">
+<meta property="og:url" content="https://irndevs.com/artigo-backup-restic.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:site_name" content="IRN Devs">
+</head>
+<body>
+<!-- nav: site-nav.js -->
+<article class="wrap artigo">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="blog.html">blog</a> / artigo</nav>
+  <h1>Backup automatizado com restic e rsync</h1>
+  <p class="meta">IRN Devs · set 2026</p>
+
+  <p>Backup que ninguém testa não é backup. restic faz snapshots deduplicados e criptografados; rsync ainda serve para espelho simples.</p>
+  <h2>restic em 4 passos</h2>
+  <pre><code>sudo apt install restic -y
+export RESTIC_REPOSITORY=/mnt/backup/repo
+export RESTIC_PASSWORD='senha-forte'
+restic init
+restic backup /var/www /etc --exclude /var/www/cache
+restic snapshots
+restic forget --keep-daily 7 --keep-weekly 4 --prune</code></pre>
+  <h2>Agendar</h2>
+  <pre><code># crontab -e
+0 3 * * * RESTIC_REPOSITORY=/mnt/backup/repo RESTIC_PASSWORD_FILE=/root/.restic-pass restic backup /var/www</code></pre>
+  <p>Guarde a senha fora do servidor de produção. Teste restore mensalmente.</p>
+
+  <p><a href="blog.html">← voltar ao blog</a> · <a href="cursos.html">cursos</a></p>
+</article>
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260914f" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916" defer></script>
+</body>
+</html>

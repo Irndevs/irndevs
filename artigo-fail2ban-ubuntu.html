@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fail2ban no Ubuntu Server em 10 minutos | IRN Devs</title>
+<meta name="description" content="Proteger SSH e serviços web contra força bruta com jails e ban time sensatos.">
+<link rel="canonical" href="https://irndevs.com/artigo-fail2ban-ubuntu.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/artigo-base.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/motion.css">
+<meta property="og:title" content="Fail2ban no Ubuntu Server em 10 minutos | IRN Devs">
+<meta property="og:description" content="Proteger SSH e serviços web contra força bruta com jails e ban time sensatos.">
+<meta property="og:url" content="https://irndevs.com/artigo-fail2ban-ubuntu.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:site_name" content="IRN Devs">
+</head>
+<body>
+<!-- nav: site-nav.js -->
+<article class="wrap artigo">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="blog.html">blog</a> / artigo</nav>
+  <h1>Fail2ban no Ubuntu Server em 10 minutos</h1>
+  <p class="meta">IRN Devs · set 2026</p>
+
+  <p>Servidor exposto sem rate limit em SSH é convite a bots. Fail2ban lê logs e bloqueia IPs no firewall.</p>
+  <h2>Instalação</h2>
+  <pre><code>sudo apt update
+sudo apt install fail2ban -y
+sudo systemctl enable --now fail2ban</code></pre>
+  <h2>Jail local para SSH</h2>
+  <pre><code># /etc/fail2ban/jail.local
+[sshd]
+enabled = true
+port = ssh
+filter = sshd
+logpath = /var/log/auth.log
+maxretry = 4
+bantime = 1h
+findtime = 10m</code></pre>
+  <pre><code>sudo systemctl restart fail2ban
+sudo fail2ban-client status sshd</code></pre>
+  <div class="warn"><strong>CUIDADO</strong> Não se auto-banque: tenha console ou IP allowlist se o acesso for crítico.</div>
+
+  <p><a href="blog.html">← voltar ao blog</a> · <a href="cursos.html">cursos</a></p>
+</article>
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260914f" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916" defer></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Actions para publicar site estático | IRN Devs</title>
+<meta name="description" content="Pipeline mínimo para build e deploy no GitHub Pages com cache e branch main.">
+<link rel="canonical" href="https://irndevs.com/artigo-github-actions-pages.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/artigo-base.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/motion.css">
+<meta property="og:title" content="GitHub Actions para publicar site estático | IRN Devs">
+<meta property="og:description" content="Pipeline mínimo para build e deploy no GitHub Pages com cache e branch main.">
+<meta property="og:url" content="https://irndevs.com/artigo-github-actions-pages.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:site_name" content="IRN Devs">
+</head>
+<body>
+<!-- nav: site-nav.js -->
+<article class="wrap artigo">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="blog.html">blog</a> / artigo</nav>
+  <h1>GitHub Actions para publicar site estático</h1>
+  <p class="meta">IRN Devs · set 2026</p>
+
+  <p>Publicar HTML no GitHub Pages pode ser só um push — ou um workflow estável com validação.</p>
+  <h2>Workflow mínimo</h2>
+  <pre><code>name: deploy
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: validate
+        run: python3 scripts/validate-site.py
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - uses: actions/deploy-pages@v4</code></pre>
+  <h2>Dicas</h2>
+  <ul>
+    <li>Rode o validador local antes do push</li>
+    <li>Use <code>concurrency</code> para cancelar deploys antigos</li>
+    <li>Secrets só quando precisar de token externo</li>
+  </ul>
+  <p>Combina bem com o <a href="cursos.html#docker">curso de Docker</a> quando o próximo passo for containerizar o front.</p>
+
+  <p><a href="blog.html">← voltar ao blog</a> · <a href="cursos.html">cursos</a></p>
+</article>
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260914f" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916" defer></script>
+</body>
+</html>

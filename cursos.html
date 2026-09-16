@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cursos — IRN Devs</title>
-<meta name="description" content="Cursos da IRN Devs: Automações em Python completo, do zero ao deploy, com exemplos reais de produção.">
+<meta name="description" content="Cursos IRN Devs: Automações em Python e Docker em Produção — do zero ao deploy, com exemplos reais.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
@@ -41,7 +41,7 @@
     <div class="sec-head"><span class="amber">$</span> ls cursos/ --detalhe</div>
     <h1>Cursos <span>IRN Devs</span></h1>
     <p class="lede">Conteúdo prático, gravado em cima de projetos reais em produção. Sem enrolação: você aprende, executa e sobe pro seu portfólio.</p>
-    <div id="irn-progress-bar"></div>
+    <div id="irn-progress-bar" data-progress="python"></div>
   </div>
 </header>
 
@@ -73,6 +73,31 @@
   </div>
 </section>
 
+
+<section id="docker">
+  <div class="wrap">
+    <div class="curso-card">
+      <div class="curso-tag">● disponível</div>
+      <h2>Docker em Produção</h2>
+      <p>Do primeiro container ao Compose com reverse proxy: imagens, volumes, segurança, healthchecks e deploy em VPS. 6 módulos práticos.</p>
+      <div class="stack">
+        <span>Docker</span><span>Compose</span><span>Nginx</span><span>Linux</span><span>VPS</span>
+      </div>
+      <div id="irn-progress-docker" data-progress="docker"></div>
+      <a class="btn primary" href="curso-docker-modulo-1.html">começar o curso →</a>
+      <a class="btn ghost" href="certificado-docker.html" style="margin-left:10px">certificado →</a>
+      <span class="curso-meta">6 módulos · ~8h</span>
+    </div>
+    <div class="mod-list">
+      <a class="mod-item" href="curso-docker-modulo-1.html"><span class="mod-num">01</span><span class="mod-name">Conceitos e instalação</span><span class="mod-time">~1h</span></a>
+      <a class="mod-item" href="curso-docker-modulo-2.html"><span class="mod-num">02</span><span class="mod-name">Dockerfile e imagens</span><span class="mod-time">~1.5h</span></a>
+      <a class="mod-item" href="curso-docker-modulo-3.html"><span class="mod-num">03</span><span class="mod-name">Volumes, redes e Compose</span><span class="mod-time">~1.5h</span></a>
+      <a class="mod-item" href="curso-docker-modulo-4.html"><span class="mod-num">04</span><span class="mod-name">Segurança e boas práticas</span><span class="mod-time">~1h</span></a>
+      <a class="mod-item" href="curso-docker-modulo-5.html"><span class="mod-num">05</span><span class="mod-name">Healthchecks e logs</span><span class="mod-time">~1h</span></a>
+      <a class="mod-item" href="curso-docker-modulo-6.html"><span class="mod-num">06</span><span class="mod-name">Projeto final: app + proxy</span><span class="mod-time">~2h</span></a>
+    </div>
+  </div>
+</section>
 <section>
   <div class="wrap">
     <div class="sec-head"><span class="amber">$</span> ls redes-sociais/</div>
@@ -117,7 +142,7 @@
 </footer>
 
 <script src="assets/js/site-nav.js?v=20260914f" defer></script>
-<script src="assets/js/curso-progress.js?v=20260916" defer></script>
+<script src="assets/js/curso-progress.js?v=20260916b" defer></script>
 <script src="assets/js/chat-bot.js?v=20260915" defer></script>
 
 <script>

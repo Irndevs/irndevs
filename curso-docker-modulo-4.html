@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Docker 4 — Segurança e boas práticas | IRN Devs</title>
+<link rel="canonical" href="https://irndevs.com/curso-docker-modulo-4.html">
+<meta name="description" content="Módulo 4 do curso Docker em Produção: Segurança e boas práticas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/curso-python.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/motion.css">
+<meta property="og:title" content="Docker 4 — Segurança e boas práticas | IRN Devs">
+<meta property="og:description" content="Módulo 4: Segurança e boas práticas.">
+<meta property="og:url" content="https://irndevs.com/curso-docker-modulo-4.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:site_name" content="IRN Devs">
+</head>
+<body data-course="docker">
+<!-- nav: site-nav.js -->
+<article class="wrap">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#docker">docker em produção</a> / módulo 4</nav>
+  <div class="sec-head"><span class="amber">$</span> docker modulo_4</div>
+  <h1>Segurança e boas práticas</h1>
+  <p class="lede">Rodar como non-root, secrets, images scanned e rede mínima.</p>
+  <div id="irn-progress-bar" data-progress="docker"></div>
+  <h2>O que você vai aprender</h2>
+  <ul>
+    <li>USER non-root no Dockerfile</li>
+    <li>Secrets via env/arquivo (nunca na imagem)</li>
+    <li>read-only rootfs e cap-drop</li>
+    <li>Evitar :latest e imagens desconhecidas</li>
+  </ul>
+
+  <h2>1. Non-root</h2>
+  <pre><code>RUN useradd -m -u 10001 app
+USER app</code></pre>
+
+  <h2>2. Compose mais seguro</h2>
+  <pre><code>services:
+  api:
+    read_only: true
+    tmpfs: ["/tmp"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    env_file: .env</code></pre>
+
+  <div class="warn"><strong>NUNCA</strong> faça COPY de .env ou chaves privadas para a imagem. Use env em runtime ou secrets do orquestrador.</div>
+
+
+  <div class="exercise" data-solution="Adicione USER e cap_drop ao serviço do módulo 3. Confirme com docker inspect.">
+    <strong>EXERCÍCIO</strong>
+    Adicione USER e cap_drop ao serviço do módulo 3. Confirme com docker inspect.
+  </div>
+  <h2>Sumário do curso</h2>
+  <div class="mod-sumario">
+    <a class="mod-card" href="curso-docker-modulo-1.html"><span class="mod-card-n">01</span><span class="mod-card-name">Conceitos e instalação</span></a>
+    <a class="mod-card" href="curso-docker-modulo-2.html"><span class="mod-card-n">02</span><span class="mod-card-name">Dockerfile e imagens</span></a>
+    <a class="mod-card" href="curso-docker-modulo-3.html"><span class="mod-card-n">03</span><span class="mod-card-name">Volumes, redes e Compose</span></a>
+    <a class="mod-card" href="curso-docker-modulo-4.html" aria-current="page"><span class="mod-card-n">04</span><span class="mod-card-name">Segurança e boas práticas</span></a>
+    <a class="mod-card" href="curso-docker-modulo-5.html"><span class="mod-card-n">05</span><span class="mod-card-name">Healthchecks e logs</span></a>
+    <a class="mod-card" href="curso-docker-modulo-6.html"><span class="mod-card-n">06</span><span class="mod-card-name">Projeto final: app + proxy</span></a>
+  </div>
+  <div class="aula-progress">
+    <a class="btn ghost" href="curso-docker-modulo-3.html">← anterior</a>
+    <span class="dots"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b></b><b></b></span>
+    <a class="btn primary" href="curso-docker-modulo-5.html">próximo →</a>
+  </div>
+</article>
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260914f" defer></script>
+<script src="assets/js/curso-progress.js?v=20260916b" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916" defer></script>
+</body>
+</html>

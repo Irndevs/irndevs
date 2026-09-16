@@ -73,7 +73,7 @@
 
   var kb = [
     { k: ['oi', 'olá', 'ola', 'hey', 'bom dia', 'boa tarde', 'boa noite', 'hello', 'hi'], r: 'Olá! 👋 Sou o assistente da ' + IRN_NOME + '.\n\nPosso falar sobre cursos, serviços, projetos ou te conectar com um humano.' },
-    { k: ['curso', 'cursos', 'python', 'aula', 'módulo', 'modulo', 'aprender', 'treinamento'], r: 'Temos o curso completo **Automações em Python** (8 módulos, ~14h):\n• Setup e scripts\n• Web scraping\n• Automação de navegador\n• Planilhas e dados\n• E-mails e arquivos\n• APIs e webhooks\n• Agendamento e Docker\n• Projeto final\n\nAcesse: <a class="irn-link" href="cursos.html">cursos.html</a>' },
+    { k: ['curso', 'cursos', 'python', 'aula', 'módulo', 'modulo', 'aprender', 'treinamento'], r: 'Temos **Automações em Python** (8 módulos) e **Docker em Produção** (6 módulos).\n\nPython: (8 módulos, ~14h):\n• Setup e scripts\n• Web scraping\n• Automação de navegador\n• Planilhas e dados\n• E-mails e arquivos\n• APIs e webhooks\n• Agendamento e Docker\n• Projeto final\n\nAcesse: <a class="irn-link" href="cursos.html">cursos.html</a>' },
     { k: ['preço', 'preços', 'valor', 'valores', 'quanto custa', 'orçamento', 'orcamento', 'custo', 'investimento'], r: 'Os valores variam conforme o escopo.\n\nPara um orçamento personalizado, abra o contato ou me diga o tipo de projeto (automação, site, API, infra...).' },
     { k: ['serviço', 'serviços', 'o que vocês fazem', 'trabalham com', 'desenvolvimento', 'automação', 'automacoes', 'infra'], r: 'Atuamos em:\n• Desenvolvimento de software e APIs\n• Automações (Python, bots, integrações)\n• Análise de dados e relatórios\n• Infraestrutura (Docker, k3s, observabilidade)\n• Homelab e hardening\n\nQuer detalhes de algum serviço? Veja também <a class="irn-link" href="servicos.html">servicos.html</a>' },
     { k: ['prazo', 'tempo', 'demora', 'quando fica', 'entrega'], r: 'MVPs simples: 2–4 semanas.\nProjetos médios/grandes: cronograma combinado após o briefing.\n\nPrefere falar com um atendente para alinhar prazo?' },
@@ -84,6 +84,12 @@
     { k: ['pacote', 'pacotes', 'plano', 'planos'], r: 'Temos pacotes de contratação descritos em <a class="irn-link" href="pacotes.html">pacotes.html</a>.\n\nQuer um resumo ou prefere ir direto para orçamento?' },
     { k: ['obrigado', 'obrigada', 'valeu', 'thanks', 'vlw'], r: 'Por nada! Se precisar de mais alguma coisa, é só chamar. 👍' },
     { k: ['login', 'cadastro', 'conta', 'área do cliente', 'area do cliente'], r: 'Você pode criar conta ou entrar em <a class="irn-link" href="cadastro.html">cadastro.html</a> / <a class="irn-link" href="login.html">login.html</a>.\nA área do cliente fica em <a class="irn-link" href="area-cliente.html">area-cliente.html</a>.' },
+    
+    { k: ['docker', 'container', 'compose', 'dockerfile'], r: 'Temos o curso **Docker em Produção** (6 módulos): conceitos, Dockerfile, Compose, segurança, healthchecks e projeto com Nginx.\n\n<a class="irn-link" href="cursos.html#docker">Abrir curso Docker</a>' },
+    { k: ['fail2ban', 'ssh', 'força bruta'], r: 'Temos um artigo prático: <a class="irn-link" href="artigo-fail2ban-ubuntu.html">Fail2ban no Ubuntu</a>.' },
+    { k: ['backup', 'restic'], r: 'Veja o guia de <a class="irn-link" href="artigo-backup-restic.html">backup com restic</a>.' },
+    { k: ['nginx', 'proxy', 'reverse proxy'], r: 'Artigo: <a class="irn-link" href="artigo-nginx-reverse-proxy.html">Nginx como reverse proxy</a> + módulo final do curso Docker.' },
+
     { k: ['privacidade', 'lgpd', 'dados', 'política'], r: 'Nossa Política de Privacidade está em <a class="irn-link" href="privacidade.html">privacidade.html</a>.' },
     { k: ['venv', 'ambiente virtual', 'virtualenv'], r: 'No módulo 1 ensinamos a criar venv:\n<code>python3 -m venv .venv</code> e ativar com <code>source .venv/bin/activate</code>.\n\nVeja: <a class="irn-link" href="curso-python-modulo-1.html">módulo 1</a>' },
     { k: ['scraping', 'beautifulsoup', 'requests', 'raspar'], r: 'Web scraping está no **módulo 2** (Requests + BeautifulSoup), com paginação, delays e ética.\n\n<a class="irn-link" href="curso-python-modulo-2.html">Abrir módulo 2</a>' },
