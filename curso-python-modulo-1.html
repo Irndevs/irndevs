@@ -5,16 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Python 1 — Setup e primeiros scripts | IRN Devs</title>
 <link rel="canonical" href="https://irndevs.com/curso-python-modulo-1.html">
-<meta name="description" content="Módulo 1 do curso Automações em Python: instalação, ambiente virtual e primeiros scripts.">
+<meta name="description" content="Módulo 1 do curso Automações em Python: instalação, ambiente virtual, pathlib e primeiros scripts úteis em produção.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/pages/curso-python.css">
 <link rel="stylesheet" href="assets/css/site-nav.css">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/motion.css">
-
+<link rel="stylesheet" href="assets/css/motion.css">
 <meta property="og:title" content="Python 1 — Setup e primeiros scripts | IRN Devs">
-<meta property="og:description" content="Módulo 1 do curso Automações em Python: instalação, ambiente virtual e primeiros scripts.">
+<meta property="og:description" content="Módulo 1 do curso Automações em Python: instalação, ambiente virtual, pathlib e primeiros scripts úteis em produção.">
 <meta property="og:url" content="https://irndevs.com/curso-python-modulo-1.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
@@ -29,24 +28,152 @@
 
   <div class="sec-head"><span class="amber">$</span> python modulo_1.py</div>
   <h1>Setup e primeiros scripts</h1>
-  <p class="lede">Python instalado, ambiente virtual configurado e o primeiro script útil rodando em 15 minutos.</p>
+  <p class="lede">Python instalado, ambiente virtual configurado e o primeiro script útil rodando em 15 minutos. Base sólida para todas as automações que vêm a seguir.</p>
 
   <h2>O que você vai aprender</h2>
   <ul>
-    <li>Instalar Python 3 no Linux, Windows e Mac</li>
-    <li>venv e pip sem dor de cabeça</li>
-    <li>Primeiro script: renomear e organizar 500 arquivos automaticamente</li>
+    <li>Instalar Python 3 no Linux, Windows e macOS</li>
+    <li>Criar e ativar ambientes virtuais (venv) corretamente</li>
+    <li>Usar pip e requirements.txt de forma profissional</li>
+    <li>Manipular arquivos e pastas com pathlib (sem os.path antigo)</li>
+    <li>Escrever o primeiro script de produção: organizar milhares de arquivos</li>
   </ul>
 
-  <h2>Código da aula</h2>
-  <pre><code># organiza_fotos.py — padroniza nomes de arquivos numa pasta
-from pathlib import Path
+  <h2>1. Instalação do Python 3</h2>
+  <p>Use sempre a versão 3.11 ou superior. Evite o Python 2 e instalações “quebradas” do sistema.</p>
 
-pasta = Path("fotos")
-for i, arq in enumerate(sorted(pasta.glob("*.jpg")), start=1):
-    novo = pasta / f"foto_{i:03d}.jpg"
-    arq.rename(novo)
-    print(f"{arq.name} -&gt; {novo.name}")</code></pre>
+  <h3>Linux (Ubuntu/Debian)</h3>
+  <div class="code-title">terminal</div>
+  <pre><code>sudo apt update
+sudo apt install python3 python3-venv python3-pip -y
+python3 --version</code></pre>
+
+  <h3>Windows</h3>
+  <p>Baixe o instalador oficial em <strong>python.org</strong>. Marque a opção <em>“Add python.exe to PATH”</em> durante a instalação. Depois abra o PowerShell ou CMD e confirme:</p>
+  <pre><code>python --version
+pip --version</code></pre>
+
+  <h3>macOS</h3>
+  <pre><code>brew install python
+python3 --version</code></pre>
+
+  <div class="tip">
+    <strong>DICA DE PRODUÇÃO</strong>
+    Em servidores Linux nunca use o Python do sistema para projetos. Sempre crie um venv isolado. Isso evita conflitos de pacotes e quebras do SO.
+  </div>
+
+  <h2>2. Ambiente virtual (venv)</h2>
+  <p>O venv isola as dependências do projeto. É obrigatório em qualquer automação séria.</p>
+  <div class="code-title">criar e ativar</div>
+  <pre><code># criar
+python3 -m venv .venv
+
+# ativar no Linux/macOS
+source .venv/bin/activate
+
+# ativar no Windows (PowerShell)
+.venv\Scripts\Activate.ps1
+
+# verificar
+which python   # deve apontar para .venv
+pip list</code></pre>
+
+  <p>Para desativar: <code>deactivate</code>.</p>
+
+  <h2>3. Dependências e requirements.txt</h2>
+  <p>Sempre fixe as versões. Nunca use <code>pip install pacote</code> solto em produção.</p>
+  <pre><code># instalar e registrar
+pip install requests beautifulsoup4
+pip freeze > requirements.txt
+
+# em outra máquina ou CI
+pip install -r requirements.txt</code></pre>
+
+  <div class="note">
+    <strong>BOA PRÁTICA</strong>
+    Coloque o .venv no .gitignore. Nunca faça commit da pasta do ambiente virtual.
+  </div>
+
+  <h2>4. pathlib — o jeito moderno de lidar com arquivos</h2>
+  <p>Esqueça <code>os.path.join</code>. Use <code>pathlib.Path</code>.</p>
+  <pre><code>from pathlib import Path
+
+pasta = Path("dados")
+pasta.mkdir(exist_ok=True)
+
+arquivo = pasta / "relatorio.txt"
+arquivo.write_text("conteúdo inicial\n", encoding="utf-8")
+
+print(arquivo.exists())
+print(arquivo.read_text(encoding="utf-8"))
+print(list(pasta.glob("*.txt")))</code></pre>
+
+  <h2>5. Script completo: organizar fotos e documentos</h2>
+  <p>Este script renomeia e organiza arquivos por extensão e data. Útil em pastas bagunçadas de downloads ou backups.</p>
+  <div class="code-title">organiza_arquivos.py</div>
+  <pre><code>#!/usr/bin/env python3
+"""Organiza arquivos de uma pasta por extensão e data de modificação."""
+from pathlib import Path
+from datetime import datetime
+import shutil
+
+ORIGEM = Path("entrada")
+DESTINO = Path("organizado")
+
+def organizar():
+    ORIGEM.mkdir(exist_ok=True)
+    DESTINO.mkdir(exist_ok=True)
+
+    contador = {}
+    for arq in ORIGEM.rglob("*"):
+        if not arq.is_file():
+            continue
+        ext = arq.suffix.lower() or ".sem_ext"
+        pasta_ext = DESTINO / ext[1:]  # remove o ponto
+        pasta_ext.mkdir(exist_ok=True)
+
+        # nome com data
+        mtime = datetime.fromtimestamp(arq.stat().st_mtime)
+        novo_nome = f"{mtime:%Y%m%d_%H%M%S}_{arq.name}"
+        destino = pasta_ext / novo_nome
+
+        # evita sobrescrever
+        i = 1
+        while destino.exists():
+            destino = pasta_ext / f"{mtime:%Y%m%d_%H%M%S}_{i}_{arq.name}"
+            i += 1
+
+        shutil.copy2(arq, destino)  # copy2 preserva metadados
+        contador[ext] = contador.get(ext, 0) + 1
+        print(f"{arq.name} → {destino}")
+
+    print("\nResumo:")
+    for ext, qtd in sorted(contador.items()):
+        print(f"  {ext}: {qtd} arquivo(s)")
+
+if __name__ == "__main__":
+    organizar()</code></pre>
+
+  <div class="exercise">
+    <strong>EXERCÍCIO</strong>
+    1. Crie uma pasta <code>entrada</code> com 20–30 arquivos misturados (jpg, pdf, txt, csv).<br>
+    2. Rode o script.<br>
+    3. Altere para <strong>mover</strong> em vez de copiar (use <code>shutil.move</code>).<br>
+    4. Adicione um log em arquivo <code>organizacao.log</code> com timestamp de cada operação.
+  </div>
+
+  <h2>6. Erros comuns e como evitar</h2>
+  <ul>
+    <li><strong>PermissionError</strong> — rode com usuário que tenha permissão na pasta ou use caminhos absolutos.</li>
+    <li><strong>FileNotFoundError</strong> — sempre use <code>exist_ok=True</code> e verifique com <code>.exists()</code>.</li>
+    <li><strong>Encoding</strong> — em arquivos de texto use sempre <code>encoding="utf-8"</code>.</li>
+    <li><strong>Caminhos com espaços</strong> — pathlib trata corretamente; evite strings manuais.</li>
+  </ul>
+
+  <div class="warn">
+    <strong>ATENÇÃO</strong>
+    Nunca rode scripts de organização em pastas do sistema (/, /home, C:\Windows). Sempre teste em uma pasta de teste primeiro.
+  </div>
 
   <h2>Sumário do curso</h2>
   <div class="mod-sumario">
@@ -75,6 +202,6 @@ for i, arq in enumerate(sorted(pasta.glob("*.jpg")), start=1):
 </footer>
 
 <script src="assets/js/site-nav.js?v=20260914f" defer></script>
-<script src="assets/js/chat-bot.js?v=20260915" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916" defer></script>
 </body>
 </html>

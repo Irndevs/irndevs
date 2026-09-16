@@ -5,54 +5,94 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Python 7 — Agendamento e deploy | IRN Devs</title>
 <link rel="canonical" href="https://irndevs.com/curso-python-modulo-7.html">
-<meta name="description" content="Módulo 7 do curso Automações em Python: agendamento com cron e systemd, empacotamento com Dockerfile e monitoramento de logs.">
+<meta name="description" content="Módulo 7: Cron, schedule, Docker e deploy de automações em produção.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/pages/curso-python.css">
 <link rel="stylesheet" href="assets/css/site-nav.css">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/motion.css">
-
+<link rel="stylesheet" href="assets/css/motion.css">
 <meta property="og:title" content="Python 7 — Agendamento e deploy | IRN Devs">
-<meta property="og:description" content="Módulo 7 do curso Automações em Python: agendamento com cron e systemd, empacotamento com Dockerfile e monitoramento de logs.">
+<meta property="og:description" content="Módulo 7: Cron, schedule, Docker e deploy de automações em produção.">
 <meta property="og:url" content="https://irndevs.com/curso-python-modulo-7.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
 <meta property="og:site_name" content="IRN Devs">
 </head>
 <body>
-
 <!-- nav: site-nav.js -->
-
 <article class="wrap">
   <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#python">automações em python</a> / módulo 7</nav>
-
   <div class="sec-head"><span class="amber">$</span> python modulo_7.py</div>
-  <h1>Agendamento e deploy com cron e Docker</h1>
-  <p class="lede">Coloque o robô para rodar 24 horas por dia, sem depender do seu computador ligado.</p>
+  <h1>Agendamento e deploy</h1>
+  <p class="lede">Rodar scripts automaticamente todos os dias e colocar em produção com Docker. Do cron clássico ao container isolado.</p>
 
   <h2>O que você vai aprender</h2>
   <ul>
-    <li>Agendar execuções com cron e systemd timers</li>
-    <li>Empacotar uma automação Python em um Dockerfile</li>
-    <li>Configurar logs para acompanhar a execução do container</li>
+    <li>Agendar com cron (Linux) e schedule (Python)</li>
+    <li>Logs rotativos e notificação de falha</li>
+    <li>Dockerfile mínimo para automações</li>
+    <li>docker-compose e volumes</li>
+    <li>Checklist de produção (env, secrets, health)</li>
   </ul>
 
-  <h2>Código da aula</h2>
-  <pre><code># Dockerfile — empacota o scraper agendado
-FROM python:3.12-slim
+  <h2>1. Cron clássico</h2>
+  <pre><code># editar crontab
+crontab -e
 
+# todo dia às 6h
+0 6 * * * /home/user/proj/.venv/bin/python /home/user/proj/job.py >> /var/log/job.log 2>&amp;1
+
+# a cada 15 minutos
+*/15 * * * * /path/to/python /path/to/script.py</code></pre>
+
+  <h2>2. schedule em Python</h2>
+  <pre><code>import schedule
+import time
+
+def job():
+    print("Executando job...")
+
+schedule.every().day.at("06:00").do(job)
+schedule.every(15).minutes.do(job)
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)</code></pre>
+
+  <h2>3. Dockerfile para automação</h2>
+  <div class="code-title">Dockerfile</div>
+  <pre><code>FROM python:3.12-slim
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+CMD ["python", "job.py"]</code></pre>
+  <pre><code>docker build -t irn-job .
+docker run --rm -v $(pwd)/dados:/app/dados --env-file .env irn-job</code></pre>
 
-COPY scraper_cotacoes.py .
+  <h2>4. docker-compose</h2>
+  <pre><code>version: "3.8"
+services:
+  job:
+    build: .
+    env_file: .env
+    volumes:
+      - ./dados:/app/dados
+      - ./logs:/app/logs
+    restart: unless-stopped</code></pre>
 
-# crontab: roda a cada hora e registra log
-RUN echo "0 * * * * python /app/scraper_cotacoes.py &gt;&gt; /var/log/cron.log 2&gt;&amp;1" &gt; /etc/cron.d/scraper
-RUN chmod 0644 /etc/cron.d/scraper &amp;&amp; crontab /etc/cron.d/scraper
+  <div class="note">
+    <strong>SECRETS</strong>
+    Nunca coloque senhas no código ou no Dockerfile. Use .env (e não faça commit dele) ou secrets do orquestrador.
+  </div>
 
-CMD ["cron", "-f"]</code></pre>
+  <div class="exercise">
+    <strong>EXERCÍCIO</strong>
+    1. Agende o scraper do módulo 2 para rodar diariamente via cron.<br>
+    2. Containerize o script e rode com volume para persistir o JSON.<br>
+    3. Adicione envio de e-mail em caso de exceção não tratada.
+  </div>
 
   <h2>Sumário do curso</h2>
   <div class="mod-sumario">
@@ -67,20 +107,18 @@ CMD ["cron", "-f"]</code></pre>
   </div>
 
   <div class="aula-progress">
-    <a class="btn ghost" href="cursos.html">← todos os cursos</a>
-    <span class="dots"><b></b><b></b><b></b><b></b><b></b><b></b><b class="on"></b><b></b></span>
+    <a class="btn ghost" href="curso-python-modulo-6.html">← anterior</a>
+    <span class="dots"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b></b></span>
     <a class="btn primary" href="curso-python-modulo-8.html">próximo: Projeto final →</a>
   </div>
 </article>
-
 <footer>
   <div class="wrap">
     <div>© 2026 irndevs</div>
     <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
   </div>
 </footer>
-
 <script src="assets/js/site-nav.js?v=20260914f" defer></script>
-<script src="assets/js/chat-bot.js?v=20260915" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916" defer></script>
 </body>
 </html>

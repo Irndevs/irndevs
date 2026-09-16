@@ -5,16 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Python 3 — Automação de navegador | IRN Devs</title>
 <link rel="canonical" href="https://irndevs.com/curso-python-modulo-3.html">
-<meta name="description" content="Módulo 3 do curso Automações em Python: drivers, esperas explícitas, screenshots e automação assíncrona com Playwright.">
+<meta name="description" content="Módulo 3: Automação de navegador com Playwright e Selenium. Login, formulários e sites dinâmicos.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/pages/curso-python.css">
 <link rel="stylesheet" href="assets/css/site-nav.css">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/motion.css">
-
+<link rel="stylesheet" href="assets/css/motion.css">
 <meta property="og:title" content="Python 3 — Automação de navegador | IRN Devs">
-<meta property="og:description" content="Módulo 3 do curso Automações em Python: drivers, esperas explícitas, screenshots e automação assíncrona com Playwright.">
+<meta property="og:description" content="Módulo 3: Automação de navegador com Playwright e Selenium. Login, formulários e sites dinâmicos.">
 <meta property="og:url" content="https://irndevs.com/curso-python-modulo-3.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
@@ -28,44 +27,110 @@
   <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#python">automações em python</a> / módulo 3</nav>
 
   <div class="sec-head"><span class="amber">$</span> python modulo_3.py</div>
-  <h1>Automação de navegador com Selenium e Playwright</h1>
-  <p class="lede">Faça o navegador clicar, preencher formulários e baixar arquivos por você, como se um humano estivesse na frente da tela.</p>
+  <h1>Automação de navegador</h1>
+  <p class="lede">Quando o HTML estático não basta: sites com JavaScript, login, CAPTCHA leve e interações. Playwright é a escolha moderna; Selenium ainda é útil em legados.</p>
 
   <h2>O que você vai aprender</h2>
   <ul>
-    <li>Configurar drivers de navegador e entender a diferença entre Selenium e Playwright</li>
-    <li>Usar esperas explícitas para lidar com páginas que carregam conteúdo dinâmico</li>
-    <li>Tirar screenshots automáticos e trabalhar com Playwright no modo assíncrono</li>
+    <li>Instalar e usar Playwright (recomendado) e Selenium</li>
+    <li>Navegar, clicar, preencher formulários e esperar elementos</li>
+    <li>Tirar screenshots e extrair dados de páginas dinâmicas</li>
+    <li>Headless vs headed e debugging</li>
+    <li>Boas práticas de estabilidade (waits explícitos)</li>
   </ul>
 
-  <h2>Código da aula</h2>
-  <pre><code># login_download.py — login automático e download de relatório
-import asyncio
-from playwright.async_api import async_playwright
+  <h2>1. Playwright — instalação</h2>
+  <pre><code>pip install playwright
+playwright install chromium</code></pre>
 
-async def baixar_relatorio():
-    async with async_playwright() as p:
-        navegador = await p.chromium.launch(headless=True)
-        pagina = await navegador.new_page()
+  <h2>2. Exemplo básico com Playwright</h2>
+  <div class="code-title">playwright_basico.py</div>
+  <pre><code>from playwright.sync_api import sync_playwright
 
-        await pagina.goto("https://exemplo-portal.com/login")
-        await pagina.fill("#usuario", "meu_usuario")
-        await pagina.fill("#senha", "minha_senha")
-        await pagina.click("button[type=submit]")
+with sync_playwright() as p:
+    browser = p.chromium.launch(headless=True)
+    page = browser.new_page()
+    page.goto("https://quotes.toscrape.com")
+    page.wait_for_selector("div.quote")
 
-        await pagina.wait_for_selector("#dashboard")
-        await pagina.screenshot(path="dashboard.png")
+    quotes = page.query_selector_all("div.quote")
+    for q in quotes[:5]:
+        texto = q.query_selector("span.text").inner_text()
+        autor = q.query_selector("small.author").inner_text()
+        print(f"{autor}: {texto[:60]}...")
 
-        async with pagina.expect_download() as download_info:
-            await pagina.click("text=Baixar relatório")
-        download = await download_info.value
-        await download.save_as("relatorio.xlsx")
+    page.screenshot(path="quotes.png", full_page=True)
+    browser.close()</code></pre>
 
-        await navegador.close()
-        print("Relatório baixado com sucesso.")
+  <h2>3. Login e formulários</h2>
+  <pre><code>page.goto("https://exemplo.com/login")
+page.fill("input[name=email]", "usuario@empresa.com")
+page.fill("input[name=password]", "senha-secreta")
+page.click("button[type=submit]")
+page.wait_for_url("**/dashboard**")
+print("Login OK:", page.url)</code></pre>
 
-if __name__ == "__main__":
-    asyncio.run(baixar_relatorio())</code></pre>
+  <div class="tip">
+    <strong>ESTABILIDADE</strong>
+    Prefira wait_for_selector e wait_for_url em vez de time.sleep. Esperas explícitas tornam o script confiável.
+  </div>
+
+  <h2>4. Selenium (alternativa legada)</h2>
+  <pre><code>from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+opts = Options()
+opts.add_argument("--headless=new")
+driver = webdriver.Chrome(options=opts)
+driver.get("https://quotes.toscrape.com")
+WebDriverWait(driver, 10).until(
+    EC.presence_of_element_located((By.CSS_SELECTOR, "div.quote"))
+)
+print(driver.find_element(By.CSS_SELECTOR, "div.quote span.text").text)
+driver.quit()</code></pre>
+
+  <h2>5. Script prático: monitorar preço</h2>
+  <div class="code-title">monitor_preco.py</div>
+  <pre><code>from playwright.sync_api import sync_playwright
+import json
+from pathlib import Path
+from datetime import datetime
+
+URL = "https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html"
+
+def capturar_preco():
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page()
+        page.goto(URL)
+        page.wait_for_selector("p.price_color")
+        preco = page.query_selector("p.price_color").inner_text()
+        titulo = page.query_selector("h1").inner_text()
+        browser.close()
+        return {"titulo": titulo, "preco": preco, "quando": datetime.utcnow().isoformat()}
+
+dados = capturar_preco()
+historico = Path("precos.json")
+lista = json.loads(historico.read_text()) if historico.exists() else []
+lista.append(dados)
+historico.write_text(json.dumps(lista, ensure_ascii=False, indent=2))
+print(dados)</code></pre>
+
+  <div class="exercise">
+    <strong>EXERCÍCIO</strong>
+    1. Automatize o login em um site de teste (ex.: the-internet.herokuapp.com).<br>
+    2. Extraia uma tabela dinâmica e salve em CSV.<br>
+    3. Adicione screenshot em caso de falha.<br>
+    4. Compare Playwright e Selenium no mesmo fluxo e meça o tempo.
+  </div>
+
+  <div class="warn">
+    <strong>CUIDADO</strong>
+    Automação de sites de terceiros pode violar termos. Use apenas em sites que você controla ou que permitem explicitamente.
+  </div>
 
   <h2>Sumário do curso</h2>
   <div class="mod-sumario">
@@ -80,8 +145,8 @@ if __name__ == "__main__":
   </div>
 
   <div class="aula-progress">
-    <a class="btn ghost" href="cursos.html">← todos os cursos</a>
-    <span class="dots"><b></b><b></b><b class="on"></b><b></b><b></b><b></b><b></b><b></b></span>
+    <a class="btn ghost" href="curso-python-modulo-2.html">← anterior</a>
+    <span class="dots"><b class="on"></b><b class="on"></b><b class="on"></b><b></b><b></b><b></b><b></b><b></b></span>
     <a class="btn primary" href="curso-python-modulo-4.html">próximo: Planilhas e dados →</a>
   </div>
 </article>
@@ -94,6 +159,6 @@ if __name__ == "__main__":
 </footer>
 
 <script src="assets/js/site-nav.js?v=20260914f" defer></script>
-<script src="assets/js/chat-bot.js?v=20260915" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916" defer></script>
 </body>
 </html>

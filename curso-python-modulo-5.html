@@ -5,72 +5,124 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Python 5 — E-mails e arquivos | IRN Devs</title>
 <link rel="canonical" href="https://irndevs.com/curso-python-modulo-5.html">
-<meta name="description" content="Módulo 5 do curso Automações em Python: envio de e-mails com smtplib, anexos MIME e monitoramento de pastas com watchdog.">
+<meta name="description" content="Módulo 5: Envio de e-mails, anexos, organização automática de arquivos e monitoramento de pastas.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/pages/curso-python.css">
 <link rel="stylesheet" href="assets/css/site-nav.css">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/motion.css">
-
+<link rel="stylesheet" href="assets/css/motion.css">
 <meta property="og:title" content="Python 5 — E-mails e arquivos | IRN Devs">
-<meta property="og:description" content="Módulo 5 do curso Automações em Python: envio de e-mails com smtplib, anexos MIME e monitoramento de pastas com watchdog.">
+<meta property="og:description" content="Módulo 5: Envio de e-mails, anexos, organização automática de arquivos e monitoramento de pastas.">
 <meta property="og:url" content="https://irndevs.com/curso-python-modulo-5.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
 <meta property="og:site_name" content="IRN Devs">
 </head>
 <body>
-
 <!-- nav: site-nav.js -->
-
 <article class="wrap">
   <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#python">automações em python</a> / módulo 5</nav>
-
   <div class="sec-head"><span class="amber">$</span> python modulo_5.py</div>
-  <h1>E-mails, arquivos e organização automática</h1>
-  <p class="lede">Deixe a caixa de entrada e as pastas do computador se organizarem sozinhas, sem você mexer em nada.</p>
+  <h1>E-mails e arquivos</h1>
+  <p class="lede">Enviar relatórios por e-mail, anexar arquivos e organizar pastas automaticamente. SMTP + pathlib + logging.</p>
 
   <h2>O que você vai aprender</h2>
   <ul>
-    <li>Enviar e-mails com anexos usando smtplib e MIME</li>
-    <li>Automatizar o disparo de relatórios por e-mail</li>
-    <li>Monitorar pastas em tempo real e organizar arquivos com watchdog</li>
+    <li>Enviar e-mails via SMTP (Gmail, Outlook, servidor próprio)</li>
+    <li>Anexos e HTML no corpo da mensagem</li>
+    <li>Organização automática de downloads e pastas</li>
+    <li>Watchdog: reagir a novos arquivos em tempo real</li>
+    <li>Logging estruturado para auditoria</li>
   </ul>
 
-  <h2>Código da aula</h2>
-  <pre><code># email_relatorio.py — envia relatório por e-mail com anexo
-import smtplib
+  <h2>1. Envio de e-mail simples</h2>
+  <pre><code>import smtplib
 from email.message import EmailMessage
 from pathlib import Path
-import os
 
-def enviar_relatorio(destinatario, caminho_anexo):
+def enviar_email(destino: str, assunto: str, corpo: str, anexo: Path | None = None):
     msg = EmailMessage()
-    msg["Subject"] = "Relatório automático"
-    msg["From"] = "robo@irndevs.com"
-    msg["To"] = destinatario
-    msg.set_content("Segue em anexo o relatório gerado automaticamente.")
+    msg["From"] = "robot@irndevs.com"
+    msg["To"] = destino
+    msg["Subject"] = assunto
+    msg.set_content(corpo)
 
-    anexo = Path(caminho_anexo)
-    msg.add_attachment(
-        anexo.read_bytes(),
-        maintype="application",
-        subtype="octet-stream",
-        filename=anexo.name,
-    )
+    if anexo and anexo.exists():
+        msg.add_attachment(
+            anexo.read_bytes(),
+            maintype="application",
+            subtype="octet-stream",
+            filename=anexo.name
+        )
 
-    smtp_host = os.environ["SMTP_HOST"]
-    smtp_user = os.environ["SMTP_USER"]
-    smtp_password = os.environ["SMTP_PASSWORD"]
-    with smtplib.SMTP_SSL(smtp_host, 465) as servidor:
-        servidor.login(smtp_user, smtp_password)
-        servidor.send_message(msg)
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+        smtp.login("seu@gmail.com", "app-password")  # use App Password
+        smtp.send_message(msg)
 
-    print(f"E-mail enviado para {destinatario} com {anexo.name}")
+enviar_email("cliente@empresa.com", "Relatório diário", "Segue o relatório.", Path("relatorio.xlsx"))</code></pre>
 
-if __name__ == "__main__":
-    enviar_relatorio("time@empresa.com", "relatorio_consolidado.xlsx")</code></pre>
+  <div class="tip">
+    <strong>GMAIL</strong>
+    Ative a verificação em 2 etapas e gere uma “Senha de app”. Nunca use a senha normal da conta.
+  </div>
+
+  <h2>2. HTML no corpo</h2>
+  <pre><code>msg.add_alternative("""
+&lt;html&gt;
+  &lt;body style="font-family:sans-serif"&gt;
+    &lt;h2&gt;Relatório IRN Devs&lt;/h2&gt;
+    &lt;p&gt;Total do dia: &lt;strong&gt;R$ 12.450&lt;/strong&gt;&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+""", subtype="html")</code></pre>
+
+  <h2>3. Organização de pastas (watchdog)</h2>
+  <pre><code>pip install watchdog</code></pre>
+  <div class="code-title">watcher.py</div>
+  <pre><code>from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
+from pathlib import Path
+import time
+import shutil
+
+DESTINOS = {
+    ".pdf": Path("docs"),
+    ".xlsx": Path("planilhas"),
+    ".csv": Path("planilhas"),
+    ".jpg": Path("imagens"),
+    ".png": Path("imagens"),
+}
+
+class Organizador(FileSystemEventHandler):
+    def on_created(self, event):
+        if event.is_directory:
+            return
+        arq = Path(event.src_path)
+        time.sleep(0.5)  # espera gravar
+        destino_dir = DESTINOS.get(arq.suffix.lower(), Path("outros"))
+        destino_dir.mkdir(exist_ok=True)
+        destino = destino_dir / arq.name
+        shutil.move(str(arq), str(destino))
+        print(f"Movido: {arq.name} → {destino}")
+
+observer = Observer()
+observer.schedule(Organizador(), path="downloads", recursive=False)
+observer.start()
+print("Monitorando pasta downloads...")
+try:
+    while True:
+        time.sleep(1)
+except KeyboardInterrupt:
+    observer.stop()
+observer.join()</code></pre>
+
+  <div class="exercise">
+    <strong>EXERCÍCIO</strong>
+    1. Envie um e-mail com anexo Excel gerado no módulo 4.<br>
+    2. Crie um watcher que move arquivos e envia notificação por e-mail quando chega um PDF.<br>
+    3. Adicione logging em arquivo com nível INFO e ERROR.
+  </div>
 
   <h2>Sumário do curso</h2>
   <div class="mod-sumario">
@@ -85,20 +137,18 @@ if __name__ == "__main__":
   </div>
 
   <div class="aula-progress">
-    <a class="btn ghost" href="cursos.html">← todos os cursos</a>
-    <span class="dots"><b></b><b></b><b></b><b></b><b class="on"></b><b></b><b></b><b></b></span>
+    <a class="btn ghost" href="curso-python-modulo-4.html">← anterior</a>
+    <span class="dots"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b></b><b></b><b></b></span>
     <a class="btn primary" href="curso-python-modulo-6.html">próximo: APIs e webhooks →</a>
   </div>
 </article>
-
 <footer>
   <div class="wrap">
     <div>© 2026 irndevs</div>
     <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
   </div>
 </footer>
-
 <script src="assets/js/site-nav.js?v=20260914f" defer></script>
-<script src="assets/js/chat-bot.js?v=20260915" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916" defer></script>
 </body>
 </html>

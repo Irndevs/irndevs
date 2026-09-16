@@ -35,3 +35,25 @@ pre{background:#0e120c;border:1px solid var(--border);border-radius:10px;padding
 .dots{display:flex;gap:6px}
 .dots b{width:10px;height:10px;border-radius:50%;background:var(--border);display:block}
 .dots b.on{background:var(--amber)}
+
+/* conteúdo expandido */
+h3{margin-top:28px;margin-bottom:12px;font-size:16px;color:var(--amber)}
+p{line-height:1.65;color:var(--text);margin:0 0 14px}
+.tip,.note,.warn,.exercise{border-radius:10px;padding:14px 16px;margin:20px 0;border:1px solid var(--border);background:var(--card);font-size:14px;line-height:1.55}
+.tip{border-left:3px solid var(--amber)}
+.note{border-left:3px solid #5a8a6a}
+.warn{border-left:3px solid #c45c5c}
+.exercise{border-left:3px solid #6a8ac9}
+.tip strong,.note strong,.warn strong,.exercise strong{display:block;margin-bottom:6px;font-size:13px;font-family:"IBM Plex Mono",monospace}
+.tip strong{color:var(--amber)}
+.note strong{color:#7aba8a}
+.warn strong{color:#e88}
+.exercise strong{color:#8ab0e0}
+.code-title{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--dim);margin-bottom:6px;margin-top:18px}
+pre + p, pre + h3{margin-top:18px}
+ol{margin:0 0 16px;padding-left:22px;display:flex;flex-direction:column;gap:8px}
+ol li{line-height:1.55}
+footer{border-top:1px solid var(--border);padding:28px 0;margin-top:40px;font-size:13px;color:var(--dim)}
+footer a{color:var(--dim);text-decoration:none}
+footer a:hover{color:var(--amber)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}

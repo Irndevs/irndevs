@@ -5,66 +5,110 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Python 6 — APIs e webhooks | IRN Devs</title>
 <link rel="canonical" href="https://irndevs.com/curso-python-modulo-6.html">
-<meta name="description" content="Módulo 6 do curso Automações em Python: rotas, validação com pydantic, webhooks e deploy de uma API com FastAPI.">
+<meta name="description" content="Módulo 6: Consumir e criar APIs com FastAPI, webhooks e autenticação.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/pages/curso-python.css">
 <link rel="stylesheet" href="assets/css/site-nav.css">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/motion.css">
-
+<link rel="stylesheet" href="assets/css/motion.css">
 <meta property="og:title" content="Python 6 — APIs e webhooks | IRN Devs">
-<meta property="og:description" content="Módulo 6 do curso Automações em Python: rotas, validação com pydantic, webhooks e deploy de uma API com FastAPI.">
+<meta property="og:description" content="Módulo 6: Consumir e criar APIs com FastAPI, webhooks e autenticação.">
 <meta property="og:url" content="https://irndevs.com/curso-python-modulo-6.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
 <meta property="og:site_name" content="IRN Devs">
 </head>
 <body>
-
 <!-- nav: site-nav.js -->
-
 <article class="wrap">
   <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#python">automações em python</a> / módulo 6</nav>
-
   <div class="sec-head"><span class="amber">$</span> python modulo_6.py</div>
-  <h1>APIs e webhooks com FastAPI</h1>
-  <p class="lede">Transforme suas automações em serviços de verdade, prontos para serem chamados por outros sistemas.</p>
+  <h1>APIs e webhooks</h1>
+  <p class="lede">Consumir APIs externas e criar as suas próprias com FastAPI. Webhooks para receber eventos em tempo real.</p>
 
   <h2>O que você vai aprender</h2>
   <ul>
-    <li>Criar rotas e validar dados de entrada com pydantic</li>
-    <li>Expor uma automação como endpoint HTTP</li>
-    <li>Receber e processar webhooks disparados por sistemas externos</li>
+    <li>Consumir APIs REST com requests (auth, paginação, rate limit)</li>
+    <li>Criar API rápida com FastAPI + Pydantic</li>
+    <li>Receber webhooks e validar assinatura</li>
+    <li>Documentação automática (OpenAPI/Swagger)</li>
+    <li>Deploy simples com uvicorn</li>
   </ul>
 
-  <h2>Código da aula</h2>
-  <pre><code># api_automacao.py — endpoint que dispara uma automação
-from fastapi import FastAPI
-from pydantic import BaseModel
+  <h2>1. Consumir API externa</h2>
+  <pre><code>import requests
 
-app = FastAPI()
+r = requests.get(
+    "https://api.github.com/users/iri-afk",
+    headers={"Accept": "application/vnd.github+json"},
+    timeout=10
+)
+r.raise_for_status()
+data = r.json()
+print(data["name"], data["public_repos"])</code></pre>
 
-class PedidoAutomacao(BaseModel):
-    email: str
-    relatorio: str
+  <h2>2. FastAPI — API mínima</h2>
+  <pre><code>pip install fastapi uvicorn[standard] pydantic</code></pre>
+  <div class="code-title">main.py</div>
+  <pre><code>from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, EmailStr
+from datetime import datetime
 
-@app.post("/disparar")
-def disparar_automacao(pedido: PedidoAutomacao):
-    # aqui entraria a chamada para a automação real (ex: módulo 5)
-    return {
-        "status": "recebido",
-        "email": pedido.email,
-        "relatorio": pedido.relatorio,
-    }
+app = FastAPI(title="IRN Devs API", version="1.0")
+
+class Lead(BaseModel):
+    nome: str
+    email: EmailStr
+    mensagem: str
+
+leads: list[dict] = []
+
+@app.get("/health")
+def health():
+    return {"status": "ok", "ts": datetime.utcnow().isoformat()}
+
+@app.post("/leads", status_code=201)
+def criar_lead(lead: Lead):
+    item = lead.model_dump()
+    item["criado_em"] = datetime.utcnow().isoformat()
+    leads.append(item)
+    return item
+
+@app.get("/leads")
+def listar_leads():
+    return leads</code></pre>
+  <pre><code>uvicorn main:app --reload --port 8000
+# docs em http://localhost:8000/docs</code></pre>
+
+  <h2>3. Webhook receptor</h2>
+  <pre><code>from fastapi import Request, Header
+import hmac, hashlib
+
+SECRET = b"seu-segredo-webhook"
 
 @app.post("/webhook/pagamento")
-def webhook_pagamento(payload: dict):
-    evento = payload.get("evento")
-    if evento == "pagamento_confirmado":
-        # dispara alguma automação em resposta ao evento
-        pass
-    return {"recebido": True}</code></pre>
+async def webhook(request: Request, x_signature: str = Header(None)):
+    body = await request.body()
+    esperado = hmac.new(SECRET, body, hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(esperado, x_signature or ""):
+        raise HTTPException(401, "assinatura inválida")
+    payload = await request.json()
+    # processar evento...
+    return {"received": True}</code></pre>
+
+  <div class="tip">
+    <strong>PRODUÇÃO</strong>
+    Sempre valide assinatura de webhooks. Nunca confie apenas no IP de origem.
+  </div>
+
+  <div class="exercise">
+    <strong>EXERCÍCIO</strong>
+    1. Crie endpoints GET/POST para um recurso (ex.: tarefas).<br>
+    2. Adicione autenticação simples com header X-API-Key.<br>
+    3. Consuma sua própria API com requests e salve em JSON.<br>
+    4. Simule um webhook e valide a assinatura HMAC.
+  </div>
 
   <h2>Sumário do curso</h2>
   <div class="mod-sumario">
@@ -79,20 +123,18 @@ def webhook_pagamento(payload: dict):
   </div>
 
   <div class="aula-progress">
-    <a class="btn ghost" href="cursos.html">← todos os cursos</a>
-    <span class="dots"><b></b><b></b><b></b><b></b><b></b><b class="on"></b><b></b><b></b></span>
+    <a class="btn ghost" href="curso-python-modulo-5.html">← anterior</a>
+    <span class="dots"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b></b><b></b></span>
     <a class="btn primary" href="curso-python-modulo-7.html">próximo: Agendamento e deploy →</a>
   </div>
 </article>
-
 <footer>
   <div class="wrap">
     <div>© 2026 irndevs</div>
     <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
   </div>
 </footer>
-
 <script src="assets/js/site-nav.js?v=20260914f" defer></script>
-<script src="assets/js/chat-bot.js?v=20260915" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916" defer></script>
 </body>
 </html>

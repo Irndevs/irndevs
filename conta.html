@@ -87,15 +87,15 @@
       <div class="dash-grid-2">
         <div class="dash-card">
           <div class="dash-card-title">atividade recente</div>
-          <div id="recentList"><p style="color:var(--dash-faint);font-size:13px;font-family:var(--dash-mono)">Nada ainda.</p></div>
+          <div id="recentList"><p class="dash-muted">Nada ainda.</p></div>
         </div>
         <div class="dash-card">
           <div class="dash-card-title">atalhos</div>
-          <p style="font-family:var(--dash-mono);font-size:13px;line-height:1.9;color:var(--dash-dim)">
-            <a href="ferramenta-checklist.html" style="color:var(--dash-amber)">gerar checklist →</a><br>
-            <a href="area-cliente.html" style="color:var(--dash-amber)">área do cliente →</a><br>
-            <a href="contato.html" style="color:var(--dash-amber)">falar com a IRN →</a><br>
-            <a href="pacotes.html" style="color:var(--dash-amber)">ver pacotes →</a>
+          <p class="dash-dim-text">
+            <a href="ferramenta-checklist.html" class="dash-link-amber">gerar checklist →</a><br>
+            <a href="area-cliente.html" class="dash-link-amber">área do cliente →</a><br>
+            <a href="contato.html" class="dash-link-amber">falar com a IRN →</a><br>
+            <a href="pacotes.html" class="dash-link-amber">ver pacotes →</a>
           </p>
         </div>
       </div>
@@ -130,10 +130,10 @@
           <input id="newpass" type="password" minlength="6" required autocomplete="new-password" placeholder="••••••••">
           <button class="dash-btn" type="submit">alterar senha →</button>
         </form>
-        <div style="margin-top:22px;padding-top:18px;border-top:1px solid var(--dash-border)">
+        <div class="dash-sep">
           <p style="font-family:var(--dash-mono);font-size:12.5px;color:var(--dash-faint);margin-bottom:12px">Encerrar sessão neste dispositivo.</p>
           <button class="dash-btn ghost" type="button" id="btnOut">sair</button>
-          <p style="margin-top:14px"><a href="contato.html" style="font-family:var(--dash-mono);font-size:12.5px;color:var(--dash-faint)">solicitar exclusão de conta →</a></p>
+          <p style="margin-top:14px"><a href="contato.html" class="dash-faint-sm">solicitar exclusão de conta →</a></p>
         </div>
       </div>
     </section>
@@ -144,8 +144,8 @@
         <div class="dash-card-title">checklists salvos</div>
         <div id="list"></div>
         <p style="margin-top:14px;font-family:var(--dash-mono);font-size:13px">
-          <a href="ferramenta-checklist.html" style="color:var(--dash-amber)">gerar novo checklist</a>
-          · <a href="pacotes.html" style="color:var(--dash-amber)">pacotes</a>
+          <a href="ferramenta-checklist.html" class="dash-link-amber">gerar novo checklist</a>
+          · <a href="pacotes.html" class="dash-link-amber">pacotes</a>
         </p>
       </div>
     </section>
@@ -250,7 +250,7 @@
       var rows = await IRNAuth.listChecklists();
       document.getElementById('statChecklists').textContent = rows.length;
       if (!rows.length) {
-        box.innerHTML = '<p style="color:var(--dash-faint);font-family:var(--dash-mono);font-size:13px">Nenhum checklist salvo ainda.</p>';
+        box.innerHTML = '<p class="dash-muted">Nenhum checklist salvo ainda.</p>';
       } else {
         rows.forEach(function (r) {
           var p = parseProgress(r.content);

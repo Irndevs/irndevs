@@ -367,3 +367,12 @@ body.dash-app .sn-burger { display: none !important; }
 @media (max-width: 480px) {
   .dash-stats { grid-template-columns: 1fr; }
 }
+
+/* links sem style inline */
+.dash-link-amber{color:var(--dash-amber);text-decoration:none}
+.dash-link-amber:hover{text-decoration:underline}
+.dash-muted{color:var(--dash-faint);font-family:var(--dash-mono);font-size:13px}
+.dash-dim-text{font-family:var(--dash-mono);font-size:13px;line-height:1.9;color:var(--dash-dim)}
+.dash-sep{margin-top:22px;padding-top:18px;border-top:1px solid var(--dash-border)}
+.dash-faint-sm{font-family:var(--dash-mono);font-size:12.5px;color:var(--dash-faint);margin-bottom:12px}
+

@@ -3,72 +3,119 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Python 8 — Projeto final em produção | IRN Devs</title>
+<title>Python 8 — Projeto final | IRN Devs</title>
 <link rel="canonical" href="https://irndevs.com/curso-python-modulo-8.html">
-<meta name="description" content="Módulo 8 do curso Automações em Python: arquitetura de projeto, tratamento de erro, logging e monitoramento de uma pipeline em produção.">
+<meta name="description" content="Módulo 8: Projeto final — robô completo de coleta, processamento, relatório e notificação em produção.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/pages/curso-python.css">
 <link rel="stylesheet" href="assets/css/site-nav.css">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/motion.css">
-
-<meta property="og:title" content="Python 8 — Projeto final em produção | IRN Devs">
-<meta property="og:description" content="Módulo 8 do curso Automações em Python: arquitetura de projeto, tratamento de erro, logging e monitoramento de uma pipeline em produção.">
+<link rel="stylesheet" href="assets/css/motion.css">
+<meta property="og:title" content="Python 8 — Projeto final | IRN Devs">
+<meta property="og:description" content="Módulo 8: Projeto final — robô completo de coleta, processamento, relatório e notificação em produção.">
 <meta property="og:url" content="https://irndevs.com/curso-python-modulo-8.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
 <meta property="og:site_name" content="IRN Devs">
 </head>
 <body>
-
 <!-- nav: site-nav.js -->
-
 <article class="wrap">
   <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#python">automações em python</a> / módulo 8</nav>
-
   <div class="sec-head"><span class="amber">$</span> python modulo_8.py</div>
-  <h1>Projeto final: robô completo em produção</h1>
-  <p class="lede">Uma pipeline completa, do zero à produção: coleta de dados, processamento e envio de relatório, com logs e tratamento de erro de verdade.</p>
+  <h1>Projeto final: robô completo</h1>
+  <p class="lede">Une tudo que você aprendeu: coleta → processamento → relatório → e-mail → agendamento → Docker. Um pipeline de produção real.</p>
 
-  <h2>O que você vai aprender</h2>
+  <h2>Objetivo do projeto</h2>
+  <p>Construir um robô que:</p>
   <ul>
-    <li>Estruturar um projeto de automação com arquitetura clara e reutilizável</li>
-    <li>Tratar erros e falhas sem derrubar a automação inteira</li>
-    <li>Registrar logs e monitorar a execução da pipeline em produção</li>
+    <li>Coleta dados de uma fonte (scraping ou API)</li>
+    <li>Limpa e agrega com pandas</li>
+    <li>Gera relatório Excel formatado</li>
+    <li>Envia por e-mail para uma lista de destinatários</li>
+    <li>Roda diariamente via cron ou Docker + schedule</li>
+    <li>Registra logs e trata erros sem cair silenciosamente</li>
   </ul>
 
-  <h2>Código da aula</h2>
-  <pre><code># pipeline.py — coleta, processa e envia relatório, com logging
-import logging
+  <h2>Estrutura sugerida</h2>
+  <pre><code>robo-diario/
+├── .env                 # secrets (não commitado)
+├── .gitignore
+├── requirements.txt
+├── Dockerfile
+├── docker-compose.yml
+├── main.py              # orquestrador
+├── collectors/
+│   └── scrape.py
+├── processors/
+│   └── transform.py
+├── reporters/
+│   └── excel.py
+├── notifiers/
+│   └── email.py
+└── logs/</code></pre>
 
-from scraper_cotacoes import coletar_cotacoes, salvar_csv
-from email_relatorio import enviar_relatorio
+  <h2>Orquestrador (main.py)</h2>
+  <pre><code>#!/usr/bin/env python3
+import logging
+from datetime import datetime
+from collectors.scrape import coletar
+from processors.transform import processar
+from reporters.excel import gerar_relatorio
+from notifiers.email import enviar
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
-    filename="pipeline.log",
+    handlers=[
+        logging.FileHandler("logs/robo.log"),
+        logging.StreamHandler()
+    ]
 )
+log = logging.getLogger("robo")
 
-def rodar_pipeline():
+def run():
+    log.info("Iniciando pipeline")
     try:
-        logging.info("Iniciando coleta de dados")
-        dados = coletar_cotacoes()
-
-        logging.info("Salvando dados coletados")
-        salvar_csv(dados, "cotacoes.csv")
-
-        logging.info("Enviando relatório por e-mail")
-        enviar_relatorio("time@empresa.com", "cotacoes.csv")
-
-        logging.info("Pipeline concluída com sucesso")
-    except Exception as erro:
-        logging.error(f"Falha na pipeline: {erro}")
+        bruto = coletar()
+        log.info("Coletados %d registros", len(bruto))
+        df = processar(bruto)
+        caminho = gerar_relatorio(df)
+        log.info("Relatório gerado: %s", caminho)
+        enviar(
+            assunto=f"Relatório diário — {datetime.now():%d/%m/%Y}",
+            corpo="Segue o relatório automático da IRN Devs.",
+            anexo=caminho
+        )
+        log.info("E-mail enviado com sucesso")
+    except Exception:
+        log.exception("Falha no pipeline")
         raise
 
 if __name__ == "__main__":
-    rodar_pipeline()</code></pre>
+    run()</code></pre>
+
+  <h2>Checklist de entrega</h2>
+  <ul>
+    <li>Código organizado em módulos (não um único arquivo gigante)</li>
+    <li>requirements.txt com versões fixadas</li>
+    <li>.env.example documentando as variáveis necessárias</li>
+    <li>Dockerfile funcional</li>
+    <li>Log em arquivo + console</li>
+    <li>Tratamento de exceção no orquestrador</li>
+    <li>README curto explicando como rodar local e em container</li>
+  </ul>
+
+  <div class="exercise">
+    <strong>DESAFIO FINAL</strong>
+    Implemente o robô completo usando um domínio real de sua escolha (preços, vagas, cotações, status de serviços etc.). Publique o repositório no GitHub e documente o deploy. Este projeto vira item forte de portfólio.
+  </div>
+
+  <div class="tip">
+    <strong>PRÓXIMOS PASSOS</strong>
+    Após este curso você está pronto para: observabilidade (logs + métricas), filas (Redis/RQ), e orquestração com Kubernetes ou GitHub Actions.
+  </div>
 
   <h2>Sumário do curso</h2>
   <div class="mod-sumario">
@@ -83,20 +130,18 @@ if __name__ == "__main__":
   </div>
 
   <div class="aula-progress">
-    <a class="btn ghost" href="cursos.html">← todos os cursos</a>
-    <span class="dots"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b class="on"></b></span>
-    <a class="btn primary" href="cursos.html">concluir curso →</a>
+    <a class="btn ghost" href="curso-python-modulo-7.html">← anterior</a>
+    <span class="dots"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b></span>
+    <a class="btn primary" href="cursos.html">voltar aos cursos →</a>
   </div>
 </article>
-
 <footer>
   <div class="wrap">
     <div>© 2026 irndevs</div>
     <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
   </div>
 </footer>
-
 <script src="assets/js/site-nav.js?v=20260914f" defer></script>
-<script src="assets/js/chat-bot.js?v=20260915" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916" defer></script>
 </body>
 </html>

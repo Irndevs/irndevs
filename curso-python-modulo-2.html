@@ -5,16 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Python 2 — Web scraping | IRN Devs</title>
 <link rel="canonical" href="https://irndevs.com/curso-python-modulo-2.html">
-<meta name="description" content="Módulo 2 do curso Automações em Python: requisições HTTP, parsing de HTML com BeautifulSoup e exportação para CSV.">
+<meta name="description" content="Módulo 2: Web scraping com Requests e BeautifulSoup. Extrair dados de sites de forma ética e robusta.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/pages/curso-python.css">
 <link rel="stylesheet" href="assets/css/site-nav.css">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/motion.css">
-
+<link rel="stylesheet" href="assets/css/motion.css">
 <meta property="og:title" content="Python 2 — Web scraping | IRN Devs">
-<meta property="og:description" content="Módulo 2 do curso Automações em Python: requisições HTTP, parsing de HTML com BeautifulSoup e exportação para CSV.">
+<meta property="og:description" content="Módulo 2: Web scraping com Requests e BeautifulSoup. Extrair dados de sites de forma ética e robusta.">
 <meta property="og:url" content="https://irndevs.com/curso-python-modulo-2.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
@@ -28,49 +27,137 @@
   <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#python">automações em python</a> / módulo 2</nav>
 
   <div class="sec-head"><span class="amber">$</span> python modulo_2.py</div>
-  <h1>Web scraping com Requests e BeautifulSoup</h1>
-  <p class="lede">Colete dados de sites e transforme páginas HTML em informação estruturada, sem depender de ninguém copiar e colar.</p>
+  <h1>Web scraping</h1>
+  <p class="lede">Extrair dados de páginas HTML de forma ética, robusta e reutilizável. Requests + BeautifulSoup são a base de 80% das automações de coleta.</p>
 
   <h2>O que você vai aprender</h2>
   <ul>
-    <li>Fazer requisições HTTP com a biblioteca Requests e tratar erros de conexão</li>
-    <li>Extrair dados de páginas com BeautifulSoup e seletores CSS</li>
-    <li>Salvar os resultados coletados em um arquivo CSV pronto para análise</li>
+    <li>Fazer requisições HTTP com headers e tratamento de erros</li>
+    <li>Parsear HTML com BeautifulSoup (CSS selectors e find)</li>
+    <li>Paginação, delays e respeito a robots.txt</li>
+    <li>Salvar resultados em JSON e CSV</li>
+    <li>Detectar e contornar bloqueios simples</li>
   </ul>
 
-  <h2>Código da aula</h2>
-  <pre><code># scraper_cotacoes.py — coleta cotações de moedas e salva em CSV
-import csv
-import requests
+  <h2>1. Instalação</h2>
+  <pre><code>pip install requests beautifulsoup4 lxml</code></pre>
+
+  <h2>2. Requisição básica e boa prática</h2>
+  <pre><code>import requests
 from bs4 import BeautifulSoup
+import time
 
-URL = "https://exemplo-financas.com/cotacoes"
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (compatible; IRNBot/1.0; +https://irndevs.com)",
+    "Accept-Language": "pt-BR,pt;q=0.9",
+}
 
-def coletar_cotacoes():
-    resposta = requests.get(URL, timeout=10)
-    resposta.raise_for_status()
+def get_html(url: str, tentativas: int = 3) -> str | None:
+    for i in range(tentativas):
+        try:
+            r = requests.get(url, headers=HEADERS, timeout=15)
+            r.raise_for_status()
+            r.encoding = r.apparent_encoding
+            return r.text
+        except requests.RequestException as e:
+            print(f"Tentativa {i+1} falhou: {e}")
+            time.sleep(2 ** i)
+    return None</code></pre>
 
-    sopa = BeautifulSoup(resposta.text, "html.parser")
-    linhas = sopa.select("table#cotacoes tbody tr")
+  <div class="tip">
+    <strong>DICA</strong>
+    Sempre envie um User-Agent identificável. Em produção, respect robots.txt e adicione delays entre requisições.
+  </div>
 
-    dados = []
-    for linha in linhas:
-        moeda = linha.select_one(".moeda").get_text(strip=True)
-        valor = linha.select_one(".valor").get_text(strip=True)
-        dados.append({"moeda": moeda, "valor": valor})
+  <h2>3. Parsing com BeautifulSoup</h2>
+  <pre><code>html = get_html("https://exemplo.com/lista")
+soup = BeautifulSoup(html, "lxml")
 
-    return dados
+# CSS selector (preferido)
+titulos = [el.get_text(strip=True) for el in soup.select("h2.titulo")]
 
-def salvar_csv(dados, caminho="cotacoes.csv"):
-    with open(caminho, "w", newline="", encoding="utf-8") as arquivo:
-        escritor = csv.DictWriter(arquivo, fieldnames=["moeda", "valor"])
-        escritor.writeheader()
-        escritor.writerows(dados)
-    print(f"{len(dados)} cotações salvas em {caminho}")
+# find / find_all
+links = soup.find_all("a", class_="item")
+for a in links:
+    href = a.get("href")
+    texto = a.get_text(strip=True)
+    print(texto, href)</code></pre>
+
+  <h2>4. Exemplo completo: coletar lista de posts</h2>
+  <div class="code-title">scraper_posts.py</div>
+  <pre><code>#!/usr/bin/env python3
+import json
+from pathlib import Path
+from bs4 import BeautifulSoup
+import requests
+import time
+
+HEADERS = {"User-Agent": "IRNBot/1.0 (+https://irndevs.com)"}
+BASE = "https://quotes.toscrape.com"
+
+def scrape_pagina(num: int) -> list[dict]:
+    url = f"{BASE}/page/{num}/"
+    r = requests.get(url, headers=HEADERS, timeout=15)
+    r.raise_for_status()
+    soup = BeautifulSoup(r.text, "lxml")
+    itens = []
+    for q in soup.select("div.quote"):
+        itens.append({
+            "texto": q.select_one("span.text").get_text(strip=True),
+            "autor": q.select_one("small.author").get_text(strip=True),
+            "tags": [t.get_text(strip=True) for t in q.select("a.tag")],
+        })
+    return itens
+
+def main():
+    todos = []
+    for pagina in range(1, 4):  # primeiras 3 páginas
+        print(f"Página {pagina}...")
+        todos.extend(scrape_pagina(pagina))
+        time.sleep(1.5)  # educado
+
+    Path("quotes.json").write_text(
+        json.dumps(todos, ensure_ascii=False, indent=2),
+        encoding="utf-8"
+    )
+    print(f"Salvos {len(todos)} itens em quotes.json")
 
 if __name__ == "__main__":
-    cotacoes = coletar_cotacoes()
-    salvar_csv(cotacoes)</code></pre>
+    main()</code></pre>
+
+  <h2>5. Paginação e parada inteligente</h2>
+  <p>Muitos sites não têm número fixo de páginas. Detecte o botão “próxima” ou o fim da lista.</p>
+  <pre><code>proxima = soup.select_one("li.next a")
+if proxima:
+    url_proxima = BASE + proxima["href"]
+else:
+    print("Última página alcançada")</code></pre>
+
+  <div class="warn">
+    <strong>ÉTICA E LEGAL</strong>
+    Scraping agressivo pode violar termos de uso. Prefira APIs oficiais quando existirem. Nunca sobrecarregue o servidor (use delays e rate limits).
+  </div>
+
+  <h2>6. Salvar em CSV</h2>
+  <pre><code>import csv
+
+with open("quotes.csv", "w", newline="", encoding="utf-8") as f:
+    w = csv.DictWriter(f, fieldnames=["texto", "autor", "tags"])
+    w.writeheader()
+    for item in todos:
+        w.writerow({
+            "texto": item["texto"],
+            "autor": item["autor"],
+            "tags": ",".join(item["tags"]),
+        })</code></pre>
+
+  <div class="exercise">
+    <strong>EXERCÍCIO</strong>
+    1. Adapte o scraper para um site de sua escolha (preços, notícias ou jobs).<br>
+    2. Implemente retry com backoff exponencial.<br>
+    3. Salve tanto JSON quanto CSV.<br>
+    4. Adicione um campo <code>coletado_em</code> com datetime ISO.
+  </div>
 
   <h2>Sumário do curso</h2>
   <div class="mod-sumario">
@@ -85,8 +172,8 @@ if __name__ == "__main__":
   </div>
 
   <div class="aula-progress">
-    <a class="btn ghost" href="cursos.html">← todos os cursos</a>
-    <span class="dots"><b></b><b class="on"></b><b></b><b></b><b></b><b></b><b></b><b></b></span>
+    <a class="btn ghost" href="curso-python-modulo-1.html">← anterior</a>
+    <span class="dots"><b class="on"></b><b class="on"></b><b></b><b></b><b></b><b></b><b></b><b></b></span>
     <a class="btn primary" href="curso-python-modulo-3.html">próximo: Automação de navegador →</a>
   </div>
 </article>
@@ -99,6 +186,6 @@ if __name__ == "__main__":
 </footer>
 
 <script src="assets/js/site-nav.js?v=20260914f" defer></script>
-<script src="assets/js/chat-bot.js?v=20260915" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916" defer></script>
 </body>
 </html>
