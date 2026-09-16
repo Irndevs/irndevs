@@ -84,7 +84,16 @@
     { k: ['pacote', 'pacotes', 'plano', 'planos'], r: 'Temos pacotes de contratação descritos em <a class="irn-link" href="pacotes.html">pacotes.html</a>.\n\nQuer um resumo ou prefere ir direto para orçamento?' },
     { k: ['obrigado', 'obrigada', 'valeu', 'thanks', 'vlw'], r: 'Por nada! Se precisar de mais alguma coisa, é só chamar. 👍' },
     { k: ['login', 'cadastro', 'conta', 'área do cliente', 'area do cliente'], r: 'Você pode criar conta ou entrar em <a class="irn-link" href="cadastro.html">cadastro.html</a> / <a class="irn-link" href="login.html">login.html</a>.\nA área do cliente fica em <a class="irn-link" href="area-cliente.html">area-cliente.html</a>.' },
-    { k: ['privacidade', 'lgpd', 'dados', 'política'], r: 'Nossa Política de Privacidade está em <a class="irn-link" href="privacidade.html">privacidade.html</a>.' }
+    { k: ['privacidade', 'lgpd', 'dados', 'política'], r: 'Nossa Política de Privacidade está em <a class="irn-link" href="privacidade.html">privacidade.html</a>.' },
+    { k: ['venv', 'ambiente virtual', 'virtualenv'], r: 'No módulo 1 ensinamos a criar venv:\n<code>python3 -m venv .venv</code> e ativar com <code>source .venv/bin/activate</code>.\n\nVeja: <a class="irn-link" href="curso-python-modulo-1.html">módulo 1</a>' },
+    { k: ['scraping', 'beautifulsoup', 'requests', 'raspar'], r: 'Web scraping está no **módulo 2** (Requests + BeautifulSoup), com paginação, delays e ética.\n\n<a class="irn-link" href="curso-python-modulo-2.html">Abrir módulo 2</a>' },
+    { k: ['playwright', 'selenium', 'navegador'], r: 'Automação de navegador (Playwright e Selenium) é o **módulo 3**.\n\n<a class="irn-link" href="curso-python-modulo-3.html">Abrir módulo 3</a>' },
+    { k: ['pandas', 'excel', 'planilha', 'csv'], r: 'Planilhas e dados com pandas/openpyxl: **módulo 4**.\n\n<a class="irn-link" href="curso-python-modulo-4.html">Abrir módulo 4</a>' },
+    { k: ['fastapi', 'api', 'webhook'], r: 'APIs e webhooks com FastAPI: **módulo 6**.\n\n<a class="irn-link" href="curso-python-modulo-6.html">Abrir módulo 6</a>' },
+    { k: ['docker', 'cron', 'deploy', 'agendar'], r: 'Agendamento (cron/schedule) e deploy com Docker: **módulo 7**.\n\n<a class="irn-link" href="curso-python-modulo-7.html">Abrir módulo 7</a>' },
+    { k: ['certificado', 'certificado de conclusão'], r: 'Ao concluir os 8 módulos (marcando cada um como feito), você pode gerar o certificado em <a class="irn-link" href="certificado-python.html">certificado-python.html</a>.' },
+    { k: ['progresso', 'quanto falta', 'módulos feitos'], r: 'Seu progresso fica salvo no navegador. Abra <a class="irn-link" href="cursos.html">cursos.html</a> para ver a barra de progresso e marcar módulos concluídos.' },
+
   ];
 
   var userCount = 0;

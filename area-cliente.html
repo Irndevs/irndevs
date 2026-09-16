@@ -96,5 +96,25 @@
 })();
 </script>
   <script src="assets/js/chat-bot.js?v=20260915" defer></script>
+
+<script>
+(function(){
+  try {
+    var data = JSON.parse(localStorage.getItem('irn_python_progress')||'{}');
+    var done = 0;
+    for (var i=1;i<=8;i++) if(data[i]) done++;
+    var host = document.querySelector('.dash-stats') || document.querySelector('.dash-main');
+    if (!host) return;
+    var card = document.createElement('div');
+    card.className = 'dash-card';
+    card.style.marginTop = '16px';
+    card.innerHTML = '<div class="dash-card-title">curso python</div>' +
+      '<p style="font-family:var(--dash-mono);font-size:13px;color:var(--dash-dim)">' + done + ' / 8 módulos concluídos</p>' +
+      '<a href="cursos.html" class="dash-link-amber">continuar curso →</a>' +
+      (done >= 8 ? ' · <a href="certificado-python.html" class="dash-link-amber">certificado</a>' : '');
+    host.parentNode.insertBefore(card, host.nextSibling);
+  } catch(e) {}
+})();
+</script>
 </body>
 </html>

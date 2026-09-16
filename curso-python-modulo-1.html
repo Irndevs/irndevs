@@ -29,6 +29,7 @@
   <div class="sec-head"><span class="amber">$</span> python modulo_1.py</div>
   <h1>Setup e primeiros scripts</h1>
   <p class="lede">Python instalado, ambiente virtual configurado e o primeiro script útil rodando em 15 minutos. Base sólida para todas as automações que vêm a seguir.</p>
+  <div id="irn-progress-bar"></div>
 
   <h2>O que você vai aprender</h2>
   <ul>
@@ -154,7 +155,7 @@ def organizar():
 if __name__ == "__main__":
     organizar()</code></pre>
 
-  <div class="exercise">
+  <div class="exercise" data-solution="Use <code>shutil.move</code> no lugar de <code>copy2</code>. Para o log: abra um arquivo com <code>open('organizacao.log','a')</code> e escreva f"{datetime.now().isoformat()} {arq} → {destino}\n".">
     <strong>EXERCÍCIO</strong>
     1. Crie uma pasta <code>entrada</code> com 20–30 arquivos misturados (jpg, pdf, txt, csv).<br>
     2. Rode o script.<br>
@@ -202,6 +203,7 @@ if __name__ == "__main__":
 </footer>
 
 <script src="assets/js/site-nav.js?v=20260914f" defer></script>
+<script src="assets/js/curso-progress.js?v=20260916" defer></script>
 <script src="assets/js/chat-bot.js?v=20260916" defer></script>
 </body>
 </html>

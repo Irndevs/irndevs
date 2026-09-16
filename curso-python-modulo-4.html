@@ -26,6 +26,7 @@
   <div class="sec-head"><span class="amber">$</span> python modulo_4.py</div>
   <h1>Planilhas e dados</h1>
   <p class="lede">Ler, limpar, transformar e gerar relatórios a partir de CSV e Excel. pandas é a ferramenta padrão; openpyxl para formatação avançada.</p>
+  <div id="irn-progress-bar"></div>
 
   <h2>O que você vai aprender</h2>
   <ul>
@@ -103,7 +104,7 @@ for cell in ws[3]:
 
 wb.save("relatorio_vendas.xlsx")</code></pre>
 
-  <div class="exercise">
+  <div class="exercise" data-solution="Leia com <code>pd.read_csv</code>, faça <code>groupby</code> por mês com <code>df['data'].dt.to_period('M')</code>, exporte duas sheets com <code>ExcelWriter</code>.">
     <strong>EXERCÍCIO</strong>
     1. Baixe um CSV público (ex.: dados abertos) e limpe-o.<br>
     2. Gere um resumo por mês e por categoria.<br>
@@ -136,6 +137,7 @@ wb.save("relatorio_vendas.xlsx")</code></pre>
   </div>
 </footer>
 <script src="assets/js/site-nav.js?v=20260914f" defer></script>
+<script src="assets/js/curso-progress.js?v=20260916" defer></script>
 <script src="assets/js/chat-bot.js?v=20260916" defer></script>
 </body>
 </html>

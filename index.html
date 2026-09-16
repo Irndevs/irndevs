@@ -439,5 +439,13 @@ const siteSearch = document.getElementById('siteSearch');
 
   <script src="assets/js/site-nav.js?v=20260914g" defer></script>
   <script src="assets/js/chat-bot.js?v=20260915" defer></script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').catch(function(){});
+  });
+}
+</script>
 </body>
 </html>

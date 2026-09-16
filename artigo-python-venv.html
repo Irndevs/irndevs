@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Por que todo projeto Python precisa de venv | IRN Devs</title>
+<meta name="description" content="Ambientes virtuais isolam dependências, evitam quebrar o sistema e tornam deploys reproduzíveis. Guia prático.">
+<link rel="canonical" href="https://irndevs.com/artigo-python-venv.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/artigo-base.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/motion.css">
+<meta property="og:title" content="Por que todo projeto Python precisa de venv | IRN Devs">
+<meta property="og:description" content="Ambientes virtuais isolam dependências e tornam deploys reproduzíveis.">
+<meta property="og:url" content="https://irndevs.com/artigo-python-venv.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:site_name" content="IRN Devs">
+</head>
+<body>
+<!-- nav: site-nav.js -->
+<article class="wrap artigo">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="blog.html">blog</a> / venv</nav>
+  <h1>Por que todo projeto Python precisa de venv</h1>
+  <p class="meta">IRN Devs · 2026</p>
+  <p>Instalar pacotes globalmente no Python do sistema é o caminho mais rápido para conflitos, upgrades quebrados e “funciona na minha máquina”. O <code>venv</code> resolve isso com três linhas.</p>
+  <h2>O problema</h2>
+  <p>Dois projetos pedem versões diferentes da mesma biblioteca. Sem isolamento, um sobrescreve o outro. Em servidores, o Python do SO é usado por ferramentas do próprio sistema — poluí-lo é risco operacional.</p>
+  <h2>A solução em 30 segundos</h2>
+  <pre><code>python3 -m venv .venv
+source .venv/bin/activate   # Linux/macOS
+pip install -r requirements.txt</code></pre>
+  <p>No Windows PowerShell: <code>.venv\Scripts\Activate.ps1</code>.</p>
+  <h2>Boas práticas</h2>
+  <ul>
+    <li>Sempre pin versions no <code>requirements.txt</code> (<code>pip freeze</code>)</li>
+    <li>Coloque <code>.venv/</code> no <code>.gitignore</code></li>
+    <li>Em Docker, o próprio container já isola — ainda assim use venv se preferir</li>
+    <li>Documente no README o comando de ativação</li>
+  </ul>
+  <h2>Quer ir além?</h2>
+  <p>Isso é só o começo do nosso <a href="cursos.html">curso Automações em Python</a> — módulo 1 cobre setup completo e o primeiro script de produção.</p>
+  <p><a href="blog.html">← voltar ao blog</a></p>
+</article>
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260914f" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916" defer></script>
+</body>
+</html>

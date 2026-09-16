@@ -26,6 +26,7 @@
   <div class="sec-head"><span class="amber">$</span> python modulo_6.py</div>
   <h1>APIs e webhooks</h1>
   <p class="lede">Consumir APIs externas e criar as suas próprias com FastAPI. Webhooks para receber eventos em tempo real.</p>
+  <div id="irn-progress-bar"></div>
 
   <h2>O que você vai aprender</h2>
   <ul>
@@ -102,7 +103,7 @@ async def webhook(request: Request, x_signature: str = Header(None)):
     Sempre valide assinatura de webhooks. Nunca confie apenas no IP de origem.
   </div>
 
-  <div class="exercise">
+  <div class="exercise" data-solution="Header <code>X-API-Key</code> comparado com variável de ambiente. Teste o webhook com <code>curl -H 'X-Signature: ...'</code>.">
     <strong>EXERCÍCIO</strong>
     1. Crie endpoints GET/POST para um recurso (ex.: tarefas).<br>
     2. Adicione autenticação simples com header X-API-Key.<br>
@@ -135,6 +136,7 @@ async def webhook(request: Request, x_signature: str = Header(None)):
   </div>
 </footer>
 <script src="assets/js/site-nav.js?v=20260914f" defer></script>
+<script src="assets/js/curso-progress.js?v=20260916" defer></script>
 <script src="assets/js/chat-bot.js?v=20260916" defer></script>
 </body>
 </html>

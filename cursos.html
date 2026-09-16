@@ -21,6 +21,15 @@
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
 <meta property="og:site_name" content="IRN Devs">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"O curso é gratuito?","acceptedAnswer":{"@type":"Answer","text":"Sim. Todo o conteúdo textual dos 8 módulos está disponível gratuitamente no site."}},
+{"@type":"Question","name":"Preciso de conhecimento prévio?","acceptedAnswer":{"@type":"Answer","text":"O módulo 1 começa do zero. Familiaridade básica com terminal ajuda, mas não é obrigatória."}},
+{"@type":"Question","name":"Como funciona o progresso e o certificado?","acceptedAnswer":{"@type":"Answer","text":"O progresso fica salvo no navegador. Ao concluir os 8 módulos você pode gerar um certificado personalizado."}}
+]}
+</script>
+
 </head>
 <body>
 
@@ -32,6 +41,7 @@
     <div class="sec-head"><span class="amber">$</span> ls cursos/ --detalhe</div>
     <h1>Cursos <span>IRN Devs</span></h1>
     <p class="lede">Conteúdo prático, gravado em cima de projetos reais em produção. Sem enrolação: você aprende, executa e sobe pro seu portfólio.</p>
+    <div id="irn-progress-bar"></div>
   </div>
 </header>
 
@@ -45,6 +55,7 @@
         <span>Python 3</span><span>Requests</span><span>BeautifulSoup</span><span>Selenium</span><span>Playwright</span><span>pandas</span><span>FastAPI</span><span>Docker</span><span>Cron</span>
       </div>
       <a class="btn primary" href="curso-python-modulo-1.html">começar o curso →</a>
+      <a class="btn ghost" href="certificado-python.html" style="margin-left:10px">certificado →</a>
       <span class="curso-meta">8 módulos · ~14h · gratuito</span>
     </div>
 
@@ -77,6 +88,18 @@
   </div>
 </section>
 
+
+<section id="faq-curso">
+  <div class="wrap">
+    <div class="sec-head"><span class="amber">$</span> faq --curso-python</div>
+    <h2 class="sec-title">Perguntas frequentes</h2>
+    <details class="faq-item"><summary>O curso é gratuito?</summary><div class="faq-body">Sim. Todo o conteúdo textual dos 8 módulos está disponível gratuitamente no site.</div></details>
+    <details class="faq-item"><summary>Preciso de conhecimento prévio?</summary><div class="faq-body">O módulo 1 começa do zero (instalação e primeiros scripts). Familiaridade básica com terminal ajuda, mas não é obrigatória.</div></details>
+    <details class="faq-item"><summary>Como funciona o progresso e o certificado?</summary><div class="faq-body">Seu progresso fica salvo no navegador (localStorage). Ao concluir os 8 módulos você pode gerar um certificado personalizado.</div></details>
+    <details class="faq-item"><summary>Posso usar o código em projetos reais?</summary><div class="faq-body">Sim. Os exemplos são pensados para produção. Adapte e use livremente.</div></details>
+  </div>
+</section>
+
 <div class="wrap cta-final">
   <h2>Ficou com dúvida no curso?</h2>
   <p>Chama no WhatsApp ou fala com nosso robô no canto da tela.</p>
@@ -94,6 +117,15 @@
 </footer>
 
 <script src="assets/js/site-nav.js?v=20260914f" defer></script>
+<script src="assets/js/curso-progress.js?v=20260916" defer></script>
 <script src="assets/js/chat-bot.js?v=20260915" defer></script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').catch(function(){});
+  });
+}
+</script>
 </body>
 </html>

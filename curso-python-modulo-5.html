@@ -26,6 +26,7 @@
   <div class="sec-head"><span class="amber">$</span> python modulo_5.py</div>
   <h1>E-mails e arquivos</h1>
   <p class="lede">Enviar relatórios por e-mail, anexar arquivos e organizar pastas automaticamente. SMTP + pathlib + logging.</p>
+  <div id="irn-progress-bar"></div>
 
   <h2>O que você vai aprender</h2>
   <ul>
@@ -117,7 +118,7 @@ except KeyboardInterrupt:
     observer.stop()
 observer.join()</code></pre>
 
-  <div class="exercise">
+  <div class="exercise" data-solution="No handler do watchdog, após <code>shutil.move</code> chame a função de e-mail do módulo. Logging: <code>logging.basicConfig(filename='watcher.log', level=logging.INFO)</code>.">
     <strong>EXERCÍCIO</strong>
     1. Envie um e-mail com anexo Excel gerado no módulo 4.<br>
     2. Crie um watcher que move arquivos e envia notificação por e-mail quando chega um PDF.<br>
@@ -149,6 +150,7 @@ observer.join()</code></pre>
   </div>
 </footer>
 <script src="assets/js/site-nav.js?v=20260914f" defer></script>
+<script src="assets/js/curso-progress.js?v=20260916" defer></script>
 <script src="assets/js/chat-bot.js?v=20260916" defer></script>
 </body>
 </html>

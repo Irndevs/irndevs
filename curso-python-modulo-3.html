@@ -29,6 +29,7 @@
   <div class="sec-head"><span class="amber">$</span> python modulo_3.py</div>
   <h1>Automação de navegador</h1>
   <p class="lede">Quando o HTML estático não basta: sites com JavaScript, login, CAPTCHA leve e interações. Playwright é a escolha moderna; Selenium ainda é útil em legados.</p>
+  <div id="irn-progress-bar"></div>
 
   <h2>O que você vai aprender</h2>
   <ul>
@@ -119,7 +120,7 @@ lista.append(dados)
 historico.write_text(json.dumps(lista, ensure_ascii=False, indent=2))
 print(dados)</code></pre>
 
-  <div class="exercise">
+  <div class="exercise" data-solution="the-internet.herokuapp.com/login usa #username e #password. Após login espere <code>page.wait_for_url('**/secure**')</code>. Screenshot: <code>page.screenshot(path='erro.png')</code> no except.">
     <strong>EXERCÍCIO</strong>
     1. Automatize o login em um site de teste (ex.: the-internet.herokuapp.com).<br>
     2. Extraia uma tabela dinâmica e salve em CSV.<br>
@@ -159,6 +160,7 @@ print(dados)</code></pre>
 </footer>
 
 <script src="assets/js/site-nav.js?v=20260914f" defer></script>
+<script src="assets/js/curso-progress.js?v=20260916" defer></script>
 <script src="assets/js/chat-bot.js?v=20260916" defer></script>
 </body>
 </html>

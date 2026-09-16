@@ -26,6 +26,7 @@
   <div class="sec-head"><span class="amber">$</span> python modulo_7.py</div>
   <h1>Agendamento e deploy</h1>
   <p class="lede">Rodar scripts automaticamente todos os dias e colocar em produção com Docker. Do cron clássico ao container isolado.</p>
+  <div id="irn-progress-bar"></div>
 
   <h2>O que você vai aprender</h2>
   <ul>
@@ -87,7 +88,7 @@ services:
     Nunca coloque senhas no código ou no Dockerfile. Use .env (e não faça commit dele) ou secrets do orquestrador.
   </div>
 
-  <div class="exercise">
+  <div class="exercise" data-solution="crontab: <code>0 6 * * * cd /app && python job.py</code>. Dockerfile + volume <code>./dados:/app/dados</code>. try/except no main enviando e-mail de erro.">
     <strong>EXERCÍCIO</strong>
     1. Agende o scraper do módulo 2 para rodar diariamente via cron.<br>
     2. Containerize o script e rode com volume para persistir o JSON.<br>
@@ -119,6 +120,7 @@ services:
   </div>
 </footer>
 <script src="assets/js/site-nav.js?v=20260914f" defer></script>
+<script src="assets/js/curso-progress.js?v=20260916" defer></script>
 <script src="assets/js/chat-bot.js?v=20260916" defer></script>
 </body>
 </html>
