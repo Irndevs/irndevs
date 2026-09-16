@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Busca semântica e hybrid search em produção — IRN Devs</title>
+<meta name="description" content="Do protótipo ao serviço: hybrid search (BM25 + vetor), filtros por metadados, multi-tenancy e métricas de retrieval com pgvector e alternativas.">
+<meta name="author" content="IRN Devs">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/artigo-base.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<meta property="og:title" content="Hybrid search em produção — IRN Devs">
+<meta property="og:description" content="BM25 + vetor, filtros, multi-tenancy e métricas de retrieval.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://irndevs.com/artigo-hybrid-search.html">
+<meta property="og:url" content="https://irndevs.com/artigo-hybrid-search.html">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:site_name" content="IRN Devs">
+<meta property="article:published_time" content="2026-09-16">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BlogPosting",
+  "headline":"Busca semântica e hybrid search em produção",
+  "description":"Hybrid search, filtros, multi-tenancy e métricas de retrieval.",
+  "datePublished":"2026-09-16",
+  "author":{"@type":"Organization","name":"IRN Devs"},
+  "publisher":{"@type":"Organization","name":"IRN Devs","url":"https://irndevs.com"},
+  "mainEntityOfPage":"https://irndevs.com/artigo-hybrid-search.html",
+  "inLanguage":"pt-BR"
+}
+</script>
+</head>
+<body>
+<!-- nav: site-nav.js -->
+<div class="wrap crumb">
+  <a href="index.html">~</a> / <a href="blog.html">blog</a> / <a href="ia.html">ia</a> / <span>hybrid-search</span>
+</div>
+
+<div class="wrap article-head">
+  <div class="meta">
+    <span>16 set 2026</span>
+    <span class="tag">ia</span>
+    <span>12 min de leitura</span>
+  </div>
+  <h1>Busca semântica e hybrid search em produção</h1>
+  <p class="excerpt">Só embeddings não bastam quando o usuário busca um código de erro exato. Hybrid search combina keyword (BM25) e vetor, com filtros de metadados e medição de qualidade — o caminho do protótipo ao serviço confiável.</p>
+  <div class="stack"><span>hybrid search</span><span>BM25</span><span>pgvector</span><span>retrieval</span><span>RAG</span></div>
+</div>
+
+<div class="wrap">
+  <div class="toc">
+    <div class="label">$ cat sumario.txt</div>
+    <ol>
+      <li><a href="#por-que">Por que hybrid search</a></li>
+      <li><a href="#arquitetura">Arquitetura mínima</a></li>
+      <li><a href="#pgvector">Hybrid com PostgreSQL</a></li>
+      <li><a href="#filtros">Filtros e multi-tenancy</a></li>
+      <li><a href="#metricas">Métricas de retrieval</a></li>
+      <li><a href="#operacao">Operação e escala</a></li>
+      <li><a href="#checklist">Checklist de produção</a></li>
+    </ol>
+  </div>
+
+  <article class="body">
+    <h2 id="por-que">1. Por que hybrid search</h2>
+    <p>Busca só por vetor (semântica) captura sinônimos e intenção (“como restaurar backup” ≈ “procedimento de restore”). Falha em:</p>
+    <ul>
+      <li>Códigos exatos: <code>ERR_SSL_PROTOCOL_ERROR</code>, CVE, IDs de ticket</li>
+      <li>Nomes próprios raros ou siglas internas</li>
+      <li>Versões e paths de arquivo</li>
+    </ul>
+    <p>BM25 (ou full-text clássico) acerta esses termos e erra em paráfrases. <strong>Hybrid</strong> = fundir os dois rankings (RRF, weighted sum, ou re-ranker) para o melhor dos dois mundos.</p>
+    <div class="tip"><strong>tip</strong> · Em RAG, hybrid search costuma subir recall@k de forma perceptível em bases técnicas (runbooks, docs de API, tickets).</div>
+
+    <h2 id="arquitetura">2. Arquitetura mínima</h2>
+    <ol>
+      <li><strong>Indexação</strong> — chunks com texto, embedding e metadados (tenant, produto, data, tags)</li>
+      <li><strong>Query path</strong> — embedding da pergunta + full-text query em paralelo</li>
+      <li><strong>Fusão</strong> — Reciprocal Rank Fusion (RRF) ou score ponderado</li>
+      <li><strong>Filtros</strong> — WHERE por tenant/produto <em>antes</em> ou <em>durante</em> a busca</li>
+      <li><strong>Opcional</strong> — cross-encoder re-rank nos top 20–50</li>
+    </ol>
+
+    <h2 id="pgvector">3. Hybrid com PostgreSQL</h2>
+    <p>Você já pode ter <code>tsvector</code> + <code>pgvector</code> na mesma tabela:</p>
+<pre><code>-- Colunas extras
+ALTER TABLE chunks ADD COLUMN tsv tsvector
+  GENERATED ALWAYS AS (to_tsvector('portuguese', content)) STORED;
+CREATE INDEX chunks_tsv_idx ON chunks USING GIN (tsv);
+
+-- Keyword (BM25-like via ts_rank)
+SELECT id, content,
+       ts_rank(tsv, plainto_tsquery('portuguese', $1)) AS kw_score
+FROM chunks
+WHERE tsv @@ plainto_tsquery('portuguese', $1)
+ORDER BY kw_score DESC
+LIMIT 20;
+
+-- Vetor (já visto no artigo de RAG)
+SELECT id, content,
+       1 - (embedding &lt;=&gt; $2) AS vec_score
+FROM chunks
+ORDER BY embedding &lt;=&gt; $2
+LIMIT 20;</code></pre>
+    <p><strong>RRF</strong> (simples e robusto): para cada documento, some <code>1 / (k + rank)</code> nos dois rankings (k típico = 60). Ordene pelo score RRF final e pegue top N.</p>
+<pre><code>// Pseudocódigo
+function rrf(rankKeyword, rankVector, k = 60) {
+  const scores = {};
+  rankKeyword.forEach((id, i) => {
+    scores[id] = (scores[id] || 0) + 1 / (k + i + 1);
+  });
+  rankVector.forEach((id, i) => {
+    scores[id] = (scores[id] || 0) + 1 / (k + i + 1);
+  });
+  return Object.entries(scores).sort((a, b) => b[1] - a[1]);
+}</code></pre>
+    <p>Alternativas: Elasticsearch / OpenSearch (BM25 nativo + dense vector), ou serviços (Pinecone + sparse, Weaviate hybrid).</p>
+
+    <h2 id="filtros">4. Filtros e multi-tenancy</h2>
+    <ul>
+      <li>Sempre filtre por <code>tenant_id</code> (ou workspace) — vazamento entre clientes é falha grave</li>
+      <li>Filtros comuns: produto, idioma, data mínima, tipo de documento</li>
+      <li>No pgvector, coloque metadados em colunas e use <code>WHERE</code> junto com a busca; índices parciais ajudam</li>
+      <li>Em serviços gerenciados, use metadata filters nativos e teste se o filtro é pré ou pós ranking</li>
+    </ul>
+    <div class="tip"><strong>tip</strong> · Teste com dois tenants no mesmo índice. A query do tenant A nunca deve retornar chunk do tenant B, mesmo com k alto.</div>
+
+    <h2 id="metricas">5. Métricas de retrieval</h2>
+    <p>Sem avaliação, você otimiza no escuro. Monte um conjunto pequeno (50–200 perguntas) com “documentos relevantes” anotados:</p>
+    <ul>
+      <li><strong>Recall@k</strong> — fração dos relevantes que aparecem no top k</li>
+      <li><strong>MRR</strong> (Mean Reciprocal Rank) — qualidade da primeira posição correta</li>
+      <li><strong>nDCG@k</strong> — se houver graus de relevância</li>
+    </ul>
+    <p>Compare: só vetor vs só keyword vs hybrid vs hybrid + re-rank. Meça também latência p95 e custo de embedding.</p>
+
+    <h2 id="operacao">6. Operação e escala</h2>
+    <ul>
+      <li><strong>Reindexação</strong> — pipeline quando o modelo de embedding muda (versão no metadado)</li>
+      <li><strong>Chunking</strong> — títulos e listas técnicas se beneficiam de chunks menores; código, um pouco maiores</li>
+      <li><strong>Cache</strong> — cache de embedding de queries frequentes (TTL curto)</li>
+      <li><strong>Observabilidade</strong> — logar query, top ids, scores e se o usuário abriu o resultado</li>
+    </ul>
+    <p>Com centenas de milhares de chunks, pgvector + HNSW ainda aguenta bem em um Postgres bem dimensionado. Além disso, avalie índice dedicado.</p>
+
+    <h2 id="checklist">7. Checklist de produção</h2>
+    <ul>
+      <li>[ ] Hybrid (keyword + vetor) com fusão documentada (RRF ou pesos)</li>
+      <li>[ ] Filtro obrigatório por tenant / workspace</li>
+      <li>[ ] Conjunto de avaliação e métricas baseline</li>
+      <li>[ ] Versionamento do modelo de embedding</li>
+      <li>[ ] Limite de k e timeout na query path</li>
+      <li>[ ] Logs sem PII desnecessária; retenção definida</li>
+      <li>[ ] Teste de regressão quando mudar chunking ou pesos</li>
+    </ul>
+    <p>Hybrid search é o upgrade natural depois do RAG básico com pgvector. Comece com RRF, filtre por tenant, meça recall@k — e só então invista em re-rankers caros.</p>
+    <p class="next-link"><a href="artigo-rag-pgvector.html">← RAG com pgvector</a> · <a href="ia.html">hub de IA</a> · <a href="demo-mock-data.html">demo: mock data →</a></p>
+  </article>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260916d" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916e" defer></script>
+</body>
+</html>

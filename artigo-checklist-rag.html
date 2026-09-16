@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checklist de produção para RAG — IRN Devs</title>
+<meta name="description" content="Checklist prático para colocar RAG em produção: dados, retrieval, geração, segurança, custo, observabilidade e rollback.">
+<meta name="author" content="IRN Devs">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/artigo-base.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<meta property="og:title" content="Checklist de produção para RAG — IRN Devs">
+<meta property="og:description" content="Dados, retrieval, geração, segurança, custo e observabilidade.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://irndevs.com/artigo-checklist-rag.html">
+<meta property="og:url" content="https://irndevs.com/artigo-checklist-rag.html">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:site_name" content="IRN Devs">
+<meta property="article:published_time" content="2026-09-16">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BlogPosting",
+  "headline":"Checklist de produção para RAG",
+  "description":"Checklist prático para colocar RAG em produção.",
+  "datePublished":"2026-09-16",
+  "author":{"@type":"Organization","name":"IRN Devs"},
+  "publisher":{"@type":"Organization","name":"IRN Devs","url":"https://irndevs.com"},
+  "mainEntityOfPage":"https://irndevs.com/artigo-checklist-rag.html",
+  "inLanguage":"pt-BR"
+}
+</script>
+</head>
+<body>
+<!-- nav: site-nav.js -->
+<div class="wrap crumb">
+  <a href="index.html">~</a> / <a href="blog.html">blog</a> / <a href="ia.html">ia</a> / <span>checklist-rag</span>
+</div>
+
+<div class="wrap article-head">
+  <div class="meta">
+    <span>16 set 2026</span>
+    <span class="tag">ia</span>
+    <span>8 min de leitura</span>
+  </div>
+  <h1>Checklist de produção para RAG</h1>
+  <p class="excerpt">Protótipo funciona no notebook. Produção exige isolamento de tenant, avaliação, limites de custo e plano de rollback. Use esta lista antes de abrir o assistente para usuários reais.</p>
+  <div class="stack"><span>RAG</span><span>produção</span><span>checklist</span><span>segurança</span><span>observabilidade</span></div>
+</div>
+
+<div class="wrap">
+  <div class="toc">
+    <div class="label">$ cat sumario.txt</div>
+    <ol>
+      <li><a href="#dados">Dados e indexação</a></li>
+      <li><a href="#retrieval">Retrieval</a></li>
+      <li><a href="#geracao">Geração e prompts</a></li>
+      <li><a href="#seguranca">Segurança e privacidade</a></li>
+      <li><a href="#custo">Custo e limites</a></li>
+      <li><a href="#obs">Observabilidade</a></li>
+      <li><a href="#ops">Operação e rollback</a></li>
+    </ol>
+  </div>
+
+  <article class="body">
+    <h2 id="dados">1. Dados e indexação</h2>
+    <ul>
+      <li>[ ] Fonte de verdade definida (wiki, PDFs, tickets) e dono por conjunto</li>
+      <li>[ ] Pipeline de ingestão reproduzível (chunk size, overlap, limpeza)</li>
+      <li>[ ] Metadados em todo chunk: tenant, origem, data, versão do doc</li>
+      <li>[ ] Modelo de embedding versionado; reindex planejado se trocar o modelo</li>
+      <li>[ ] Documentos sensíveis classificados (não indexar o que não pode sair)</li>
+      <li>[ ] Job de atualização/remoção quando o doc original muda ou expira</li>
+    </ul>
+
+    <h2 id="retrieval">2. Retrieval</h2>
+    <ul>
+      <li>[ ] Hybrid search (keyword + vetor) ou justificativa documentada para só vetor</li>
+      <li>[ ] Filtro obrigatório por tenant / workspace em toda query</li>
+      <li>[ ] k e thresholds definidos; timeout na busca</li>
+      <li>[ ] Conjunto de avaliação (perguntas + docs relevantes) e baseline de recall@k / MRR</li>
+      <li>[ ] Teste de regressão quando mudar chunking, pesos ou modelo</li>
+    </ul>
+    <div class="tip"><strong>tip</strong> · Veja o artigo de <a href="artigo-hybrid-search.html">hybrid search</a> e o de <a href="artigo-rag-pgvector.html">RAG com pgvector</a> para o caminho técnico.</div>
+
+    <h2 id="geracao">3. Geração e prompts</h2>
+    <ul>
+      <li>[ ] System prompt força uso das fontes e admite “não sei” quando não houver evidência</li>
+      <li>[ ] Citações (id do doc / trecho) na resposta quando possível</li>
+      <li>[ ] Temperatura baixa para respostas factuais</li>
+      <li>[ ] Limite de tokens de contexto e de saída</li>
+      <li>[ ] Prompt e parâmetros versionados (como código)</li>
+    </ul>
+
+    <h2 id="seguranca">4. Segurança e privacidade</h2>
+    <ul>
+      <li>[ ] API keys só em secret manager; nunca no front-end</li>
+      <li>[ ] Isolamento multi-tenant verificado com testes automatizados</li>
+      <li>[ ] Prompt injection: entrada do usuário não sobrescreve regras do sistema</li>
+      <li>[ ] PII minimizada nos logs; retenção definida</li>
+      <li>[ ] Tools/agents (se houver) com allowlist e sem shell irrestrito</li>
+      <li>[ ] Política clara: o que pode ser enviado a provedores externos de LLM</li>
+    </ul>
+
+    <h2 id="custo">5. Custo e limites</h2>
+    <ul>
+      <li>[ ] Budget por usuário / tenant / feature</li>
+      <li>[ ] Rate limit e quota; mensagem amigável quando estourar</li>
+      <li>[ ] Modelo barato para triagem + modelo forte só quando necessário (se fizer sentido)</li>
+      <li>[ ] Alertas de billing e de pico de tokens</li>
+      <li>[ ] Cache de embeddings de queries repetidas (com TTL)</li>
+    </ul>
+
+    <h2 id="obs">6. Observabilidade</h2>
+    <ul>
+      <li>[ ] Trace por request: retrieval ids, scores, modelo, tokens in/out, latência</li>
+      <li>[ ] Métricas: taxa de “não encontrado”, feedback do usuário, erros 4xx/5xx do LLM</li>
+      <li>[ ] Amostragem de respostas para revisão humana periódica</li>
+      <li>[ ] Dashboard mínimo (latência p95, custo/dia, recall em eval set)</li>
+    </ul>
+
+    <h2 id="ops">7. Operação e rollback</h2>
+    <ul>
+      <li>[ ] Feature flag para desligar o assistente sem deploy de emergência</li>
+      <li>[ ] Fallback: mensagem estática ou busca keyword se o LLM/vector store cair</li>
+      <li>[ ] Runbook: o que fazer se embedding API, Postgres ou provedor LLM falhar</li>
+      <li>[ ] Backup do índice / tabela de chunks alinhado ao RPO da empresa</li>
+      <li>[ ] Dono on-call e canal de escalação definidos</li>
+    </ul>
+
+    <p>Se a maior parte dos itens ainda estiver aberta, o sistema é um protótipo útil — não um produto. Feche segurança e isolamento de tenant antes de escala de usuários.</p>
+    <p class="next-link"><a href="artigo-rag-pgvector.html">← RAG com pgvector</a> · <a href="artigo-hybrid-search.html">hybrid search</a> · <a href="ia.html">hub de IA</a></p>
+  </article>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260916d" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916e" defer></script>
+</body>
+</html>

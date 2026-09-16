@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo: Mock data inteligente — IRN Devs</title>
+<meta name="description" content="Gere JSON de mock realista a partir de um domínio (clínica, e-commerce, SaaS). Demo local + prompt pronto para IA.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/ia.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<meta property="og:title" content="Demo: Mock data inteligente — IRN Devs">
+<meta property="og:description" content="JSON realista por domínio. Demo local + prompt para ChatGPT/Claude.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://irndevs.com/demo-mock-data.html">
+<meta property="og:url" content="https://irndevs.com/demo-mock-data.html">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:site_name" content="IRN Devs">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  .demo-wrap { max-width: 860px; margin: 0 auto; padding: 0 28px 60px; }
+  .demo-hero { padding: 36px 0 28px; }
+  .demo-hero h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin: 10px 0 12px; line-height: 1.25; }
+  .demo-hero p { color: var(--text-dim, #a8b0a0); font-size: 15px; max-width: 580px; }
+  .demo-kicker { font-family: var(--mono, monospace); font-size: 12px; color: var(--ia-amber, #c9a227); display: flex; align-items: center; gap: 8px; }
+  .demo-panel { background: var(--bg-raised, #161a14); border: 1px solid var(--border, #2a3028); padding: 20px; margin-bottom: 20px; }
+  .demo-panel label { display: block; font-family: var(--mono, monospace); font-size: 12px; color: var(--ia-amber, #c9a227); margin-bottom: 10px; }
+  .demo-panel textarea, .demo-panel input, .demo-panel select {
+    width: 100%; background: #0c0e0b; border: 1px solid var(--border, #2a3028);
+    color: #b8c4a8; font-family: var(--mono, monospace); font-size: 13px;
+    padding: 12px 14px; box-sizing: border-box;
+  }
+  .demo-panel textarea { min-height: 72px; resize: vertical; line-height: 1.45; }
+  .demo-panel textarea:focus, .demo-panel input:focus, .demo-panel select:focus {
+    outline: none; border-color: var(--ia-amber, #c9a227);
+  }
+  .demo-row { display: grid; grid-template-columns: 1fr 120px; gap: 12px; margin-bottom: 14px; }
+  @media (max-width: 560px) { .demo-row { grid-template-columns: 1fr; } }
+  .demo-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+  .demo-btn {
+    font-family: var(--mono, monospace); font-size: 13px; padding: 10px 16px;
+    background: transparent; border: 1px solid var(--ia-amber, #c9a227); color: var(--ia-amber, #c9a227);
+    cursor: pointer; transition: background 0.15s, color 0.15s;
+  }
+  .demo-btn:hover { background: var(--ia-amber, #c9a227); color: #10130f; }
+  .demo-btn.secondary { border-color: var(--border, #2a3028); color: var(--text-dim, #a8b0a0); }
+  .demo-btn.secondary:hover { border-color: var(--ia-amber, #c9a227); color: var(--ia-amber, #c9a227); background: transparent; }
+  .demo-result {
+    background: #0c0e0b; border: 1px solid var(--border, #2a3028); padding: 16px 18px;
+    font-family: var(--mono, monospace); font-size: 12px; line-height: 1.5; color: #7dcea0;
+    white-space: pre-wrap; word-break: break-word; max-height: 420px; overflow: auto; min-height: 80px;
+  }
+  .demo-result.empty { color: var(--text-faint, #5a6258); }
+  .demo-meta { font-family: var(--mono, monospace); font-size: 11px; color: var(--text-faint, #5a6258); margin-top: 10px; }
+  .demo-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .demo-chip {
+    font-family: var(--mono, monospace); font-size: 11px; padding: 6px 10px;
+    border: 1px solid var(--border, #2a3028); color: var(--text-dim, #a8b0a0); cursor: pointer; background: transparent;
+  }
+  .demo-chip:hover, .demo-chip.active { border-color: var(--ia-amber, #c9a227); color: var(--ia-amber, #c9a227); }
+  .demo-note {
+    margin-top: 24px; padding: 16px 18px; border: 1px solid var(--border, #2a3028);
+    font-size: 14px; color: var(--text-dim, #a8b0a0); line-height: 1.55;
+  }
+  .demo-note strong { color: var(--ia-amber, #c9a227); font-family: var(--mono, monospace); font-size: 12px; }
+  @media (max-width: 600px) {
+    .demo-wrap { padding-left: 16px; padding-right: 16px; }
+    .demo-hero h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap crumb"><a href="index.html">~</a> / <a href="ia.html">ia</a> / <span>demo-mock</span></div>
+
+<div class="demo-wrap">
+  <header class="demo-hero">
+    <div class="demo-kicker"><span class="pulse-dot"></span> demo interativa · 100% local</div>
+    <h1>Mock data inteligente</h1>
+    <p>Escolha um domínio ou descreva o seu. A demo gera JSON com IDs relacionados, datas ISO e valores plausíveis — sem API. Para dados mais ricos, use o prompt para IA.</p>
+  </header>
+
+  <div class="demo-panel">
+    <label>domínio rápido</label>
+    <div class="demo-chips" id="domainChips">
+      <button type="button" class="demo-chip active" data-domain="vet">clínica veterinária</button>
+      <button type="button" class="demo-chip" data-domain="ecommerce">e-commerce</button>
+      <button type="button" class="demo-chip" data-domain="saas">SaaS B2B</button>
+      <button type="button" class="demo-chip" data-domain="homelab">homelab / infra</button>
+      <button type="button" class="demo-chip" data-domain="custom">personalizado</button>
+    </div>
+    <div class="demo-row">
+      <div>
+        <label for="domainDesc" style="margin-top:0">descrição (opcional)</label>
+        <textarea id="domainDesc" placeholder="Ex.: clínica com tutores, pets, consultas e status de vacina"></textarea>
+      </div>
+      <div>
+        <label for="countInput" style="margin-top:0">registros</label>
+        <input type="number" id="countInput" min="3" max="20" value="8">
+      </div>
+    </div>
+    <div class="demo-actions">
+      <button type="button" class="demo-btn" id="btnGenerate">gerar JSON</button>
+      <button type="button" class="demo-btn secondary" id="btnCopyPrompt">copiar prompt para IA</button>
+      <button type="button" class="demo-btn secondary" id="btnClear">limpar</button>
+    </div>
+  </div>
+
+  <div class="demo-panel">
+    <label>resultado</label>
+    <div class="demo-result empty" id="resultBox">escolha um domínio e clique em gerar JSON</div>
+    <div class="demo-meta" id="resultMeta"></div>
+    <div class="demo-actions" style="margin-top:12px">
+      <button type="button" class="demo-btn secondary" id="btnCopyResult" disabled>copiar JSON</button>
+    </div>
+  </div>
+
+  <div class="demo-note">
+    <strong>como funciona</strong> · Templates locais com nomes, datas e relações entre entidades. Não chama API. Use “copiar prompt para IA” quando precisar de campos customizados ou volume maior.
+  </div>
+
+  <p style="margin-top:28px;font-family:var(--mono,monospace);font-size:13px;color:var(--text-faint,#5a6258)">
+    <a href="ia.html" style="color:var(--ia-amber,#c9a227)">← hub de IA</a>
+    · <a href="demo-commit-ia.html" style="color:var(--ia-amber,#c9a227)">demo: commits</a>
+    · <a href="artigo-hybrid-search.html" style="color:var(--ia-amber,#c9a227)">artigo: hybrid search</a>
+  </p>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+
+<script src="assets/js/site-nav.js?v=20260916d" defer></script>
+<script>
+(function () {
+  var firstNames = ['Ana','Bruno','Carla','Diego','Elena','Felipe','Giulia','Hugo','Iris','João','Karen','Lucas','Marina','Nuno','Olívia','Paulo','Rita','Sérgio','Tina','Vitor'];
+  var lastNames = ['Silva','Santos','Oliveira','Souza','Lima','Costa','Ferreira','Almeida','Ribeiro','Martins','Carvalho','Rocha','Gomes','Barbosa','Dias'];
+  var petNames = ['Thor','Luna','Bob','Mel','Max','Nina','Rex','Maya','Toby','Lola','Zeus','Bela','Simba','Mimi','Apollo'];
+  var species = ['cão','gato','pássaro','coelho'];
+  var breeds = { 'cão':['Labrador','SRD','Bulldog','Poodle'], 'gato':['Siamês','Persa','SRD','Maine Coon'], 'pássaro':['Canário','Calopsita'], 'coelho':['Anão','Angorá'] };
+  var products = ['Teclado mecânico','Headset USB','Monitor 27"','SSD 1TB','Mouse ergonômico','Webcam HD','Hub USB-C','Cadeira office'];
+  var plans = ['Starter','Pro','Business','Enterprise'];
+  var hosts = ['proxmox-01','k3s-worker-a','nas-backup','edge-router','pi-monitor'];
+  var services = ['nginx','postgres','redis','prometheus','grafana','traefik'];
+
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+  function id(prefix, n) { return prefix + '-' + String(n).padStart(3, '0'); }
+  function isoDate(daysAgo) {
+    var d = new Date();
+    d.setDate(d.getDate() - (daysAgo || Math.floor(Math.random() * 90)));
+    return d.toISOString().slice(0, 10);
+  }
+  function isoDateTime(daysAgo) {
+    var d = new Date();
+    d.setDate(d.getDate() - (daysAgo || Math.floor(Math.random() * 60)));
+    d.setHours(9 + Math.floor(Math.random() * 8), Math.floor(Math.random() * 60), 0, 0);
+    return d.toISOString().replace(/\.\d{3}Z$/, 'Z');
+  }
+  function email(first, last) {
+    return (first + '.' + last).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '') + '@email.com';
+  }
+  function phone() {
+    return '+55 11 9' + String(1000 + Math.floor(Math.random() * 9000)) + '-' + String(1000 + Math.floor(Math.random() * 9000));
+  }
+
+  function genVet(n) {
+    var tutors = [], pets = [], consultas = [];
+    for (var i = 1; i <= n; i++) {
+      var fn = pick(firstNames), ln = pick(lastNames);
+      tutors.push({ id: id('tut', i), name: fn + ' ' + ln, email: email(fn, ln), phone: phone(), created_at: isoDate(120 - i * 3) });
+    }
+    for (var j = 1; j <= n; j++) {
+      var sp = pick(species);
+      pets.push({
+        id: id('pet', j),
+        tutor_id: id('tut', ((j - 1) % n) + 1),
+        name: pick(petNames),
+        species: sp,
+        breed: pick(breeds[sp]),
+        birth_date: isoDate(365 + Math.floor(Math.random() * 2000)),
+        status: Math.random() > 0.15 ? 'ativo' : 'inativo'
+      });
+    }
+    var statuses = ['agendada', 'concluída', 'cancelada', 'em_andamento'];
+    for (var k = 1; k <= Math.min(n + 4, 15); k++) {
+      var petIdx = ((k - 1) % n) + 1;
+      consultas.push({
+        id: id('con', k),
+        pet_id: id('pet', petIdx),
+        tutor_id: id('tut', ((petIdx - 1) % n) + 1),
+        scheduled_at: isoDateTime(k * 2),
+        reason: pick(['check-up', 'vacina', 'consulta de rotina', 'emergência', 'retorno']),
+        status: pick(statuses),
+        notes: Math.random() > 0.6 ? null : 'Observação clínica de exemplo'
+      });
+    }
+    return { domain: 'clínica veterinária', tutors: tutors, pets: pets, consultas: consultas };
+  }
+
+  function genEcommerce(n) {
+    var customers = [], orders = [], items = [];
+    for (var i = 1; i <= n; i++) {
+      var fn = pick(firstNames), ln = pick(lastNames);
+      customers.push({ id: id('cus', i), name: fn + ' ' + ln, email: email(fn, ln), city: pick(['São Paulo','Curitiba','BH','Porto Alegre','Recife']), created_at: isoDate(200 - i * 5) });
+    }
+    var orderStatuses = ['pending', 'paid', 'shipped', 'delivered', 'cancelled'];
+    for (var j = 1; j <= n; j++) {
+      var oid = id('ord', j);
+      var total = 0;
+      var lineCount = 1 + Math.floor(Math.random() * 3);
+      for (var L = 0; L < lineCount; L++) {
+        var price = [49.9, 89, 129, 199, 299, 459][Math.floor(Math.random() * 6)];
+        var qty = 1 + Math.floor(Math.random() * 2);
+        total += price * qty;
+        items.push({ id: id('itm', j * 10 + L), order_id: oid, product: pick(products), unit_price: price, quantity: qty });
+      }
+      orders.push({
+        id: oid,
+        customer_id: id('cus', ((j - 1) % n) + 1),
+        status: pick(orderStatuses),
+        total: Math.round(total * 100) / 100,
+        created_at: isoDateTime(j * 3)
+      });
+    }
+    return { domain: 'e-commerce', customers: customers, orders: orders, order_items: items };
+  }
+
+  function genSaas(n) {
+    var orgs = [], users = [], subscriptions = [];
+    for (var i = 1; i <= Math.ceil(n / 2); i++) {
+      orgs.push({ id: id('org', i), name: pick(['Acme','Nimbus','Vertex','Orbit','Pulse']) + ' ' + pick(['Labs','Tech','Systems','IO']), plan: pick(plans), seats: 5 + Math.floor(Math.random() * 40), created_at: isoDate(300 - i * 20) });
+    }
+    for (var j = 1; j <= n; j++) {
+      var fn = pick(firstNames), ln = pick(lastNames);
+      users.push({
+        id: id('usr', j),
+        org_id: id('org', ((j - 1) % orgs.length) + 1),
+        name: fn + ' ' + ln,
+        email: email(fn, ln),
+        role: pick(['admin', 'member', 'billing', 'viewer']),
+        last_login_at: Math.random() > 0.2 ? isoDateTime(Math.floor(Math.random() * 14)) : null
+      });
+    }
+    for (var k = 1; k <= orgs.length; k++) {
+      subscriptions.push({
+        id: id('sub', k),
+        org_id: id('org', k),
+        status: pick(['active', 'trialing', 'past_due', 'canceled']),
+        mrr: [49, 99, 249, 799][Math.floor(Math.random() * 4)],
+        current_period_end: isoDate(-30 + Math.floor(Math.random() * 45))
+      });
+    }
+    return { domain: 'SaaS B2B', organizations: orgs, users: users, subscriptions: subscriptions };
+  }
+
+  function genHomelab(n) {
+    var nodes = [], containers = [], alerts = [];
+    for (var i = 1; i <= Math.min(n, 6); i++) {
+      nodes.push({
+        id: id('node', i),
+        hostname: hosts[(i - 1) % hosts.length] + (i > hosts.length ? '-' + i : ''),
+        role: pick(['hypervisor', 'worker', 'storage', 'edge']),
+        cpu_cores: pick([4, 8, 12, 16]),
+        ram_gb: pick([16, 32, 64]),
+        status: Math.random() > 0.1 ? 'up' : 'degraded'
+      });
+    }
+    for (var j = 1; j <= n; j++) {
+      containers.push({
+        id: id('ctr', j),
+        node_id: id('node', ((j - 1) % nodes.length) + 1),
+        name: pick(services) + (Math.random() > 0.5 ? '-' + j : ''),
+        image: pick(['nginx:1.27', 'postgres:16', 'redis:7', 'prom/prometheus:v2.54', 'grafana/grafana:11']),
+        status: pick(['running', 'running', 'running', 'exited', 'restarting']),
+        ports: pick(['80:80', '5432:5432', '6379:6379', '9090:9090', '3000:3000'])
+      });
+    }
+    for (var k = 1; k <= Math.min(n, 8); k++) {
+      alerts.push({
+        id: id('alr', k),
+        node_id: id('node', ((k - 1) % nodes.length) + 1),
+        severity: pick(['info', 'warning', 'critical']),
+        message: pick(['disk usage > 85%', 'high memory pressure', 'container restart loop', 'certificate expiring in 7d', 'backup job failed']),
+        fired_at: isoDateTime(k),
+        resolved: Math.random() > 0.5
+      });
+    }
+    return { domain: 'homelab / infra', nodes: nodes, containers: containers, alerts: alerts };
+  }
+
+  function genCustom(n, desc) {
+    var label = (desc || 'domínio customizado').slice(0, 80);
+    var records = [];
+    for (var i = 1; i <= n; i++) {
+      var fn = pick(firstNames), ln = pick(lastNames);
+      records.push({
+        id: id('rec', i),
+        name: fn + ' ' + ln,
+        email: email(fn, ln),
+        status: pick(['active', 'pending', 'archived']),
+        tags: [pick(['core', 'beta', 'legacy', 'vip'])],
+        created_at: isoDate(i * 4),
+        meta: { note: 'Ajuste o schema no prompt de IA para o domínio: ' + label }
+      });
+    }
+    return { domain: label, records: records, _hint: 'Use o botão “copiar prompt para IA” para um schema mais fiel ao domínio descrito.' };
+  }
+
+  var currentDomain = 'vet';
+  var chips = document.getElementById('domainChips');
+  var desc = document.getElementById('domainDesc');
+  var countInput = document.getElementById('countInput');
+  var resultBox = document.getElementById('resultBox');
+  var resultMeta = document.getElementById('resultMeta');
+  var btnGenerate = document.getElementById('btnGenerate');
+  var btnCopyPrompt = document.getElementById('btnCopyPrompt');
+  var btnCopyResult = document.getElementById('btnCopyResult');
+  var btnClear = document.getElementById('btnClear');
+
+  chips.querySelectorAll('.demo-chip').forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      chips.querySelectorAll('.demo-chip').forEach(function (c) { c.classList.remove('active'); });
+      chip.classList.add('active');
+      currentDomain = chip.dataset.domain;
+      var placeholders = {
+        vet: 'Clínica veterinária com tutores, pets, consultas e status',
+        ecommerce: 'Loja online com clientes, pedidos e itens',
+        saas: 'SaaS B2B com orgs, usuários e assinaturas',
+        homelab: 'Homelab com nodes, containers e alertas',
+        custom: 'Descreva entidades, campos e relações'
+      };
+      desc.placeholder = placeholders[currentDomain] || '';
+    });
+  });
+
+  function buildData() {
+    var n = Math.max(3, Math.min(20, parseInt(countInput.value, 10) || 8));
+    switch (currentDomain) {
+      case 'vet': return genVet(n);
+      case 'ecommerce': return genEcommerce(n);
+      case 'saas': return genSaas(n);
+      case 'homelab': return genHomelab(n);
+      default: return genCustom(n, desc.value.trim());
+    }
+  }
+
+  function promptForAI() {
+    var domainText = desc.value.trim() || {
+      vet: 'Clínica veterinária com histórico de consultas, pets e tutores',
+      ecommerce: 'E-commerce com clientes, pedidos e itens de pedido',
+      saas: 'SaaS B2B com organizações, usuários e assinaturas',
+      homelab: 'Homelab com nodes, containers Docker e alertas de monitoramento',
+      custom: 'domínio genérico com registros relacionados'
+    }[currentDomain];
+    var n = countInput.value || 8;
+    return 'Gere dados de mock realistas em JSON para o domínio abaixo.\n\nRegras:\n- Estrutura clara com arrays e objetos aninhados quando fizer sentido\n- IDs consistentes entre entidades relacionadas\n- Datas em ISO 8601\n- Valores plausíveis (não “foo/bar”)\n- Inclua edge cases (status cancelado, campos nulos, etc.)\n- Quantidade: cerca de ' + n + ' registros por entidade principal\n- Responda APENAS com JSON válido\n\nDomínio:\n' + domainText;
+  }
+
+  btnGenerate.addEventListener('click', function () {
+    var data = buildData();
+    var json = JSON.stringify(data, null, 2);
+    resultBox.textContent = json;
+    resultBox.classList.remove('empty');
+    resultMeta.textContent = 'gerado localmente · ' + json.length + ' caracteres · revise IDs e edge cases';
+    btnCopyResult.disabled = false;
+  });
+
+  btnCopyPrompt.addEventListener('click', function () {
+    navigator.clipboard.writeText(promptForAI()).then(function () {
+      btnCopyPrompt.textContent = 'prompt copiado!';
+      setTimeout(function () { btnCopyPrompt.textContent = 'copiar prompt para IA'; }, 1600);
+    }).catch(function () {
+      btnCopyPrompt.textContent = 'falha ao copiar';
+      setTimeout(function () { btnCopyPrompt.textContent = 'copiar prompt para IA'; }, 2000);
+    });
+  });
+
+  btnCopyResult.addEventListener('click', function () {
+    if (resultBox.classList.contains('empty')) return;
+    navigator.clipboard.writeText(resultBox.textContent).then(function () {
+      btnCopyResult.textContent = 'copiado!';
+      setTimeout(function () { btnCopyResult.textContent = 'copiar JSON'; }, 1600);
+    });
+  });
+
+  btnClear.addEventListener('click', function () {
+    desc.value = '';
+    resultBox.textContent = 'escolha um domínio e clique em gerar JSON';
+    resultBox.classList.add('empty');
+    resultMeta.textContent = '';
+    btnCopyResult.disabled = true;
+  });
+})();
+</script>
+<script src="assets/js/chat-bot.js?v=20260916e" defer></script>
+</body>
+</html>
