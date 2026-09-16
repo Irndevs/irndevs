@@ -47,15 +47,15 @@
   .filter-btn:hover { border-color: var(--amber-dim); color: var(--amber); }
   .filter-btn.active { background: var(--amber); color: #10130f; border-color: var(--amber); font-weight: 600; }
 
-  .posts { padding: 10px 0 50px; }
+  .posts { padding: 10px 0 50px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
 
-  .post { border-bottom: 1px solid var(--bg-line); padding: 26px 0; display: grid; grid-template-columns: 130px 1fr; gap: 22px; transition: background 0.2s ease; }
-  .post:hover { background: rgba(232,163,61,0.03); }
+  .post { border:1px solid var(--border); border-radius:12px; padding:20px; display:flex; flex-direction:column; gap:12px; min-height:220px; transition:background .2s ease,border-color .2s ease,transform .2s ease; }
+  .post:hover { background:rgba(232,163,61,0.03); border-color:var(--amber-dim); transform:translateY(-2px); }
   .post-meta-col { font-family: var(--mono); font-size: 12px; color: var(--text-faint); padding-top: 3px; }
   .post-meta-col .date { color: var(--text-dim); display: block; margin-bottom: 4px; }
   .post-tag { display: inline-block; font-family: var(--mono); font-size: 11px; color: var(--amber-dim); border: 1px solid var(--border); padding: 2px 7px; }
 
-  .post.featured { background: rgba(232,163,61,0.04); border: 1px solid var(--border); padding: 24px 20px; margin-bottom: 8px; }
+  .post.featured { grid-column:span 2; background:rgba(232,163,61,0.04); border:1px solid var(--amber-dim); padding:24px 20px; min-height:0; }
   .featured-flag { font-family: var(--mono); font-size: 11px; color: var(--amber); margin-bottom: 8px; }
 
   .post-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
@@ -67,8 +67,10 @@
   .read-more:hover { color: var(--amber); }
 
   @media (max-width: 640px) {
+    .posts { grid-template-columns:1fr; }
+    .post.featured { grid-column:auto; }
     .search-box { grid-template-columns: 1fr; align-items: stretch; gap: 8px; padding: 12px; }
-    .post { grid-template-columns: 1fr; gap: 6px; }
+    .post { gap:8px; }
   }
 
   footer { border-top: 1px solid var(--bg-line); padding: 36px 0; }

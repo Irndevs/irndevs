@@ -7,7 +7,7 @@
     <language>pt-BR</language>
     <atom:link href="https://irndevs.com/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
-      <title>Stack de Qualidade e confiabilidade com Docker</title>
+      <title>Stack de Observabilidade com Docker</title>
       <link>https://irndevs.com/artigo-observabilidade-docker.html</link>
       <guid>https://irndevs.com/artigo-observabilidade-docker.html</guid>
       <pubDate>Fri, 15 Aug 2026 10:00:00 GMT</pubDate>
@@ -54,6 +54,34 @@
       <guid>https://irndevs.com/artigo-ubuntu-server.html</guid>
       <pubDate>Fri, 18 Jul 2026 10:00:00 GMT</pubDate>
       <description>Base sólida antes de subir qualquer serviço.</description>
+    </item>
+    <item>
+      <title>SSH seguro em produção: chaves, bastion e auditoria</title>
+      <link>https://irndevs.com/artigo-ssh-seguro.html</link>
+      <guid>https://irndevs.com/artigo-ssh-seguro.html</guid>
+      <pubDate>Wed, 16 Sep 2026 10:00:00 GMT</pubDate>
+      <description>Chaves, configuração segura do sshd, bastion e auditoria de acessos.</description>
+    </item>
+    <item>
+      <title>systemd na prática: serviços confiáveis</title>
+      <link>https://irndevs.com/artigo-systemd-servicos.html</link>
+      <guid>https://irndevs.com/artigo-systemd-servicos.html</guid>
+      <pubDate>Wed, 16 Sep 2026 10:00:00 GMT</pubDate>
+      <description>Units, restart controlado, logs no journal e troubleshooting.</description>
+    </item>
+    <item>
+      <title>Backup 3-2-1 com Restic</title>
+      <link>https://irndevs.com/artigo-backup-3-2-1-restic.html</link>
+      <guid>https://irndevs.com/artigo-backup-3-2-1-restic.html</guid>
+      <pubDate>Wed, 16 Sep 2026 10:00:00 GMT</pubDate>
+      <description>Retenção, criptografia, cópia externa e restore testado.</description>
+    </item>
+    <item>
+      <title>Runbook Linux para produção</title>
+      <link>https://irndevs.com/artigo-linux-runbook-producao.html</link>
+      <guid>https://irndevs.com/artigo-linux-runbook-producao.html</guid>
+      <pubDate>Wed, 16 Sep 2026 10:00:00 GMT</pubDate>
+      <description>Checklist operacional de acesso, serviços, firewall, logs e rollback.</description>
     </item>
   </channel>
 </rss>

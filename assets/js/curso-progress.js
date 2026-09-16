@@ -6,7 +6,8 @@
 
   var COURSES = {
     python: { key: 'irn_python_progress', total: 8, pattern: /curso-python-modulo-(\d)/, cert: 'certificado-python.html', label: 'Python' },
-    docker: { key: 'irn_docker_progress', total: 6, pattern: /curso-docker-modulo-(\d)/, cert: 'certificado-docker.html', label: 'Docker' }
+    docker: { key: 'irn_docker_progress', total: 6, pattern: /curso-docker-modulo-(\d)/, cert: 'certificado-docker.html', label: 'Docker' },
+    linux: { key: 'irn_linux_progress', total: 6, pattern: /curso-linux-modulo-(\d)/, cert: 'certificado-linux.html', label: 'Linux' }
   };
 
   function detectCourse() {

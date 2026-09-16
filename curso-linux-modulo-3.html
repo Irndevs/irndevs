@@ -1,0 +1,22 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Linux 3 — systemd, processos e serviços | IRN Devs</title><meta name="description" content="Módulo 3 do curso Linux e Servidores em Produção: Aprenda a observar processos e criar serviços reproduzíveis com systemd."><link rel="canonical" href="https://irndevs.com/curso-linux-modulo-3.html"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/css/pages/curso-python.css"><link rel="stylesheet" href="assets/css/site-nav.css"><link rel="stylesheet" href="assets/css/motion.css"></head><body data-course="linux"><article class="wrap"><nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#linux">linux e servidores</a> / módulo 3</nav><div class="sec-head"><span class="amber">$</span> linux modulo_3.sh</div><h1>systemd, processos e serviços</h1><p class="lede">Aprenda a observar processos e criar serviços reproduzíveis com systemd.</p><div id="irn-progress-bar" data-progress="linux"></div><h2>O que você vai aprender</h2><ul><li>Inspecionar CPU, memória, sockets e logs</li><li>Criar unit files com usuário dedicado</li><li>Configurar restart, dependências e healthcheck básico</li></ul><h2>1. Observar antes de intervir</h2><pre><code>systemctl --failed
+systemctl status nginx
+ps aux --sort=-%mem | head
+free -h
+df -h
+ss -lntp</code></pre><p>Diagnóstico operacional começa por separar sintomas: processo parado, porta indisponível, disco cheio e serviço sem permissão exigem respostas diferentes.</p><h2>2. Um serviço mínimo</h2><pre><code>[Unit]
+Description=Worker IRN
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=worker
+WorkingDirectory=/opt/worker
+ExecStart=/opt/worker/.venv/bin/python worker.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target</code></pre><pre><code>sudo systemctl daemon-reload
+sudo systemctl enable --now irn-worker
+systemctl status irn-worker
+journalctl -u irn-worker -f</code></pre><div class="tip"><strong>DICA DE PRODUÇÃO</strong> Use <code>Restart=on-failure</code>, não um loop infinito dentro do código. O systemd deve ser responsável por supervisionar o processo.</div><h2>3. Limites e encerramento</h2><p>Defina timeout, memória e política de logs conforme a criticidade. Antes de matar um processo, descubra seu dono, unidade e motivo da falha.</p><h2>4. Exercício</h2><p>Empacote um pequeno worker Python como serviço, provoque uma falha controlada e confirme a reinicialização pelo journal.</p><h2>Sumário do curso</h2><div class="mod-sumario"><a class="mod-card" href="curso-linux-modulo-1.html"><span class="mod-card-n">01</span><span class="mod-card-name">Terminal, usuários e permissões</span></a><a class="mod-card" href="curso-linux-modulo-2.html"><span class="mod-card-n">02</span><span class="mod-card-name">SSH seguro e acesso remoto</span></a><a class="mod-card" href="curso-linux-modulo-3.html" aria-current="page"><span class="mod-card-n">03</span><span class="mod-card-name">systemd, processos e serviços</span></a><a class="mod-card" href="curso-linux-modulo-4.html"><span class="mod-card-n">04</span><span class="mod-card-name">Firewall, logs e Fail2ban</span></a><a class="mod-card" href="curso-linux-modulo-5.html"><span class="mod-card-n">05</span><span class="mod-card-name">Backup 3-2-1 com Restic e Rsync</span></a><a class="mod-card" href="curso-linux-modulo-6.html"><span class="mod-card-n">06</span><span class="mod-card-name">Projeto final: servidor Linux seguro</span></a></div><div class="aula-progress"><a class="btn ghost" href="curso-linux-modulo-2.html">← anterior</a><span class="dots"><b class="on"></b><b class="on"></b><b class="on"></b><b></b><b></b><b></b></span><a class="btn primary" href="curso-linux-modulo-4.html">próximo: Firewall, logs e Fail2ban →</a></div></article><footer><div class="wrap"><div>© 2026 irndevs</div><div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div></div></footer><script src="assets/js/site-nav.js?v=20260916c" defer></script><script src="assets/js/curso-progress.js?v=20260916c" defer></script><script src="assets/js/chat-bot.js?v=20260916c" defer></script></body></html>

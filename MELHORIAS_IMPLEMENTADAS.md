@@ -60,3 +60,13 @@ python3 scripts/validate-site.py
 - ebookIA*.jpg (4 imagens) ainda órfãs — decidir: apagar ou criar página de captura de leads
 - Conta duplicada: loja Next.js é projeto Supabase separado — decidir estratégia (magic link, ou unificar projetos)
 - Criar conta Plausible/Umami e ligar `IRN_ANALYTICS.enabled`
+
+
+## 2026-09-16 — Expansão editorial e nova trilha Linux
+
+- Adicionada a trilha **Linux e Servidores em Produção**, com 6 módulos, progresso local e certificado.
+- Criados os artigos `artigo-ssh-seguro.html`, `artigo-systemd-servicos.html`, `artigo-backup-3-2-1-restic.html` e `artigo-linux-runbook-producao.html`, com sumário, exemplos, dicas, avisos, troubleshooting e checklist.
+- Atualizados `cursos.html`, `blog.html`, `sitemap.xml`, `feed.xml`, `manifest.json` e o cache do service worker.
+- Blog convertido para grid responsivo de cards, com destaque ocupando duas colunas no desktop e uma no mobile.
+- Corrigidos títulos e metadados que exibiam “Qualidade e confiabilidade” no lugar de “Observabilidade”.
+- A versão expandida foi validada com 68 páginas HTML, zero referências locais quebradas, JSON-LD parseável e JavaScript sem erros sintáticos.

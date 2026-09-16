@@ -8,6 +8,7 @@ body{background:var(--bg);color:var(--text);font-family:"IBM Plex Sans",system-u
 .lede{color:var(--dim);max-width:640px}
 .sec-head{font-family:"IBM Plex Mono",monospace;color:var(--dim)}
 .sec-title{font-size:22px}
+.track-label{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--amber);letter-spacing:.02em;text-transform:lowercase;margin:34px 0 10px}
 .curso-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;margin-bottom:24px}
 .curso-tag{font-family:"IBM Plex Mono",monospace;color:#7ec87e;font-size:12px}
 .curso-meta{display:block;margin-top:10px;color:var(--dim);font-size:13px}
@@ -37,6 +38,8 @@ body{background:var(--bg);color:var(--text);font-family:"IBM Plex Sans",system-u
 .cta-final{padding:56px 0 40px}
 .cta-final h2{font-size:24px;margin-bottom:8px}
 .cta-final p{color:var(--dim);margin-bottom:20px}
+.wrap.cta-final a,.wrap + footer a,footer a{color:var(--dim);text-decoration:none;transition:color .2s ease}
+footer a:hover{color:var(--amber)}
 .faq-item{border:1px solid var(--border,#3a4a32);border-radius:10px;margin-bottom:10px;overflow:hidden;background:var(--card,#1a1f18)}
 .faq-item summary{padding:14px 16px;cursor:pointer;font-weight:600;list-style:none;color:var(--text,#e8e6e0)}
 .faq-item summary::-webkit-details-marker{display:none}
