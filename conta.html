@@ -127,6 +127,8 @@
         <div class="dash-card-title">alterar senha</div>
         <div id="secMsg" class="dash-msg" hidden></div>
         <form class="dash-form" id="pwForm">
+          <label for="oldpass">senha atual</label>
+          <input id="oldpass" type="password" required autocomplete="current-password" placeholder="••••••••">
           <label for="newpass">nova senha (mín. 6)</label>
           <input id="newpass" type="password" minlength="6" required autocomplete="new-password" placeholder="••••••••">
           <button class="dash-btn" type="submit">alterar senha →</button>
@@ -310,7 +312,10 @@ document.addEventListener('DOMContentLoaded', async function () {
   document.getElementById('pwForm').addEventListener('submit', async function (e) {
     e.preventDefault();
     try {
-      await IRNAuth.changePassword(document.getElementById('newpass').value);
+      await IRNAuth.changePassword(
+        document.getElementById('newpass').value,
+        document.getElementById('oldpass').value
+      );
       setMsg('secMsg', 'Senha alterada.', true);
       e.target.reset();
     } catch (err) {

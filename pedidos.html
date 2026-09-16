@@ -89,9 +89,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     d.onclick = function(){ location.href = 'pedido.html?id=' + r.id; };
     d.innerHTML = '<div class="dash-list-head"><span>#' + r.id + ' · ' + (r.status||'') + '</span><span>' +
       money(r.amount_cents, r.currency) + '</span></div><div class="dash-list-body">' +
-      (r.title||'') + (r.notes ? '
-' + r.notes : '') + '
-' +
+      (r.title||'') + (r.notes ? '<br>' + r.notes : '') + '<br>' +
       (r.created_at ? new Date(r.created_at).toLocaleString('pt-BR') : '') +
       '</div><div style="margin-top:6px;font-size:12px;color:var(--dash-amber)">ver detalhe →</div>';
     box.appendChild(d);

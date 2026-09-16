@@ -1,9 +1,92 @@
-ls -lah
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linux 1 — Terminal, usuários e permissões | IRN Devs</title>
+<link rel="canonical" href="https://irndevs.com/curso-linux-modulo-1.html">
+<meta name="description" content="Módulo 1 do curso Linux e Servidores em Produção: terminal, usuários, grupos, sudo e permissões de arquivo.">
+<link rel="stylesheet" href="assets/css/pages/curso-python.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
+<link rel="stylesheet" href="assets/css/motion.css">
+<meta property="og:title" content="Linux 1 — Terminal, usuários e permissões | IRN Devs">
+<meta property="og:description" content="Módulo 1: terminal, usuários, grupos, sudo e permissões de arquivo.">
+<meta property="og:url" content="https://irndevs.com/curso-linux-modulo-1.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
+<meta property="og:site_name" content="IRN Devs">
+</head>
+<body data-course="linux">
+<!-- nav: site-nav.js -->
+<article class="wrap">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#linux">linux e servidores</a> / módulo 1</nav>
+  <div class="sec-head"><span class="amber">$</span> linux modulo_1</div>
+  <h1>Terminal, usuários e permissões</h1>
+  <p class="lede">A base de tudo: navegar no shell com confiança, entender quem é quem no sistema e o que cada permissão realmente autoriza.</p>
+  <div id="irn-progress-bar" data-progress="linux"></div>
+
+  <h2>O que você vai aprender</h2>
+  <ul>
+    <li>Comandos essenciais de diagnóstico do sistema</li>
+    <li>Criar usuários e conceder acesso administrativo via grupo sudo</li>
+    <li>Ler e interpretar permissões de arquivo (dono, grupo, outros)</li>
+    <li>Por que evitar login direto como root em produção</li>
+  </ul>
+
+  <h2>1. Primeiro contato com o servidor</h2>
+  <p>Antes de mexer em qualquer configuração, vale mapear onde você está: quem é o usuário atual, quais grupos ele pertence e informações básicas da máquina. Esses comandos são o ponto de partida de qualquer diagnóstico.</p>
+  <pre><code>ls -lah
 whoami
 id
-hostnamectl</code></pre><p>O comando <code>id</code> mostra os grupos efetivos do usuário. Isso é mais confiável do que assumir que um usuário tem acesso só porque o nome parece administrativo.</p><h2>2. Usuários, grupos e sudo</h2><pre><code>sudo adduser deploy
+hostnamectl</code></pre>
+  <p>O comando <code>id</code> mostra os grupos efetivos do usuário. Isso é mais confiável do que assumir que um usuário tem acesso só porque o nome parece administrativo.</p>
+
+  <h2>2. Usuários, grupos e sudo</h2>
+  <p>Trabalhar como root o tempo todo é uma prática arriscada: qualquer comando errado tem alcance total sobre o sistema, e não há rastro de quem fez o quê. O padrão em produção é criar um usuário nominal por pessoa (ou por serviço) e conceder privilégios administrativos pontualmente via <code>sudo</code>.</p>
+  <pre><code>sudo adduser deploy
 sudo usermod -aG sudo deploy
 getent group sudo
-sudo -l -U deploy</code></pre><div class="tip"><strong>DICA DE PRODUÇÃO</strong> Use um usuário nominal para cada pessoa ou serviço. Evite compartilhar a conta root: isso melhora auditoria e reduz o impacto de uma credencial vazada.</div><h2>3. Entendendo permissões</h2><p>Cada arquivo possui permissões para proprietário, grupo e outros. Leia a saída de <code>ls -l</code> da esquerda para a direita: tipo, usuário, grupo e bits de leitura, escrita e execução.</p><pre><code>ls -l deploy.sh
+sudo -l -U deploy</code></pre>
+  <div class="tip"><strong>DICA DE PRODUÇÃO</strong> Use um usuário nominal para cada pessoa ou serviço. Evite compartilhar a conta root: isso melhora auditoria e reduz o impacto de uma credencial vazada.</div>
+
+  <h2>3. Entendendo permissões</h2>
+  <p>Cada arquivo possui permissões para proprietário, grupo e outros. Leia a saída de <code>ls -l</code> da esquerda para a direita: tipo, usuário, grupo e bits de leitura, escrita e execução.</p>
+  <pre><code>ls -l deploy.sh
 sudo chown deploy:deploy deploy.sh
-chmod 750 deploy.sh
+chmod 750 deploy.sh</code></pre>
+  <p>No exemplo acima, <code>750</code> dá leitura/escrita/execução ao dono, leitura/execução ao grupo, e nada para os demais. É um bom ponto de partida para scripts de deploy que só o próprio usuário e sua equipe devem rodar.</p>
+
+  <div class="exercise" data-solution="Crie um usuário 'deploy', adicione-o ao grupo sudo, confirme com 'sudo -l -U deploy' e ajuste as permissões de um script de exemplo para 750.">
+    <strong>EXERCÍCIO</strong>
+    Crie um usuário chamado <code>deploy</code>, adicione-o ao grupo <code>sudo</code> e confirme os privilégios com <code>sudo -l -U deploy</code>. Depois crie um arquivo <code>deploy.sh</code> e ajuste suas permissões para <code>750</code>.
+  </div>
+
+  <h2>Sumário do curso</h2>
+  <div class="mod-sumario">
+    <a class="mod-card" href="curso-linux-modulo-1.html" aria-current="page"><span class="mod-card-n">01</span><span class="mod-card-name">Terminal, usuários e permissões</span></a>
+    <a class="mod-card" href="curso-linux-modulo-2.html"><span class="mod-card-n">02</span><span class="mod-card-name">SSH seguro e acesso remoto</span></a>
+    <a class="mod-card" href="curso-linux-modulo-3.html"><span class="mod-card-n">03</span><span class="mod-card-name">systemd, processos e serviços</span></a>
+    <a class="mod-card" href="curso-linux-modulo-4.html"><span class="mod-card-n">04</span><span class="mod-card-name">Firewall, logs e Fail2ban</span></a>
+    <a class="mod-card" href="curso-linux-modulo-5.html"><span class="mod-card-n">05</span><span class="mod-card-name">Backup 3-2-1 com Restic e Rsync</span></a>
+    <a class="mod-card" href="curso-linux-modulo-6.html"><span class="mod-card-n">06</span><span class="mod-card-name">Projeto final: servidor seguro</span></a>
+  </div>
+  <div class="aula-progress">
+    <a class="btn ghost" href="cursos.html">← todos os cursos</a>
+    <span class="dots"><b class="on"></b><b></b><b></b><b></b><b></b><b></b></span>
+    <a class="btn primary" href="curso-linux-modulo-2.html">próximo →</a>
+  </div>
+</article>
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260916c" defer></script>
+<script src="assets/js/curso-progress.js?v=20260916d" defer></script>
+  <script src="assets/js/chat-bot.js?v=20260916e" defer></script>
+</body>
+</html>

@@ -1,12 +1,60 @@
-sudo ufw default deny incoming
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linux 4 — Firewall, logs e Fail2ban | IRN Devs</title>
+<link rel="canonical" href="https://irndevs.com/curso-linux-modulo-4.html">
+<meta name="description" content="Módulo 4 do curso Linux e Servidores em Produção: firewall com UFW, leitura de logs e bloqueio automático com Fail2ban.">
+<link rel="stylesheet" href="assets/css/pages/curso-python.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
+<link rel="stylesheet" href="assets/css/motion.css">
+<meta property="og:title" content="Linux 4 — Firewall, logs e Fail2ban | IRN Devs">
+<meta property="og:description" content="Módulo 4: firewall com UFW, leitura de logs e bloqueio automático com Fail2ban.">
+<meta property="og:url" content="https://irndevs.com/curso-linux-modulo-4.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
+<meta property="og:site_name" content="IRN Devs">
+</head>
+<body data-course="linux">
+<!-- nav: site-nav.js -->
+<article class="wrap">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#linux">linux e servidores</a> / módulo 4</nav>
+  <div class="sec-head"><span class="amber">$</span> linux modulo_4</div>
+  <h1>Firewall, logs e Fail2ban</h1>
+  <p class="lede">Fechar as portas que não precisam estar abertas, aprender a ler os logs que contam a história de um incidente, e automatizar o bloqueio de quem insiste em tentar invadir.</p>
+  <div id="irn-progress-bar" data-progress="linux"></div>
+
+  <h2>O que você vai aprender</h2>
+  <ul>
+    <li>Configurar um firewall com UFW seguindo o princípio de negar por padrão</li>
+    <li>Filtrar e ler logs do sistema por severidade e por serviço</li>
+    <li>Instalar e configurar o Fail2ban para banir tentativas de força bruta</li>
+  </ul>
+
+  <h2>1. Firewall com UFW</h2>
+  <p>A regra de ouro de um firewall é negar tudo por padrão e liberar só o necessário. No UFW (Uncomplicated Firewall), isso é direto: defina as políticas padrão, libere as portas dos serviços que você realmente usa, e só então ative.</p>
+  <pre><code>sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw allow 22/tcp comment 'SSH'
 sudo ufw allow 80/tcp
 sudo ufw allow 443/tcp
 sudo ufw enable
-sudo ufw status verbose</code></pre><div class="warn"><strong>ATENÇÃO</strong> Libere a porta SSH antes de ativar o firewall. Em uma VPS, mantenha o console do provedor disponível.</div><h2>2. Logs que explicam o incidente</h2><pre><code>sudo journalctl -p warning..alert -b
+sudo ufw status verbose</code></pre>
+  <div class="warn"><strong>ATENÇÃO</strong> Libere a porta SSH antes de ativar o firewall. Em uma VPS, mantenha o console do provedor disponível.</div>
+
+  <h2>2. Logs que explicam o incidente</h2>
+  <p>Quando algo dá errado, os logs são a primeira fonte de verdade. O <code>journalctl</code> permite filtrar por prioridade e por janela de tempo, o que evita vasculhar milhares de linhas irrelevantes.</p>
+  <pre><code>sudo journalctl -p warning..alert -b
 sudo journalctl -u ssh --since "1 hour ago"
-sudo tail -f /var/log/auth.log</code></pre><h2>3. Fail2ban</h2><pre><code>sudo tee /etc/fail2ban/jail.d/sshd.local &lt;&lt;'EOF'
+sudo tail -f /var/log/auth.log</code></pre>
+
+  <h2>3. Fail2ban</h2>
+  <p>Mesmo com autenticação por chave, é comum ver um volume enorme de tentativas automatizadas de login contra a porta 22. O Fail2ban monitora os logs e bane temporariamente IPs que ultrapassam um limite de tentativas.</p>
+  <pre><code>sudo tee /etc/fail2ban/jail.d/sshd.local &lt;&lt;'EOF'
 [sshd]
 enabled = true
 port = ssh
@@ -14,4 +62,37 @@ maxretry = 5
 findtime = 10m
 bantime = 1h
 EOF
-sudo systemctl enable --now fail2ban
+sudo systemctl enable --now fail2ban</code></pre>
+  <p>Com <code>maxretry = 5</code> e <code>findtime = 10m</code>, um IP que errar 5 vezes em 10 minutos leva um ban de 1 hora. Ajuste esses valores conforme o perfil de tráfego do seu servidor.</p>
+
+  <div class="exercise" data-solution="Configure o UFW negando entrada por padrão e liberando só SSH, HTTP e HTTPS. Instale o Fail2ban com uma jail para sshd e confirme o status com fail2ban-client status sshd.">
+    <strong>EXERCÍCIO</strong>
+    Configure o UFW liberando apenas as portas 22, 80 e 443, instale o Fail2ban com a jail de SSH acima, e confirme com <code>sudo fail2ban-client status sshd</code>.
+  </div>
+
+  <h2>Sumário do curso</h2>
+  <div class="mod-sumario">
+    <a class="mod-card" href="curso-linux-modulo-1.html"><span class="mod-card-n">01</span><span class="mod-card-name">Terminal, usuários e permissões</span></a>
+    <a class="mod-card" href="curso-linux-modulo-2.html"><span class="mod-card-n">02</span><span class="mod-card-name">SSH seguro e acesso remoto</span></a>
+    <a class="mod-card" href="curso-linux-modulo-3.html"><span class="mod-card-n">03</span><span class="mod-card-name">systemd, processos e serviços</span></a>
+    <a class="mod-card" href="curso-linux-modulo-4.html" aria-current="page"><span class="mod-card-n">04</span><span class="mod-card-name">Firewall, logs e Fail2ban</span></a>
+    <a class="mod-card" href="curso-linux-modulo-5.html"><span class="mod-card-n">05</span><span class="mod-card-name">Backup 3-2-1 com Restic e Rsync</span></a>
+    <a class="mod-card" href="curso-linux-modulo-6.html"><span class="mod-card-n">06</span><span class="mod-card-name">Projeto final: servidor seguro</span></a>
+  </div>
+  <div class="aula-progress">
+    <a class="btn ghost" href="curso-linux-modulo-3.html">← anterior</a>
+    <span class="dots"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b></b><b></b></span>
+    <a class="btn primary" href="curso-linux-modulo-5.html">próximo →</a>
+  </div>
+</article>
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260916c" defer></script>
+<script src="assets/js/curso-progress.js?v=20260916d" defer></script>
+  <script src="assets/js/chat-bot.js?v=20260916e" defer></script>
+</body>
+</html>

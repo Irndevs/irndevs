@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Demo: Conversor de linguagens — IRN Devs</title>
-<meta name="description" content="Monte o prompt ideal para converter código entre linguagens (Python, TypeScript, Go, Rust…). Demo local + cópia para ChatGPT/Claude/Cursor.">
+<title>Demo: Conversor de linguagens (motor real) — IRN Devs</title>
+<meta name="description" content="Motor de conversão real Python ⇄ JavaScript ⇄ TypeScript no browser + prompt estruturado para código complexo. IRN Devs.">
 <link rel="stylesheet" href="assets/css/pages/ia.css">
 <link rel="stylesheet" href="assets/css/site-nav.css">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
-<meta property="og:title" content="Demo: Conversor de linguagens — IRN Devs">
-<meta property="og:description" content="Prompt estruturado para conversão idiomática entre linguagens.">
+<meta property="og:title" content="Demo: Conversor de linguagens (motor real) — IRN Devs">
+<meta property="og:description" content="Conversão local Python ⇄ JS ⇄ TS + prompt para LLM em casos complexos.">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://irndevs.com/demo-conversor-linguagens.html">
 <meta property="og:url" content="https://irndevs.com/demo-conversor-linguagens.html">
@@ -23,7 +23,7 @@
   .demo-wrap { max-width: 900px; margin: 0 auto; padding: 0 28px 60px; }
   .demo-hero { padding: 36px 0 28px; }
   .demo-hero h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin: 10px 0 12px; line-height: 1.25; }
-  .demo-hero p { color: var(--text-dim, #a8b0a0); font-size: 15px; max-width: 620px; }
+  .demo-hero p { color: var(--text-dim, #a8b0a0); font-size: 15px; max-width: 640px; }
   .demo-kicker { font-family: var(--mono, monospace); font-size: 12px; color: var(--ia-amber, #c9a227); display: flex; align-items: center; gap: 8px; }
   .demo-panel { background: var(--bg-raised, #161a14); border: 1px solid var(--border, #2a3028); padding: 20px; margin-bottom: 20px; }
   .demo-panel label { display: block; font-family: var(--mono, monospace); font-size: 12px; color: var(--ia-amber, #c9a227); margin-bottom: 8px; }
@@ -48,10 +48,12 @@
   .demo-btn:hover { background: var(--ia-amber, #c9a227); color: #10130f; }
   .demo-btn.secondary { border-color: var(--border, #2a3028); color: var(--text-dim, #a8b0a0); }
   .demo-btn.secondary:hover { border-color: var(--ia-amber, #c9a227); color: var(--ia-amber, #c9a227); background: transparent; }
+  .demo-btn.primary-local { background: var(--ia-amber, #c9a227); color: #10130f; border-color: var(--ia-amber, #c9a227); font-weight: 600; }
+  .demo-btn.primary-local:hover { filter: brightness(1.08); }
   .demo-result {
     background: #0c0e0b; border: 1px solid var(--border, #2a3028); padding: 16px 18px;
     font-family: var(--mono, monospace); font-size: 12px; line-height: 1.5; color: #7dcea0;
-    white-space: pre-wrap; word-break: break-word; max-height: 380px; overflow: auto; min-height: 72px;
+    white-space: pre-wrap; word-break: break-word; max-height: 420px; overflow: auto; min-height: 72px;
   }
   .demo-result.empty { color: var(--text-faint, #5a6258); }
   .demo-meta { font-family: var(--mono, monospace); font-size: 11px; color: var(--text-faint, #5a6258); margin-top: 10px; }
@@ -66,6 +68,7 @@
     font-size: 14px; color: var(--text-dim, #a8b0a0); line-height: 1.55;
   }
   .demo-note strong { color: var(--ia-amber, #c9a227); font-family: var(--mono, monospace); font-size: 12px; }
+  .badge-real { display: inline-block; font-family: var(--mono,monospace); font-size: 10px; padding: 2px 7px; border: 1px solid var(--ia-amber,#c9a227); color: var(--ia-amber,#c9a227); margin-left: 8px; vertical-align: middle; }
   @media (max-width: 640px) {
     .lang-row { grid-template-columns: 1fr; }
     .lang-arrow { padding: 0; transform: rotate(90deg); }
@@ -79,9 +82,13 @@
 
 <div class="demo-wrap">
   <header class="demo-hero">
-    <div class="demo-kicker"><span class="pulse-dot"></span> demo interativa · prompt estruturado</div>
-    <h1>Conversor de linguagens</h1>
-    <p>Escolha origem e destino, cole o código e gere um <strong>prompt de conversão</strong> pronto para colar no ChatGPT, Claude ou Cursor. A conversão real de código complexo exige um LLM — esta demo monta a instrução certa e exemplos rápidos.</p>
+    <div class="demo-kicker"><span class="pulse-dot"></span> demo interativa · motor local + prompt</div>
+    <h1>Conversor de linguagens <span class="badge-real">MOTOR REAL</span></h1>
+    <p>
+      Motor de conversão <strong>local</strong> (sem API) para <strong>Python ⇄ JavaScript ⇄ TypeScript</strong>.
+      Transforma funções, classes, loops, condicionais e tipos com regras e heurísticas no browser.
+      Para código complexo (ou outras linguagens) use o prompt estruturado para ChatGPT/Claude/Cursor.
+    </p>
   </header>
 
   <div class="demo-panel">
@@ -98,7 +105,6 @@
           <option value="C#">C#</option>
           <option value="PHP">PHP</option>
           <option value="Ruby">Ruby</option>
-          <option value="SQL">SQL</option>
         </select>
       </div>
       <div class="lang-arrow">→</div>
@@ -106,15 +112,14 @@
         <label for="langTo">para</label>
         <select id="langTo">
           <option value="TypeScript">TypeScript</option>
-          <option value="Python">Python</option>
           <option value="JavaScript">JavaScript</option>
+          <option value="Python">Python</option>
           <option value="Go">Go</option>
           <option value="Rust">Rust</option>
           <option value="Java">Java</option>
           <option value="C#">C#</option>
           <option value="PHP">PHP</option>
           <option value="Ruby">Ruby</option>
-          <option value="SQL">SQL</option>
         </select>
       </div>
     </div>
@@ -123,42 +128,45 @@
     <textarea id="codeInput" spellcheck="false" placeholder="Cole a função ou módulo aqui..."></textarea>
     <div class="demo-ex">
       <button type="button" data-ex="py-fn">ex: Python função</button>
+      <button type="button" data-ex="py-class">ex: Python class</button>
       <button type="button" data-ex="js-async">ex: JS async</button>
-      <button type="button" data-ex="go-struct">ex: Go struct</button>
+      <button type="button" data-ex="ts-interface">ex: TS interface</button>
     </div>
 
     <div class="opts">
       <label><input type="checkbox" id="optTypes" checked> tipos / interfaces no destino</label>
-      <label><input type="checkbox" id="optTests" checked> testes unitários equivalentes</label>
+      <label><input type="checkbox" id="optTests"> testes unitários equivalentes (prompt)</label>
       <label><input type="checkbox" id="optIdioms" checked> idioms da linguagem destino</label>
       <label><input type="checkbox" id="optGaps" checked> listar o que não mapeia 1:1</label>
     </div>
 
     <div class="demo-actions">
-      <button type="button" class="demo-btn" id="btnPrompt">gerar e copiar prompt</button>
+      <button type="button" class="demo-btn primary-local" id="btnConvert">converter local (motor real)</button>
+      <button type="button" class="demo-btn secondary" id="btnPrompt">gerar e copiar prompt</button>
       <button type="button" class="demo-btn secondary" id="btnPreview">pré-visualizar prompt</button>
       <button type="button" class="demo-btn secondary" id="btnClear">limpar</button>
     </div>
   </div>
 
   <div class="demo-panel">
-    <label>prompt / saída</label>
-    <div class="demo-result empty" id="resultBox">selecione linguagens, cole o código e gere o prompt</div>
+    <label>saída / prompt</label>
+    <div class="demo-result empty" id="resultBox">escolha Python/JS/TS, cole o código e clique em “converter local”</div>
     <div class="demo-meta" id="resultMeta"></div>
     <div class="demo-actions" style="margin-top:12px">
-      <button type="button" class="demo-btn secondary" id="btnCopy" disabled>copiar de novo</button>
+      <button type="button" class="demo-btn secondary" id="btnCopy" disabled>copiar saída</button>
     </div>
   </div>
 
   <div class="demo-note">
-    <strong>honestidade</strong> · Não há modelo de IA rodando nesta página. O valor está no prompt estruturado (regras de preservação de lógica, tipos, testes e gaps). Cole no seu assistente favorito para obter o código convertido.
+    <strong>como funciona</strong> · O motor local aplica transformações baseadas em regras (keywords, sintaxe, tipos e padrões comuns) entre Python, JavaScript e TypeScript.
+    Não é um compilador completo: list comprehensions complexas, decorators avançados, genéricos profundos e macros podem exigir o prompt + LLM.
+    Nenhuma chamada de rede — o código não sai do seu browser.
   </div>
 
   <p style="margin-top:28px;font-family:var(--mono,monospace);font-size:13px;color:var(--text-faint,#5a6258)">
     <a href="ia.html" style="color:var(--ia-amber,#c9a227)">← hub de IA</a>
     · <a href="demo-commit-ia.html" style="color:var(--ia-amber,#c9a227)">demo: commits</a>
     · <a href="demo-mock-data.html" style="color:var(--ia-amber,#c9a227)">demo: mock data</a>
-    · <a href="artigo-checklist-rag.html" style="color:var(--ia-amber,#c9a227)">checklist RAG</a>
   </p>
 </div>
 
@@ -172,18 +180,24 @@
 <script src="assets/js/site-nav.js?v=20260916d" defer></script>
 <script>
 (function () {
+  'use strict';
+
   var examples = {
     'py-fn': {
       from: 'Python', to: 'TypeScript',
-      code: 'def validate_token(token: str, secret: str) -> dict:\n    if not token:\n        raise ValueError("missing token")\n    payload = jwt.decode(token, secret, algorithms=["HS256"])\n    return payload\n'
+      code: 'def fetch_user(user_id: int) -> dict:\n    """Busca usuário por ID."""\n    if user_id <= 0:\n        raise ValueError("id inválido")\n    response = requests.get(f"/api/users/{user_id}")\n    if response.status_code != 200:\n        raise RuntimeError(f"HTTP {response.status_code}")\n    return response.json()\n'
+    },
+    'py-class': {
+      from: 'Python', to: 'TypeScript',
+      code: 'class UserService:\n    def __init__(self, base_url: str):\n        self.base_url = base_url\n        self._cache = {}\n\n    def get(self, user_id: int) -> dict | None:\n        if user_id in self._cache:\n            return self._cache[user_id]\n        data = self._fetch(user_id)\n        if data:\n            self._cache[user_id] = data\n        return data\n\n    def _fetch(self, user_id: int) -> dict | None:\n        # placeholder\n        return {"id": user_id, "name": "Ana"}\n'
     },
     'js-async': {
       from: 'JavaScript', to: 'Python',
-      code: 'async function fetchUser(id) {\n  const res = await fetch(`/api/users/${id}`);\n  if (!res.ok) throw new Error(`HTTP ${res.status}`);\n  return res.json();\n}\n'
+      code: 'async function fetchUser(id) {\n  const res = await fetch(`/api/users/${id}`);\n  if (!res.ok) throw new Error(`HTTP ${res.status}`);\n  return res.json();\n}\n\nfunction sum(arr) {\n  return arr.reduce((a, b) => a + b, 0);\n}\n'
     },
-    'go-struct': {
-      from: 'Go', to: 'Rust',
-      code: 'type User struct {\n    ID    string `json:"id"`\n    Email string `json:"email"`\n    Active bool  `json:"active"`\n}\n\nfunc (u User) IsValid() bool {\n    return u.ID != "" && strings.Contains(u.Email, "@")\n}\n'
+    'ts-interface': {
+      from: 'TypeScript', to: 'Python',
+      code: 'interface User {\n  id: number;\n  name: string;\n  active?: boolean;\n}\n\nexport async function getUser(id: number): Promise<User> {\n  const res = await fetch(`/api/users/${id}`);\n  if (!res.ok) throw new Error(`HTTP ${res.status}`);\n  return res.json() as User;\n}\n'
     }
   };
 
@@ -192,6 +206,7 @@
   var codeInput = document.getElementById('codeInput');
   var resultBox = document.getElementById('resultBox');
   var resultMeta = document.getElementById('resultMeta');
+  var btnConvert = document.getElementById('btnConvert');
   var btnPrompt = document.getElementById('btnPrompt');
   var btnPreview = document.getElementById('btnPreview');
   var btnCopy = document.getElementById('btnCopy');
@@ -199,7 +214,7 @@
 
   document.querySelectorAll('.demo-ex button').forEach(function (b) {
     b.addEventListener('click', function () {
-      var ex = examples[b.dataset.ex];
+      var ex = examples[b.getAttribute('data-ex')];
       if (!ex) return;
       langFrom.value = ex.from;
       langTo.value = ex.to;
@@ -207,22 +222,512 @@
     });
   });
 
+  var REAL_PAIR = { Python: true, JavaScript: true, TypeScript: true };
+
+  function isRealPair(from, to) {
+    return REAL_PAIR[from] && REAL_PAIR[to] && from !== to;
+  }
+
+  function indentOf(line) {
+    var m = line.match(/^(\s*)/);
+    return m ? m[1].length : 0;
+  }
+
+  function spaces(n) {
+    return new Array(Math.max(0, n) + 1).join(' ');
+  }
+
+  function mapType(t) {
+    if (!t) return 'any';
+    t = t.trim();
+    var map = {
+      'int': 'number', 'float': 'number', 'str': 'string', 'bool': 'boolean',
+      'None': 'null', 'dict': 'Record<string, any>', 'list': 'any[]',
+      'Any': 'any', 'List': 'any[]', 'Dict': 'Record<string, any>',
+      'Optional': 'any | null', 'Tuple': '[any]', 'Callable': 'Function'
+    };
+    if (t.indexOf('|') >= 0) {
+      return t.split('|').map(function (p) { return mapType(p.trim()); }).join(' | ');
+    }
+    var generic = t.match(/^(\w+)\[(.+)\]$/);
+    if (generic) {
+      if (generic[1] === 'list' || generic[1] === 'List') return mapType(generic[2]) + '[]';
+      if (generic[1] === 'dict' || generic[1] === 'Dict') {
+        var parts = generic[2].split(',').map(function (s) { return s.trim(); });
+        return 'Record<' + mapType(parts[0]) + ', ' + mapType(parts[1] || 'any') + '>';
+      }
+      if (generic[1] === 'Optional') return mapType(generic[2]) + ' | null';
+    }
+    return map[t] || t;
+  }
+
+  function convertExprPy(expr) {
+    return expr
+      .replace(/\bTrue\b/g, 'true')
+      .replace(/\bFalse\b/g, 'false')
+      .replace(/\bNone\b/g, 'null')
+      .replace(/\band\b/g, '&&')
+      .replace(/\bor\b/g, '||')
+      .replace(/\bnot\b/g, '!')
+      .replace(/\bself\b/g, 'this')
+      .replace(/f(["'])(.+?)\1/g, function (_, q, inner) {
+        return '`' + inner.replace(/\{([^}]+)\}/g, '${$1}') + '`';
+      });
+  }
+
+  function pyToJsTs(code, toTS, opts) {
+    var lines = code.replace(/\r\n/g, '\n').split('\n');
+    var out = [];
+    var gaps = [];
+    var i = 0;
+    var classStack = [];
+
+    while (i < lines.length) {
+      var line = lines[i];
+      var ind = indentOf(line);
+      var trimmed = line.trim();
+
+      if (!trimmed) { out.push(''); i++; continue; }
+      if (trimmed.startsWith('#')) {
+        out.push(spaces(ind) + '// ' + trimmed.slice(1).trim());
+        i++; continue;
+      }
+
+      if (trimmed.startsWith('"""') || trimmed.startsWith("'''")) {
+        var q = trimmed.slice(0, 3);
+        var doc = trimmed.slice(3);
+        if (doc.endsWith(q)) {
+          out.push(spaces(ind) + '/** ' + doc.slice(0, -3).trim() + ' */');
+          i++; continue;
+        }
+        var buf = [doc];
+        i++;
+        while (i < lines.length && lines[i].indexOf(q) < 0) {
+          buf.push(lines[i]);
+          i++;
+        }
+        if (i < lines.length) {
+          var last = lines[i];
+          buf.push(last.slice(0, last.indexOf(q)));
+          i++;
+        }
+        out.push(spaces(ind) + '/**');
+        buf.forEach(function (d) { out.push(spaces(ind) + ' * ' + d.trim()); });
+        out.push(spaces(ind) + ' */');
+        continue;
+      }
+
+      if (/^import\s+/.test(trimmed) || /^from\s+\S+\s+import\s+/.test(trimmed)) {
+        gaps.push('import: ' + trimmed);
+        out.push(spaces(ind) + '// TODO: ' + trimmed);
+        i++; continue;
+      }
+
+      var classM = trimmed.match(/^class\s+(\w+)(?:\(([^)]*)\))?\s*:/);
+      if (classM) {
+        var cname = classM[1];
+        var bases = (classM[2] || '').split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+        var extendsPart = (bases.length && bases[0] !== 'object') ? (' extends ' + bases[0]) : '';
+        out.push(spaces(ind) + 'class ' + cname + extendsPart + ' {');
+        classStack.push({ indent: ind });
+        i++; continue;
+      }
+
+      var defM = trimmed.match(/^(async\s+)?def\s+(\w+)\s*\((.*)\)\s*(?:->\s*([^:]+))?\s*:/);
+      if (defM) {
+        var isAsync = !!defM[1];
+        var fname = defM[2];
+        var argsRaw = defM[3];
+        var retType = defM[4] ? mapType(defM[4].trim()) : '';
+        var isMethod = classStack.length && ind > classStack[classStack.length - 1].indent;
+        var args = argsRaw.split(',').map(function (a) { return a.trim(); }).filter(Boolean);
+        if (isMethod && args[0] === 'self') args.shift();
+
+        var jsArgs = args.map(function (a) {
+          var parts = a.split('=');
+          var left = parts[0].trim();
+          var defVal = parts[1] ? convertExprPy(parts[1].trim()) : null;
+          var nameType = left.split(':');
+          var aname = nameType[0].trim();
+          var atype = nameType[1] ? mapType(nameType[1].trim()) : '';
+          var s = aname;
+          if (toTS && atype) s += ': ' + atype;
+          if (defVal !== null) s += ' = ' + defVal;
+          return s;
+        }).join(', ');
+
+        var prefix = isAsync ? 'async ' : '';
+        var ret = (toTS && retType) ? (': ' + (isAsync && retType.indexOf('Promise') < 0 ? 'Promise<' + retType + '>' : retType)) : '';
+
+        if (isMethod && fname === '__init__') {
+          out.push(spaces(ind) + 'constructor(' + jsArgs + ') {');
+        } else if (isMethod) {
+          out.push(spaces(ind) + prefix + fname + '(' + jsArgs + ')' + ret + ' {');
+        } else {
+          out.push(spaces(ind) + 'function ' + fname + '(' + jsArgs + ')' + ret + ' {');
+        }
+        i++; continue;
+      }
+
+      if (/^elif\s+/.test(trimmed)) {
+        out.push(spaces(ind) + '} else if (' + convertExprPy(trimmed.replace(/^elif\s+/, '').replace(/:\s*$/, '')) + ') {');
+        i++; continue;
+      }
+      if (/^else\s*:/.test(trimmed)) {
+        out.push(spaces(ind) + '} else {');
+        i++; continue;
+      }
+      if (/^if\s+/.test(trimmed)) {
+        out.push(spaces(ind) + 'if (' + convertExprPy(trimmed.replace(/^if\s+/, '').replace(/:\s*$/, '')) + ') {');
+        i++; continue;
+      }
+
+      var forRange = trimmed.match(/^for\s+(\w+)\s+in\s+range\s*\(([^)]+)\)\s*:/);
+      if (forRange) {
+        var v = forRange[1];
+        var argsR = forRange[2].split(',').map(function (s) { return s.trim(); });
+        var start = '0', end = argsR[0], step = '1';
+        if (argsR.length >= 2) { start = argsR[0]; end = argsR[1]; }
+        if (argsR.length >= 3) step = argsR[2];
+        out.push(spaces(ind) + 'for (let ' + v + ' = ' + start + '; ' + v + ' < ' + end + '; ' + v + ' += ' + step + ') {');
+        i++; continue;
+      }
+
+      var forIn = trimmed.match(/^for\s+(\w+)\s+in\s+(.+)\s*:/);
+      if (forIn) {
+        out.push(spaces(ind) + 'for (const ' + forIn[1] + ' of ' + convertExprPy(forIn[2]) + ') {');
+        i++; continue;
+      }
+
+      if (/^while\s+/.test(trimmed)) {
+        out.push(spaces(ind) + 'while (' + convertExprPy(trimmed.replace(/^while\s+/, '').replace(/:\s*$/, '')) + ') {');
+        i++; continue;
+      }
+
+      if (/^try\s*:/.test(trimmed)) { out.push(spaces(ind) + 'try {'); i++; continue; }
+      if (/^except\b/.test(trimmed)) {
+        var em = trimmed.match(/^except\s+(\w+)?(?:\s+as\s+(\w+))?\s*:/);
+        out.push(spaces(ind) + '} catch (' + ((em && em[2]) || 'e') + ') {');
+        i++; continue;
+      }
+      if (/^finally\s*:/.test(trimmed)) { out.push(spaces(ind) + '} finally {'); i++; continue; }
+
+      if (/^return\b/.test(trimmed)) {
+        var retExpr = trimmed.replace(/^return\s*/, '').trim();
+        out.push(spaces(ind) + 'return' + (retExpr ? ' ' + convertExprPy(retExpr) : '') + ';');
+        i++; continue;
+      }
+      if (/^raise\b/.test(trimmed)) {
+        var raiseExpr = trimmed.replace(/^raise\s*/, '').trim()
+          .replace(/^(ValueError|TypeError|RuntimeError|Exception)\s*\((.*)\)/, 'new Error($2)');
+        out.push(spaces(ind) + 'throw ' + convertExprPy(raiseExpr) + ';');
+        i++; continue;
+      }
+      if (trimmed === 'pass') { out.push(spaces(ind) + '// pass'); i++; continue; }
+      if (trimmed === 'break' || trimmed === 'continue') {
+        out.push(spaces(ind) + trimmed + ';'); i++; continue;
+      }
+
+      if (/^print\s*\(/.test(trimmed)) {
+        out.push(spaces(ind) + 'console.log' + convertExprPy(trimmed.replace(/^print\s*/, '')) + ';');
+        i++; continue;
+      }
+
+      var assignType = trimmed.match(/^(\w+)\s*:\s*([^=]+)\s*=\s*(.+)$/);
+      if (assignType) {
+        if (toTS) out.push(spaces(ind) + 'let ' + assignType[1] + ': ' + mapType(assignType[2]) + ' = ' + convertExprPy(assignType[3]) + ';');
+        else out.push(spaces(ind) + 'let ' + assignType[1] + ' = ' + convertExprPy(assignType[3]) + ';');
+        i++; continue;
+      }
+
+      var assign = trimmed.match(/^(\w+)\s*=\s*(.+)$/);
+      if (assign && !/==|!=|<=|>=/.test(trimmed)) {
+        out.push(spaces(ind) + 'let ' + assign[1] + ' = ' + convertExprPy(assign[2]) + ';');
+        i++; continue;
+      }
+
+      var attrAssign = trimmed.match(/^(self\.\w+)\s*=\s*(.+)$/);
+      if (attrAssign) {
+        out.push(spaces(ind) + convertExprPy(attrAssign[1]) + ' = ' + convertExprPy(attrAssign[2]) + ';');
+        i++; continue;
+      }
+
+      var converted = convertExprPy(trimmed);
+      if (!/[;{}]$/.test(converted) && !converted.startsWith('//')) converted += ';';
+      out.push(spaces(ind) + converted);
+      i++;
+    }
+
+    var closed = insertBraces(out);
+    var result = closed.join('\n');
+    if (opts.gaps && gaps.length) {
+      result += '\n\n// --- Gaps / decisões ---\n' + gaps.map(function (g) { return '// • ' + g; }).join('\n');
+    }
+    return result;
+  }
+
+  function insertBraces(lines) {
+    var result = [];
+    var stack = [0];
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i];
+      var ind = indentOf(line);
+      var t = line.trim();
+      if (!t) { result.push(line); continue; }
+      while (stack.length > 1 && ind < stack[stack.length - 1] && !t.startsWith('}')) {
+        stack.pop();
+        result.push(spaces(stack[stack.length - 1]) + '}');
+      }
+      result.push(line);
+      if (/\{\s*$/.test(t)) stack.push(ind + 2);
+    }
+    while (stack.length > 1) {
+      stack.pop();
+      result.push(spaces(stack[stack.length - 1]) + '}');
+    }
+    return result;
+  }
+
+  function convertExprJs(expr) {
+    return expr
+      .replace(/\btrue\b/g, 'True')
+      .replace(/\bfalse\b/g, 'False')
+      .replace(/\bnull\b/g, 'None')
+      .replace(/\bundefined\b/g, 'None')
+      .replace(/&&/g, ' and ')
+      .replace(/\|\|/g, ' or ')
+      .replace(/!([^=])/g, 'not $1')
+      .replace(/\bthis\b/g, 'self')
+      .replace(/`([^`]*)`/g, function (_, inner) {
+        return 'f"' + inner.replace(/\$\{([^}]+)\}/g, '{$1}') + '"';
+      })
+      .replace(/\bconst\b|\blet\b|\bvar\b/g, '')
+      .replace(/===/g, '==')
+      .replace(/!==/g, '!=');
+  }
+
+  function stripTypes(s) {
+    return s
+      .replace(/:\s*[\w\[\]<>|&\s.,]+(?=\s*[=,)\]])/g, '')
+      .replace(/<[^>]+>/g, '')
+      .replace(/\bas\s+\w+/g, '')
+      .trim();
+  }
+
+  function jsTsToPy(code, fromTS, opts) {
+    var lines = code.replace(/\r\n/g, '\n').split('\n');
+    var out = [];
+    var gaps = [];
+    var i = 0;
+
+    while (i < lines.length) {
+      var raw = lines[i];
+      var ind = indentOf(raw);
+      var trimmed = raw.trim();
+
+      if (!trimmed) { out.push(''); i++; continue; }
+      if (trimmed.startsWith('//')) {
+        out.push(spaces(ind) + '# ' + trimmed.slice(2).trim());
+        i++; continue;
+      }
+      if (trimmed.startsWith('/*') || trimmed.startsWith('*') || trimmed.startsWith('*/')) {
+        out.push(spaces(ind) + '# ' + trimmed.replace(/^\/\*+|\*+\/$/g, '').replace(/^\*\s?/, '').trim());
+        i++; continue;
+      }
+
+      if (/^(export\s+)?interface\s+\w+/.test(trimmed) || /^(export\s+)?type\s+\w+\s*=/.test(trimmed)) {
+        gaps.push('interface/type: ' + trimmed.slice(0, 50));
+        out.push(spaces(ind) + '# ' + trimmed);
+        if (trimmed.indexOf('{') >= 0 && trimmed.indexOf('}') < 0) {
+          i++;
+          while (i < lines.length && lines[i].indexOf('}') < 0) i++;
+          if (i < lines.length) i++;
+        } else i++;
+        continue;
+      }
+
+      var classM = trimmed.match(/^(export\s+)?class\s+(\w+)(?:\s+extends\s+(\w+))?\s*\{?/);
+      if (classM) {
+        out.push(spaces(ind) + 'class ' + classM[2] + (classM[3] ? '(' + classM[3] + ')' : '') + ':');
+        i++; continue;
+      }
+
+      if (/^constructor\s*\(/.test(trimmed)) {
+        var cargs = trimmed.match(/\(([^)]*)\)/);
+        var args = cargs ? stripTypes(cargs[1]) : '';
+        var argList = args.split(',').map(function (a) { return a.trim(); }).filter(Boolean);
+        argList.unshift('self');
+        out.push(spaces(ind) + 'def __init__(' + argList.join(', ') + '):');
+        i++; continue;
+      }
+
+      var fnM = trimmed.match(/^(export\s+)?(async\s+)?function\s+(\w+)\s*\(([^)]*)\)(?:\s*:\s*([^{]+))?\s*\{?/);
+      if (fnM) {
+        var isAsync = !!fnM[2];
+        var fname = fnM[3];
+        var fargs = stripTypes(fnM[4] || '');
+        var ret = fnM[5] ? stripTypes(fnM[5]).replace(/Promise<(.+)>/, '$1') : '';
+        out.push(spaces(ind) + (isAsync ? 'async ' : '') + 'def ' + fname + '(' + fargs + ')' + (ret ? ' -> ' + ret : '') + ':');
+        i++; continue;
+      }
+
+      var arrow = trimmed.match(/^(?:export\s+)?(?:const|let|var)\s+(\w+)\s*=\s*(async\s*)?\(([^)]*)\)(?:\s*:\s*([^=]+))?\s*=>\s*\{?/);
+      if (arrow) {
+        out.push(spaces(ind) + (arrow[2] ? 'async ' : '') + 'def ' + arrow[1] + '(' + stripTypes(arrow[3] || '') + '):');
+        i++; continue;
+      }
+
+      if (/^else\s+if\s*\(/.test(trimmed)) {
+        var c = trimmed.match(/\((.+)\)/);
+        out.push(spaces(ind) + 'elif ' + convertExprJs(c ? c[1] : '') + ':');
+        i++; continue;
+      }
+      if (/^else\s*\{?/.test(trimmed)) {
+        out.push(spaces(ind) + 'else:');
+        i++; continue;
+      }
+      if (/^if\s*\(/.test(trimmed)) {
+        var cIf = trimmed.match(/\((.+)\)/);
+        out.push(spaces(ind) + 'if ' + convertExprJs(cIf ? cIf[1] : '') + ':');
+        i++; continue;
+      }
+
+      var forC = trimmed.match(/^for\s*\(\s*(?:let|var|const)?\s*(\w+)\s*=\s*([^;]+);\s*\1\s*<\s*([^;]+);/);
+      if (forC) {
+        out.push(spaces(ind) + 'for ' + forC[1] + ' in range(' + convertExprJs(forC[2].trim()) + ', ' + convertExprJs(forC[3].trim()) + '):');
+        i++; continue;
+      }
+
+      var forOf = trimmed.match(/^for\s*\(\s*(?:const|let|var)\s+(\w+)\s+of\s+(.+)\s*\)/);
+      if (forOf) {
+        out.push(spaces(ind) + 'for ' + forOf[1] + ' in ' + convertExprJs(forOf[2]) + ':');
+        i++; continue;
+      }
+
+      if (/^while\s*\(/.test(trimmed)) {
+        var w = trimmed.match(/\((.+)\)/);
+        out.push(spaces(ind) + 'while ' + convertExprJs(w ? w[1] : '') + ':');
+        i++; continue;
+      }
+
+      if (/^try\s*\{?/.test(trimmed)) { out.push(spaces(ind) + 'try:'); i++; continue; }
+      if (/^catch\s*\(/.test(trimmed)) {
+        var ce = trimmed.match(/\((\w+)/);
+        out.push(spaces(ind) + 'except Exception as ' + (ce ? ce[1] : 'e') + ':');
+        i++; continue;
+      }
+      if (/^finally\s*\{?/.test(trimmed)) { out.push(spaces(ind) + 'finally:'); i++; continue; }
+
+      if (/^return\b/.test(trimmed)) {
+        var re = trimmed.replace(/^return\s*/, '').replace(/;$/, '').trim();
+        out.push(spaces(ind) + 'return' + (re ? ' ' + convertExprJs(re) : ''));
+        i++; continue;
+      }
+      if (/^throw\b/.test(trimmed)) {
+        var te = trimmed.replace(/^throw\s*/, '').replace(/;$/, '').trim()
+          .replace(/new\s+Error\s*\((.*)\)/, 'RuntimeError($1)');
+        out.push(spaces(ind) + 'raise ' + convertExprJs(te));
+        i++; continue;
+      }
+
+      if (/^console\.(log|warn|error|info)\s*\(/.test(trimmed)) {
+        var ca = trimmed.replace(/^console\.\w+\s*/, '').replace(/;$/, '');
+        out.push(spaces(ind) + 'print' + convertExprJs(ca));
+        i++; continue;
+      }
+
+      if (trimmed === '}' || trimmed === '};') { i++; continue; }
+
+      var asg = trimmed.match(/^(?:const|let|var)?\s*([\w.]+)\s*=\s*(.+);?$/);
+      if (asg) {
+        out.push(spaces(ind) + convertExprJs(asg[1]) + ' = ' + convertExprJs(asg[2].replace(/;$/, '')));
+        i++; continue;
+      }
+
+      var stmt = convertExprJs(stripTypes(trimmed)).replace(/;$/, '');
+      if (stmt === '{' || stmt === '}') { i++; continue; }
+      out.push(spaces(ind) + stmt);
+      i++;
+    }
+
+    var result = out.join('\n');
+    if (opts.gaps && gaps.length) {
+      result += '\n\n# --- Gaps / decisões ---\n' + gaps.map(function (g) { return '# • ' + g; }).join('\n');
+    }
+    return result;
+  }
+
+  function jsToTs(code) {
+    return code.split('\n').map(function (line) {
+      var t = line.trim();
+      var m = t.match(/^(async\s+)?function\s+(\w+)\s*\(([^)]*)\)\s*\{?/);
+      if (m && m[3] && m[3].indexOf(':') < 0) {
+        var args = m[3].split(',').map(function (a) {
+          a = a.trim();
+          if (!a) return a;
+          if (a.indexOf('=') >= 0) {
+            var p = a.split('=');
+            return p[0].trim() + ': any = ' + p[1].trim();
+          }
+          return a + ': any';
+        }).join(', ');
+        return line.replace(/\([^)]*\)/, '(' + args + '): any');
+      }
+      return line;
+    }).join('\n');
+  }
+
+  function tsToJs(code) {
+    return code
+      .replace(/:\s*[\w\[\]<>|&\s.,]+(?=\s*[=,)\]])/g, '')
+      .replace(/<[^>]+>/g, '')
+      .replace(/\bas\s+[\w<>[\]]+/g, '')
+      .replace(/^(export\s+)?interface\s+\w+[\s\S]*?\}/gm, function (m) {
+        return '/* ' + m.split('\n')[0] + ' ... */';
+      })
+      .replace(/^(export\s+)?type\s+\w+\s*=\s*[^;]+;/gm, function (m) {
+        return '// ' + m;
+      });
+  }
+
+  function convertLocal(from, to, code, opts) {
+    if (!isRealPair(from, to)) {
+      return {
+        ok: false,
+        text: 'Motor local disponível apenas para Python ⇄ JavaScript ⇄ TypeScript.\nPara ' + from + ' → ' + to + ' use o botão “gerar e copiar prompt”.'
+      };
+    }
+    var result;
+    if (from === 'Python' && (to === 'JavaScript' || to === 'TypeScript')) {
+      result = pyToJsTs(code, to === 'TypeScript', opts);
+    } else if ((from === 'JavaScript' || from === 'TypeScript') && to === 'Python') {
+      result = jsTsToPy(code, from === 'TypeScript', opts);
+    } else if (from === 'JavaScript' && to === 'TypeScript') {
+      result = jsToTs(code);
+    } else if (from === 'TypeScript' && to === 'JavaScript') {
+      result = tsToJs(code);
+    } else {
+      result = code;
+    }
+    return { ok: true, text: result };
+  }
+
   function buildPrompt() {
     var from = langFrom.value;
     var to = langTo.value;
     var code = codeInput.value.trim();
-    if (!code) return null;
-    if (from === to) return null;
+    if (!code || from === to) return null;
 
     var rules = [
       '- Preserve a lógica e o comportamento observável',
-      '- Não invente funcionalidades que não existem no original'
+      '- Use idioms naturais da linguagem de destino',
+      '- Não traduza nomes de variáveis de forma literal se houver convenção melhor'
     ];
-    if (document.getElementById('optIdioms').checked) {
-      rules.push('- Use idioms e convenções naturais de ' + to + ' (não traduza sintaxe ao pé da letra)');
-    }
     if (document.getElementById('optTypes').checked) {
-      rules.push('- Se ' + to + ' for tipada, inclua tipos, interfaces ou structs apropriados');
+      rules.push('- Inclua tipos/interfaces quando a linguagem destino for tipada');
+    }
+    if (document.getElementById('optIdioms').checked) {
+      rules.push('- Prefira padrões idiomáticos (ex: list comprehension vs map, async/await vs promises)');
     }
     if (document.getElementById('optTests').checked) {
       rules.push('- Gere testes unitários equivalentes no destino (framework usual da linguagem)');
@@ -248,6 +753,25 @@
     btn.textContent = okText;
     setTimeout(function () { btn.textContent = original; }, 1600);
   }
+
+  btnConvert.addEventListener('click', function () {
+    var from = langFrom.value;
+    var to = langTo.value;
+    var code = codeInput.value.trim();
+    if (!code) { flash(btnConvert, 'cole o código'); return; }
+    if (from === to) { flash(btnConvert, 'linguagens iguais'); return; }
+    var opts = {
+      types: document.getElementById('optTypes').checked,
+      gaps: document.getElementById('optGaps').checked,
+      idioms: document.getElementById('optIdioms').checked
+    };
+    var res = convertLocal(from, to, code, opts);
+    if (!res.ok) {
+      show(res.text, 'motor local indisponível para este par · use o prompt');
+      return;
+    }
+    show(res.text, 'motor local · ' + from + ' → ' + to + ' · sem rede · revisão recomendada');
+  });
 
   btnPreview.addEventListener('click', function () {
     var p = buildPrompt();
@@ -286,7 +810,7 @@
 
   btnClear.addEventListener('click', function () {
     codeInput.value = '';
-    resultBox.textContent = 'selecione linguagens, cole o código e gere o prompt';
+    resultBox.textContent = 'escolha Python/JS/TS, cole o código e clique em “converter local”';
     resultBox.classList.add('empty');
     resultMeta.textContent = '';
     btnCopy.disabled = true;

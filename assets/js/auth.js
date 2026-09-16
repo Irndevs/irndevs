@@ -95,10 +95,12 @@
     return s ? s.user : null;
   }
 
-  async function changePassword(newPassword) {
+  async function changePassword(newPassword, currentPassword) {
     var sb = getClient();
     if (!sb) throw new Error('Auth não configurado.');
-    var res = await sb.auth.updateUser({ password: newPassword });
+    var payload = { password: newPassword };
+    if (currentPassword) payload.current_password = currentPassword;
+    var res = await sb.auth.updateUser(payload);
     if (res.error) throw res.error;
     return res.data;
   }

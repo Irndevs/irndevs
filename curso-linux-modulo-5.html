@@ -1,7 +1,93 @@
-export RESTIC_PASSWORD_FILE=/etc/restic/password
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linux 5 — Backup 3-2-1 com Restic e Rsync | IRN Devs</title>
+<link rel="canonical" href="https://irndevs.com/curso-linux-modulo-5.html">
+<meta name="description" content="Módulo 5 do curso Linux e Servidores em Produção: backup criptografado com Restic, cópia com Rsync e teste de restore.">
+<link rel="stylesheet" href="assets/css/pages/curso-python.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
+<link rel="stylesheet" href="assets/css/motion.css">
+<meta property="og:title" content="Linux 5 — Backup 3-2-1 com Restic e Rsync | IRN Devs">
+<meta property="og:description" content="Módulo 5: backup criptografado com Restic, cópia com Rsync e teste de restore.">
+<meta property="og:url" content="https://irndevs.com/curso-linux-modulo-5.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
+<meta property="og:site_name" content="IRN Devs">
+</head>
+<body data-course="linux">
+<!-- nav: site-nav.js -->
+<article class="wrap">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#linux">linux e servidores</a> / módulo 5</nav>
+  <div class="sec-head"><span class="amber">$</span> linux modulo_5</div>
+  <h1>Backup 3-2-1 com Restic e Rsync</h1>
+  <p class="lede">Um backup que ninguém nunca restaurou não é backup, é esperança. Monte uma rotina criptografada, com retenção e um teste de restore de verdade.</p>
+  <div id="irn-progress-bar" data-progress="linux"></div>
+
+  <h2>O que você vai aprender</h2>
+  <ul>
+    <li>O conceito da regra 3-2-1 de backup</li>
+    <li>Criar um repositório criptografado com Restic e definir retenção</li>
+    <li>Fazer cópia simples e incremental com Rsync</li>
+    <li>Por que testar o restore é a parte que mais importa</li>
+  </ul>
+
+  <h2>1. Repositório Restic</h2>
+  <p>Restic cria snapshots incrementais e criptografados dos diretórios que você escolher. Antes de rodar o primeiro backup, é preciso inicializar o repositório com uma senha — guarde essa senha com o mesmo cuidado que guardaria uma chave privada.</p>
+  <pre><code>export RESTIC_PASSWORD_FILE=/etc/restic/password
 restic init
 restic backup /etc /opt /srv
 restic snapshots
-restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 12 --prune</code></pre><div class="warn"><strong>ATENÇÃO</strong> A senha do repositório não pode ficar no histórico do shell. Proteja o arquivo com <code>chmod 600</code> e mantenha uma cópia segura fora do servidor.</div><h2>3. Cópia simples com rsync</h2><pre><code>rsync -aHAX --delete /srv/ backup@storage:/backups/servidor/srv/
-rsync -aHAX --dry-run /srv/ backup@storage:/backups/servidor/srv/</code></pre><h2>4. Restore é o teste</h2><pre><code>mkdir /tmp/restore
-restic restore latest --target /tmp/restore
+restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 12 --prune</code></pre>
+  <div class="warn"><strong>ATENÇÃO</strong> A senha do repositório não pode ficar no histórico do shell. Proteja o arquivo com <code>chmod 600</code> e mantenha uma cópia segura fora do servidor.</div>
+  <p>O comando <code>forget</code> com <code>--prune</code> aplica a política de retenção definida (diário, semanal, mensal) e remove os dados órfãos, mantendo o repositório enxuto sem perder histórico relevante.</p>
+
+  <h2>2. Regra 3-2-1</h2>
+  <p>A regra prática é simples: 3 cópias dos dados, em 2 mídias diferentes, com 1 cópia fora do local (off-site). Um snapshot do Restic no mesmo disco do servidor não conta como backup — se o disco falhar, os dois vão junto.</p>
+
+  <h2>3. Cópia simples com rsync</h2>
+  <p>Para réplicas diretas de diretórios (sem versionamento nem criptografia embutida), o Rsync continua sendo a ferramenta mais previsível. Rode sempre com <code>--dry-run</code> primeiro pra conferir o que seria alterado.</p>
+  <pre><code>rsync -aHAX --delete /srv/ backup@storage:/backups/servidor/srv/
+rsync -aHAX --dry-run /srv/ backup@storage:/backups/servidor/srv/</code></pre>
+
+  <h2>4. Restore é o teste</h2>
+  <p>Um backup só vale alguma coisa se você já provou, em algum momento, que consegue restaurá-lo. Agende testes periódicos de restore em um ambiente isolado.</p>
+  <pre><code>mkdir /tmp/restore
+restic restore latest --target /tmp/restore</code></pre>
+  <div class="tip"><strong>DICA DE PRODUÇÃO</strong> Calendarize um restore de teste (mensal ou trimestral). É o único jeito de descobrir problemas de backup antes de precisar dele de verdade.</div>
+
+  <div class="exercise" data-solution="Inicialize um repositório Restic, faça um backup de um diretório de teste, aplique uma política de retenção com forget --prune, e execute um restore em /tmp/restore para validar o processo.">
+    <strong>EXERCÍCIO</strong>
+    Inicialize um repositório Restic local, faça backup de um diretório de teste, aplique uma política de retenção e execute um restore completo em <code>/tmp/restore</code> para confirmar que os dados voltam íntegros.
+  </div>
+
+  <h2>Sumário do curso</h2>
+  <div class="mod-sumario">
+    <a class="mod-card" href="curso-linux-modulo-1.html"><span class="mod-card-n">01</span><span class="mod-card-name">Terminal, usuários e permissões</span></a>
+    <a class="mod-card" href="curso-linux-modulo-2.html"><span class="mod-card-n">02</span><span class="mod-card-name">SSH seguro e acesso remoto</span></a>
+    <a class="mod-card" href="curso-linux-modulo-3.html"><span class="mod-card-n">03</span><span class="mod-card-name">systemd, processos e serviços</span></a>
+    <a class="mod-card" href="curso-linux-modulo-4.html"><span class="mod-card-n">04</span><span class="mod-card-name">Firewall, logs e Fail2ban</span></a>
+    <a class="mod-card" href="curso-linux-modulo-5.html" aria-current="page"><span class="mod-card-n">05</span><span class="mod-card-name">Backup 3-2-1 com Restic e Rsync</span></a>
+    <a class="mod-card" href="curso-linux-modulo-6.html"><span class="mod-card-n">06</span><span class="mod-card-name">Projeto final: servidor seguro</span></a>
+  </div>
+  <div class="aula-progress">
+    <a class="btn ghost" href="curso-linux-modulo-4.html">← anterior</a>
+    <span class="dots"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b></b></span>
+    <a class="btn primary" href="curso-linux-modulo-6.html">próximo →</a>
+  </div>
+</article>
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260916c" defer></script>
+<script src="assets/js/curso-progress.js?v=20260916d" defer></script>
+  <script src="assets/js/chat-bot.js?v=20260916e" defer></script>
+</body>
+</html>

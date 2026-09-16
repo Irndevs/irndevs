@@ -1,4 +1,90 @@
-systemctl is-enabled irn-worker
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linux 6 — Projeto final: servidor seguro | IRN Devs</title>
+<link rel="canonical" href="https://irndevs.com/curso-linux-modulo-6.html">
+<meta name="description" content="Módulo 6 do curso Linux e Servidores em Produção: projeto final unindo usuários, SSH, systemd, firewall, Fail2ban e backup em um checklist único.">
+<link rel="stylesheet" href="assets/css/pages/curso-python.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
+<link rel="stylesheet" href="assets/css/motion.css">
+<meta property="og:title" content="Linux 6 — Projeto final: servidor seguro | IRN Devs">
+<meta property="og:description" content="Módulo 6: projeto final unindo usuários, SSH, systemd, firewall, Fail2ban e backup em um checklist único.">
+<meta property="og:url" content="https://irndevs.com/curso-linux-modulo-6.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
+<meta property="og:site_name" content="IRN Devs">
+</head>
+<body data-course="linux">
+<!-- nav: site-nav.js -->
+<article class="wrap">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#linux">linux e servidores</a> / módulo 6</nav>
+  <div class="sec-head"><span class="amber">$</span> linux modulo_6</div>
+  <h1>Projeto final: servidor seguro</h1>
+  <p class="lede">Junte tudo que você configurou nos módulos anteriores em um único runbook de verificação — o checklist que você rodaria antes de considerar um servidor pronto para produção.</p>
+  <div id="irn-progress-bar" data-progress="linux"></div>
+
+  <h2>O que você vai fazer</h2>
+  <ul>
+    <li>Provisionar um servidor do zero com usuário nominal e sudo</li>
+    <li>Acesso apenas por chave SSH, com hardening do sshd</li>
+    <li>Rodar sua aplicação como serviço systemd com restart automático</li>
+    <li>Firewall ativo e Fail2ban protegendo o SSH</li>
+    <li>Rotina de backup com Restic já testada com restore</li>
+  </ul>
+
+  <h2>1. Checklist de verificação</h2>
+  <p>Depois de aplicar os módulos 1 a 5 em um servidor de teste, rode os comandos abaixo em sequência. Cada um confirma uma camada diferente do runbook: identidade, serviço, firewall e backup.</p>
+  <pre><code>systemctl is-enabled irn-worker
 sudo ufw status numbered
 sudo fail2ban-client status sshd
-restic snapshots
+restic snapshots</code></pre>
+  <p>Se os quatro comandos retornarem o esperado — serviço habilitado, regras de firewall ativas na ordem correta, jail do SSH rodando e pelo menos um snapshot de backup — o servidor está no ponto que definimos como "pronto para produção" nesta trilha.</p>
+
+  <h2>2. Checklist de entrega</h2>
+  <ul>
+    <li>Usuário administrativo nominal, sem login direto como root (módulo 1)</li>
+    <li><code>PasswordAuthentication no</code> e <code>PermitRootLogin no</code> no sshd, validados com <code>sshd -t</code> (módulo 2)</li>
+    <li>Aplicação rodando como unit systemd com <code>Restart=on-failure</code> (módulo 3)</li>
+    <li>UFW com política padrão de negar entrada, liberando só as portas necessárias (módulo 4)</li>
+    <li>Fail2ban ativo na jail de SSH (módulo 4)</li>
+    <li>Backup Restic com política de retenção definida e um restore já testado (módulo 5)</li>
+  </ul>
+
+  <div class="tip"><strong>DICA DE PRODUÇÃO</strong> Guarde esse checklist como runbook. Rodar as mesmas quatro verificações depois de cada mudança de infraestrutura evita regressões silenciosas de segurança.</div>
+
+  <div class="exercise" data-solution="Provisione um servidor de teste aplicando os 5 módulos anteriores e rode o checklist de verificação (systemctl is-enabled, ufw status, fail2ban-client status, restic snapshots) confirmando que os quatro retornam o estado esperado.">
+    <strong>EXERCÍCIO FINAL</strong>
+    Em um servidor de teste (pode ser uma VM ou container), aplique tudo dos módulos 1 a 5 e rode o checklist de verificação completo. Confirme que os quatro comandos retornam o estado esperado antes de considerar o projeto concluído.
+  </div>
+
+  <h2>Sumário do curso</h2>
+  <div class="mod-sumario">
+    <a class="mod-card" href="curso-linux-modulo-1.html"><span class="mod-card-n">01</span><span class="mod-card-name">Terminal, usuários e permissões</span></a>
+    <a class="mod-card" href="curso-linux-modulo-2.html"><span class="mod-card-n">02</span><span class="mod-card-name">SSH seguro e acesso remoto</span></a>
+    <a class="mod-card" href="curso-linux-modulo-3.html"><span class="mod-card-n">03</span><span class="mod-card-name">systemd, processos e serviços</span></a>
+    <a class="mod-card" href="curso-linux-modulo-4.html"><span class="mod-card-n">04</span><span class="mod-card-name">Firewall, logs e Fail2ban</span></a>
+    <a class="mod-card" href="curso-linux-modulo-5.html"><span class="mod-card-n">05</span><span class="mod-card-name">Backup 3-2-1 com Restic e Rsync</span></a>
+    <a class="mod-card" href="curso-linux-modulo-6.html" aria-current="page"><span class="mod-card-n">06</span><span class="mod-card-name">Projeto final: servidor seguro</span></a>
+  </div>
+  <div class="aula-progress">
+    <a class="btn ghost" href="curso-linux-modulo-5.html">← anterior</a>
+    <span class="dots"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b></span>
+    <a class="btn primary" href="certificado-linux.html">gerar certificado →</a>
+  </div>
+</article>
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260916c" defer></script>
+<script src="assets/js/curso-progress.js?v=20260916d" defer></script>
+  <script src="assets/js/chat-bot.js?v=20260916e" defer></script>
+</body>
+</html>

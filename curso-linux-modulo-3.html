@@ -1,8 +1,53 @@
-systemctl status nginx
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linux 3 — systemd, processos e serviços | IRN Devs</title>
+<link rel="canonical" href="https://irndevs.com/curso-linux-modulo-3.html">
+<meta name="description" content="Módulo 3 do curso Linux e Servidores em Produção: diagnóstico de processos e criação de serviços systemd confiáveis.">
+<link rel="stylesheet" href="assets/css/pages/curso-python.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
+<link rel="stylesheet" href="assets/css/motion.css">
+<meta property="og:title" content="Linux 3 — systemd, processos e serviços | IRN Devs">
+<meta property="og:description" content="Módulo 3: diagnóstico de processos e criação de serviços systemd confiáveis.">
+<meta property="og:url" content="https://irndevs.com/curso-linux-modulo-3.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
+<meta property="og:site_name" content="IRN Devs">
+</head>
+<body data-course="linux">
+<!-- nav: site-nav.js -->
+<article class="wrap">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#linux">linux e servidores</a> / módulo 3</nav>
+  <div class="sec-head"><span class="amber">$</span> linux modulo_3</div>
+  <h1>systemd, processos e serviços</h1>
+  <p class="lede">Diagnosticar um servidor com sintomas confusos e transformar um script solto em um serviço systemd que reinicia sozinho.</p>
+  <div id="irn-progress-bar" data-progress="linux"></div>
+
+  <h2>O que você vai aprender</h2>
+  <ul>
+    <li>Diagnóstico rápido de CPU, memória, disco e portas</li>
+    <li>Estrutura de uma unit file do systemd</li>
+    <li>Habilitar, iniciar e checar o status de um serviço</li>
+    <li>Restart automático em caso de falha</li>
+  </ul>
+
+  <h2>1. Diagnóstico operacional</h2>
+  <p>Diagnóstico operacional começa por separar sintomas: processo parado, porta indisponível, disco cheio e serviço sem permissão exigem respostas diferentes. Antes de qualquer suposição, olhe os números.</p>
+  <pre><code>systemctl status nginx
 ps aux --sort=-%mem | head
 free -h
 df -h
-ss -lntp</code></pre><p>Diagnóstico operacional começa por separar sintomas: processo parado, porta indisponível, disco cheio e serviço sem permissão exigem respostas diferentes.</p><h2>2. Um serviço mínimo</h2><pre><code>[Unit]
+ss -lntp</code></pre>
+  <p><code>ss -lntp</code> mostra quais processos estão escutando em quais portas — útil pra confirmar se um serviço realmente subiu ou se outra aplicação já ocupa a porta esperada.</p>
+
+  <h2>2. Um serviço mínimo</h2>
+  <p>Scripts rodados manualmente ou via <code>nohup</code> morrem quando a sessão termina e não voltam sozinhos depois de um reboot. Uma unit file resolve isso: define como o processo inicia, quem o executa e o que fazer se ele cair.</p>
+  <pre><code>[Unit]
 Description=Worker IRN
 After=network-online.target
 Wants=network-online.target
@@ -15,6 +60,43 @@ Restart=on-failure
 RestartSec=5
 
 [Install]
-WantedBy=multi-user.target</code></pre><pre><code>sudo systemctl daemon-reload
+WantedBy=multi-user.target</code></pre>
+
+  <h2>3. Ativando o serviço</h2>
+  <p>Com o arquivo salvo em <code>/etc/systemd/system/irn-worker.service</code>, recarregue o systemd para que ele reconheça a nova unit, habilite o serviço para iniciar no boot e confirme que está rodando.</p>
+  <pre><code>sudo systemctl daemon-reload
 sudo systemctl enable --now irn-worker
-systemctl status irn-worker
+systemctl status irn-worker</code></pre>
+  <div class="tip"><strong>DICA DE PRODUÇÃO</strong> <code>Restart=on-failure</code> com <code>RestartSec</code> evita loops de reinício agressivos e dá tempo pro processo se recuperar de falhas transitórias.</div>
+
+  <div class="exercise" data-solution="Crie uma unit file para um script Python simples, ative com systemctl enable --now, confirme o status, e teste o restart automático matando o processo manualmente.">
+    <strong>EXERCÍCIO</strong>
+    Escreva uma unit file para um script seu, habilite-a com <code>systemctl enable --now</code>, confirme com <code>systemctl status</code> e teste o restart automático matando o processo com <code>kill</code>.
+  </div>
+
+  <h2>Sumário do curso</h2>
+  <div class="mod-sumario">
+    <a class="mod-card" href="curso-linux-modulo-1.html"><span class="mod-card-n">01</span><span class="mod-card-name">Terminal, usuários e permissões</span></a>
+    <a class="mod-card" href="curso-linux-modulo-2.html"><span class="mod-card-n">02</span><span class="mod-card-name">SSH seguro e acesso remoto</span></a>
+    <a class="mod-card" href="curso-linux-modulo-3.html" aria-current="page"><span class="mod-card-n">03</span><span class="mod-card-name">systemd, processos e serviços</span></a>
+    <a class="mod-card" href="curso-linux-modulo-4.html"><span class="mod-card-n">04</span><span class="mod-card-name">Firewall, logs e Fail2ban</span></a>
+    <a class="mod-card" href="curso-linux-modulo-5.html"><span class="mod-card-n">05</span><span class="mod-card-name">Backup 3-2-1 com Restic e Rsync</span></a>
+    <a class="mod-card" href="curso-linux-modulo-6.html"><span class="mod-card-n">06</span><span class="mod-card-name">Projeto final: servidor seguro</span></a>
+  </div>
+  <div class="aula-progress">
+    <a class="btn ghost" href="curso-linux-modulo-2.html">← anterior</a>
+    <span class="dots"><b class="on"></b><b class="on"></b><b class="on"></b><b></b><b></b><b></b></span>
+    <a class="btn primary" href="curso-linux-modulo-4.html">próximo →</a>
+  </div>
+</article>
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260916c" defer></script>
+<script src="assets/js/curso-progress.js?v=20260916d" defer></script>
+  <script src="assets/js/chat-bot.js?v=20260916e" defer></script>
+</body>
+</html>
