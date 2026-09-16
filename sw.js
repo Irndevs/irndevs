@@ -1,16 +1,20 @@
 /* IRN Devs — service worker leve (cache estático) */
-const CACHE = 'irn-v20260916b';
+const CACHE = 'irn-v20260916e';
 const OFFLINE_URL = '/offline.html';
 const ASSETS = [
   '/',
   '/index.html',
   '/cursos.html',
+  '/blog.html',
+  '/ia.html',
   '/offline.html',
   '/manifest.json',
   '/assets/css/site-nav.css',
   '/assets/css/motion.css',
   '/assets/css/pages/index.css',
   '/assets/css/pages/cursos.css',
+  '/assets/css/pages/blog.css',
+  '/assets/css/pages/ia.css',
   '/assets/css/pages/curso-python.css',
   '/assets/css/pages/404.css',
   '/assets/js/site-nav.js',

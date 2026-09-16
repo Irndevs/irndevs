@@ -34,8 +34,8 @@
     { href: 'index.html#projetos', label: 'projetos', ico: '▸' },
     { href: 'servicos.html', label: 'serviços', ico: '⚙' },
     { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
-	{ href: 'cursos.html', label: 'cursos', ico: '◈' },
-    { href: 'homelab.html', label: 'homelab', ico: '▣' }
+    { href: 'cursos.html', label: 'cursos', ico: '◈' },
+    { href: 'ia.html', label: 'IA', ico: '✦', extraClass: 'sn-top-ia' }
   ];
 
   var drawerGroups = [
@@ -88,14 +88,13 @@
     { href: 'index.html', label: 'início', ico: '⌂' },
     { href: 'index.html#projetos', label: 'projetos', ico: '▸' },
     { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
-    { href: 'homelab.html', label: 'homelab', ico: '▣' },
-	{ href: 'cursos.html', label: 'cursos', ico: '◈' },
+    { href: 'cursos.html', label: 'cursos', ico: '◈' },
     { href: 'contato.html', label: 'contato', ico: '@' }
 	
   ];
 
   function linkHtml(l) {
-    return '<a href="' + l.href + '" class="' + cls(l.href).trim() + '"><span class="ico">' + l.ico + '</span><span class="label">' + l.label + '</span></a>';
+    return '<a href="' + l.href + '" class="' + (cls(l.href).trim() + (l.extraClass ? ' ' + l.extraClass : '')).trim() + '"><span class="ico">' + l.ico + '</span><span class="label">' + l.label + '</span></a>';
   }
 
   function mount() {

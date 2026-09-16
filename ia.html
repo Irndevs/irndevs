@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IA na prática — IRN Devs</title>
+<meta name="description" content="Hub de Inteligência Artificial da IRN Devs: automações, agentes, APIs, modelos locais, prompts e projetos práticos.">
+<link rel="canonical" href="https://irndevs.com/ia.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/ia.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<meta property="og:title" content="IA na prática — IRN Devs">
+<meta property="og:description" content="Automações, agentes, APIs, modelos locais e projetos de IA aplicados a problemas reais.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://irndevs.com/ia.html">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:site_name" content="IRN Devs">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"CollectionPage",
+  "name":"IA na prática — IRN Devs",
+  "description":"Hub de Inteligência Artificial com trilhas, projetos, ferramentas e boas práticas.",
+  "url":"https://irndevs.com/ia.html",
+  "inLanguage":"pt-BR",
+  "isPartOf":{"@type":"WebSite","name":"IRN Devs","url":"https://irndevs.com/"}
+}
+</script>
+</head>
+<body>
+<div class="wrap crumb"><a href="index.html">~</a> / <span>ia</span></div>
+
+<header class="ia-hero">
+  <div class="wrap">
+    <div class="ia-kicker"><span class="pulse-dot"></span> laboratório de inteligência artificial</div>
+    <h1>IA que sai do prompt<br><span>e chega em produção.</span></h1>
+    <p class="ia-lede">Um espaço para aprender, testar e construir soluções com IA aplicada: automações, agentes, APIs, modelos locais, dados e operações confiáveis.</p>
+    <div class="ia-actions">
+      <a class="btn primary" href="#trilhas">explorar trilhas →</a>
+      <a class="btn ghost" href="#laboratorio">abrir laboratório</a>
+    </div>
+    <div class="ia-stats">
+      <div><strong>04</strong><span>trilhas práticas</span></div>
+      <div><strong>12</strong><span>ideias de projeto</span></div>
+      <div><strong>∞</strong><span>experimentos possíveis</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="trilhas">
+  <div class="wrap">
+    <div class="section-kicker">$ ls trilhas-ia/</div>
+    <h2>Por onde começar</h2>
+    <p class="section-intro">Escolha uma direção conforme o problema que você quer resolver. A recomendação é começar pequeno, medir o resultado e só depois adicionar complexidade.</p>
+    <div class="track-grid">
+      <article class="track-card featured-track">
+        <div class="track-number">01</div><div class="track-tag">fundamentos</div>
+        <h3>IA aplicada e prompts</h3>
+        <p>Entenda modelos, contexto, instruções, avaliação e limites. Aprenda a escrever prompts que produzem resultados repetíveis.</p>
+        <div class="chips"><span>prompts</span><span>avaliação</span><span>contexto</span></div>
+        <a href="#laboratorio">abrir laboratório →</a>
+      </article>
+      <article class="track-card">
+        <div class="track-number">02</div><div class="track-tag">desenvolvimento</div>
+        <h3>APIs e automações</h3>
+        <p>Conecte modelos a Python, FastAPI, webhooks, planilhas, e-mail e fluxos de negócio com logs e tratamento de erros.</p>
+        <div class="chips"><span>Python</span><span>FastAPI</span><span>webhooks</span></div>
+        <a href="#projetos">ver projetos →</a>
+      </article>
+      <article class="track-card">
+        <div class="track-number">03</div><div class="track-tag">produto</div>
+        <h3>Agentes e RAG</h3>
+        <p>Construa sistemas que consultam documentos, usam ferramentas e mantêm rastreabilidade sem virar uma caixa-preta.</p>
+        <div class="chips"><span>RAG</span><span>embeddings</span><span>tools</span></div>
+        <a href="#arquitetura">ver arquitetura →</a>
+      </article>
+      <article class="track-card">
+        <div class="track-number">04</div><div class="track-tag">infraestrutura</div>
+        <h3>IA local e operação</h3>
+        <p>Explore modelos locais, GPU, observabilidade, custos, privacidade e deploy de serviços de inferência.</p>
+        <div class="chips"><span>modelos locais</span><span>Docker</span><span>observabilidade</span></div>
+        <a href="cursos.html#linux">preparar infraestrutura →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="laboratorio" class="section-alt">
+  <div class="wrap">
+    <div class="section-kicker">$ cat laboratorio.md</div>
+    <h2>Laboratório de prompts</h2>
+    <p class="section-intro">Use estes padrões como ponto de partida. O prompt é só uma parte do sistema: contexto, dados, ferramentas e avaliação importam tanto quanto a frase enviada ao modelo.</p>
+    <div class="prompt-grid">
+      <article class="prompt-card"><span class="prompt-label">01 · extração estruturada</span><pre><code>Você é um extrator de dados.
+Receba o texto abaixo e retorne JSON válido
+seguindo exatamente este schema: {schema}.
+Se um campo não existir, use null.
+Não invente valores.</code></pre><button type="button" class="copy-prompt" data-copy="Você é um extrator de dados. Receba o texto abaixo e retorne JSON válido seguindo exatamente este schema. Se um campo não existir, use null. Não invente valores.">copiar prompt</button></article>
+      <article class="prompt-card"><span class="prompt-label">02 · revisão técnica</span><pre><code>Revise este código como um engenheiro sênior.
+Liste bugs prováveis, riscos de segurança,
+casos de borda e testes ausentes.
+Separe problemas críticos de sugestões.</code></pre><button type="button" class="copy-prompt" data-copy="Revise este código como um engenheiro sênior. Liste bugs prováveis, riscos de segurança, casos de borda e testes ausentes. Separe problemas críticos de sugestões.">copiar prompt</button></article>
+      <article class="prompt-card"><span class="prompt-label">03 · decisão com evidências</span><pre><code>Compare as opções usando apenas as evidências
+fornecidas. Explicite premissas, incertezas,
+trade-offs e o que precisaria ser validado
+antes de tomar a decisão.</code></pre><button type="button" class="copy-prompt" data-copy="Compare as opções usando apenas as evidências fornecidas. Explicite premissas, incertezas, trade-offs e o que precisaria ser validado antes de tomar a decisão.">copiar prompt</button></article>
+    </div>
+  </div>
+</section>
+
+<section id="projetos">
+  <div class="wrap">
+    <div class="section-kicker">$ ideas --ready-to-build</div>
+    <h2>Projetos para colocar no portfólio</h2>
+    <div class="project-grid">
+      <article><span class="project-type">automação</span><h3>Assistente de operações</h3><p>Recebe alertas, consulta runbooks, resume incidentes e sugere próximos passos com aprovação humana.</p><strong>Stack sugerida:</strong> Python · FastAPI · Slack/Discord · banco de eventos</article>
+      <article><span class="project-type">dados</span><h3>Relatório inteligente</h3><p>Ingere CSVs e planilhas, valida qualidade, gera indicadores e explica variações em linguagem natural.</p><strong>Stack sugerida:</strong> pandas · DuckDB · FastAPI · gráficos</article>
+      <article><span class="project-type">RAG</span><h3>Busca no conhecimento interno</h3><p>Indexa documentação técnica, responde com citações e informa quando não encontrou evidência suficiente.</p><strong>Stack sugerida:</strong> embeddings · PostgreSQL · API de modelo</article>
+      <article><span class="project-type">produto</span><h3>Triagem de solicitações</h3><p>Classifica contatos, extrai contexto, sugere prioridade e encaminha cada pedido para o fluxo certo.</p><strong>Stack sugerida:</strong> webhooks · JSON schema · fila · auditoria</article>
+    </div>
+  </div>
+</section>
+
+<section id="arquitetura" class="section-alt">
+  <div class="wrap">
+    <div class="section-kicker">$ cat arquitetura-segura.txt</div>
+    <h2>Como pensar uma aplicação de IA</h2>
+    <div class="architecture">
+      <div class="arch-step"><b>01</b><span>entrada</span><p>Valide, normalize e classifique a solicitação.</p></div><div class="arch-arrow">→</div>
+      <div class="arch-step"><b>02</b><span>contexto</span><p>Busque apenas documentos relevantes e autorizados.</p></div><div class="arch-arrow">→</div>
+      <div class="arch-step"><b>03</b><span>modelo</span><p>Use schema, limites e instruções versionadas.</p></div><div class="arch-arrow">→</div>
+      <div class="arch-step"><b>04</b><span>verificação</span><p>Valide saída, registre evidências e peça aprovação quando necessário.</p></div>
+    </div>
+    <div class="principles"><div><b>privacidade</b><span>Minimize dados e defina retenção.</span></div><div><b>confiabilidade</b><span>Meça qualidade, latência e custo.</span></div><div><b>controle humano</b><span>Automatize execução, não responsabilidade.</span></div></div>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="wrap roadmap-wrap">
+    <div><div class="section-kicker">$ roadmap --ia</div><h2>O que podemos colocar aqui</h2><p class="section-intro">A seção pode crescer com conteúdo que ensina e demonstra trabalho real, sem prometer mágica.</p></div>
+    <div class="roadmap-list"><div><span>agora</span><p>Guias de prompts, APIs e automações úteis.</p></div><div><span>próximo</span><p>Curso de agentes, RAG e avaliação de respostas.</p></div><div><span>depois</span><p>Laboratório de modelos locais com Docker e GPU.</p></div><div><span>contínuo</span><p>Estudos de caso, benchmarks de custo e qualidade.</p></div></div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><div>© 2026 irndevs</div><div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div></div></footer>
+<script src="assets/js/site-nav.js?v=20260916d" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916d" defer></script>
+<script>
+document.querySelectorAll('.copy-prompt').forEach(function(button){button.addEventListener('click',function(){navigator.clipboard.writeText(button.dataset.copy).then(function(){button.textContent='copiado!';setTimeout(function(){button.textContent='copiar prompt'},1600)}).catch(function(){button.textContent='selecione manualmente'})})});
+</script>
+</body>
+</html>

@@ -11,7 +11,11 @@
   "theme_color": "#10130f",
   "lang": "pt-BR",
   "dir": "ltr",
-  "categories": ["business", "education", "developer tools"],
+  "categories": [
+    "business",
+    "education",
+    "developer tools"
+  ],
   "icons": [
     {
       "src": "/assets/img/icon-192.png",
@@ -40,6 +44,17 @@
   ],
   "shortcuts": [
     {
+      "name": "IA na prática",
+      "short_name": "IA",
+      "url": "/ia.html",
+      "icons": [
+        {
+          "src": "/assets/img/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
       "name": "Cursos gratuitos",
       "short_name": "Cursos",
       "url": "/cursos.html",
@@ -56,6 +71,17 @@
       "short_name": "Contato",
       "url": "/contato.html",
       "description": "Fale com a IRN Devs"
+    },
+    {
+      "name": "Trilha Linux",
+      "short_name": "Linux",
+      "url": "/cursos.html#linux",
+      "icons": [
+        {
+          "src": "/assets/img/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }
