@@ -154,10 +154,11 @@
   <div class="search-box" id="buscar">
     <label for="postSearch"><span aria-hidden="true">$</span> buscar artigos</label>
      <input id="postSearch" type="search" placeholder="ex.: Docker, Linux, Kubernetes..." autocomplete="off">
-     <span id="searchCount" aria-live="polite">16 artigos</span>
+     <span id="searchCount" aria-live="polite">20 artigos</span>
    </div>
   <div class="filters">
     <button class="filter-btn active" data-category="all">todos</button>
+    <button class="filter-btn" data-category="ia">ia</button>
     <button class="filter-btn" data-category="observabilidade">observabilidade</button>
     <button class="filter-btn" data-category="linux">linux</button>
     <button class="filter-btn" data-category="kubernetes">kubernetes</button>
@@ -168,6 +169,58 @@
 </div>
 
 <div class="wrap posts" id="postsList">
+  <div class="post" data-category="ia">
+    <div class="post-meta-col">
+      <span class="date">16 set 2026</span>
+      <span class="post-tag">ia</span>
+      <span>13 min</span>
+    </div>
+    <div>
+      <div class="post-title"><a href="artigo-agentes-langchain.html">Agentes com LangChain, LlamaIndex e CrewAI</a></div>
+      <p class="post-excerpt">Chains vs agents, tools, function calling e crews multi-agente — quando usar cada um.</p>
+      <div class="post-stack"><span>LangChain</span><span>CrewAI</span><span>agents</span><span>tools</span></div>
+      <a class="read-more" href="artigo-agentes-langchain.html">ler artigo →</a>
+    </div>
+  </div>
+  <div class="post featured" data-category="ia">
+    <div class="post-meta-col">
+      <span class="date">16 set 2026</span>
+      <span class="post-tag">ia</span>
+      <span>14 min</span>
+    </div>
+    <div>
+      <div class="post-title"><a href="artigo-rag-pgvector.html">RAG com pgvector: assistente com documentos da empresa</a></div>
+      <p class="post-excerpt">Retrieval-Augmented Generation na prática: chunking, embeddings, PostgreSQL + pgvector e geração com citações.</p>
+      <div class="post-stack"><span>RAG</span><span>pgvector</span><span>PostgreSQL</span><span>embeddings</span></div>
+      <a class="read-more" href="artigo-rag-pgvector.html">ler artigo →</a>
+    </div>
+  </div>
+  <div class="post" data-category="ia">
+    <div class="post-meta-col">
+      <span class="date">16 set 2026</span>
+      <span class="post-tag">ia</span>
+      <span>12 min</span>
+    </div>
+    <div>
+      <div class="post-title"><a href="artigo-apis-ia.html">Integração de APIs de IA: OpenAI, Claude e Gemini</a></div>
+      <p class="post-excerpt">Clientes oficiais, streaming, rate limit e checklist de produção em Node.js e Python.</p>
+      <div class="post-stack"><span>OpenAI</span><span>Claude</span><span>Gemini</span><span>API</span></div>
+      <a class="read-more" href="artigo-apis-ia.html">ler artigo →</a>
+    </div>
+  </div>
+  <div class="post" data-category="ia">
+    <div class="post-meta-col">
+      <span class="date">16 set 2026</span>
+      <span class="post-tag">ia</span>
+      <span>11 min</span>
+    </div>
+    <div>
+      <div class="post-title"><a href="artigo-ollama-local.html">Seu próprio Copilot local com Ollama</a></div>
+      <p class="post-excerpt">Llama 3, Mistral e Qwen na máquina: privacidade total, VS Code/Neovim e limites de hardware.</p>
+      <div class="post-stack"><span>Ollama</span><span>Llama</span><span>privacidade</span><span>local</span></div>
+      <a class="read-more" href="artigo-ollama-local.html">ler artigo →</a>
+    </div>
+  </div>
   <div class="post" data-category="devops">
     <div class="post-meta-col">
       <span class="date">16 set 2026</span>
@@ -177,6 +230,7 @@
     <p class="post-excerpt">Pipeline mínimo para validar e publicar no GitHub Pages.</p>
     <a class="read-more" href="artigo-github-actions-pages.html">ler artigo →</a>
   </div>
+
 
   <div class="post" data-category="seguranca">
     <div class="post-meta-col">

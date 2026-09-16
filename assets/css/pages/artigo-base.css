@@ -83,3 +83,18 @@
 .obs-style-6 { display:inline-block;width:10px }
 .obs-style-7 { font-family:'IBM Plex Mono',monospace;font-size:13px;color:#e8a33d;border:1px solid #2a3126;padding:9px 14px;text-decoration:none; }
 .obs-style-8 { display:flex; gap:20px; }
+
+.next-link {
+  margin-top: 36px;
+  padding-top: 20px;
+  border-top: 1px solid var(--bg-line);
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text-dim);
+}
+.next-link a {
+  color: var(--amber);
+}
+.next-link a:hover {
+  text-decoration: underline;
+}

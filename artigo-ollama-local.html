@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seu próprio Copilot local com Ollama — IRN Devs</title>
+<meta name="description" content="Rode Llama 3, Mistral, Qwen e outros modelos open-source na máquina com Ollama. Privacidade total do código, integração com VS Code/Neovim e limites de hardware.">
+<meta name="author" content="IRN Devs">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/artigo-base.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<meta property="og:title" content="Copilot local com Ollama — IRN Devs">
+<meta property="og:description" content="Modelos open-source na máquina: instalação, modelos recomendados, VS Code e limites de hardware.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://irndevs.com/artigo-ollama-local.html">
+<meta property="og:url" content="https://irndevs.com/artigo-ollama-local.html">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:site_name" content="IRN Devs">
+<meta property="article:published_time" content="2026-09-16">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BlogPosting",
+  "headline":"Seu próprio Copilot local com Ollama",
+  "description":"Rode modelos open-source na máquina com privacidade total do código.",
+  "datePublished":"2026-09-16",
+  "author":{"@type":"Organization","name":"IRN Devs"},
+  "publisher":{"@type":"Organization","name":"IRN Devs","url":"https://irndevs.com"},
+  "mainEntityOfPage":"https://irndevs.com/artigo-ollama-local.html",
+  "inLanguage":"pt-BR"
+}
+</script>
+</head>
+<body>
+<!-- nav: site-nav.js -->
+<div class="wrap crumb">
+  <a href="index.html">~</a> / <a href="blog.html">blog</a> / <a href="ia.html">ia</a> / <span>ollama-local</span>
+</div>
+
+<div class="wrap article-head">
+  <div class="meta">
+    <span>16 set 2026</span>
+    <span class="tag">ia</span>
+    <span>11 min de leitura</span>
+  </div>
+  <h1>Seu próprio Copilot local com Ollama</h1>
+  <p class="excerpt">Código proprietário não precisa sair da máquina. Com Ollama você roda Llama 3, Mistral, Qwen e outros modelos open-source localmente e integra no editor — sem enviar trechos para a nuvem.</p>
+  <div class="stack"><span>Ollama</span><span>Llama 3</span><span>Mistral</span><span>privacidade</span><span>VS Code</span></div>
+</div>
+
+<div class="wrap">
+  <div class="toc">
+    <div class="label">$ cat sumario.txt</div>
+    <ol>
+      <li><a href="#por-que">Por que rodar local</a></li>
+      <li><a href="#instalar">Instalar o Ollama</a></li>
+      <li><a href="#modelos">Modelos recomendados</a></li>
+      <li><a href="#cli">Uso básico pela CLI</a></li>
+      <li><a href="#editor">Integração com o editor</a></li>
+      <li><a href="#hardware">Hardware e quantização</a></li>
+      <li><a href="#limites">Limites honestos</a></li>
+    </ol>
+  </div>
+
+  <article class="body">
+    <h2 id="por-que">1. Por que rodar local</h2>
+    <ul>
+      <li><strong>Privacidade</strong> — código, logs e dados sensíveis não saem do ambiente</li>
+      <li><strong>Custo zero de API</strong> — depois do hardware, o modelo é gratuito</li>
+      <li><strong>Offline</strong> — funciona em avião, VPN restrita ou rede air-gapped</li>
+      <li><strong>Controle</strong> — você escolhe modelo, temperatura e system prompt</li>
+    </ul>
+    <p>Não substitui GPT-4o ou Claude em tarefas complexas de arquitetura, mas cobre bem refatoração, testes, explicação de código e geração de boilerplate.</p>
+
+    <h2 id="instalar">2. Instalar o Ollama</h2>
+    <p>Linux (script oficial):</p>
+<pre><code>curl -fsSL https://ollama.com/install.sh | sh</code></pre>
+    <p>macOS: baixe o app em <code>ollama.com</code> ou use Homebrew. Windows: instalador nativo disponível.</p>
+    <p>Depois do install, o serviço sobe em <code>localhost:11434</code> e a CLI fica disponível:</p>
+<pre><code>ollama --version
+ollama list</code></pre>
+
+    <h2 id="modelos">3. Modelos recomendados (2026)</h2>
+    <p>Comece com estes (ajuste conforme RAM/GPU):</p>
+    <ul>
+      <li><strong>llama3.2:3b</strong> — leve, bom para máquinas modestas e tarefas simples</li>
+      <li><strong>llama3.1:8b</strong> — equilíbrio qualidade/velocidade para código</li>
+      <li><strong>qwen2.5-coder:7b</strong> — forte em geração e explicação de código</li>
+      <li><strong>mistral:7b</strong> ou <strong>mixtral</strong> — alternativas sólidas</li>
+      <li><strong>codellama:13b</strong> — se tiver mais VRAM e quiser foco puro em código</li>
+    </ul>
+<pre><code>ollama pull llama3.1:8b
+ollama pull qwen2.5-coder:7b</code></pre>
+    <div class="tip"><strong>tip</strong> · Prefira variantes quantizadas (Q4_K_M, Q5) quando a documentação do modelo indicar. Ollama escolhe um default razoável na maioria dos pulls.</div>
+
+    <h2 id="cli">4. Uso básico pela CLI</h2>
+<pre><code># Chat interativo
+ollama run llama3.1:8b
+
+# Uma pergunta e sai
+ollama run llama3.1:8b "Explique este erro de segfault em C"
+
+# API HTTP (útil para scripts)
+curl http://localhost:11434/api/generate -d '{
+  "model": "llama3.1:8b",
+  "prompt": "Gere um teste unitário para esta função Python...",
+  "stream": false
+}'</code></pre>
+    <p>A API é compatível o suficiente com o formato OpenAI para muitos clientes simples.</p>
+
+    <h2 id="editor">5. Integração com o editor</h2>
+    <p><strong>VS Code / Cursor</strong></p>
+    <ul>
+      <li>Extensão <em>Continue</em> ou <em>Ollama</em> — aponte para <code>http://localhost:11434</code></li>
+      <li>Configure o modelo default e o system prompt focado em engenharia de software</li>
+      <li>Use atalhos para “explicar seleção”, “gerar testes”, “refatorar”</li>
+    </ul>
+    <p><strong>Neovim</strong></p>
+    <ul>
+      <li>Plugins como <code>ollama.nvim</code> ou integração via <code>avante.nvim</code> / <code>codecompanion</code></li>
+      <li>Mesmo endpoint local</li>
+    </ul>
+    <p>O fluxo típico: selecione o código → peça explicação ou alteração → revise o diff antes de aplicar.</p>
+
+    <h2 id="hardware">6. Hardware e quantização</h2>
+    <ul>
+      <li><strong>8 GB RAM</strong> — modelos 3B–7B quantizados (Q4)</li>
+      <li><strong>16 GB RAM</strong> — 7B–13B confortáveis; 8B com boa velocidade</li>
+      <li><strong>GPU NVIDIA com 8+ GB VRAM</strong> — acelera muito (Ollama detecta CUDA)</li>
+      <li><strong>Apple Silicon</strong> — Metal funciona bem; 16 GB unificados já rodam 8B com folga</li>
+    </ul>
+    <p>Quantização (Q4, Q5, Q8) reduz memória e velocidade de carregamento com perda pequena de qualidade na maioria das tarefas de código. Teste no seu hardware: latência de 1–3 tokens/s em CPU é usável; em GPU costuma ficar bem mais rápido.</p>
+
+    <h2 id="limites">7. Limites honestos</h2>
+    <ul>
+      <li>Modelos 7B–13B ainda erram em raciocínio multi-passo e arquiteturas complexas</li>
+      <li>Contexto menor que os modelos de nuvem (geralmente 8k–32k tokens)</li>
+      <li>Não substituem revisão humana nem testes</li>
+      <li>Para código crítico de produção, combine local (rascunho) + modelo forte na nuvem (revisão final) se a política de dados permitir</li>
+    </ul>
+    <p>O ganho real está em ter um assistente sempre disponível, offline e sem vazar o repositório. Comece com um modelo 7B/8B, integre no editor e meça se a produtividade sobe antes de investir em hardware maior.</p>
+    <p class="next-link"><a href="artigo-rag-pgvector.html">← RAG com pgvector</a> · <a href="ia.html">hub de IA</a> · <a href="artigo-apis-ia.html">próximo: Integração de APIs de IA →</a></p>
+  </article>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260916d" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916e" defer></script>
+</body>
+</html>

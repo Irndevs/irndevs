@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAG com pgvector: assistente com documentos da empresa — IRN Devs</title>
+<meta name="description" content="Guia prático de Retrieval-Augmented Generation usando PostgreSQL + pgvector. Chunking, embeddings, retrieval e geração com citações — do zero ao protótipo funcional.">
+<meta name="author" content="IRN Devs">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/artigo-base.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<meta property="og:title" content="RAG com pgvector — IRN Devs">
+<meta property="og:description" content="Como alimentar uma IA com PDFs e bases internas usando PostgreSQL + pgvector. Chunking, embeddings e retrieval com citações.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://irndevs.com/artigo-rag-pgvector.html">
+<meta property="og:url" content="https://irndevs.com/artigo-rag-pgvector.html">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:site_name" content="IRN Devs">
+<meta property="article:published_time" content="2026-09-16">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BlogPosting",
+  "headline":"RAG com pgvector: assistente com documentos da empresa",
+  "description":"Guia prático de Retrieval-Augmented Generation usando PostgreSQL + pgvector.",
+  "datePublished":"2026-09-16",
+  "author":{"@type":"Organization","name":"IRN Devs"},
+  "publisher":{"@type":"Organization","name":"IRN Devs","url":"https://irndevs.com"},
+  "mainEntityOfPage":"https://irndevs.com/artigo-rag-pgvector.html",
+  "inLanguage":"pt-BR"
+}
+</script>
+</head>
+<body>
+<!-- nav: site-nav.js -->
+<div class="wrap crumb">
+  <a href="index.html">~</a> / <a href="blog.html">blog</a> / <a href="ia.html">ia</a> / <span>rag-pgvector</span>
+</div>
+
+<div class="wrap article-head">
+  <div class="meta">
+    <span>16 set 2026</span>
+    <span class="tag">ia</span>
+    <span>14 min de leitura</span>
+  </div>
+  <h1>RAG com pgvector: assistente com documentos da empresa</h1>
+  <p class="excerpt">Retrieval-Augmented Generation permite que o modelo responda com base em PDFs, wikis e bancos internos — com citações e menos alucinações. Este guia monta um protótipo funcional usando PostgreSQL + pgvector.</p>
+  <div class="stack"><span>RAG</span><span>pgvector</span><span>PostgreSQL</span><span>embeddings</span><span>OpenAI</span></div>
+</div>
+
+<div class="wrap">
+  <div class="toc">
+    <div class="label">$ cat sumario.txt</div>
+    <ol>
+      <li><a href="#o-que">O que é RAG (e o que não é)</a></li>
+      <li><a href="#arquitetura">Arquitetura mínima</a></li>
+      <li><a href="#pgvector">Preparar o PostgreSQL + pgvector</a></li>
+      <li><a href="#chunking">Chunking e embeddings</a></li>
+      <li><a href="#retrieval">Retrieval + geração</a></li>
+      <li><a href="#quando-nao">Quando RAG não é a solução</a></li>
+      <li><a href="#proximos">Próximos passos</a></li>
+    </ol>
+  </div>
+
+  <article class="body">
+    <h2 id="o-que">1. O que é RAG (e o que não é)</h2>
+    <p>RAG (Retrieval-Augmented Generation) combina <strong>busca</strong> + <strong>geração</strong>. Em vez de depender só do conhecimento treinado no modelo, o sistema:</p>
+    <ol>
+      <li>Recebe a pergunta do usuário</li>
+      <li>Busca trechos relevantes em uma base de documentos (PDFs, Markdown, tickets, etc.)</li>
+      <li>Injeta esses trechos no contexto do prompt</li>
+      <li>Pede ao modelo para responder <em>usando apenas</em> o material recuperado, citando fontes</li>
+    </ol>
+    <p>Não é fine-tuning. Não é treinar um modelo do zero. É um padrão de arquitetura que reduz alucinações e permite atualizar a base sem re-treinar nada.</p>
+    <div class="tip"><strong>tip</strong> · Comece com documentos estáveis (manuais, políticas, runbooks). Tickets e chats mudam rápido e exigem pipeline de atualização.</div>
+
+    <h2 id="arquitetura">2. Arquitetura mínima</h2>
+    <p>Para um protótipo sério, quatro peças bastam:</p>
+    <ul>
+      <li><strong>Store de documentos</strong> — arquivos + metadados (título, origem, data)</li>
+      <li><strong>Índice vetorial</strong> — embeddings dos chunks (aqui: pgvector)</li>
+      <li><strong>Retriever</strong> — busca por similaridade + filtros opcionais</li>
+      <li><strong>Gerador</strong> — LLM com prompt que força uso das fontes e citações</li>
+    </ul>
+    <p>PostgreSQL + extensão <code>pgvector</code> é uma escolha sólida: você já tem o banco, ACID, backups e SQL. Para muitos casos (até dezenas/centenas de milhares de chunks) não precisa de Pinecone ou similar.</p>
+
+    <h2 id="pgvector">3. Preparar o PostgreSQL + pgvector</h2>
+    <p>No Postgres 16+ (ou 15 com a extensão instalada):</p>
+<pre><code>-- Habilitar a extensão
+CREATE EXTENSION IF NOT EXISTS vector;
+
+-- Tabela de documentos (metadados)
+CREATE TABLE documents (
+  id          bigserial PRIMARY KEY,
+  title       text NOT NULL,
+  source      text,          -- caminho do arquivo, URL, etc.
+  created_at  timestamptz DEFAULT now()
+);
+
+-- Chunks com embedding
+-- dimension 1536 = text-embedding-3-small (OpenAI)
+CREATE TABLE chunks (
+  id          bigserial PRIMARY KEY,
+  document_id bigint REFERENCES documents(id) ON DELETE CASCADE,
+  content     text NOT NULL,
+  embedding   vector(1536),
+  chunk_index int,
+  token_count int
+);
+
+-- Índice HNSW para busca aproximada (bom equilíbrio qualidade/velocidade)
+CREATE INDEX ON chunks
+  USING hnsw (embedding vector_cosine_ops);</code></pre>
+    <p>Ajuste a dimensão conforme o modelo de embedding que você usar (OpenAI, Voyage, nomic, etc.).</p>
+
+    <h2 id="chunking">4. Chunking e embeddings</h2>
+    <p>Documentos longos precisam ser divididos. Regras práticas:</p>
+    <ul>
+      <li>Tamanho típico: 400–800 tokens por chunk</li>
+      <li>Overlap de 10–20% para não cortar frases no meio</li>
+      <li>Preferir quebrar em títulos/parágrafos (não no meio de tabelas ou código)</li>
+      <li>Guardar <code>chunk_index</code> e referência ao documento original</li>
+    </ul>
+    <p>Exemplo mínimo em Python (usando a API oficial da OpenAI):</p>
+<pre><code>from openai import OpenAI
+import psycopg2
+
+client = OpenAI()
+
+def embed(texts: list[str]) -> list[list[float]]:
+    res = client.embeddings.create(
+        model="text-embedding-3-small",
+        input=texts
+    )
+    return [d.embedding for d in res.data]
+
+# após chunkar o PDF/Markdown:
+embeddings = embed([c["content"] for c in chunks])
+# inserir no Postgres com psycopg2 ou SQLAlchemy</code></pre>
+    <div class="tip"><strong>tip</strong> · Rode o embedding em batch (até 100–200 textos por request). Guarde o modelo e a dimensão usados — trocar depois exige reindexar tudo.</div>
+
+    <h2 id="retrieval">5. Retrieval + geração</h2>
+    <p>Fluxo de uma pergunta:</p>
+<pre><code>-- 1. Embedding da pergunta
+-- (feito na aplicação)
+
+-- 2. Busca dos k chunks mais próximos
+SELECT content, document_id, 1 - (embedding &lt;=&gt; $1) AS score
+FROM chunks
+ORDER BY embedding &lt;=&gt; $1
+LIMIT 6;</code></pre>
+    <p>O operador <code>&lt;=&gt;</code> é distância de cosseno no pgvector. Depois monte o prompt:</p>
+<pre><code>Você é um assistente técnico. Responda APENAS com base nos trechos abaixo.
+Se a informação não estiver nos trechos, diga que não encontrou.
+Cite a fonte no formato [doc:ID].
+
+Trechos:
+---
+[doc:42] ...conteúdo do chunk...
+[doc:17] ...conteúdo do chunk...
+---
+
+Pergunta do usuário: {pergunta}</code></pre>
+    <p>Envie para o modelo (GPT-4o-mini, Claude, Gemini, etc.) com temperatura baixa (0–0.3) e, se possível, response format estruturado.</p>
+
+    <h2 id="quando-nao">6. Quando RAG não é a solução certa</h2>
+    <ul>
+      <li>Perguntas que exigem raciocínio multi-hop complexo sem evidência direta nos docs</li>
+      <li>Base muito pequena e estável — às vezes um prompt com o texto inteiro basta</li>
+      <li>Necessidade de respostas em tempo real com dados transacionais (aí é melhor function calling + SQL)</li>
+      <li>Documentos extremamente ruidosos ou mal estruturados (priorize limpeza antes de indexar)</li>
+    </ul>
+
+    <h2 id="proximos">7. Próximos passos</h2>
+    <ol>
+      <li>Adicionar <strong>hybrid search</strong> (BM25 + vetor) para termos exatos (códigos de erro, nomes de serviços)</li>
+      <li>Filtros por metadados (departamento, data, produto)</li>
+      <li>Avaliação: conjunto de perguntas + respostas esperadas e métricas de retrieval (recall@k, MRR)</li>
+      <li>Observabilidade: logar quais chunks foram usados e se o usuário aceitou a resposta</li>
+    </ol>
+    <p>Com esse esqueleto você já tem um assistente interno utilizável. O resto é iteração sobre qualidade dos chunks, modelo de embedding e prompt de geração.</p>
+    <p class="next-link"><a href="ia.html">← voltar ao hub de IA</a> · <a href="artigo-ollama-local.html">próximo: Copilot local com Ollama →</a></p>
+  </article>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260916d" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916e" defer></script>
+</body>
+</html>

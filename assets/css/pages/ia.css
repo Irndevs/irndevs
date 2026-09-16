@@ -499,3 +499,26 @@ footer a:hover { color: var(--ia-amber); }
   .ia-stats { gap: 22px; }
   .project-grid article { min-height: 0; }
 }
+
+.content-link {
+  display: inline-block;
+  margin-top: 14px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ia-amber);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s;
+}
+.content-link:hover {
+  border-bottom-color: var(--ia-amber);
+}
+.content-soon {
+  display: inline-block;
+  margin-top: 14px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-faint);
+  border: 1px solid var(--border);
+  padding: 2px 8px;
+}

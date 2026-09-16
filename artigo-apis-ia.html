@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Integração de APIs de IA: OpenAI, Claude e Gemini — IRN Devs</title>
+<meta name="description" content="Passo a passo para conectar OpenAI, Anthropic (Claude) e Google Gemini em aplicações Node.js e Python. Chaves, streaming, rate limit e tratamento de erros.">
+<meta name="author" content="IRN Devs">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/artigo-base.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<meta property="og:title" content="Integração de APIs de IA — IRN Devs">
+<meta property="og:description" content="OpenAI, Claude e Gemini em Node.js e Python: autenticação, streaming e produção.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://irndevs.com/artigo-apis-ia.html">
+<meta property="og:url" content="https://irndevs.com/artigo-apis-ia.html">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:site_name" content="IRN Devs">
+<meta property="article:published_time" content="2026-09-16">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BlogPosting",
+  "headline":"Integração de APIs de IA: OpenAI, Claude e Gemini",
+  "description":"Passo a passo para conectar as principais APIs de LLM em aplicações reais.",
+  "datePublished":"2026-09-16",
+  "author":{"@type":"Organization","name":"IRN Devs"},
+  "publisher":{"@type":"Organization","name":"IRN Devs","url":"https://irndevs.com"},
+  "mainEntityOfPage":"https://irndevs.com/artigo-apis-ia.html",
+  "inLanguage":"pt-BR"
+}
+</script>
+</head>
+<body>
+<!-- nav: site-nav.js -->
+<div class="wrap crumb">
+  <a href="index.html">~</a> / <a href="blog.html">blog</a> / <a href="ia.html">ia</a> / <span>apis-ia</span>
+</div>
+
+<div class="wrap article-head">
+  <div class="meta">
+    <span>16 set 2026</span>
+    <span class="tag">ia</span>
+    <span>12 min de leitura</span>
+  </div>
+  <h1>Integração de APIs de IA: OpenAI, Claude e Gemini</h1>
+  <p class="excerpt">Como conectar as três principais APIs de modelos de linguagem em Node.js e Python de forma segura: chaves, clientes oficiais, streaming, rate limits e erros que você vai encontrar em produção.</p>
+  <div class="stack"><span>OpenAI</span><span>Claude</span><span>Gemini</span><span>Node.js</span><span>Python</span></div>
+</div>
+
+<div class="wrap">
+  <div class="toc">
+    <div class="label">$ cat sumario.txt</div>
+    <ol>
+      <li><a href="#chaves">Chaves e variáveis de ambiente</a></li>
+      <li><a href="#openai">OpenAI (Node + Python)</a></li>
+      <li><a href="#claude">Anthropic Claude</a></li>
+      <li><a href="#gemini">Google Gemini</a></li>
+      <li><a href="#streaming">Streaming no front-end</a></li>
+      <li><a href="#producao">Checklist de produção</a></li>
+    </ol>
+  </div>
+
+  <article class="body">
+    <h2 id="chaves">1. Chaves e variáveis de ambiente</h2>
+    <p>Nunca hardcode a API key. Use variáveis de ambiente e, em produção, um secret manager (GitHub Actions secrets, Doppler, AWS Secrets Manager, etc.).</p>
+<pre><code># .env (nunca commitado)
+OPENAI_API_KEY=sk-...
+ANTHROPIC_API_KEY=sk-ant-...
+GOOGLE_API_KEY=AIza...</code></pre>
+    <p>No Node: <code>dotenv</code> ou variáveis nativas do runtime. No Python: <code>python-dotenv</code> ou o loader do framework.</p>
+    <div class="tip"><strong>tip</strong> · Crie chaves com escopo mínimo e ative billing alerts. Uma chave vazada em repositório público custa caro em minutos.</div>
+
+    <h2 id="openai">2. OpenAI</h2>
+    <p><strong>Node.js</strong></p>
+<pre><code>import OpenAI from "openai";
+
+const client = new OpenAI(); // lê OPENAI_API_KEY
+
+const completion = await client.chat.completions.create({
+  model: "gpt-4o-mini",
+  messages: [
+    { role: "system", content: "Você é um assistente de engenharia de software." },
+    { role: "user", content: "Explique este erro de TypeScript..." }
+  ],
+  temperature: 0.2,
+});
+
+console.log(completion.choices[0].message.content);</code></pre>
+    <p><strong>Python</strong></p>
+<pre><code>from openai import OpenAI
+
+client = OpenAI()  # OPENAI_API_KEY
+
+resp = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "system", "content": "Você é um assistente de engenharia de software."},
+        {"role": "user", "content": "Explique este erro de TypeScript..."}
+    ],
+    temperature=0.2,
+)
+print(resp.choices[0].message.content)</code></pre>
+
+    <h2 id="claude">3. Anthropic Claude</h2>
+    <p><strong>Node.js</strong></p>
+<pre><code>import Anthropic from "@anthropic-ai/sdk";
+
+const client = new Anthropic(); // ANTHROPIC_API_KEY
+
+const msg = await client.messages.create({
+  model: "claude-sonnet-4-20250514",
+  max_tokens: 1024,
+  messages: [{ role: "user", content: "Revise este diff de segurança..." }],
+});
+
+console.log(msg.content[0].text);</code></pre>
+    <p><strong>Python</strong></p>
+<pre><code>import anthropic
+
+client = anthropic.Anthropic()
+
+msg = client.messages.create(
+    model="claude-sonnet-4-20250514",
+    max_tokens=1024,
+    messages=[{"role": "user", "content": "Revise este diff de segurança..."}],
+)
+print(msg.content[0].text)</code></pre>
+    <p>Claude usa <code>messages</code> (não há role <code>system</code> separado no mesmo formato; use o parâmetro <code>system</code> no create quando precisar).</p>
+
+    <h2 id="gemini">4. Google Gemini</h2>
+    <p><strong>Python (SDK oficial)</strong></p>
+<pre><code>import google.generativeai as genai
+import os
+
+genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+model = genai.GenerativeModel("gemini-2.0-flash")
+
+resp = model.generate_content("Gere um schema JSON para um pedido de e-commerce")
+print(resp.text)</code></pre>
+    <p>No Node, use <code>@google/generative-ai</code> com o mesmo fluxo: configurar a key e chamar <code>generateContent</code>.</p>
+
+    <h2 id="streaming">5. Streaming no front-end</h2>
+    <p>Para UX de “digitando…”, use streaming. Exemplo genérico com Server-Sent Events (backend Node):</p>
+<pre><code>// backend (express)
+app.post("/api/chat", async (req, res) => {
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.flushHeaders();
+
+  const stream = await client.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages: req.body.messages,
+    stream: true,
+  });
+
+  for await (const chunk of stream) {
+    const delta = chunk.choices[0]?.delta?.content || "";
+    if (delta) res.write(`data: ${JSON.stringify({ delta })}\n\n`);
+  }
+  res.write("data: [DONE]\n\n");
+  res.end();
+});</code></pre>
+    <p>No front, consuma com <code>EventSource</code> ou <code>fetch</code> + <code>ReadableStream</code> e vá concatenando o texto na UI.</p>
+
+    <h2 id="producao">6. Checklist de produção</h2>
+    <ul>
+      <li>Timeouts e retries com backoff (erros 429 e 5xx)</li>
+      <li>Limite de tokens de entrada e saída</li>
+      <li>Logging de custo (tokens in/out) por usuário ou feature</li>
+      <li>Sanitização de prompt: não deixe o usuário injetar instruções que quebrem o system prompt</li>
+      <li>Fallback: se um provedor cair, ter um segundo modelo configurado</li>
+      <li>Observabilidade: latência p50/p95, taxa de erro, tokens médios</li>
+    </ul>
+    <p>Com esses três clientes você cobre a maior parte dos casos. Escolha o modelo conforme a tarefa (código, raciocínio longo, custo) e mantenha a camada de aplicação desacoplada do provedor — facilita trocar depois.</p>
+    <p class="next-link"><a href="artigo-ollama-local.html">← Ollama local</a> · <a href="ia.html">hub de IA</a> · <a href="artigo-rag-pgvector.html">RAG com pgvector →</a></p>
+  </article>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260916d" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916e" defer></script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentes com LangChain, LlamaIndex e CrewAI — IRN Devs</title>
+<meta name="description" content="Como montar agentes autônomos com LangChain, LlamaIndex e CrewAI: chains vs agents, tools, function calling e crews multi-agente. Guia prático para engenheiros de software.">
+<meta name="author" content="IRN Devs">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/pages/artigo-base.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<meta property="og:title" content="Agentes com LangChain e CrewAI — IRN Devs">
+<meta property="og:description" content="Chains, agents, tools e crews multi-agente na prática.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://irndevs.com/artigo-agentes-langchain.html">
+<meta property="og:url" content="https://irndevs.com/artigo-agentes-langchain.html">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
+<meta property="og:site_name" content="IRN Devs">
+<meta property="article:published_time" content="2026-09-16">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BlogPosting",
+  "headline":"Agentes com LangChain, LlamaIndex e CrewAI",
+  "description":"Como montar agentes autônomos: chains vs agents, tools e crews multi-agente.",
+  "datePublished":"2026-09-16",
+  "author":{"@type":"Organization","name":"IRN Devs"},
+  "publisher":{"@type":"Organization","name":"IRN Devs","url":"https://irndevs.com"},
+  "mainEntityOfPage":"https://irndevs.com/artigo-agentes-langchain.html",
+  "inLanguage":"pt-BR"
+}
+</script>
+</head>
+<body>
+<!-- nav: site-nav.js -->
+<div class="wrap crumb">
+  <a href="index.html">~</a> / <a href="blog.html">blog</a> / <a href="ia.html">ia</a> / <span>agentes</span>
+</div>
+
+<div class="wrap article-head">
+  <div class="meta">
+    <span>16 set 2026</span>
+    <span class="tag">ia</span>
+    <span>13 min de leitura</span>
+  </div>
+  <h1>Agentes com LangChain, LlamaIndex e CrewAI</h1>
+  <p class="excerpt">Chains resolvem fluxos lineares. Agents decidem quais ferramentas usar. Crews coordenam vários agentes. Este guia mostra quando usar cada um e como montar o mínimo viável sem over-engineering.</p>
+  <div class="stack"><span>LangChain</span><span>LlamaIndex</span><span>CrewAI</span><span>agents</span><span>tools</span></div>
+</div>
+
+<div class="wrap">
+  <div class="toc">
+    <div class="label">$ cat sumario.txt</div>
+    <ol>
+      <li><a href="#chains-vs-agents">Chains vs agents</a></li>
+      <li><a href="#tools">Tools e function calling</a></li>
+      <li><a href="#langchain">LangChain na prática</a></li>
+      <li><a href="#llamaindex">LlamaIndex para RAG + agentes</a></li>
+      <li><a href="#crewai">CrewAI: multi-agente</a></li>
+      <li><a href="#quando">Quando usar o quê</a></li>
+      <li><a href="#producao">Cuidados em produção</a></li>
+    </ol>
+  </div>
+
+  <article class="body">
+    <h2 id="chains-vs-agents">1. Chains vs agents</h2>
+    <p><strong>Chain</strong> = sequência fixa de passos. Você define a ordem: prompt → modelo → parser → próximo prompt. Previsível, fácil de testar e de limitar custo.</p>
+    <p><strong>Agent</strong> = o modelo escolhe a próxima ação. Você entrega um conjunto de <em>tools</em> (buscar, calcular, chamar API, ler arquivo) e o modelo decide qual usar, com base no objetivo.</p>
+    <ul>
+      <li>Use <strong>chain</strong> quando o fluxo é conhecido (classificar ticket → extrair campos → responder template)</li>
+      <li>Use <strong>agent</strong> quando o caminho depende da entrada (pesquisar docs, consultar banco, comparar opções)</li>
+    </ul>
+    <div class="tip"><strong>tip</strong> · Agents são mais caros e menos determinísticos. Comece com chain; só abra o agent quando a chain ficar torta demais.</div>
+
+    <h2 id="tools">2. Tools e function calling</h2>
+    <p>Uma tool é uma função com nome, descrição e schema de parâmetros. O modelo “vê” a descrição e decide chamar ou não. Exemplo de schema mental:</p>
+<pre><code>{
+  "name": "search_docs",
+  "description": "Busca na documentação interna por similaridade semântica",
+  "parameters": {
+    "query": "string",
+    "limit": "integer (default 5)"
+  }
+}</code></pre>
+    <p>Na prática (OpenAI / Anthropic / Gemini), isso vira <em>function calling</em> ou <em>tool use</em>: o modelo devolve um JSON estruturado, sua aplicação executa a função e devolve o resultado no próximo turno.</p>
+    <p>Regras úteis:</p>
+    <ul>
+      <li>Descrições claras e curtas — o modelo depende delas</li>
+      <li>Poucas tools no início (3–6); muitas tools diluem a escolha</li>
+      <li>Validar argumentos antes de executar (tipos, limites, path traversal)</li>
+      <li>Timeout e sandbox para tools que tocam rede ou filesystem</li>
+    </ul>
+
+    <h2 id="langchain">3. LangChain na prática</h2>
+    <p>LangChain organiza prompts, modelos, parsers e tools. Esqueleto mínimo de agent com tool de busca:</p>
+<pre><code>from langchain_openai import ChatOpenAI
+from langchain.agents import create_tool_calling_agent, AgentExecutor
+from langchain_core.tools import tool
+from langchain_core.prompts import ChatPromptTemplate
+
+@tool
+def search_docs(query: str) -> str:
+    """Busca na base de documentação interna."""
+    # sua lógica de retrieval (pgvector, etc.)
+    return "trechos relevantes..."
+
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "Você é um assistente técnico. Use tools quando precisar de dados."),
+    ("human", "{input}"),
+    ("placeholder", "{agent_scratchpad}"),
+])
+agent = create_tool_calling_agent(llm, [search_docs], prompt)
+executor = AgentExecutor(agent=agent, tools=[search_docs], verbose=True)
+
+result = executor.invoke({"input": "Como configurar o backup 3-2-1?"})
+print(result["output"])</code></pre>
+    <p>Comece com <code>verbose=True</code> para ver o raciocínio e as chamadas. Em produção, desligue e logue só o necessário.</p>
+
+    <h2 id="llamaindex">4. LlamaIndex para RAG + agentes</h2>
+    <p>LlamaIndex brilha quando o centro é <strong>dados indexados</strong> (PDFs, pastas, bancos). O fluxo típico:</p>
+    <ol>
+      <li>Carregar documentos → chunking → embeddings → índice</li>
+      <li>Query engine ou agent que consulta o índice</li>
+      <li>Resposta com fontes (citations)</li>
+    </ol>
+<pre><code>from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
+from llama_index.llms.openai import OpenAI
+
+documents = SimpleDirectoryReader("./docs").load_data()
+index = VectorStoreIndex.from_documents(documents)
+query_engine = index.as_query_engine(similarity_top_k=4)
+
+response = query_engine.query("Qual o procedimento de restore do Restic?")
+print(response)</code></pre>
+    <p>Para agent: use <code>as_chat_engine</code> ou integre tools extras (SQL, HTTP). LlamaIndex e LangChain se complementam — muitos times usam LlamaIndex no retrieval e LangChain na orquestração.</p>
+
+    <h2 id="crewai">5. CrewAI: multi-agente</h2>
+    <p>CrewAI modela <strong>papéis</strong> (researcher, writer, reviewer) e um processo (sequencial ou hierárquico). Útil quando a tarefa naturalmente se divide:</p>
+    <ul>
+      <li>Pesquisador busca e resume fontes</li>
+      <li>Analista compara opções e trade-offs</li>
+      <li>Redator gera o relatório final</li>
+    </ul>
+<pre><code>from crewai import Agent, Task, Crew
+
+researcher = Agent(
+    role="Pesquisador técnico",
+    goal="Coletar evidências sobre a pergunta",
+    backstory="Especialista em documentação de infraestrutura",
+    verbose=True,
+)
+writer = Agent(
+    role="Redator técnico",
+    goal="Escrever resposta clara e citada",
+    backstory="Engenheiro que documenta runbooks",
+    verbose=True,
+)
+
+task1 = Task(description="Pesquise: {pergunta}", agent=researcher)
+task2 = Task(description="Escreva a resposta final com base na pesquisa", agent=writer)
+
+crew = Crew(agents=[researcher, writer], tasks=[task1, task2])
+result = crew.kickoff(inputs={"pergunta": "Como endurecer SSH em Ubuntu?"})</code></pre>
+    <p>Multi-agente aumenta custo e latência. Só vale quando um único agent não consegue manter contexto ou especialização.</p>
+
+    <h2 id="quando">6. Quando usar o quê</h2>
+    <ul>
+      <li><strong>Chain simples</strong> — fluxo fixo, baixo risco, alta previsibilidade</li>
+      <li><strong>Agent + tools</strong> — precisa consultar docs, banco ou APIs de forma dinâmica</li>
+      <li><strong>LlamaIndex</strong> — o núcleo é RAG sobre muitos documentos</li>
+      <li><strong>CrewAI</strong> — tarefas longas com papéis distintos e revisão</li>
+    </ul>
+    <p>Não comece com crew de 5 agentes. Comece com uma tool e um agent; meça qualidade e custo; só então especialize.</p>
+
+    <h2 id="producao">7. Cuidados em produção</h2>
+    <ul>
+      <li><strong>Loop infinito</strong> — limite de iterações (max_iterations) e de tokens</li>
+      <li><strong>Tools perigosas</strong> — shell, escrita em disco e HTTP externo precisam de allowlist</li>
+      <li><strong>Custo</strong> — logar tokens por tool call; agentes “pensam” em voz alta e gastam</li>
+      <li><strong>Observabilidade</strong> — trace de cada step (LangSmith, Phoenix, ou logs estruturados)</li>
+      <li><strong>Humano no loop</strong> — ações irreversíveis (deploy, delete, e-mail) pedem confirmação</li>
+    </ul>
+    <p>Agentes são poderosos e frágeis. Trate-os como sistemas distribuídos: limites, retries, métricas e rollback.</p>
+    <p class="next-link"><a href="artigo-rag-pgvector.html">← RAG com pgvector</a> · <a href="ia.html">hub de IA</a> · <a href="demo-commit-ia.html">demo: gerador de commit →</a></p>
+  </article>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
+<script src="assets/js/site-nav.js?v=20260916d" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916e" defer></script>
+</body>
+</html>
