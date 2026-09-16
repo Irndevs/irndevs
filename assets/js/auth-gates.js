@@ -10,7 +10,9 @@
       'conta.html',
       'area-cliente.html',
       'pedidos.html',
-      'orcamentos.html'
+      'orcamentos.html',
+      'pedido.html',
+      'admin.html'
     ],
     actions: {
       'save-checklist': true,

@@ -47,7 +47,7 @@
   <script src="assets/js/auth.js" defer></script>
   <script src="assets/js/site-nav.js?v=20260916c" defer></script>
 <script>
-(function () {
+document.addEventListener('DOMContentLoaded', function () {
   function safeNext() {
     var q = new URLSearchParams(location.search).get('next') || '';
     if (!q || q.indexOf('://') !== -1 || (q.charAt(0) === '/' && q.charAt(1) === '/')) return 'conta.html';
@@ -60,7 +60,11 @@
     link.href = 'login.html?next=' + encodeURIComponent(next);
   }
 
-  if (!window.IRNAuth || !IRNAuth.ready()) document.getElementById('cfgNote').hidden = false;
+  if (!window.IRNAuth || !IRNAuth.ready()) {
+    var n = document.getElementById('cfgNote');
+    if (n) n.hidden = false;
+    return;
+  }
   document.getElementById('form').addEventListener('submit', async function (e) {
     e.preventDefault();
     var btn = e.target.querySelector('button');
@@ -83,7 +87,7 @@
       btn.disabled = false;
     }
   });
-})();
+});
 </script>
   <script src="assets/js/chat-bot.js?v=20260916e" defer></script>
 </body>

@@ -159,7 +159,7 @@
 <script src="assets/js/auth-gates.js" defer></script>
 <script src="assets/js/site-nav.js?v=20260916c" defer></script>
 <script>
-(async function () {
+document.addEventListener('DOMContentLoaded', async function () {
   function setMsg(id, text, ok) {
     var el = document.getElementById(id);
     if (!el) return;
@@ -169,7 +169,8 @@
   }
 
   if (!window.IRNAuth || !IRNAuth.ready()) {
-    document.getElementById('hello').textContent = 'Auth não configurado. Veja AUTH-SUPABASE.md';
+    var hello = document.getElementById('hello');
+    if (hello) hello.textContent = 'Auth não configurado. Veja AUTH-SUPABASE.md';
     return;
   }
   if (window.IRNAuthGates) {
@@ -323,7 +324,7 @@
   }
   document.getElementById('btnOut').onclick = doOut;
   document.getElementById('btnOutSide').onclick = doOut;
-})();
+});
 </script>
   <script src="assets/js/chat-bot.js?v=20260916e" defer></script>
 </body>

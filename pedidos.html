@@ -51,7 +51,7 @@
 <script src="assets/js/auth-gates.js" defer></script>
 <script src="assets/js/site-nav.js?v=20260916c" defer></script>
 <script>
-(async function () {
+document.addEventListener('DOMContentLoaded', async function () {
   if (!(await IRNAuthGates.guardPage())) return;
   var box = document.getElementById('list');
   var rows = [];
@@ -78,16 +78,25 @@
     try { return (c/100).toLocaleString('pt-BR',{style:'currency',currency:cur||'BRL'}); }
     catch(e){ return (c/100).toFixed(2); }
   }
+  var activeStatuses = ['recebido','em_analise','em_execucao','aguardando_cliente','aberto','em_andamento'];
+  var doneStatuses = ['entregue'];
+  document.getElementById('statA').textContent = rows.filter(function(r){ return activeStatuses.indexOf(r.status)!==-1; }).length;
+  document.getElementById('statB').textContent = rows.filter(function(r){ return doneStatuses.indexOf(r.status)!==-1; }).length;
   rows.forEach(function (r) {
     var d = document.createElement('div');
     d.className = 'dash-list-item';
+    d.style.cursor = 'pointer';
+    d.onclick = function(){ location.href = 'pedido.html?id=' + r.id; };
     d.innerHTML = '<div class="dash-list-head"><span>#' + r.id + ' · ' + (r.status||'') + '</span><span>' +
       money(r.amount_cents, r.currency) + '</span></div><div class="dash-list-body">' +
-      (r.title||'') + (r.notes ? '\n' + r.notes : '') + '\n' +
-      (r.created_at ? new Date(r.created_at).toLocaleString('pt-BR') : '') + '</div>';
+      (r.title||'') + (r.notes ? '
+' + r.notes : '') + '
+' +
+      (r.created_at ? new Date(r.created_at).toLocaleString('pt-BR') : '') +
+      '</div><div style="margin-top:6px;font-size:12px;color:var(--dash-amber)">ver detalhe →</div>';
     box.appendChild(d);
   });
-})();
+});
 </script>
   <script src="assets/js/chat-bot.js?v=20260916e" defer></script>
 </body>

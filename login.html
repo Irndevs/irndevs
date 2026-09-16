@@ -33,9 +33,13 @@
       <label for="email">email</label>
       <input id="email" type="email" required autocomplete="email" placeholder="voce@empresa.com">
       <label for="password">senha</label>
-      <input id="password" type="password" required autocomplete="current-password" minlength="6" placeholder="••••••••">
+      <input id="password" type="password" autocomplete="current-password" minlength="6" placeholder="••••••••">
       <button class="btn" type="submit">entrar →</button>
     </form>
+    <p style="margin-top:14px;font-size:13px;color:var(--dim,#8f9587)">
+      <a href="#" id="btnMagic" style="color:#e8a33d">entrar com link mágico (sem senha)</a>
+      · <a href="#" id="btnReset" style="color:#e8a33d">esqueci a senha</a>
+    </p>
     <p class="note" id="cfgNote" hidden>Auth ainda não configurado. Veja AUTH-SUPABASE.md</p>
   </div>
   <p class="foot">Não tem conta? <a href="cadastro.html" id="linkCadastro">criar conta</a></p>
@@ -45,7 +49,7 @@
   <script src="assets/js/auth.js" defer></script>
   <script src="assets/js/site-nav.js?v=20260916c" defer></script>
 <script>
-(function () {
+document.addEventListener('DOMContentLoaded', function () {
   function safeNext() {
     var q = new URLSearchParams(location.search).get('next') || '';
     var allowed = ['conta.html', 'area-cliente.html', 'pedidos.html', 'orcamentos.html'];
@@ -58,7 +62,10 @@
   }
 
   var note = document.getElementById('cfgNote');
-  if (!window.IRNAuth || !IRNAuth.ready()) note.hidden = false;
+  if (!window.IRNAuth || !IRNAuth.ready()) {
+    if (note) note.hidden = false;
+    return;
+  }
   IRNAuth.user().then(function (u) { if (u) location.replace(next); });
   document.getElementById('form').addEventListener('submit', async function (e) {
     e.preventDefault();
@@ -76,7 +83,31 @@
       btn.disabled = false;
     }
   });
-})();
+
+  document.getElementById('btnMagic').addEventListener('click', async function (e) {
+    e.preventDefault();
+    var email = document.getElementById('email').value.trim();
+    if (!email) { IRNAuth.setMsg('msg', 'Informe o e-mail.', false); return; }
+    try {
+      await IRNAuth.signInWithMagicLink(email);
+      IRNAuth.setMsg('msg', 'Link mágico enviado! Verifique seu e-mail.', true);
+    } catch (err) {
+      IRNAuth.setMsg('msg', (err && err.message) || 'Falha ao enviar link', false);
+    }
+  });
+
+  document.getElementById('btnReset').addEventListener('click', async function (e) {
+    e.preventDefault();
+    var email = document.getElementById('email').value.trim();
+    if (!email) { IRNAuth.setMsg('msg', 'Informe o e-mail para recuperar a senha.', false); return; }
+    try {
+      await IRNAuth.resetPassword(email);
+      IRNAuth.setMsg('msg', 'E-mail de recuperação enviado. Verifique sua caixa de entrada.', true);
+    } catch (err) {
+      IRNAuth.setMsg('msg', (err && err.message) || 'Falha ao enviar recuperação', false);
+    }
+  });
+});
 </script>
   <script src="assets/js/chat-bot.js?v=20260916e" defer></script>
 </body>

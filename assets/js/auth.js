@@ -1,6 +1,6 @@
 /**
- * IRN Devs — auth client (Supabase CDN)
- * Depende de: supabase-config.js + @supabase/supabase-js
+ * IRN Devs — auth client v2 (Supabase CDN)
+ * Área do cliente: pedidos, orçamentos, arquivos, notificações, IA tools, magic link
  */
 (function (global) {
   var client = null;
@@ -35,6 +35,7 @@
     box.className = 'auth-msg ' + (ok ? 'ok' : 'err');
   }
 
+  // ---------- Auth basics ----------
   async function signUp(email, password, fullName) {
     var sb = getClient();
     if (!sb) throw new Error('Auth não configurado. Preencha assets/js/supabase-config.js');
@@ -51,6 +52,27 @@
     var sb = getClient();
     if (!sb) throw new Error('Auth não configurado.');
     var res = await sb.auth.signInWithPassword({ email: email, password: password });
+    if (res.error) throw res.error;
+    return res.data;
+  }
+
+  async function signInWithMagicLink(email) {
+    var sb = getClient();
+    if (!sb) throw new Error('Auth não configurado.');
+    var res = await sb.auth.signInWithOtp({
+      email: email,
+      options: { emailRedirectTo: window.location.origin + '/conta.html' }
+    });
+    if (res.error) throw res.error;
+    return res.data;
+  }
+
+  async function resetPassword(email) {
+    var sb = getClient();
+    if (!sb) throw new Error('Auth não configurado.');
+    var res = await sb.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + '/conta.html?reset=1'
+    });
     if (res.error) throw res.error;
     return res.data;
   }
@@ -73,6 +95,15 @@
     return s ? s.user : null;
   }
 
+  async function changePassword(newPassword) {
+    var sb = getClient();
+    if (!sb) throw new Error('Auth não configurado.');
+    var res = await sb.auth.updateUser({ password: newPassword });
+    if (res.error) throw res.error;
+    return res.data;
+  }
+
+  // ---------- Profile ----------
   async function getProfile() {
     var sb = getClient();
     var u = await user();
@@ -90,82 +121,271 @@
       updated_at: new Date().toISOString()
     })).eq('id', u.id);
     if (res.error) throw res.error;
+    return res.data;
   }
 
-  async function saveChecklist(kind, content) {
+  async function isAdmin() {
+    var p = await getProfile();
+    return !!(p && p.is_admin);
+  }
+
+  // ---------- Checklists ----------
+  async function saveChecklist(kind, content, title) {
     var sb = getClient();
     var u = await user();
-    if (!sb || !u) throw new Error('Faça login para salvar.');
+    if (!sb || !u) throw new Error('Faça login.');
     var res = await sb.from('checklists_saved').insert({
       user_id: u.id,
-      kind: kind,
+      kind: kind || 'auto',
+      title: title || null,
       content: content
     });
     if (res.error) throw res.error;
+    return res.data;
   }
 
   async function listChecklists() {
     var sb = getClient();
     var u = await user();
     if (!sb || !u) return [];
-    var res = await sb.from('checklists_saved').select('*').order('created_at', { ascending: false }).limit(20);
+    var res = await sb.from('checklists_saved').select('*').eq('user_id', u.id).order('created_at', { ascending: false });
     if (res.error) throw res.error;
     return res.data || [];
   }
 
+  // ---------- Quotes (orçamentos) ----------
   async function listQuotes() {
     var sb = getClient();
     var u = await user();
     if (!sb || !u) return [];
-    var res = await sb.from('quotes').select('*').order('created_at', { ascending: false }).limit(50);
+    var res = await sb.from('quotes').select('*').eq('user_id', u.id).order('created_at', { ascending: false });
     if (res.error) throw res.error;
     return res.data || [];
   }
 
-  async function listOrders() {
+  async function getQuote(id) {
     var sb = getClient();
     var u = await user();
-    if (!sb || !u) return [];
-    var res = await sb.from('orders').select('*').order('created_at', { ascending: false }).limit(50);
-    if (res.error) throw res.error;
-    return res.data || [];
-  }
-
-  async function changePassword(newPassword) {
-    var sb = getClient();
-    if (!sb) throw new Error('Auth não configurado.');
-    var u = await user();
-    if (!u) throw new Error('Faça login.');
-    if (!newPassword || String(newPassword).length < 6) {
-      throw new Error('Senha deve ter no mínimo 6 caracteres.');
-    }
-    var res = await sb.auth.updateUser({ password: String(newPassword) });
+    if (!sb || !u) return null;
+    var res = await sb.from('quotes').select('*').eq('id', id).eq('user_id', u.id).maybeSingle();
     if (res.error) throw res.error;
     return res.data;
   }
 
-  /**
-   * Exige sessão ativa. Se não houver, redireciona para login.html?next=...
-   * Retorna o user ou null (após redirecionar).
-   */
+  async function createQuote(title, notes, payload) {
+    var sb = getClient();
+    var u = await user();
+    if (!sb || !u) throw new Error('Faça login.');
+    var res = await sb.from('quotes').insert({
+      user_id: u.id,
+      title: title,
+      notes: notes || null,
+      status: 'enviado',
+      payload: payload || {}
+    }).select().single();
+    if (res.error) throw res.error;
+    return res.data;
+  }
+
+  async function acceptQuote(id) {
+    var sb = getClient();
+    var u = await user();
+    if (!sb || !u) throw new Error('Faça login.');
+    var res = await sb.from('quotes').update({
+      status: 'aprovado',
+      accepted_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    }).eq('id', id).eq('user_id', u.id).select().single();
+    if (res.error) throw res.error;
+    return res.data;
+  }
+
+  async function refuseQuote(id) {
+    var sb = getClient();
+    var u = await user();
+    if (!sb || !u) throw new Error('Faça login.');
+    var res = await sb.from('quotes').update({
+      status: 'recusado',
+      updated_at: new Date().toISOString()
+    }).eq('id', id).eq('user_id', u.id).select().single();
+    if (res.error) throw res.error;
+    return res.data;
+  }
+
+  // ---------- Orders (pedidos) ----------
+  async function listOrders() {
+    var sb = getClient();
+    var u = await user();
+    if (!sb || !u) return [];
+    var res = await sb.from('orders').select('*').eq('user_id', u.id).order('created_at', { ascending: false });
+    if (res.error) throw res.error;
+    return res.data || [];
+  }
+
+  async function getOrder(id) {
+    var sb = getClient();
+    var u = await user();
+    if (!sb || !u) return null;
+    var res = await sb.from('orders').select('*').eq('id', id).eq('user_id', u.id).maybeSingle();
+    if (res.error) throw res.error;
+    return res.data;
+  }
+
+  async function listOrderEvents(orderId) {
+    var sb = getClient();
+    var u = await user();
+    if (!sb || !u) return [];
+    var res = await sb.from('order_events').select('*').eq('order_id', orderId).order('created_at', { ascending: true });
+    if (res.error) throw res.error;
+    return res.data || [];
+  }
+
+  async function listOrderMessages(orderId) {
+    var sb = getClient();
+    var u = await user();
+    if (!sb || !u) return [];
+    var res = await sb.from('order_messages').select('*').eq('order_id', orderId).order('created_at', { ascending: true });
+    if (res.error) throw res.error;
+    return res.data || [];
+  }
+
+  async function sendOrderMessage(orderId, body) {
+    var sb = getClient();
+    var u = await user();
+    if (!sb || !u) throw new Error('Faça login.');
+    var res = await sb.from('order_messages').insert({
+      order_id: orderId,
+      user_id: u.id,
+      body: body,
+      is_admin: false
+    }).select().single();
+    if (res.error) throw res.error;
+    return res.data;
+  }
+
+  // ---------- Files ----------
+  async function listOrderFiles(orderId) {
+    var sb = getClient();
+    var u = await user();
+    if (!sb || !u) return [];
+    var res = await sb.from('order_files').select('*').eq('order_id', orderId).eq('user_id', u.id).order('created_at', { ascending: false });
+    if (res.error) throw res.error;
+    return res.data || [];
+  }
+
+  async function uploadOrderFile(orderId, file) {
+    var sb = getClient();
+    var u = await user();
+    if (!sb || !u) throw new Error('Faça login.');
+    var path = u.id + '/' + orderId + '/' + Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+    var up = await sb.storage.from('order-files').upload(path, file, { upsert: false });
+    if (up.error) throw up.error;
+    var res = await sb.from('order_files').insert({
+      order_id: orderId,
+      user_id: u.id,
+      uploaded_by: u.id,
+      file_name: file.name,
+      file_path: path,
+      file_size: file.size,
+      mime_type: file.type || null
+    }).select().single();
+    if (res.error) throw res.error;
+    return res.data;
+  }
+
+  async function getFileUrl(filePath) {
+    var sb = getClient();
+    if (!sb) return null;
+    var res = await sb.storage.from('order-files').createSignedUrl(filePath, 3600);
+    if (res.error) throw res.error;
+    return res.data.signedUrl;
+  }
+
+  // ---------- Notifications ----------
+  async function listNotifications(limit) {
+    var sb = getClient();
+    var u = await user();
+    if (!sb || !u) return [];
+    var q = sb.from('notifications').select('*').eq('user_id', u.id).order('created_at', { ascending: false });
+    if (limit) q = q.limit(limit);
+    var res = await q;
+    if (res.error) throw res.error;
+    return res.data || [];
+  }
+
+  async function markNotificationRead(id) {
+    var sb = getClient();
+    var u = await user();
+    if (!sb || !u) return;
+    await sb.from('notifications').update({ read_at: new Date().toISOString() }).eq('id', id).eq('user_id', u.id);
+  }
+
+  async function markAllNotificationsRead() {
+    var sb = getClient();
+    var u = await user();
+    if (!sb || !u) return;
+    await sb.from('notifications').update({ read_at: new Date().toISOString() }).eq('user_id', u.id).is('read_at', null);
+  }
+
+  // ---------- IA tool results ----------
+  async function saveIaResult(toolName, title, content) {
+    var sb = getClient();
+    var u = await user();
+    if (!sb || !u) throw new Error('Faça login para salvar.');
+    var res = await sb.from('ia_tool_results').insert({
+      user_id: u.id,
+      tool_name: toolName,
+      title: title || toolName,
+      content: content || {}
+    }).select().single();
+    if (res.error) throw res.error;
+    return res.data;
+  }
+
+  async function listIaResults(toolName) {
+    var sb = getClient();
+    var u = await user();
+    if (!sb || !u) return [];
+    var q = sb.from('ia_tool_results').select('*').eq('user_id', u.id).order('created_at', { ascending: false });
+    if (toolName) q = q.eq('tool_name', toolName);
+    var res = await q;
+    if (res.error) throw res.error;
+    return res.data || [];
+  }
+
+  async function deleteIaResult(id) {
+    var sb = getClient();
+    var u = await user();
+    if (!sb || !u) throw new Error('Faça login.');
+    var res = await sb.from('ia_tool_results').delete().eq('id', id).eq('user_id', u.id);
+    if (res.error) throw res.error;
+  }
+
+  // ---------- Admin (requires is_admin on profile; RLS still limits to own data unless using service role) ----------
+  // Note: full admin across all users requires Edge Function with service_role.
+  // Here we expose helpers that work when the logged user has is_admin=true AND policies allow.
+  async function adminListAllOrders() {
+    var sb = getClient();
+    if (!(await isAdmin())) throw new Error('Acesso admin necessário.');
+    // Without service role, RLS still restricts. Document that admin needs Edge Function.
+    var res = await sb.from('orders').select('*, profiles(email, full_name)').order('created_at', { ascending: false });
+    if (res.error) throw res.error;
+    return res.data || [];
+  }
+
+  // ---------- Guards ----------
   async function requireAuth(opts) {
     opts = opts || {};
-    var next = opts.next || (location.pathname.split('/').pop() || 'index.html') + (location.search || '') + (location.hash || '');
-    if (!ready()) {
-      if (opts.allowOffline) return null;
-      location.replace('login.html?next=' + encodeURIComponent(next));
-      return null;
-    }
-    var u = null;
-    try { u = await user(); } catch (e) { u = null; }
+    var u = await user();
     if (!u) {
+      var next = opts.next || (location.pathname.split('/').pop() || 'conta.html');
       location.replace('login.html?next=' + encodeURIComponent(next));
       return null;
     }
     return u;
   }
 
-  /** Atualiza links Conta / Entrar no menu injetado e em [data-auth-slot] */
+  // ---------- Nav paint ----------
   async function paintNavAuth() {
     var u = null;
     try { u = await user(); } catch (e) {}
@@ -173,7 +393,6 @@
     function fillSlots() {
       document.querySelectorAll('[data-auth-slot]').forEach(function (node) {
         if (node.classList.contains('dash-topbar-user')) {
-          // área interna: link de volta + conta
           if (u) {
             node.innerHTML = '<span style="opacity:.7">' + (u.email || 'conta') + '</span>' +
               '<a href="conta.html">conta</a><a href="index.html">← site</a>';
@@ -194,7 +413,6 @@
       var root = document.getElementById('siteNavRoot');
       if (!root) return false;
       fillSlots();
-      // no drawer, esconde o par oposto login/cadastro vs conta
       root.querySelectorAll('.sn-drawer a[href="login.html"], .sn-drawer a[href="cadastro.html"], .sn-drawer a[href="conta.html"], .sn-drawer a[href="area-cliente.html"]').forEach(function (a) {
         var href = (a.getAttribute('href') || '').toLowerCase();
         if (u) {
@@ -222,16 +440,37 @@
     getClient: getClient,
     signUp: signUp,
     signIn: signIn,
+    signInWithMagicLink: signInWithMagicLink,
+    resetPassword: resetPassword,
     signOut: signOut,
     session: session,
     user: user,
     getProfile: getProfile,
     updateProfile: updateProfile,
     changePassword: changePassword,
+    isAdmin: isAdmin,
     saveChecklist: saveChecklist,
     listChecklists: listChecklists,
     listQuotes: listQuotes,
+    getQuote: getQuote,
+    createQuote: createQuote,
+    acceptQuote: acceptQuote,
+    refuseQuote: refuseQuote,
     listOrders: listOrders,
+    getOrder: getOrder,
+    listOrderEvents: listOrderEvents,
+    listOrderMessages: listOrderMessages,
+    sendOrderMessage: sendOrderMessage,
+    listOrderFiles: listOrderFiles,
+    uploadOrderFile: uploadOrderFile,
+    getFileUrl: getFileUrl,
+    listNotifications: listNotifications,
+    markNotificationRead: markNotificationRead,
+    markAllNotificationsRead: markAllNotificationsRead,
+    saveIaResult: saveIaResult,
+    listIaResults: listIaResults,
+    deleteIaResult: deleteIaResult,
+    adminListAllOrders: adminListAllOrders,
     requireAuth: requireAuth,
     paintNavAuth: paintNavAuth,
     setMsg: setMsg

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — IRN Devs</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/dash-shell.css">
+<link rel="stylesheet" href="assets/css/motion.css">
+</head>
+<body class="dash-app">
+<div class="dash-shell">
+  <aside class="dash-side">
+    <div class="dash-side-brand"><span>$</span> admin</div>
+    <a class="active" href="admin.html">pedidos (visão)</a>
+    <a href="area-cliente.html">portal cliente</a>
+    <a href="index.html">← site</a>
+  </aside>
+  <main class="dash-main">
+    <h1 class="dash-h1">Painel admin (mínimo)</h1>
+    <p class="dash-lede">Visão limitada pelo RLS. Para ver <strong>todos</strong> os clientes, use uma Edge Function com <code>service_role</code> (não exponha no front).</p>
+    <div class="dash-card" style="margin-bottom:16px">
+      <div class="dash-card-title">como ativar admin</div>
+      <ol style="color:var(--dash-dim);font-size:14px;line-height:1.7;padding-left:18px">
+        <li>No Supabase SQL: <code>update profiles set is_admin = true where email = 'seu@email.com';</code></li>
+        <li>Crie policies admin ou Edge Functions com service_role para listar todos os orders/quotes</li>
+        <li>Configure Storage bucket <code>order-files</code> (privado) + policies</li>
+        <li>Para e-mail real: conecte Resend/SendGrid via Edge Function ao inserir em <code>notifications</code></li>
+      </ol>
+    </div>
+    <div class="dash-card">
+      <div class="dash-card-title">seus pedidos (como admin logado)</div>
+      <div id="list"><p style="color:var(--dash-faint)">Carregando…</p></div>
+    </div>
+  </main>
+</div>
+<script src="assets/js/supabase-config.js" defer></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" integrity="sha384-GFr3yTh5lJznCbZfpTtXnwboFsxqtTQoeTZCRHhE0579KrRmlCzen5AA8ohaB5ug" crossorigin="anonymous"></script>
+<script src="assets/js/auth.js" defer></script>
+<script src="assets/js/auth-gates.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', async function () {
+  if (!(await IRNAuthGates.guardPage())) return;
+  var admin = false;
+  try { admin = await IRNAuth.isAdmin(); } catch (e) {}
+  var box = document.getElementById('list');
+  if (!admin) {
+    box.innerHTML = '<p style="color:#e88">Seu perfil não tem is_admin=true. Rode o SQL indicado acima.</p>';
+    return;
+  }
+  try {
+    var rows = await IRNAuth.listOrders();
+    if (!rows.length) { box.innerHTML = '<p style="color:var(--dash-faint)">Nenhum pedido na sua conta.</p>'; return; }
+    box.innerHTML = rows.map(function (r) {
+      return '<div class="dash-list-item"><div class="dash-list-head">#' + r.id + ' · ' + r.status +
+        '</div><div class="dash-list-body">' + (r.title||'') + '<br><a href="pedido.html?id=' + r.id + '">abrir →</a></div></div>';
+    }).join('');
+  } catch (e) {
+    box.innerHTML = '<p style="color:#e88">' + (e.message||e) + '</p>';
+  }
+});
+</script>
+</body>
+</html>

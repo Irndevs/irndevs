@@ -4,43 +4,51 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Orçamentos — IRN Devs</title>
-<meta name="description" content="Acompanhe seus orçamentos e respectivos status no portal da IRN Devs.">
+<meta name="description" content="Solicite e acompanhe orçamentos no portal da IRN Devs.">
 <meta name="robots" content="noindex">
 <link rel="canonical" href="https://irndevs.com/orcamentos.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="manifest" href="/manifest.json">
-<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
 <link rel="stylesheet" href="assets/css/site-nav.css" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="assets/css/dash-shell.css">
-  <link rel="stylesheet" href="assets/css/motion.css">
-
-<meta property="og:title" content="Orçamentos — IRN Devs">
-<meta property="og:description" content="Acompanhe seus orçamentos e respectivos status no portal da IRN Devs.">
-<meta property="og:url" content="https://irndevs.com/orcamentos.html">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
-<meta property="og:site_name" content="IRN Devs">
+<link rel="stylesheet" href="assets/css/motion.css">
+<style>
+  .quote-actions { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .quote-actions button { padding: 8px 14px; border-radius: 8px; border: 0; cursor: pointer; font-weight: 600; font-size: 13px; }
+  .btn-accept { background: var(--dash-green); color: #0c0e0b; }
+  .btn-refuse { background: transparent; color: #e88; border: 1px solid #e88 !important; }
+  .new-quote { margin-bottom: 20px; }
+  .new-quote input, .new-quote textarea { width: 100%; background: var(--dash-raised); border: 1px solid var(--dash-border); color: var(--dash-text); padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; font-family: inherit; }
+  .new-quote button { background: var(--dash-amber); color: #10130f; border: 0; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+  .admin-box { background: var(--dash-raised); border: 1px solid var(--dash-border); border-radius: 8px; padding: 12px; margin-top: 8px; font-size: 13px; }
+</style>
 </head>
 <body class="dash-app">
 <div class="dash-shell">
   <aside class="dash-side">
     <div class="dash-side-brand"><span>$</span> portal</div>
     <a href="area-cliente.html">visão geral</a>
-    <a  href="pedidos.html">pedidos</a>
+    <a href="pedidos.html">pedidos</a>
     <a class="active" href="orcamentos.html">orçamentos</a>
     <a href="conta.html">minha conta</a>
-    <div class="dash-side-group">
-      <a href="index.html">← site público</a>
-    </div>
+    <div class="dash-side-group"><a href="index.html">← site público</a></div>
   </aside>
   <main class="dash-main">
-    <p class="dash-crumb"><a href="area-cliente.html">portal</a> / orcamentos</p>
+    <p class="dash-crumb"><a href="area-cliente.html">portal</a> / orçamentos</p>
     <h1 class="dash-h1">Orçamentos</h1>
-    <p class="dash-lede">Acompanhe status e histórico.</p>
+    <p class="dash-lede">Solicite, acompanhe e aceite propostas.</p>
+
+    <div class="dash-card new-quote">
+      <div class="dash-card-title">solicitar orçamento</div>
+      <input type="text" id="qTitle" placeholder="Título / escopo resumido" maxlength="200" />
+      <textarea id="qNotes" rows="3" placeholder="Detalhes, prazo desejado, links…"></textarea>
+      <button type="button" id="btnNewQuote">enviar solicitação</button>
+      <p id="qMsg" style="font-size:12px;color:var(--dash-faint);margin-top:8px"></p>
+    </div>
+
     <div class="dash-stats">
       <div class="dash-stat"><div class="dash-stat-value" id="statTotal">—</div><div class="dash-stat-label">total</div></div>
-      <div class="dash-stat"><div class="dash-stat-value" id="statA">—</div><div class="dash-stat-label">ativos</div></div>
-      <div class="dash-stat"><div class="dash-stat-value" id="statB">—</div><div class="dash-stat-label">concluídos</div></div>
+      <div class="dash-stat"><div class="dash-stat-value" id="statA">—</div><div class="dash-stat-label">em aberto</div></div>
+      <div class="dash-stat"><div class="dash-stat-value" id="statB">—</div><div class="dash-stat-label">aprovados</div></div>
     </div>
     <div class="dash-card"><div id="list"></div></div>
   </main>
@@ -49,46 +57,94 @@
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" integrity="sha384-GFr3yTh5lJznCbZfpTtXnwboFsxqtTQoeTZCRHhE0579KrRmlCzen5AA8ohaB5ug" crossorigin="anonymous"></script>
 <script src="assets/js/auth.js" defer></script>
 <script src="assets/js/auth-gates.js" defer></script>
-<script src="assets/js/site-nav.js?v=20260916c" defer></script>
+<script src="assets/js/site-nav.js?v=20260916d" defer></script>
 <script>
-(async function () {
+document.addEventListener('DOMContentLoaded', async function () {
   if (!(await IRNAuthGates.guardPage())) return;
   var box = document.getElementById('list');
-  var rows = [];
-  try { rows = await IRNAuth.listQuotes(); }
-  catch (e) {
-    box.innerHTML = '<p style="color:#e88;font-family:var(--dash-mono);font-size:13px">Erro: ' + (e.message||e) + '. Rode supabase/schema.sql se as tabelas não existirem.</p>';
-    return;
-  }
-  document.getElementById('statTotal').textContent = rows.length;
-  var active = rows.filter(function (r) {
-    return ['aberto','em_andamento','aguardando_cliente','enviado','em_analise','rascunho'].indexOf(r.status) !== -1;
-  }).length;
-  var done = rows.filter(function (r) {
-    return ['entregue','aprovado'].indexOf(r.status) !== -1;
-  }).length;
-  document.getElementById('statA').textContent = active;
-  document.getElementById('statB').textContent = done;
-  if (!rows.length) {
-    box.innerHTML = '<p style="color:var(--dash-faint);font-family:var(--dash-mono);font-size:13px">Nenhum registro ainda.</p>';
-    return;
-  }
+
   function money(c, cur) {
     if (c == null) return '—';
     try { return (c/100).toLocaleString('pt-BR',{style:'currency',currency:cur||'BRL'}); }
     catch(e){ return (c/100).toFixed(2); }
   }
-  rows.forEach(function (r) {
-    var d = document.createElement('div');
-    d.className = 'dash-list-item';
-    d.innerHTML = '<div class="dash-list-head"><span>#' + r.id + ' · ' + (r.status||'') + '</span><span>' +
-      money(r.amount_cents, r.currency) + '</span></div><div class="dash-list-body">' +
-      (r.title||'') + (r.notes ? '\n' + r.notes : '') + '\n' +
-      (r.created_at ? new Date(r.created_at).toLocaleString('pt-BR') : '') + '</div>';
-    box.appendChild(d);
-  });
-})();
+
+  async function load() {
+    var rows = [];
+    try { rows = await IRNAuth.listQuotes(); }
+    catch (e) {
+      box.innerHTML = '<p style="color:#e88;font-size:13px">Erro: ' + (e.message||e) + '</p>';
+      return;
+    }
+    document.getElementById('statTotal').textContent = rows.length;
+    document.getElementById('statA').textContent = rows.filter(function(r){ return ['enviado','em_analise','respondido','rascunho'].indexOf(r.status)!==-1; }).length;
+    document.getElementById('statB').textContent = rows.filter(function(r){ return r.status === 'aprovado'; }).length;
+    if (!rows.length) {
+      box.innerHTML = '<p style="color:var(--dash-faint);font-size:13px">Nenhum orçamento ainda. Solicite acima.</p>';
+      return;
+    }
+    box.innerHTML = '';
+    rows.forEach(function (r) {
+      var d = document.createElement('div');
+      d.className = 'dash-list-item';
+      var adminHtml = '';
+      if (r.admin_response || r.admin_amount_cents != null) {
+        adminHtml = '<div class="admin-box"><strong>Resposta IRN Devs</strong><br>' +
+          (r.admin_response || '') +
+          (r.admin_amount_cents != null ? '<br>Valor: ' + money(r.admin_amount_cents, r.currency) : '') +
+          (r.admin_deadline ? '<br>Prazo: ' + r.admin_deadline : '') + '</div>';
+      }
+      var actions = '';
+      if (r.status === 'respondido' || (r.status === 'em_analise' && r.admin_amount_cents != null)) {
+        actions = '<div class="quote-actions">' +
+          '<button type="button" class="btn-accept" data-accept="' + r.id + '">aceitar orçamento</button>' +
+          '<button type="button" class="btn-refuse" data-refuse="' + r.id + '">recusar</button></div>';
+      }
+      d.innerHTML = '<div class="dash-list-head"><span>#' + r.id + ' · ' + (r.status||'') + '</span><span>' +
+        money(r.admin_amount_cents != null ? r.admin_amount_cents : r.amount_cents, r.currency) + '</span></div>' +
+        '<div class="dash-list-body">' + (r.title||'') + (r.notes ? '\n' + r.notes : '') + '\n' +
+        (r.created_at ? new Date(r.created_at).toLocaleString('pt-BR') : '') + '</div>' +
+        adminHtml + actions;
+      box.appendChild(d);
+    });
+    box.querySelectorAll('[data-accept]').forEach(function (btn) {
+      btn.onclick = async function () {
+        if (!confirm('Aceitar este orçamento? Um pedido será criado automaticamente.')) return;
+        try {
+          await IRNAuth.acceptQuote(parseInt(btn.getAttribute('data-accept'), 10));
+          alert('Orçamento aprovado! Veja em Pedidos.');
+          load();
+        } catch (e) { alert(e.message || e); }
+      };
+    });
+    box.querySelectorAll('[data-refuse]').forEach(function (btn) {
+      btn.onclick = async function () {
+        if (!confirm('Recusar este orçamento?')) return;
+        try {
+          await IRNAuth.refuseQuote(parseInt(btn.getAttribute('data-refuse'), 10));
+          load();
+        } catch (e) { alert(e.message || e); }
+      };
+    });
+  }
+
+  document.getElementById('btnNewQuote').onclick = async function () {
+    var title = (document.getElementById('qTitle').value || '').trim();
+    var notes = (document.getElementById('qNotes').value || '').trim();
+    var msg = document.getElementById('qMsg');
+    if (!title) { msg.textContent = 'Informe um título.'; return; }
+    msg.textContent = 'Enviando…';
+    try {
+      await IRNAuth.createQuote(title, notes);
+      msg.textContent = 'Solicitação enviada.';
+      document.getElementById('qTitle').value = '';
+      document.getElementById('qNotes').value = '';
+      load();
+    } catch (e) { msg.textContent = 'Erro: ' + (e.message || e); }
+  };
+
+  load();
+});
 </script>
-  <script src="assets/js/chat-bot.js?v=20260916e" defer></script>
 </body>
 </html>

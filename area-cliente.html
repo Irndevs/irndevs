@@ -46,6 +46,10 @@
       <div class="dash-stat"><a href="conta.html#checklists"><div class="dash-stat-value" id="statChecklists">—</div><div class="dash-stat-label">checklists</div></a></div>
       <div class="dash-stat"><div class="dash-stat-value" id="statStatus">OK</div><div class="dash-stat-label">status</div></div>
     </div>
+    <div class="dash-card" style="margin-bottom:16px">
+      <div class="dash-card-title">notificações <a href="#" id="markAllRead" style="float:right;font-size:12px;color:var(--dash-amber)">marcar todas como lidas</a></div>
+      <div id="notifList"><p style="color:var(--dash-faint);font-size:13px">Carregando…</p></div>
+    </div>
     <div class="dash-card">
       <div class="dash-card-title">atividade recente</div>
       <div id="activity"></div>
@@ -58,7 +62,7 @@
 <script src="assets/js/auth-gates.js" defer></script>
 <script src="assets/js/site-nav.js?v=20260916c" defer></script>
 <script>
-(async function () {
+document.addEventListener('DOMContentLoaded', async function () {
   if (!(await IRNAuthGates.guardPage())) return;
   var u = await IRNAuth.user();
   document.getElementById('hello').textContent =
@@ -70,6 +74,25 @@
   document.getElementById('statOrders').textContent = orders.length;
   document.getElementById('statQuotes').textContent = quotes.length;
   document.getElementById('statChecklists').textContent = checks.length;
+  // notifications
+  try {
+    var notifs = await IRNAuth.listNotifications(10);
+    var nbox = document.getElementById('notifList');
+    if (nbox) {
+      if (!notifs.length) nbox.innerHTML = '<p style="color:var(--dash-faint);font-size:13px">Nenhuma notificação.</p>';
+      else {
+        nbox.innerHTML = notifs.map(function(n){
+          var unread = !n.read_at ? 'font-weight:600;' : '';
+          return '<div style="padding:8px 0;border-bottom:1px solid var(--dash-border);' + unread + '">' +
+            '<div style="font-size:13px">' + (n.title||'') + '</div>' +
+            '<div style="font-size:12px;color:var(--dash-faint)">' + (n.body||'') + ' · ' +
+            new Date(n.created_at).toLocaleString('pt-BR') + '</div></div>';
+        }).join('');
+      }
+    }
+    var markBtn = document.getElementById('markAllRead');
+    if (markBtn) markBtn.onclick = async function(e){ e.preventDefault(); await IRNAuth.markAllNotificationsRead(); location.reload(); };
+  } catch (e) {}
   var items = [];
   orders.slice(0, 5).forEach(function (o) {
     items.push({ t: o.created_at, label: '[pedido] ' + o.title + ' · ' + o.status });
@@ -94,7 +117,7 @@
       '</span></div><div class="dash-list-body">' + it.label + '</div>';
     box.appendChild(d);
   });
-})();
+});
 </script>
 
 <script>
