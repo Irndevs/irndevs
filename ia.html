@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IA na prática — IRN Devs</title>
-<meta name="description" content="Hub de Inteligência Artificial da IRN Devs: automações, agentes, APIs, modelos locais, prompts e projetos práticos.">
+<title>IA para Desenvolvedores — Ferramentas, RAG, Agentes e Prompts | IRN Devs</title>
+<meta name="description" content="Hub de Inteligência Artificial para desenvolvedores: ferramentas práticas (SQL, commits, mock data, conversão de código), guias de RAG, LangChain, modelos locais, vector databases e prompt engineering.">
 <link rel="canonical" href="https://irndevs.com/ia.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,8 +15,8 @@
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
-<meta property="og:title" content="IA na prática — IRN Devs">
-<meta property="og:description" content="Automações, agentes, APIs, modelos locais e projetos de IA aplicados a problemas reais.">
+<meta property="og:title" content="IA para Desenvolvedores — IRN Devs">
+<meta property="og:description" content="Ferramentas de IA que aceleram o trabalho do dev + guias práticos de RAG, agentes, APIs e modelos locais.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://irndevs.com/ia.html">
 <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
@@ -26,8 +26,8 @@
 {
   "@context":"https://schema.org",
   "@type":"CollectionPage",
-  "name":"IA na prática — IRN Devs",
-  "description":"Hub de Inteligência Artificial com trilhas, projetos, ferramentas e boas práticas.",
+  "name":"IA para Desenvolvedores — IRN Devs",
+  "description":"Hub de Inteligência Artificial com ferramentas práticas, prompts de engenharia de software, RAG, agentes e modelos locais.",
   "url":"https://irndevs.com/ia.html",
   "inLanguage":"pt-BR",
   "isPartOf":{"@type":"WebSite","name":"IRN Devs","url":"https://irndevs.com/"}
@@ -41,121 +41,453 @@
   <div class="wrap">
     <div class="ia-kicker"><span class="pulse-dot"></span> laboratório de inteligência artificial</div>
     <h1>IA que sai do prompt<br><span>e chega em produção.</span></h1>
-    <p class="ia-lede">Um espaço para aprender, testar e construir soluções com IA aplicada: automações, agentes, APIs, modelos locais, dados e operações confiáveis.</p>
+    <p class="ia-lede">Ferramentas prontas para acelerar o dia a dia do desenvolvedor + conteúdos que ensinam a integrar IA em sistemas reais: RAG, agentes, APIs, modelos locais e bancos vetoriais.</p>
     <div class="ia-actions">
-      <a class="btn primary" href="#trilhas">explorar trilhas →</a>
-      <a class="btn ghost" href="#laboratorio">abrir laboratório</a>
+      <a class="btn primary" href="#ferramentas">ferramentas para devs →</a>
+      <a class="btn ghost" href="#conteudos">ver conteúdos</a>
+      <a class="btn ghost" href="#laboratorio">laboratório de prompts</a>
     </div>
     <div class="ia-stats">
-      <div><strong>04</strong><span>trilhas práticas</span></div>
-      <div><strong>12</strong><span>ideias de projeto</span></div>
+      <div><strong>06</strong><span>ferramentas práticas</span></div>
+      <div><strong>04</strong><span>trilhas de conteúdo</span></div>
+      <div><strong>10+</strong><span>prompts de engenharia</span></div>
       <div><strong>∞</strong><span>experimentos possíveis</span></div>
     </div>
   </div>
 </header>
 
 <main>
-<section id="trilhas">
+
+<!-- ========== FERRAMENTAS ========== -->
+<section id="ferramentas">
+  <div class="wrap">
+    <div class="section-kicker">$ ls ferramentas-ia/</div>
+    <h2>Ferramentas de IA para desenvolvedores</h2>
+    <p class="section-intro">Foco em utilitários que aceleram o trabalho real: geração e refatoração de código, dados de teste e prompts testados. Use os padrões abaixo no ChatGPT, Claude, Cursor ou Copilot — ou adapte para o seu fluxo.</p>
+
+    <h3 class="sub-heading">Geração e refatoração de código</h3>
+    <div class="tool-grid">
+      <article class="tool-card">
+        <div class="tool-icon">SQL</div>
+        <h3>Gerador de SQL e NoSQL via texto</h3>
+        <p>Descreva o que precisa em português. A IA devolve a query SQL ou o comando MongoDB/Redis/Elasticsearch com índices e filtros corretos.</p>
+        <div class="tool-example">
+          <span class="ex-label">exemplo de entrada</span>
+          <code>“Buscar os 10 usuários mais ativos que compraram nos últimos 30 dias, ordenados por total gasto”</code>
+        </div>
+        <button type="button" class="copy-prompt" data-copy="Você é um especialista em bancos de dados. Gere a query pedida de forma correta, segura (sem SQL injection) e eficiente.
+
+Regras:
+- Identifique se o usuário quer SQL (PostgreSQL/MySQL) ou NoSQL (MongoDB, Redis, etc.)
+- Use parâmetros/placeholders quando fizer sentido
+- Inclua índices sugeridos se a consulta for pesada
+- Explique brevemente a lógica
+
+Pedido do usuário:
+Buscar os 10 usuários mais ativos que compraram nos últimos 30 dias, ordenados por total gasto.">copiar prompt base</button>
+      </article>
+
+      <article class="tool-card">
+        <div class="tool-icon">LEG</div>
+        <h3>Explorador e comentador de código legado</h3>
+        <p>Cole código confuso e sem documentação. A IA devolve explicação linha a linha, riscos e comentários profissionais prontos para o repositório.</p>
+        <div class="tool-example">
+          <span class="ex-label">quando usar</span>
+          <code>herança de sistemas antigos · onboarding · auditoria técnica</code>
+        </div>
+        <button type="button" class="copy-prompt" data-copy="Você é um engenheiro sênior especializado em código legado.
+
+Tarefa:
+1. Explique o que o código faz, bloco por bloco
+2. Identifique riscos (bugs, segurança, performance, acoplamento)
+3. Adicione comentários profissionais (em português) que um dev júnior entenderia
+4. Sugira refatorações prioritárias sem reescrever tudo de uma vez
+
+Código:
+[cole o código aqui]">copiar prompt base</button>
+      </article>
+
+      <article class="tool-card">
+        <div class="tool-icon">⇄</div>
+        <h3>Conversor de linguagens com IA</h3>
+        <p>Transforma funções e módulos de uma linguagem para outra (Python → TypeScript, Go → Rust, etc.) mantendo a lógica limpa e idiomática.</p>
+        <div class="tool-example">
+          <span class="ex-label">dica</span>
+          <code>peça sempre testes unitários equivalentes no destino</code>
+        </div>
+        <button type="button" class="copy-prompt" data-copy="Converta o código abaixo de [linguagem origem] para [linguagem destino].
+
+Regras:
+- Preserve a lógica e o comportamento
+- Use idioms naturais da linguagem de destino
+- Não traduza nomes de variáveis de forma literal se houver convenção melhor
+- Inclua tipos quando a linguagem destino for tipada
+- Gere testes unitários equivalentes
+- Liste o que não pôde ser mapeado 1:1
+
+Código:
+[cole o código aqui]">copiar prompt base</button>
+      </article>
+
+      <article class="tool-card">
+        <div class="tool-icon">git</div>
+        <h3>Gerador de commits inteligentes</h3>
+        <p>Cole o <code>git diff</code>. A IA gera mensagem no padrão Conventional Commits, clara e com escopo correto.</p>
+        <div class="tool-example">
+          <span class="ex-label">formato</span>
+          <code>feat(auth): add refresh token rotation</code>
+        </div>
+        <button type="button" class="copy-prompt" data-copy="Você gera mensagens de commit no padrão Conventional Commits.
+
+Formato: type(scope): description
+
+Types comuns: feat, fix, refactor, docs, test, chore, perf, style, ci
+
+Regras:
+- Uma linha principal curta (máx. ~72 caracteres)
+- Corpo opcional com o “porquê” se necessário
+- Não invente mudanças que não estão no diff
+- Prefira inglês técnico consistente
+
+Diff:
+[cole o resultado de git diff aqui]">copiar prompt base</button>
+      </article>
+    </div>
+
+    <h3 class="sub-heading">Dados e arquitetura</h3>
+    <div class="tool-grid tool-grid-2">
+      <article class="tool-card">
+        <div class="tool-icon">{ }</div>
+        <h3>Criador de mock data inteligente</h3>
+        <p>Em vez de dados genéricos, descreva o domínio. A IA gera JSON realista com relações coerentes (IDs, datas, status).</p>
+        <div class="tool-example">
+          <span class="ex-label">exemplo</span>
+          <code>“Clínica veterinária com histórico de consultas, pets e tutores”</code>
+        </div>
+        <button type="button" class="copy-prompt" data-copy="Gere dados de mock realistas em JSON para o domínio abaixo.
+
+Regras:
+- Estrutura clara com arrays e objetos aninhados quando fizer sentido
+- IDs consistentes entre entidades relacionadas
+- Datas em ISO 8601
+- Valores plausíveis (não “foo/bar”)
+- Inclua edge cases (status cancelado, campos nulos, etc.)
+- Quantidade: 8–15 registros por entidade principal
+
+Domínio:
+Clínica veterinária com histórico de consultas, pets e tutores.">copiar prompt base</button>
+      </article>
+
+      <article class="tool-card featured-tool">
+        <div class="tool-icon">⌘</div>
+        <h3>Prompt Helper para devs</h3>
+        <p>Biblioteca de prompts testados para ChatGPT, Claude e Copilot, focados em engenharia de software: segurança, testes, arquitetura e revisão.</p>
+        <div class="tool-example">
+          <span class="ex-label">inclui</span>
+          <code>brechas de segurança · testes unitários · design de API · code review</code>
+        </div>
+        <a class="tool-link" href="#laboratorio">abrir laboratório de prompts →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TRILHAS ========== -->
+<section id="trilhas" class="section-alt">
   <div class="wrap">
     <div class="section-kicker">$ ls trilhas-ia/</div>
     <h2>Por onde começar</h2>
-    <p class="section-intro">Escolha uma direção conforme o problema que você quer resolver. A recomendação é começar pequeno, medir o resultado e só depois adicionar complexidade.</p>
+    <p class="section-intro">Escolha uma direção conforme o problema que você quer resolver. Comece pequeno, meça o resultado e só depois adicione complexidade.</p>
     <div class="track-grid">
       <article class="track-card featured-track">
-        <div class="track-number">01</div><div class="track-tag">fundamentos</div>
+        <div class="track-number">01</div>
+        <div class="track-tag">fundamentos</div>
         <h3>IA aplicada e prompts</h3>
-        <p>Entenda modelos, contexto, instruções, avaliação e limites. Aprenda a escrever prompts que produzem resultados repetíveis.</p>
+        <p>Modelos, contexto, instruções, avaliação e limites. Escreva prompts que produzem resultados repetíveis e auditáveis.</p>
         <div class="chips"><span>prompts</span><span>avaliação</span><span>contexto</span></div>
         <a href="#laboratorio">abrir laboratório →</a>
       </article>
       <article class="track-card">
-        <div class="track-number">02</div><div class="track-tag">desenvolvimento</div>
+        <div class="track-number">02</div>
+        <div class="track-tag">desenvolvimento</div>
         <h3>APIs e automações</h3>
-        <p>Conecte modelos a Python, FastAPI, webhooks, planilhas, e-mail e fluxos de negócio com logs e tratamento de erros.</p>
-        <div class="chips"><span>Python</span><span>FastAPI</span><span>webhooks</span></div>
-        <a href="#projetos">ver projetos →</a>
+        <p>Conecte OpenAI, Claude ou Gemini a Python, Node, FastAPI, webhooks e fluxos de negócio com logs e tratamento de erros.</p>
+        <div class="chips"><span>Python</span><span>Node</span><span>webhooks</span></div>
+        <a href="#conteudos">ver guias →</a>
       </article>
       <article class="track-card">
-        <div class="track-number">03</div><div class="track-tag">produto</div>
+        <div class="track-number">03</div>
+        <div class="track-tag">produto</div>
         <h3>Agentes e RAG</h3>
-        <p>Construa sistemas que consultam documentos, usam ferramentas e mantêm rastreabilidade sem virar uma caixa-preta.</p>
-        <div class="chips"><span>RAG</span><span>embeddings</span><span>tools</span></div>
-        <a href="#arquitetura">ver arquitetura →</a>
+        <p>Sistemas que consultam documentos da empresa, usam ferramentas e mantêm rastreabilidade — sem virar caixa-preta.</p>
+        <div class="chips"><span>RAG</span><span>LangChain</span><span>embeddings</span></div>
+        <a href="#conteudos">ver conteúdos →</a>
       </article>
       <article class="track-card">
-        <div class="track-number">04</div><div class="track-tag">infraestrutura</div>
+        <div class="track-number">04</div>
+        <div class="track-tag">infraestrutura</div>
         <h3>IA local e operação</h3>
-        <p>Explore modelos locais, GPU, observabilidade, custos, privacidade e deploy de serviços de inferência.</p>
-        <div class="chips"><span>modelos locais</span><span>Docker</span><span>observabilidade</span></div>
-        <a href="cursos.html#linux">preparar infraestrutura →</a>
+        <p>Rode Llama, Mistral e outros modelos com Ollama. Privacidade total, GPU, observabilidade e custo sob controle.</p>
+        <div class="chips"><span>Ollama</span><span>Docker</span><span>privacidade</span></div>
+        <a href="#conteudos">ver guias →</a>
       </article>
     </div>
   </div>
 </section>
 
+<!-- ========== CONTEÚDOS ========== -->
+<section id="conteudos">
+  <div class="wrap">
+    <div class="section-kicker">$ cat tutoriais-ia.md</div>
+    <h2>Conteúdos e tutoriais de IA</h2>
+    <p class="section-intro">Material orientado a quem vai colocar IA em produção: integração de APIs, RAG, frameworks de agentes, prompt engineering e bancos vetoriais.</p>
+
+    <div class="content-block">
+      <h3 class="sub-heading">Integração de IA na prática</h3>
+      <div class="content-grid">
+        <article class="content-card">
+          <span class="content-tag">guia prático</span>
+          <h3>Integração de APIs de IA</h3>
+          <p>Passo a passo para conectar OpenAI, Anthropic (Claude) e Google Gemini em aplicações web e mobile (Node.js, Python, PHP e similares). Autenticação, rate limit, streaming e tratamento de erros.</p>
+          <ul class="content-list">
+            <li>Chaves e variáveis de ambiente seguras</li>
+            <li>Clientes oficiais vs. HTTP direto</li>
+            <li>Streaming de respostas no front-end</li>
+          </ul>
+        </article>
+        <article class="content-card">
+          <span class="content-tag">conceitos + código</span>
+          <h3>Introdução a RAG</h3>
+          <p>Retrieval-Augmented Generation: como alimentar a IA com PDFs, wikis e bancos da própria empresa para criar um assistente customizado com citações e menos alucinações.</p>
+          <ul class="content-list">
+            <li>Chunking e embeddings</li>
+            <li>Retrieval + geração com fontes</li>
+            <li>Quando RAG não é a solução certa</li>
+          </ul>
+        </article>
+        <article class="content-card">
+          <span class="content-tag">frameworks</span>
+          <h3>LangChain, LlamaIndex e CrewAI</h3>
+          <p>Guias visuais de como montar agentes autônomos que usam ferramentas, memória e orquestração para tarefas complexas (pesquisa, triagem, geração de relatórios).</p>
+          <ul class="content-list">
+            <li>Chains vs. agents</li>
+            <li>Tools e function calling</li>
+            <li>Crews multi-agente</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <h3 class="sub-heading">Engenharia de prompt e otimização</h3>
+      <div class="content-grid">
+        <article class="content-card">
+          <span class="content-tag">para engenheiros</span>
+          <h3>Prompt engineering para software</h3>
+          <p>Como escrever instruções avançadas para gerar código sem bugs óbvios, desenhar arquiteturas, revisar PRs e resolver problemas de infraestrutura com menos idas e vindas.</p>
+          <ul class="content-list">
+            <li>Papel + restrições + formato de saída</li>
+            <li>Few-shot e exemplos negativos</li>
+            <li>Avaliação e regressão de prompts</li>
+          </ul>
+        </article>
+        <article class="content-card">
+          <span class="content-tag">privacidade</span>
+          <h3>Seu próprio Copilot local</h3>
+          <p>Rode modelos open-source (Llama 3, Mistral, Qwen, etc.) na máquina com Ollama. Código nunca sai do seu ambiente — ideal para código proprietário e compliance.</p>
+          <ul class="content-list">
+            <li>Instalação e modelos recomendados</li>
+            <li>Integração com VS Code / Neovim</li>
+            <li>Limites de hardware e quantização</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <h3 class="sub-heading">Bancos de dados vetoriais e busca semântica</h3>
+      <div class="content-grid">
+        <article class="content-card">
+          <span class="content-tag">fundamentos</span>
+          <h3>O que são Vector Databases?</h3>
+          <p>Explicação direta de bancos focados em IA (Pinecone, Chroma, Milvus, pgvector no PostgreSQL): como funcionam embeddings, similaridade e por que isso muda busca e recomendação.</p>
+          <ul class="content-list">
+            <li>Embeddings e distância (cosine, L2)</li>
+            <li>Quando usar pgvector vs. serviço dedicado</li>
+            <li>Indexação e escala</li>
+          </ul>
+        </article>
+        <article class="content-card">
+          <span class="content-tag">prática</span>
+          <h3>Busca semântica em produção</h3>
+          <p>Do protótipo ao serviço: indexar documentação, filtrar por metadados, combinar keyword + vetor e medir qualidade das respostas.</p>
+          <ul class="content-list">
+            <li>Hybrid search</li>
+            <li>Filtros e multi-tenancy</li>
+            <li>Métricas de retrieval</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== LABORATÓRIO ========== -->
 <section id="laboratorio" class="section-alt">
   <div class="wrap">
     <div class="section-kicker">$ cat laboratorio.md</div>
-    <h2>Laboratório de prompts</h2>
-    <p class="section-intro">Use estes padrões como ponto de partida. O prompt é só uma parte do sistema: contexto, dados, ferramentas e avaliação importam tanto quanto a frase enviada ao modelo.</p>
+    <h2>Laboratório de prompts para devs</h2>
+    <p class="section-intro">Padrões testados para engenharia de software. O prompt é só uma parte do sistema: contexto, dados, ferramentas e avaliação importam tanto quanto a frase enviada ao modelo. Clique em copiar e cole no seu assistente favorito.</p>
     <div class="prompt-grid">
-      <article class="prompt-card"><span class="prompt-label">01 · extração estruturada</span><pre><code>Você é um extrator de dados.
+      <article class="prompt-card">
+        <span class="prompt-label">01 · extração estruturada</span>
+        <pre><code>Você é um extrator de dados.
 Receba o texto abaixo e retorne JSON válido
 seguindo exatamente este schema: {schema}.
 Se um campo não existir, use null.
-Não invente valores.</code></pre><button type="button" class="copy-prompt" data-copy="Você é um extrator de dados. Receba o texto abaixo e retorne JSON válido seguindo exatamente este schema. Se um campo não existir, use null. Não invente valores.">copiar prompt</button></article>
-      <article class="prompt-card"><span class="prompt-label">02 · revisão técnica</span><pre><code>Revise este código como um engenheiro sênior.
+Não invente valores.</code></pre>
+        <button type="button" class="copy-prompt" data-copy="Você é um extrator de dados. Receba o texto abaixo e retorne JSON válido seguindo exatamente este schema: {schema}. Se um campo não existir, use null. Não invente valores.">copiar prompt</button>
+      </article>
+      <article class="prompt-card">
+        <span class="prompt-label">02 · revisão técnica</span>
+        <pre><code>Revise este código como um engenheiro sênior.
 Liste bugs prováveis, riscos de segurança,
 casos de borda e testes ausentes.
-Separe problemas críticos de sugestões.</code></pre><button type="button" class="copy-prompt" data-copy="Revise este código como um engenheiro sênior. Liste bugs prováveis, riscos de segurança, casos de borda e testes ausentes. Separe problemas críticos de sugestões.">copiar prompt</button></article>
-      <article class="prompt-card"><span class="prompt-label">03 · decisão com evidências</span><pre><code>Compare as opções usando apenas as evidências
+Separe problemas críticos de sugestões.</code></pre>
+        <button type="button" class="copy-prompt" data-copy="Revise este código como um engenheiro sênior. Liste bugs prováveis, riscos de segurança, casos de borda e testes ausentes. Separe problemas críticos de sugestões.">copiar prompt</button>
+      </article>
+      <article class="prompt-card">
+        <span class="prompt-label">03 · decisão com evidências</span>
+        <pre><code>Compare as opções usando apenas as evidências
 fornecidas. Explicite premissas, incertezas,
 trade-offs e o que precisaria ser validado
-antes de tomar a decisão.</code></pre><button type="button" class="copy-prompt" data-copy="Compare as opções usando apenas as evidências fornecidas. Explicite premissas, incertezas, trade-offs e o que precisaria ser validado antes de tomar a decisão.">copiar prompt</button></article>
+antes de tomar a decisão.</code></pre>
+        <button type="button" class="copy-prompt" data-copy="Compare as opções usando apenas as evidências fornecidas. Explicite premissas, incertezas, trade-offs e o que precisaria ser validado antes de tomar a decisão.">copiar prompt</button>
+      </article>
+      <article class="prompt-card">
+        <span class="prompt-label">04 · testes unitários</span>
+        <pre><code>Gere testes unitários para o código abaixo.
+Cubra casos felizes, edge cases e falhas
+esperadas. Use o framework indicado.
+Não altere o código de produção.</code></pre>
+        <button type="button" class="copy-prompt" data-copy="Gere testes unitários para o código abaixo. Cubra casos felizes, edge cases e falhas esperadas. Use o framework indicado pelo projeto (ou sugira um). Não altere o código de produção. Nomeie os testes de forma descritiva.">copiar prompt</button>
+      </article>
+      <article class="prompt-card">
+        <span class="prompt-label">05 · análise de segurança</span>
+        <pre><code>Analise este trecho em busca de
+vulnerabilidades (OWASP Top 10).
+Para cada achado: severidade, impacto
+e correção concreta com exemplo.</code></pre>
+        <button type="button" class="copy-prompt" data-copy="Analise este trecho de código em busca de vulnerabilidades (referência OWASP Top 10 e práticas de secure coding). Para cada achado: severidade, impacto prático e correção concreta com exemplo de código. Não invente problemas inexistentes.">copiar prompt</button>
+      </article>
+      <article class="prompt-card">
+        <span class="prompt-label">06 · design de API</span>
+        <pre><code>Projete endpoints REST (ou GraphQL)
+para o domínio descrito. Inclua
+contratos, status codes, erros e
+considerações de versionamento.</code></pre>
+        <button type="button" class="copy-prompt" data-copy="Projete a API para o domínio abaixo. Preferência por REST com JSON. Inclua: recursos, métodos, path, query/body, status codes de sucesso e erro, autenticação sugerida e notas de versionamento. Seja explícito sobre idempotência e paginação.">copiar prompt</button>
+      </article>
     </div>
   </div>
 </section>
 
+<!-- ========== PROJETOS ========== -->
 <section id="projetos">
   <div class="wrap">
     <div class="section-kicker">$ ideas --ready-to-build</div>
     <h2>Projetos para colocar no portfólio</h2>
     <div class="project-grid">
-      <article><span class="project-type">automação</span><h3>Assistente de operações</h3><p>Recebe alertas, consulta runbooks, resume incidentes e sugere próximos passos com aprovação humana.</p><strong>Stack sugerida:</strong> Python · FastAPI · Slack/Discord · banco de eventos</article>
-      <article><span class="project-type">dados</span><h3>Relatório inteligente</h3><p>Ingere CSVs e planilhas, valida qualidade, gera indicadores e explica variações em linguagem natural.</p><strong>Stack sugerida:</strong> pandas · DuckDB · FastAPI · gráficos</article>
-      <article><span class="project-type">RAG</span><h3>Busca no conhecimento interno</h3><p>Indexa documentação técnica, responde com citações e informa quando não encontrou evidência suficiente.</p><strong>Stack sugerida:</strong> embeddings · PostgreSQL · API de modelo</article>
-      <article><span class="project-type">produto</span><h3>Triagem de solicitações</h3><p>Classifica contatos, extrai contexto, sugere prioridade e encaminha cada pedido para o fluxo certo.</p><strong>Stack sugerida:</strong> webhooks · JSON schema · fila · auditoria</article>
+      <article>
+        <span class="project-type">automação</span>
+        <h3>Assistente de operações</h3>
+        <p>Recebe alertas, consulta runbooks, resume incidentes e sugere próximos passos com aprovação humana.</p>
+        <strong>Stack:</strong> Python · FastAPI · Slack/Discord · banco de eventos
+      </article>
+      <article>
+        <span class="project-type">dados</span>
+        <h3>Relatório inteligente</h3>
+        <p>Ingere CSVs e planilhas, valida qualidade, gera indicadores e explica variações em linguagem natural.</p>
+        <strong>Stack:</strong> pandas · DuckDB · FastAPI · gráficos
+      </article>
+      <article>
+        <span class="project-type">RAG</span>
+        <h3>Busca no conhecimento interno</h3>
+        <p>Indexa documentação técnica, responde com citações e informa quando não encontrou evidência suficiente.</p>
+        <strong>Stack:</strong> embeddings · pgvector · API de modelo
+      </article>
+      <article>
+        <span class="project-type">produto</span>
+        <h3>Triagem de solicitações</h3>
+        <p>Classifica contatos, extrai contexto, sugere prioridade e encaminha cada pedido para o fluxo certo.</p>
+        <strong>Stack:</strong> webhooks · JSON schema · fila · auditoria
+      </article>
     </div>
   </div>
 </section>
 
+<!-- ========== ARQUITETURA ========== -->
 <section id="arquitetura" class="section-alt">
   <div class="wrap">
     <div class="section-kicker">$ cat arquitetura-segura.txt</div>
     <h2>Como pensar uma aplicação de IA</h2>
     <div class="architecture">
-      <div class="arch-step"><b>01</b><span>entrada</span><p>Valide, normalize e classifique a solicitação.</p></div><div class="arch-arrow">→</div>
-      <div class="arch-step"><b>02</b><span>contexto</span><p>Busque apenas documentos relevantes e autorizados.</p></div><div class="arch-arrow">→</div>
-      <div class="arch-step"><b>03</b><span>modelo</span><p>Use schema, limites e instruções versionadas.</p></div><div class="arch-arrow">→</div>
+      <div class="arch-step"><b>01</b><span>entrada</span><p>Valide, normalize e classifique a solicitação.</p></div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-step"><b>02</b><span>contexto</span><p>Busque apenas documentos relevantes e autorizados.</p></div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-step"><b>03</b><span>modelo</span><p>Use schema, limites e instruções versionadas.</p></div>
+      <div class="arch-arrow">→</div>
       <div class="arch-step"><b>04</b><span>verificação</span><p>Valide saída, registre evidências e peça aprovação quando necessário.</p></div>
     </div>
-    <div class="principles"><div><b>privacidade</b><span>Minimize dados e defina retenção.</span></div><div><b>confiabilidade</b><span>Meça qualidade, latência e custo.</span></div><div><b>controle humano</b><span>Automatize execução, não responsabilidade.</span></div></div>
+    <div class="principles">
+      <div><b>privacidade</b><span>Minimize dados e defina retenção.</span></div>
+      <div><b>confiabilidade</b><span>Meça qualidade, latência e custo.</span></div>
+      <div><b>controle humano</b><span>Automatize execução, não responsabilidade.</span></div>
+    </div>
   </div>
 </section>
 
+<!-- ========== ROADMAP ========== -->
 <section id="roadmap">
   <div class="wrap roadmap-wrap">
-    <div><div class="section-kicker">$ roadmap --ia</div><h2>O que podemos colocar aqui</h2><p class="section-intro">A seção pode crescer com conteúdo que ensina e demonstra trabalho real, sem prometer mágica.</p></div>
-    <div class="roadmap-list"><div><span>agora</span><p>Guias de prompts, APIs e automações úteis.</p></div><div><span>próximo</span><p>Curso de agentes, RAG e avaliação de respostas.</p></div><div><span>depois</span><p>Laboratório de modelos locais com Docker e GPU.</p></div><div><span>contínuo</span><p>Estudos de caso, benchmarks de custo e qualidade.</p></div></div>
+    <div>
+      <div class="section-kicker">$ roadmap --ia</div>
+      <h2>O que vem a seguir</h2>
+      <p class="section-intro">A seção cresce com conteúdo que ensina e demonstra trabalho real — sem prometer mágica. Ferramentas interativas e tutoriais aprofundados entram conforme a demanda.</p>
+    </div>
+    <div class="roadmap-list">
+      <div><span>agora</span><p>Ferramentas (prompts prontos), laboratório e mapa de conteúdos de RAG, agentes e modelos locais.</p></div>
+      <div><span>próximo</span><p>Artigos passo a passo: integração OpenAI/Claude/Gemini, RAG com pgvector e Ollama local.</p></div>
+      <div><span>depois</span><p>Demos interativas no browser (gerador de commit, mock data) e laboratório de agentes com Docker.</p></div>
+      <div><span>contínuo</span><p>Estudos de caso, benchmarks de custo/qualidade e checklists de produção.</p></div>
+    </div>
   </div>
 </section>
+
 </main>
 
-<footer><div class="wrap"><div>© 2026 irndevs</div><div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div></div></footer>
+<footer>
+  <div class="wrap">
+    <div>© 2026 irndevs</div>
+    <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
+  </div>
+</footer>
 <script src="assets/js/site-nav.js?v=20260916d" defer></script>
 <script>
-document.querySelectorAll('.copy-prompt').forEach(function(button){button.addEventListener('click',function(){navigator.clipboard.writeText(button.dataset.copy).then(function(){button.textContent='copiado!';setTimeout(function(){button.textContent='copiar prompt'},1600)}).catch(function(){button.textContent='selecione manualmente'})})});
+document.querySelectorAll('.copy-prompt').forEach(function(button){
+  var original = button.textContent.trim();
+  button.addEventListener('click', function(){
+    navigator.clipboard.writeText(button.dataset.copy).then(function(){
+      button.textContent = 'copiado!';
+      setTimeout(function(){ button.textContent = original; }, 1600);
+    }).catch(function(){
+      button.textContent = 'selecione manualmente';
+      setTimeout(function(){ button.textContent = original; }, 2000);
+    });
+  });
+});
 </script>
-  <script src="assets/js/chat-bot.js?v=20260916e" defer></script>
+<script src="assets/js/chat-bot.js?v=20260916e" defer></script>
 </body>
 </html>
