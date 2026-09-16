@@ -221,16 +221,21 @@
       updateExpandedState();
     });
 
-    /* Floating CTA + Chat (mobile sticky + desktop) */
+    /* Floating social links (mobile sticky + desktop) */
     if (!document.getElementById('irn-float-cta')) {
       var float = document.createElement('div');
       float.id = 'irn-float-cta';
       float.innerHTML =
-        '<a href="contato.html" class="irn-float-btn irn-float-chat" title="Falar / Contato" aria-label="Abrir contato">' +
-        '<span class="irn-float-ico">💬</span><span class="irn-float-txt">Falar</span></a>' +
-        '<a href="mailto:contato@irndevs.com?subject=Projeto%20com%20a%20IRN%20Devs" ' +
-        'class="irn-float-btn irn-float-email" title="Enviar e-mail" aria-label="Enviar e-mail">' +
-        '<span class="irn-float-ico">@</span><span class="irn-float-txt">E-mail</span></a>';
+        '<a href="https://instagram.com/irndevs" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="Instagram da IRN Devs" aria-label="Instagram da IRN Devs">' +
+        '<span class="irn-float-ico">◎</span><span class="irn-float-txt">Instagram</span></a>' +
+        '<a href="https://linkedin.com/company/irndevs" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="LinkedIn da IRN Devs" aria-label="LinkedIn da IRN Devs">' +
+        '<span class="irn-float-ico">in</span><span class="irn-float-txt">LinkedIn</span></a>' +
+        '<a href="https://github.com/iri-afk" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="GitHub da IRN Devs" aria-label="GitHub da IRN Devs">' +
+        '<span class="irn-float-ico">⌘</span><span class="irn-float-txt">GitHub</span></a>' +
+        '<a href="https://youtube.com/@irndevs" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="YouTube da IRN Devs" aria-label="YouTube da IRN Devs">' +
+        '<span class="irn-float-ico">▶</span><span class="irn-float-txt">YouTube</span></a>' +
+        '<a href="https://x.com/irndevs" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="X da IRN Devs" aria-label="X da IRN Devs">' +
+        '<span class="irn-float-ico">𝕏</span><span class="irn-float-txt">X</span></a>';
       document.body.appendChild(float);
     }
   }

@@ -447,7 +447,7 @@ body.has-site-nav > nav:not(.sn-bottom) {
   .sn-auth-slot a { padding: 6px 10px; font-size: 12px; }
 }
 
-/* Floating CTA + Chat */
+/* Floating social links */
 #irn-float-cta {
   position: fixed;
   right: 16px;
@@ -475,17 +475,15 @@ body.has-site-nav > nav:not(.sn-bottom) {
   transform: translateY(-2px);
   box-shadow: 0 12px 28px rgba(0,0,0,0.4);
 }
-.irn-float-chat {
+.irn-float-social {
+  background: #1a2119;
+  color: #e8e6e0;
+  border: 1px solid #3a4a32;
+}
+.irn-float-social:hover {
   background: var(--nav-amber, #e8a33d);
   color: #10130f;
-}
-.irn-float-wa {
-  background: #25D366;
-  color: #fff;
-}
-.irn-float-email {
-  background: var(--nav-amber, #e8a33d);
-  color: #10130f;
+  border-color: var(--nav-amber, #e8a33d);
 }
 .irn-float-install {
   background: #7fae6a;
@@ -500,4 +498,4 @@ body.has-site-nav > nav:not(.sn-bottom) {
   #irn-float-cta { bottom: 72px; right: 12px; } /* above bottom nav */
   .irn-float-btn { padding: 11px 14px; font-size: 12.5px; }
 }
-/* keep both buttons on all sizes */
+/* keep social links available on all sizes */
