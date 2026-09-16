@@ -113,7 +113,7 @@
 
     var authSlot = isInternal
       ? '<div class="sn-auth-slot dash-topbar-user" data-auth-slot><a href="index.html">← site</a></div>'
-      : '<div class="sn-auth-slot" data-auth-slot></div>';
+      : '<div class="sn-auth-slot" data-auth-slot><a class="sn-auth-login" href="login.html">entrar</a><a class="sn-auth-primary" href="cadastro.html">cadastro</a></div>';
 
     var root = document.createElement('div');
     root.id = 'siteNavRoot';
@@ -226,6 +226,9 @@
       var float = document.createElement('div');
       float.id = 'irn-float-cta';
       float.innerHTML =
+        '<button type="button" class="irn-float-btn irn-float-social-toggle" id="irn-social-toggle" aria-expanded="false" aria-controls="irn-social-links" title="Abrir redes sociais" aria-label="Abrir redes sociais">' +
+        '<span class="irn-float-ico">◎</span><span class="irn-float-txt">redes</span></button>' +
+        '<div id="irn-social-links" class="irn-social-links" hidden>' +
         '<a href="https://instagram.com/irndevs" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="Instagram da IRN Devs" aria-label="Instagram da IRN Devs">' +
         '<span class="irn-float-ico">◎</span><span class="irn-float-txt">Instagram</span></a>' +
         '<a href="https://linkedin.com/company/irndevs" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="LinkedIn da IRN Devs" aria-label="LinkedIn da IRN Devs">' +
@@ -235,8 +238,23 @@
         '<a href="https://youtube.com/@irndevs" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="YouTube da IRN Devs" aria-label="YouTube da IRN Devs">' +
         '<span class="irn-float-ico">▶</span><span class="irn-float-txt">YouTube</span></a>' +
         '<a href="https://x.com/irndevs" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="X da IRN Devs" aria-label="X da IRN Devs">' +
-        '<span class="irn-float-ico">𝕏</span><span class="irn-float-txt">X</span></a>';
+        '<span class="irn-float-ico">𝕏</span><span class="irn-float-txt">X</span></a></div>';
       document.body.appendChild(float);
+      var socialToggle = document.getElementById('irn-social-toggle');
+      var socialLinks = document.getElementById('irn-social-links');
+      socialToggle.addEventListener('click', function () {
+        var open = socialToggle.getAttribute('aria-expanded') === 'true';
+        socialToggle.setAttribute('aria-expanded', String(!open));
+        socialToggle.classList.toggle('open', !open);
+        socialLinks.hidden = open;
+      });
+      document.addEventListener('click', function (event) {
+        if (!float.contains(event.target) && socialToggle.getAttribute('aria-expanded') === 'true') {
+          socialToggle.setAttribute('aria-expanded', 'false');
+          socialToggle.classList.remove('open');
+          socialLinks.hidden = true;
+        }
+      });
     }
   }
 

@@ -156,5 +156,6 @@ antes de tomar a decisão.</code></pre><button type="button" class="copy-prompt"
 <script>
 document.querySelectorAll('.copy-prompt').forEach(function(button){button.addEventListener('click',function(){navigator.clipboard.writeText(button.dataset.copy).then(function(){button.textContent='copiado!';setTimeout(function(){button.textContent='copiar prompt'},1600)}).catch(function(){button.textContent='selecione manualmente'})})});
 </script>
+  <script src="assets/js/chat-bot.js?v=20260916e" defer></script>
 </body>
 </html>
