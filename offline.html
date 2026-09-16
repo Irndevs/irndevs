@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>404 — IRN Devs</title>
-<link rel="canonical" href="https://irndevs.com/404.html">
-<meta name="description" content="A página solicitada não foi encontrada no site da IRN Devs.">
+<title>Sem conexão — IRN Devs</title>
+<link rel="canonical" href="https://irndevs.com/offline.html">
+<meta name="description" content="Você está sem conexão. Esta página é exibida pelo IRN Devs quando o dispositivo está offline.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="/manifest.json">
@@ -17,11 +17,12 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site-nav.css">
 <link rel="stylesheet" href="assets/css/pages/404.css">
-  <link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/motion.css">
+<meta name="theme-color" content="#10130f">
 
-<meta property="og:title" content="404 — IRN Devs">
-<meta property="og:description" content="A página solicitada não foi encontrada no site da IRN Devs.">
-<meta property="og:url" content="https://irndevs.com/404.html">
+<meta property="og:title" content="Sem conexão — IRN Devs">
+<meta property="og:description" content="Você está sem conexão. Esta página é exibida quando o dispositivo está offline.">
+<meta property="og:url" content="https://irndevs.com/offline.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://irndevs.com/assets/img/og-default.png">
 <meta property="og:site_name" content="IRN Devs">
@@ -29,21 +30,20 @@
 <body>
 <div class="wrap">
   <div class="term">
-    <div><span class="green">irn@serv-irn</span><span class="dim">:~$</span> open <span class="amber">$PATH</span></div>
-    <div class="dim">bash: $PATH: No such file or directory</div>
+    <div><span class="green">irn@serv-irn</span><span class="dim">:~$</span> ping <span class="amber">irndevs.com</span></div>
+    <div class="dim">ping: connect: Network is unreachable</div>
     <div class="inline-style-1"><span class="green">irn@serv-irn</span><span class="dim">:~$</span> echo $?</div>
-    <div class="amber">404</div>
+    <div class="amber">offline</div>
   </div>
-  <h1>Página não encontrada</h1>
-  <p>O caminho não existe neste host. Volte ao início ou use um dos atalhos.</p>
+  <h1>Você está sem conexão</h1>
+  <p>Não foi possível carregar esta página pela rede. Páginas já visitadas continuam disponíveis pelo cache — tente novamente quando a conexão voltar.</p>
   <div class="links">
     <a href="index.html">~/ início</a>
-    <a href="servicos.html">serviços</a>
+    <a href="cursos.html">cursos</a>
     <a href="blog.html">blog</a>
-    <a href="contato.html">contato</a>
+    <a href="javascript:location.reload()">tentar novamente</a>
   </div>
 </div>
 <script src="assets/js/site-nav.js?v=20260914f" defer></script>
-  <script src="assets/js/chat-bot.js?v=20260915" defer></script>
 </body>
 </html>

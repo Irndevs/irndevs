@@ -241,4 +241,51 @@
   } else {
     mount();
   }
+
+  /* PWA: service worker site-wide + botão de instalar quando disponível */
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('/sw.js').catch(function () {});
+    });
+  }
+
+  var deferredInstallPrompt = null;
+
+  function showInstallButton() {
+    if (isInternal || document.getElementById('irn-install-btn')) return;
+    var floatWrap = document.getElementById('irn-float-cta');
+    if (!floatWrap) return;
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.id = 'irn-install-btn';
+    btn.className = 'irn-float-btn irn-float-install';
+    btn.title = 'Instalar o app da IRN Devs';
+    btn.setAttribute('aria-label', 'Instalar o app da IRN Devs');
+    btn.innerHTML = '<span class="irn-float-ico">⤓</span><span class="irn-float-txt">Instalar</span>';
+    btn.addEventListener('click', function () {
+      if (!deferredInstallPrompt) return;
+      deferredInstallPrompt.prompt();
+      deferredInstallPrompt.userChoice.finally(function () {
+        deferredInstallPrompt = null;
+        btn.remove();
+      });
+    });
+    floatWrap.appendChild(btn);
+  }
+
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', showInstallButton);
+    } else {
+      showInstallButton();
+    }
+  });
+
+  window.addEventListener('appinstalled', function () {
+    deferredInstallPrompt = null;
+    var btn = document.getElementById('irn-install-btn');
+    if (btn) btn.remove();
+  });
 })();
