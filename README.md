@@ -1,289 +1,144 @@
-# Portfolio Desenvolvedor Full Stack
+# IRN Devs
 
-Um portfolio moderno e interativo desenvolvido com HTML, CSS e JavaScript vanilla, apresentando projetos, habilidades e experiências de um desenvolvedor full stack.
+Site institucional, portfólio técnico e área de ferramentas da IRN Devs. O projeto é um site estático construído com HTML, CSS e JavaScript vanilla, com páginas de serviços, projetos, artigos, cursos, ferramentas e área de contato.
 
-## 🚀 Demonstração
+## Demonstração
 
-- **Site Principal**: [Ver site online](https://irndevs.com/)
-- **Repositório**: [GitHub Repository](#)
+- **Site:** https://irndevs.com/
+- **Diagnóstico gratuito:** https://irndevs.com/diagnostico.html
+- **GitHub:** https://github.com/iri-afk
 
-## ✨ Características Principais
+## Proposta comercial
 
-### 🎨 Design Moderno
-- Interface elegante com gradientes e animações suaves
-- Design responsivo que funciona em todos os dispositivos
-- Tema escuro/claro com toggle interativo
-- Efeitos visuais avançados (cursor trail, animações 3D)
+O site apresenta software, automações, dados e infraestrutura em produção. A principal porta de entrada comercial é o **diagnóstico gratuito de 30 minutos**, destinado a identificar gargalos de processo, integração, dados ou infraestrutura e indicar próximos passos proporcionais ao problema.
 
-### 📱 Páginas Implementadas
-- **Página Principal**: Hero section, estatísticas, projetos em destaque
-- **Sobre Mim**: Biografia, timeline de carreira, certificações
-- **Projetos**: Galeria de projetos com páginas detalhadas
-- **Blog**: Sistema de artigos com busca e filtros
-- **Contato**: Formulário funcional com validação
+A página de diagnóstico informa o fluxo da conversa, os tipos de problema analisados, a ausência de obrigação de contratação e o prazo de resposta de até 1 dia útil.
 
-### ⚡ Funcionalidades Avançadas
-- Navegação suave entre seções
-- Menu mobile responsivo
-- Sistema de busca no blog
-- Formulários com validação em tempo real
-- Animações on-scroll
-- Efeitos 3D nos cards
-- Lightbox para galeria de imagens
+## Estrutura principal
 
-### 🛠️ Tecnologias Utilizadas
-- **Frontend**: HTML5, CSS3, JavaScript ES6+
-- **Estilização**: CSS Grid, Flexbox, Custom Properties
-- **Animações**: CSS Animations, Intersection Observer API
-- **Responsividade**: Mobile-first approach
-- **Performance**: Lazy loading, debounced events
-
-## 📁 Estrutura do Projeto
-
-```
+```text
 irndevs/
-├── index.html                  # Página principal
-├── servicos.html               # Serviços e soluções
-├── pacotes.html                # Pacotes de contratação
-├── contato.html                # Formulário de contato
-├── blog.html                   # Índice do blog
-├── artigo-*.html               # Artigos individuais
-├── cursos.html                 # Índice dos cursos
-├── curso-python-modulo-*.html  # Módulos do curso
-├── assets/css/                 # Estilos compartilhados e por página
-├── assets/js/                  # Navegação, autenticação e interações
-├── assets/img/                 # Logos, diagramas e imagens
-├── supabase/schema.sql         # Estrutura e políticas do banco
-├── scripts/validate-site.py    # Validação de HTML, links e metadados
-└── README.md                   # Documentação
+├── index.html                         # Home e projetos em produção
+├── diagnostico.html                   # Oferta de diagnóstico gratuito
+├── servicos.html                      # Serviços, processo, cases e FAQ
+├── pacotes.html                       # Pacotes de desenvolvimento, automação e dados
+├── como-contratar.html                # Jornada de contratação
+├── contato.html                       # Formulário de contato
+├── sobre.html                         # História, método, stack e formação
+├── blog.html                          # Índice dos artigos
+├── artigo-*.html                      # Artigos técnicos
+├── cursos.html                        # Índice dos cursos
+├── curso-*-modulo-*.html              # Módulos de cursos
+├── ia.html                            # Ferramentas e conteúdo de IA
+├── ferramentas.html                   # Ferramentas gratuitas
+├── ferramenta-checklist.html          # Checklist de diagnóstico
+├── orcamentos.html                    # Área de orçamentos
+├── assets/css/                        # Estilos compartilhados e por página
+├── assets/js/                         # Navegação, autenticação e interações
+├── assets/img/                        # Logos, ícones, diagramas e OG images
+├── supabase/                          # Schema e políticas do banco
+├── scripts/validate-site.py           # Validador de HTML, links e metadados
+├── sitemap.xml                        # Sitemap do site publicado
+├── robots.txt                         # Regras para crawlers
+└── README.md                          # Esta documentação
 ```
 
-## 🎯 Melhorias Implementadas
+A pasta `_legado/` contém páginas históricas que não fazem parte da navegação publicada atual. Elas não devem ser reativadas sem uma migração dos caminhos antigos.
 
-### Comparado ao Portfolio Original
+## Melhorias comerciais implementadas
 
-#### ✅ Navegação Melhorada
-- Menu mobile funcional com animações
-- Breadcrumbs para navegação contextual
-- Links ativos baseados na seção atual
-- Smooth scrolling entre seções
+A home agora usa o diagnóstico gratuito como CTA principal e direciona o visitante para uma conversa de baixo atrito antes da proposta. As páginas de serviços, pacotes, contato, Sobre e Como contratar também apresentam essa jornada.
 
-#### ✅ SEO e Acessibilidade
-- Meta tags otimizadas para SEO
-- Estrutura semântica HTML5
-- Atributos ARIA para acessibilidade
-- Suporte a navegação por teclado
-- Foco visível em elementos interativos
+A página de contato recebeu campos opcionais para prazo desejado e faixa de investimento. O formulário mantém a categorização por assunto e informa que a resposta ocorre em até 1 dia útil.
 
-#### ✅ Performance
-- Lazy loading de imagens
-- Debounced scroll events
-- Intersection Observer para animações
-- CSS otimizado com variáveis
-- JavaScript modular e eficiente
+A página Sobre foi reorganizada para combinar narrativa, princípios de trabalho e prova técnica. A página de serviços recebeu anchors para as frentes de desenvolvimento, automações e dados. Os 24 artigos técnicos ativos receberam uma chamada contextual para o diagnóstico.
 
-#### ✅ Funcionalidades Interativas
-- Formulário de contato com validação
-- Sistema de busca no blog
-- Filtros dinâmicos por categoria
-- Lightbox para galeria de imagens
-- Notificações de feedback
+O sitemap inclui `diagnostico.html` e os links da versão completa do projeto, incluindo `ia.html` e `orcamentos.html`, foram preservados.
 
-#### ✅ Design Responsivo
-- Breakpoints otimizados
-- Layout adaptativo para mobile
-- Tipografia responsiva
-- Imagens flexíveis
+## Tecnologias
 
-## 🚀 Como Executar
+- HTML5 sem framework de frontend;
+- CSS3, Grid, Flexbox e propriedades customizadas;
+- JavaScript ES6+ modular;
+- formulários com validação no navegador e FormSubmit;
+- Supabase para os recursos que usam autenticação e dados;
+- JSON-LD, Open Graph, canonical e sitemap para SEO;
+- WebP para imagens quando disponível;
+- `prefers-reduced-motion` e foco visível para acessibilidade.
 
-### Opção 1: Servidor Local Simples
+## Como executar localmente
+
+Na raiz do site, inicie um servidor HTTP simples:
+
 ```bash
-# Clone o repositório
-git clone [url-do-repositorio]
-cd portfolio-melhorado
-
-# Inicie um servidor local (Python)
-python -m http.server 8000
-
-# Ou com Node.js
-npx serve .
-
-# Acesse http://localhost:8000
+python3 -m http.server 8000 --bind 0.0.0.0
 ```
 
-### Opção 2: Live Server (VS Code)
-1. Instale a extensão "Live Server" no VS Code
-2. Abra o projeto no VS Code
-3. Clique com botão direito em `index.html`
-4. Selecione "Open with Live Server"
+Depois acesse `http://localhost:8000/` no navegador. Para uma alternativa com Node.js, use:
 
-### Opção 3: Deploy Direto
-O projeto pode ser hospedado diretamente em:
-- **Netlify**: Drag & drop da pasta
-- **Vercel**: Conectar repositório GitHub
-- **GitHub Pages**: Ativar nas configurações do repo
+```bash
+npx serve .
+```
 
-## 📋 Funcionalidades Detalhadas
+Como o projeto é estático, não há etapa de build obrigatória para a publicação normal.
 
-### Página Principal (index.html)
-- Hero section com typing effect
-- Estatísticas animadas com counters
-- Grid de projetos com hover effects
-- Seção de habilidades com progress bars
-- Call-to-action para contato
+## Validação
 
-### Página Sobre (sobre/index.html)
-- Timeline interativa de carreira
-- Seção de habilidades detalhadas
-- Certificações e conquistas
-- Interesses pessoais
-- Stats pessoais animados
+Execute o validador incluído no projeto:
 
-### Blog (blog/index.html)
-- Sistema de busca em tempo real
-- Filtros por categoria
-- Post em destaque
-- Paginação funcional
-- Newsletter signup
-- FAQ interativo
+```bash
+python3 scripts/validate-site.py
+```
 
-### Contato (contato/index.html)
-- Formulário com validação completa
-- Informações de contato
-- Status de disponibilidade
-- Links para redes sociais
-- FAQ sobre serviços
-- Tempo de resposta estimado
+A versão entregue após as melhorias foi validada com o resultado:
 
-### Projetos Detalhados
-- Galeria de screenshots
-- Detalhes técnicos completos
-- Desafios e soluções
-- Links para demo e código
-- Navegação entre projetos
+```text
+Validated 86 HTML pages: OK
+```
 
-## 🎨 Personalização
+Também foram verificados os arquivos CSS, assets locais, sintaxe dos arquivos JavaScript, IDs duplicados, referências do sitemap e carregamento HTTP das páginas comerciais principais. A auditoria publicada encontrou zero problemas nesses arquivos ativos.
 
-### Cores e Tema
-As cores principais são definidas em CSS custom properties:
+## Publicação
+
+O site pode ser publicado como conteúdo estático em GitHub Pages, Cloudflare Pages, Netlify ou Vercel. Para GitHub Pages, publique a raiz que contém `index.html`, `CNAME`, `robots.txt` e `sitemap.xml`.
+
+Antes de uma publicação definitiva, confirme:
+
+1. o domínio configurado em `CNAME`;
+2. o HTTPS do domínio;
+3. o recebimento do formulário em `contato@irndevs.com`;
+4. o endereço informado no `sitemap.xml`;
+5. a verificação do Google Search Console;
+6. os links externos de projetos e redes sociais.
+
+## Manutenção
+
+Ao criar uma nova página pública, adicione título, descrição, canonical, Open Graph, favicon, idioma, um único `h1` e os links necessários ao sitemap. Depois execute `scripts/validate-site.py`.
+
+Ao criar um artigo, mantenha a estrutura dos artigos existentes e inclua uma chamada contextual para o diagnóstico quando o tema tiver relação com serviços da IRN Devs. Evite afirmar resultados ou métricas que não possam ser comprovados.
+
+## Contato
+
+- **E-mail:** contato@irndevs.com
+- **GitHub:** https://github.com/iri-afk
+- **Site:** https://irndevs.com/
+
+## Identidade visual atual
+
+O site utiliza a identidade visual azul-marinho, roxo, azul elétrico e ciano inspirada na comunicação visual da IRN Devs. A camada global está em `assets/css/irndevs-theme.css` e é carregada pelas 86 páginas HTML ativas.
+
+As principais variáveis são:
 
 ```css
-:root {
-    --primary: #6366f1;      /* Azul principal */
-    --secondary: #8b5cf6;    /* Roxo secundário */
-    --accent: #ec4899;       /* Rosa accent */
-    --dark: #0f172a;         /* Fundo escuro */
-    --light: #f8fafc;        /* Texto claro */
-}
+--irn-bg: #000517;
+--irn-surface: #07132F;
+--irn-purple: #6D2BFF;
+--irn-blue: #155BFF;
+--irn-cyan: #16C8FF;
+--irn-white: #F4F7FF;
+--irn-muted: #B9C8E8;
 ```
 
-### Fontes
-- **Fonte Principal**: Inter (Google Fonts)
-- **Fallbacks**: System fonts (-apple-system, BlinkMacSystemFont)
+A camada preserva a estrutura existente, mas atualiza fundos, navegação, botões, cards, formulários, rodapés, links, estados ativos, badges, terminal, grades e chamadas para ação. O gradiente principal combina violeta, roxo, azul e ciano.
 
-### Animações
-Todas as animações respeitam `prefers-reduced-motion` para acessibilidade.
-
-## 📱 Responsividade
-
-### Breakpoints
-- **Mobile**: < 768px
-- **Tablet**: 768px - 1024px
-- **Desktop**: > 1024px
-
-### Estratégia Mobile-First
-Todo o CSS foi desenvolvido com abordagem mobile-first, garantindo performance otimizada em dispositivos móveis.
-
-## 🔧 Manutenção
-
-### Adicionando Novos Projetos
-1. Crie uma nova pasta em `projetos/[nome-projeto]/`
-2. Copie a estrutura de `projetos/ecommerce/index.html`
-3. Atualize o conteúdo e metadados
-4. Adicione o card na página principal
-
-### Adicionando Posts no Blog
-1. Adicione um novo `article.blog-card` em `blog/index.html`
-2. Configure o `data-category` para filtros
-3. Atualize meta informações (data, categoria, tags)
-
-### Atualizando Informações Pessoais
-- **Contato**: Edite `contato/index.html`
-- **Sobre**: Edite `sobre/index.html`
-- **Links Sociais**: Atualize em todos os footers
-
-## 🚀 Deploy
-
-### Netlify
-1. Conecte seu repositório GitHub
-2. Configure build settings:
-   - Build command: (deixe vazio)
-   - Publish directory: `/`
-3. Deploy automático a cada push
-
-### Vercel
-1. Importe o projeto do GitHub
-2. Configure como site estático
-3. Deploy automático configurado
-
-### GitHub Pages
-1. Vá em Settings > Pages
-2. Selecione source: Deploy from branch
-3. Branch: main, folder: / (root)
-
-## 📊 Performance
-
-### Métricas Alvo
-- **First Contentful Paint**: < 1.5s
-- **Largest Contentful Paint**: < 2.5s
-- **Cumulative Layout Shift**: < 0.1
-- **First Input Delay**: < 100ms
-
-### Otimizações Implementadas
-- CSS minificado e otimizado
-- JavaScript modular e eficiente
-- Imagens otimizadas (WebP quando possível)
-- Lazy loading de conteúdo
-- Preload de recursos críticos
-
-## 🤝 Contribuições
-
-Contribuições são bem-vindas! Para contribuir:
-
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para detalhes.
-
-## 📞 Contato
-
-- **Email**: contato@irndevs.com
-- **LinkedIn**: configure o link real antes de publicar
-- **GitHub**: https://github.com/iri-afk
-- **Portfolio**: https://irndevs.com/
-
----
-
-⭐ Se este projeto foi útil para você, considere dar uma estrela no repositório!
-
-## 🔄 Changelog
-
-### v2.0.0 (Atual)
-- ✅ Navegação mobile implementada
-- ✅ Páginas secundárias criadas
-- ✅ Sistema de blog adicionado
-- ✅ Formulários funcionais
-- ✅ SEO e acessibilidade melhorados
-- ✅ Performance otimizada
-
-### v1.0.0 (Original)
-- ✅ Landing page básica
-- ✅ Design responsivo inicial
-- ✅ Animações CSS
-- ✅ Seções principais
+A cobertura visual inclui 85 páginas HTML com estrutura visual (`<head>`), incluindo as cinco páginas em inglês. O arquivo `googleb23553d3569257db.html` é apenas uma página técnica de verificação do Google, sem interface visual, e por isso não carrega a camada de tema.

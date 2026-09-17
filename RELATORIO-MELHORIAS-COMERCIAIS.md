@@ -141,3 +141,23 @@ Após a primeira validação, foi executada uma auditoria mais ampla nos arquivo
 A cópia de entrega foi comparada byte a byte com a pasta validada e não houve diferença.
 
 A pasta `_legado` contém quatro páginas históricas com referências antigas para arquivos que não fazem parte da versão atual. Essas páginas não estão na navegação principal nem no sitemap como páginas ativas. Elas foram mantidas como legado e não foram consideradas parte da superfície publicada. Se o diretório vier a ser reativado, deverá ser migrado ou removido separadamente.
+
+## Atualização visual global
+
+A identidade visual do site inteiro foi alinhada à imagem de referência enviada. Foi criada a camada `assets/css/irndevs-theme.css`, carregada nas páginas HTML ativas, com fundo azul-marinho profundo, superfícies azuladas, gradientes roxo–azul–ciano, texto branco frio, links ciano, botões em gradiente, bordas azuis e estados ativos coerentes.
+
+A camada também atualiza navegação, cards, formulários, terminal, badges, rodapés, status, chamadas para ação e elementos da versão em inglês. A estrutura HTML e os conteúdos comerciais foram preservados.
+
+Depois da aplicação do tema, o projeto foi validado novamente:
+
+- `Validated 86 HTML pages: OK`;
+- auditoria profunda: `issues=0`;
+- caminhos relativos corrigidos nas páginas em inglês;
+- tema carregado nas páginas com `<head>` ativo;
+- arquivo `assets/css/irndevs-theme.css` verificado.
+
+## Auditoria de cobertura visual
+
+Foi conferida a cobertura página por página. Das 86 páginas HTML do projeto, 85 são páginas visuais com estrutura `<head>` e carregam `assets/css/irndevs-theme.css`; isso inclui todas as páginas públicas, o portal e as cinco páginas em inglês. O único arquivo sem tema é `googleb23553d3569257db.html`, que é um arquivo técnico de verificação do Google e não possui interface visual.
+
+Também foram adicionados tokens de compatibilidade para as páginas específicas de IA e do portal de orçamentos, evitando que suas variáveis antigas de cor mantenham a paleta anterior. A validação final permaneceu em `Validated 86 HTML pages: OK` e `issues=0`.
