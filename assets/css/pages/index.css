@@ -285,12 +285,11 @@ h2.sec-title {
 /* ---- PROJECT CARDS (bento) ---- */
 .proj-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 14px;
+  align-items: stretch;
 }
-@media (max-width: 720px) {
-  .proj-grid { grid-template-columns: 1fr; }
-}
+.proj-grid > * { min-width: 0; }
 .proj-card {
   background: var(--bg-card);
   border: 1px solid var(--bg-line);
@@ -366,15 +365,11 @@ h2.sec-title {
 /* ---- TOOLS ---- */
 .tools-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 12px;
+  align-items: stretch;
 }
-@media (max-width: 860px) {
-  .tools-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 520px) {
-  .tools-grid { grid-template-columns: 1fr; }
-}
+.tools-grid > * { min-width: 0; }
 .tool {
   background: var(--bg-card);
   border: 1px solid var(--bg-line);

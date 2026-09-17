@@ -36,6 +36,7 @@
 </script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"IA: Checklist de produção para RAG","step":[{"@type":"HowToStep","name":"Preparar dados","text":"Limpe e estruture documentos"},{"@type":"HowToStep","name":"Escolher embeddings","text":"Selecione modelo de embedding adequado"},{"@type":"HowToStep","name":"Indexar com pgvector","text":"Crie índices e teste retrieval"},{"@type":"HowToStep","name":"Avaliar qualidade","text":"Meça precisão e latência"},{"@type":"HowToStep","name":"Monitorar em produção","text":"Logs, alertas e feedback"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Quais são os itens críticos de um checklist de RAG em produção?","acceptedAnswer":{"@type":"Answer","text":"Dados limpos, embeddings consistentes, avaliação de retrieval, monitoramento de latência, fallback e controle de alucinações."}},{"@type":"Question","name":"Preciso de um vector database separado?","acceptedAnswer":{"@type":"Answer","text":"Não necessariamente. pgvector no PostgreSQL atende bem a maioria dos casos até dezenas de milhões de vetores."}},{"@type":"Question","name":"Como evitar alucinações no RAG?","acceptedAnswer":{"@type":"Answer","text":"Use prompts que forçam citação de fontes, filtre por score de similaridade e implemente guardrails de verificação."}}]}</script>
+  <link rel="stylesheet" href="assets/css/footer.css?v=20260917d">
 </head>
 <body>
 <!-- nav: site-nav.js -->
