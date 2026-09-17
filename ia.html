@@ -67,7 +67,7 @@
       <article class="tool-card">
         <div class="tool-icon">SQL</div>
         <h3>Gerador de SQL e NoSQL via texto</h3>
-        <p>Descreva o que precisa em português. A IA devolve a query SQL ou o comando MongoDB/Redis/Elasticsearch com índices e filtros corretos.</p>
+        <p>Motor local gera SQL (Postgres/MySQL) ou aggregation Mongo a partir de português. Prompt para casos complexos.</p>
         <div class="tool-example">
           <span class="ex-label">exemplo de entrada</span>
           <code>“Buscar os 10 usuários mais ativos que compraram nos últimos 30 dias, ordenados por total gasto”</code>
@@ -82,12 +82,13 @@ Regras:
 
 Pedido do usuário:
 Buscar os 10 usuários mais ativos que compraram nos últimos 30 dias, ordenados por total gasto.">copiar prompt base</button>
+        <a class="content-link" href="demo-sql.html" style="margin-top:12px;display:inline-block">abrir demo motor local →</a>
       </article>
 
       <article class="tool-card">
         <div class="tool-icon">LEG</div>
         <h3>Explorador e comentador de código legado</h3>
-        <p>Cole código confuso e sem documentação. A IA devolve explicação linha a linha, riscos e comentários profissionais prontos para o repositório.</p>
+        <p>Análise local de smells, score e riscos + prompt para explicação profunda. A IA devolve explicação linha a linha, riscos e comentários profissionais prontos para o repositório.</p>
         <div class="tool-example">
           <span class="ex-label">quando usar</span>
           <code>herança de sistemas antigos · onboarding · auditoria técnica</code>
@@ -102,6 +103,7 @@ Tarefa:
 
 Código:
 [cole o código aqui]">copiar prompt base</button>
+        <a class="content-link" href="demo-legado.html" style="margin-top:12px;display:inline-block">abrir demo motor local →</a>
       </article>
 
       <article class="tool-card">
@@ -470,7 +472,7 @@ considerações de versionamento.</code></pre>
       <p class="section-intro">A seção cresce com conteúdo que ensina e demonstra trabalho real — sem prometer mágica. Ferramentas interativas e tutoriais aprofundados entram conforme a demanda.</p>
     </div>
     <div class="roadmap-list">
-      <div><span>agora</span><p>Ferramentas, lab, 6 artigos, demos com lógica local (conversor motor real, commit, mock) e checklist de RAG em produção.</p></div>
+      <div><span>agora</span><p>6 ferramentas com motor local (conversor, commit, mock, SQL, legado, checklist) + histórico no browser + prompts LLM.</p></div>
       <div><span>próximo</span><p>Estudos de caso e benchmarks de custo/qualidade por modelo.</p></div>
       <div><span>depois</span><p>Laboratório de agentes com Docker e demos adicionais.</p></div>
       <div><span>contínuo</span><p>Novos prompts no laboratório e melhorias nas demos.</p></div>
@@ -479,6 +481,39 @@ considerações de versionamento.</code></pre>
 
   </div>
 </section>
+
+
+<section id="historico-ia" style="padding:40px 0">
+  <div class="wrap">
+    <div class="section-kicker">$ cat ~/.irn/ia-history</div>
+    <h2>Histórico local das ferramentas</h2>
+    <p class="section-intro">Últimos resultados salvos neste browser (localStorage). Nada é enviado à nuvem até você usar “salvar na conta”.</p>
+    <div id="iaHistoryList" style="font-family:var(--mono,monospace);font-size:13px;color:var(--text-dim,#a8b0a0)">carregando…</div>
+    <div style="margin-top:12px">
+      <button type="button" id="btnClearHistory" class="copy-prompt" style="cursor:pointer">limpar histórico</button>
+    </div>
+  </div>
+</section>
+<script src="assets/js/ia-history.js?v=20260916v8"></script>
+<script>
+(function(){
+  function render(){
+    var el = document.getElementById('iaHistoryList');
+    if (!el || !window.IRNHistory) { if(el) el.textContent = 'histórico indisponível'; return; }
+    var list = IRNHistory.list();
+    if (!list.length) { el.textContent = '(vazio — use as demos para gerar entradas)'; return; }
+    el.innerHTML = list.slice(0, 15).map(function(e){
+      return '<div style="border:1px solid var(--border,#2a3028);padding:10px 12px;margin-bottom:8px">' +
+        '<strong style="color:var(--ia-amber,#c9a227)">' + e.tool + '</strong> · ' +
+        (e.title || '').replace(/</g,'&lt;').slice(0,80) +
+        '<div style="font-size:11px;opacity:.7;margin-top:4px">' + e.at + '</div></div>';
+    }).join('');
+  }
+  document.addEventListener('DOMContentLoaded', render);
+  var b = document.getElementById('btnClearHistory');
+  if (b) b.addEventListener('click', function(){ if (window.IRNHistory) { IRNHistory.clear(); render(); } });
+})();
+</script>
 
 </main>
 

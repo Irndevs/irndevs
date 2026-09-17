@@ -72,8 +72,8 @@
 <div class="demo-wrap">
   <header class="demo-hero">
     <div class="demo-kicker"><span class="pulse-dot"></span> demo interativa · 100% local</div>
-    <h1>Gerador de commits inteligentes</h1>
-    <p>Cole o <code>git diff</code> (ou um trecho). A demo analisa o diff no browser e sugere uma mensagem no padrão <strong>Conventional Commits</strong>. Para resultado de nível LLM, use o botão de copiar prompt.</p>
+    <h1>Gerador de commits inteligentes <span style="font-size:10px;border:1px solid var(--ia-amber,#c9a227);color:var(--ia-amber,#c9a227);padding:2px 7px;margin-left:6px;font-family:monospace">MOTOR LOCAL</span></h1>
+    <p>Cole o <code>git diff</code> (ou um trecho). Motor local reforçado: tipo, escopo, breaking change, corpo com arquivos e stats. Tudo no browser. Para qualidade de LLM, use o prompt.</p>
   </header>
 
   <div class="demo-panel">
@@ -125,6 +125,8 @@
   </div>
 </footer>
 
+<script src="assets/js/commit-engine.js?v=20260916v8"></script>
+<script src="assets/js/ia-history.js?v=20260916v8"></script>
 <script src="assets/js/site-nav.js?v=20260916d" defer></script>
 <script>
 (function () {
@@ -250,18 +252,31 @@
 
   btnGenerate.addEventListener('click', function () {
     var diff = input.value;
-    var msg = generateCommit(diff);
-    if (!msg) {
-      resultBox.textContent = 'cole um diff primeiro';
-      resultBox.classList.add('empty');
-      resultMeta.textContent = '';
-      btnCopyResult.disabled = true;
+    var result = (window.IRNCommit && IRNCommit.generate(diff)) || null;
+    if (!result) {
+      // fallback to legacy inline if engine missing
+      var msg = typeof generateCommit === 'function' ? generateCommit(diff) : null;
+      if (!msg) {
+        resultBox.textContent = 'cole um diff primeiro';
+        resultBox.classList.add('empty');
+        resultMeta.textContent = '';
+        btnCopyResult.disabled = true;
+        return;
+      }
+      resultBox.textContent = msg;
+      resultBox.classList.remove('empty');
+      resultMeta.textContent = 'heurística local (fallback)';
+      btnCopyResult.disabled = false;
       return;
     }
-    resultBox.textContent = msg;
+    resultBox.textContent = result.full;
     resultBox.classList.remove('empty');
-    resultMeta.textContent = 'heurística local · revise antes de usar · para qualidade de LLM use o prompt';
+    resultMeta.textContent = 'motor local · ' + result.type + (result.scope ? '(' + result.scope + ')' : '') +
+      (result.breaking ? ' · BREAKING' : '') + ' · confiança ~' + Math.round(result.confidence * 100) + '% · revise antes de usar';
     btnCopyResult.disabled = false;
+    if (window.IRNHistory) {
+      IRNHistory.push({ tool: 'commit', title: result.header, content: result.full });
+    }
   });
 
   btnCopyPrompt.addEventListener('click', function () {
@@ -271,7 +286,7 @@
       setTimeout(function () { btnCopyPrompt.textContent = 'copiar prompt para IA'; }, 1500);
       return;
     }
-    var text = promptForAI(diff);
+    var text = (window.IRNCommit && IRNCommit.promptForAI(diff)) || promptForAI(diff);
     navigator.clipboard.writeText(text).then(function () {
       btnCopyPrompt.textContent = 'prompt copiado!';
       setTimeout(function () { btnCopyPrompt.textContent = 'copiar prompt para IA'; }, 1600);

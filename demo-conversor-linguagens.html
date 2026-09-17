@@ -177,6 +177,7 @@
   </div>
 </footer>
 
+<script src="assets/js/ia-history.js?v=20260916v8"></script>
 <script src="assets/js/site-nav.js?v=20260916d" defer></script>
 <script>
 (function () {
@@ -771,6 +772,7 @@
       return;
     }
     show(res.text, 'motor local · ' + from + ' → ' + to + ' · sem rede · revisão recomendada');
+    if (window.IRNHistory) IRNHistory.push({ tool: 'conversor', title: from + ' → ' + to, content: res.text });
   });
 
   btnPreview.addEventListener('click', function () {

@@ -100,6 +100,8 @@
         <input type="number" id="countInput" min="3" max="20" value="8">
       </div>
     </div>
+    <label for="schemaInput" style="margin-top:12px">schema opcional (ex: id:id, name:name, email:email, status:enum:ativo|inativo)</label>
+    <input type="text" id="schemaInput" placeholder="deixe vazio para usar domínio pré-definido" style="width:100%;background:#0c0e0b;border:1px solid var(--border,#2a3028);color:#b8c4a8;font-family:var(--mono,monospace);font-size:12.5px;padding:10px 12px;box-sizing:border-box;margin-bottom:8px">
     <div class="demo-actions">
       <button type="button" class="demo-btn" id="btnGenerate">gerar JSON</button>
       <button type="button" class="demo-btn secondary" id="btnCopyPrompt">copiar prompt para IA</button>
@@ -134,9 +136,27 @@
   </div>
 </footer>
 
+<script src="assets/js/mock-engine.js?v=20260916v8"></script>
+<script src="assets/js/ia-history.js?v=20260916v8"></script>
 <script src="assets/js/site-nav.js?v=20260916d" defer></script>
 <script>
 (function () {
+
+  // Prefer shared engine when available
+  function generateWithEngine() {
+    var countEl = document.getElementById('countInput') || document.getElementById('nRows');
+    var n = countEl ? parseInt(countEl.value, 10) || 5 : 5;
+    var schemaEl = document.getElementById('schemaInput');
+    var schema = schemaEl ? schemaEl.value.trim() : '';
+    var domain = 'vet';
+    var activeChip = document.querySelector('.demo-chip.active, .demo-chip[aria-pressed="true"]');
+    if (activeChip) domain = activeChip.getAttribute('data-domain') || activeChip.dataset.domain || activeChip.textContent.toLowerCase();
+    var descEl = document.getElementById('domainDesc') || document.getElementById('descInput') || document.getElementById('customDesc');
+    var desc = descEl ? descEl.value : '';
+    if (!window.IRNMock) return null;
+    return IRNMock.generate({ domain: domain, count: n, schema: schema, description: desc });
+  }
+
   var firstNames = ['Ana','Bruno','Carla','Diego','Elena','Felipe','Giulia','Hugo','Iris','João','Karen','Lucas','Marina','Nuno','Olívia','Paulo','Rita','Sérgio','Tina','Vitor'];
   var lastNames = ['Silva','Santos','Oliveira','Souza','Lima','Costa','Ferreira','Almeida','Ribeiro','Martins','Carvalho','Rocha','Gomes','Barbosa','Dias'];
   var petNames = ['Thor','Luna','Bob','Mel','Max','Nina','Rex','Maya','Toby','Lola','Zeus','Bela','Simba','Mimi','Apollo'];
@@ -410,6 +430,20 @@ document.addEventListener("DOMContentLoaded",function(){
 <script src="assets/js/supabase-config.js" defer></script>
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script src="assets/js/auth.js" defer></script>
-<script src="assets/js/save-ia-result.js" defer></script>
+<script src="assets/js/save-ia-result.js" defer>
+  // history hook
+  var _btn = document.getElementById('btnGenerate');
+  if (_btn) {
+    _btn.addEventListener('click', function(){
+      setTimeout(function(){
+        var box = document.getElementById('resultBox');
+        if (box && !box.classList.contains('empty') && window.IRNHistory) {
+          IRNHistory.push({ tool: 'mock-data', title: 'mock', content: box.textContent });
+        }
+      }, 100);
+    });
+  }
+
+</script>
 </body>
 </html>

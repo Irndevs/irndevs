@@ -1,58 +1,32 @@
-# IRN Devs IA — v8 Motor Real
+# IRN Devs IA — v8.1 Evolução completa
 
-## O que mudou
+## Motores locais (assets/js/)
 
-### 1. Conversor de linguagens — MOTOR REAL (principal)
-Arquivo: `site/demo-conversor-linguagens.html`
+| Arquivo | Função |
+|---------|--------|
+| `commit-engine.js` | Conventional Commits: tipo, escopo, breaking, body, confiança |
+| `sql-engine.js` | NL (pt) → PostgreSQL / MySQL / MongoDB |
+| `mock-engine.js` | Domínios + **schema livre** (`id:id, email:email, status:enum:a\|b`) |
+| `legacy-engine.js` | Score, smells, segredos, SQL injection, cabeçalho |
+| `ia-history.js` | Histórico unificado em localStorage |
 
-- **Antes**: só montava prompt para colar no ChatGPT/Claude/Cursor.
-- **Agora**: motor de conversão **local no browser** (zero rede) para:
-  - Python → JavaScript
-  - Python → TypeScript
-  - JavaScript → Python
-  - TypeScript → Python
-  - JavaScript → TypeScript (anotações `any` simples)
-  - TypeScript → JavaScript (strip de tipos)
+## Demos interativas
 
-**O que o motor transforma de verdade:**
-- `def` / `async def` → `function` / `async function` / `constructor`
-- classes + `self` → `this`
-- type hints Python → tipos TS (`int`→`number`, `list[str]`→`string[]`, `dict|None`, etc.)
-- `True/False/None`, `and/or/not`
-- f-strings → template literals
-- `if/elif/else`, `for range`, `for in`, `while`
-- `try/except/finally` → `try/catch/finally`
-- `raise` → `throw new Error`
-- `print` → `console.log`
-- docstrings → JSDoc
-- fechamento de blocos por indentação (heurística)
+- `demo-conversor-linguagens.html` — motor Python ⇄ JS ⇄ TS
+- `demo-commit-ia.html` — motor commits reforçado
+- `demo-mock-data.html` — schema opcional + engine
+- `demo-sql.html` — **novo** gerador SQL local
+- `demo-legado.html` — **novo** análise de código legado
+- `ferramenta-checklist.html` — checklist interativo
 
-**Limitações honestas** (listadas na própria UI):
-- list comprehensions complexas, decorators avançados, genéricos profundos → use o botão de **prompt** + LLM
-- imports precisam de ajuste manual (marcados com `// TODO`)
+## Hub `ia.html`
 
-Botão principal: **“converter local (motor real)”**  
-Fallback: “gerar e copiar prompt” (para qualquer par de linguagens).
+- Links para todas as demos com motor local
+- Seção **Histórico local** das ferramentas
+- Textos atualizados (não é só “copiar prompt”)
 
-### 2. Outras ferramentas reforçadas (já tinham lógica local)
+## Como validar
 
-| Ferramenta | Arquivo | Lógica genuína |
-|---|---|---|
-| Commits inteligentes | `demo-commit-ia.html` | Heurísticas no browser: tipo de arquivo, keywords do diff, adições/remoções → Conventional Commits |
-| Mock data | `demo-mock-data.html` | Geradores locais por domínio (vet, e-commerce, SaaS, homelab) com IDs/datas/relações |
-| Checklist | `ferramenta-checklist.html` | Score e geração de checklist interativo (automação / pipeline) |
-| SQL / legado / lab de prompts | `ia.html` | Prompts base + cards atualizados apontando para demos com motor local |
-
-### 3. Hub `ia.html`
-- Card do conversor marcado **MOTOR REAL**
-- Textos de commit e mock atualizados para refletir lógica local
-- Linha de status das demos atualizada
-
-## Como testar
-1. Abra `site/demo-conversor-linguagens.html`
-2. Clique em “ex: Python função”
-3. Clique em **converter local (motor real)**
-4. Veja o TypeScript gerado no browser (sem rede)
-
-## Integração no site completo
-Substitua os arquivos correspondentes no deploy (mesmo caminho sob `site/`).
+1. Abra cada demo e clique no botão principal (gerar/analisar/converter)
+2. Confira que a saída aparece **sem rede**
+3. Em `ia.html` role até o histórico após usar as demos
