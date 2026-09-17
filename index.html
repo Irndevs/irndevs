@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="IRN Devs — Desenvolvimento de Software">
 <meta property="og:description" content="IRN Devs: desenvolvimento de software, automações e análises de dados — produtos e integrações em produção.">
-<link rel="stylesheet" href="assets/css/pages/index.css?v=20260914g">
+<link rel="stylesheet" href="assets/css/pages/index.css?v=20260917h">
   <link rel="stylesheet" href="assets/css/site-nav.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="assets/css/site-nav.css"></noscript>
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
@@ -87,6 +87,105 @@
 }
   </script>
   <link rel="stylesheet" href="assets/css/motion.css">
+  <style>
+    /* ---- ENTREGAMOS / PACOTES / PROCESSO (home reorganizada) ---- */
+    .entregamos-grid, .pacotes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    @media (max-width: 860px) {
+      .entregamos-grid, .pacotes-grid { grid-template-columns: 1fr; }
+    }
+    .entrega-card, .pacote-card {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-line);
+      border-radius: var(--radius);
+      padding: 22px 20px;
+      transition: border-color .2s, transform .15s;
+    }
+    .entrega-card:hover, .pacote-card:hover {
+      border-color: rgba(232,163,61,0.35);
+      transform: translateY(-2px);
+    }
+    .entrega-num, .pacote-num {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--amber);
+      margin-bottom: 8px;
+    }
+    .entrega-card h3, .pacote-card h3 {
+      margin: 0 0 10px;
+      font-size: 17px;
+      font-weight: 650;
+      letter-spacing: -0.01em;
+    }
+    .entrega-card p, .pacote-card p {
+      margin: 0 0 14px;
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+    .entrega-card ul, .pacote-card ul {
+      margin: 0 0 16px;
+      padding-left: 18px;
+      font-size: 13.5px;
+      color: var(--text-dim);
+      line-height: 1.55;
+    }
+    .entrega-card ul li, .pacote-card ul li { margin-bottom: 4px; }
+    .pacote-meta {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--green);
+      margin-bottom: 14px;
+    }
+    .processo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 900px) {
+      .processo-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 520px) {
+      .processo-grid { grid-template-columns: 1fr; }
+    }
+    .processo-step {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-line);
+      border-radius: var(--radius-sm);
+      padding: 18px 16px;
+    }
+    .processo-step .num {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--amber);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .processo-step h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      font-weight: 650;
+    }
+    .processo-step p {
+      margin: 0;
+      font-size: 13.5px;
+      color: var(--text-dim);
+      line-height: 1.45;
+    }
+    .sec-link {
+      margin-top: 20px;
+      font-family: var(--mono);
+      font-size: 13px;
+    }
+    .sec-link a { color: var(--amber); }
+    .proj-grid-limit .proj-card:nth-child(n+7) { display: none; }
+    @media (min-width: 861px) {
+      .proj-grid-limit .proj-card:nth-child(n+7) { display: none; }
+    }
+  </style>
 </head>
 <body>
 <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
@@ -102,8 +201,8 @@
         <h1>Software, automações e dados <span>em produção</span>.</h1>
         <p class="lede">A IRN Devs cria produtos, integra sistemas e transforma dados em decisão — com automações que cortam trabalho manual e stacks que já rodam de verdade.</p>
         <div class="cta-row">
-          <a class="btn primary" href="#projetos">ver projetos →</a>
-          <a class="btn ghost" href="pacotes.html">pacotes</a>
+          <a class="btn primary" href="pacotes.html">ver pacotes →</a>
+          <a class="btn ghost" href="#projetos">projetos reais</a>
           <a class="btn ghost" href="ferramenta-checklist.html">checklist grátis</a>
           <a class="btn ghost" href="contato.html">contato</a>
         </div>
@@ -141,6 +240,105 @@
   </div>
 </div>
 
+<!-- 1. O QUE ENTREGAMOS -->
+<section id="entregamos">
+  <div class="wrap">
+    <div class="sec-head"><span class="amber">$</span> cat entregas.yaml</div>
+    <h2 class="sec-title">O que entregamos</h2>
+    <p class="sec-sub">Três frentes que se combinam em produtos e operações reais.</p>
+    <div class="entregamos-grid">
+      <div class="entrega-card fade-in">
+        <div class="entrega-num">01 · desenvolvimento</div>
+        <h3>Web apps, APIs e SaaS</h3>
+        <p>TypeScript/Node, Python, React/Vite — do MVP à evolução em produção, com arquitetura type-safe e deploy estável.</p>
+        <ul>
+          <li>Apps e APIs em produção</li>
+          <li>Integrações e multi-tenant</li>
+          <li>Handoff documentado</li>
+        </ul>
+        <a class="btn ghost" href="servicos.html#desenvolvimento" style="font-size:12.5px;padding:8px 14px">ver serviços →</a>
+      </div>
+      <div class="entrega-card fade-in">
+        <div class="entrega-num">02 · automações</div>
+        <h3>Fluxos que cortam retrabalho</h3>
+        <p>Bots, webhooks, filas e IA aplicada entre sistemas (formulários, planilhas, ERPs, WhatsApp, e-mail).</p>
+        <ul>
+          <li>Gatilho → ação automatizada</li>
+          <li>Tratamento de erro e logs</li>
+          <li>Horas/semana liberadas</li>
+        </ul>
+        <a class="btn ghost" href="servicos.html#automacoes" style="font-size:12.5px;padding:8px 14px">ver serviços →</a>
+      </div>
+      <div class="entrega-card fade-in">
+        <div class="entrega-num">03 · dados</div>
+        <h3>Dashboards e indicadores</h3>
+        <p>Coleta, transformação e visualização: SQL, pipelines leves e painéis para decisão — uma fonte da verdade.</p>
+        <ul>
+          <li>Inventário de fontes</li>
+          <li>Pipeline de atualização</li>
+          <li>KPIs para ops ou gestão</li>
+        </ul>
+        <a class="btn ghost" href="servicos.html#dados" style="font-size:12.5px;padding:8px 14px">ver serviços →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. PACOTES (oferta clara) -->
+<section id="pacotes">
+  <div class="wrap">
+    <div class="sec-head"><span class="amber">$</span> cat ofertas.yaml</div>
+    <h2 class="sec-title">Pacotes para começar rápido</h2>
+    <p class="sec-sub">Três entradas claras. Escopo fechado — evolução sob medida depois do diagnóstico.</p>
+    <div class="pacotes-grid">
+      <div class="pacote-card fade-in">
+        <div class="pacote-num">01 · desenvolvimento</div>
+        <h3>MVP web</h3>
+        <p>Do zero a um produto usável: API + interface + deploy. Ideal para validar ideia com usuários reais.</p>
+        <ul>
+          <li>Escopo de 1 fluxo principal</li>
+          <li>Backend + frontend modernos</li>
+          <li>Auth básica e dados persistidos</li>
+          <li>Deploy e handoff documentado</li>
+        </ul>
+        <div class="pacote-meta">prazo típico: 2–6 semanas</div>
+        <a class="btn primary" href="contato.html" style="font-size:12.5px;padding:10px 16px">pedir proposta →</a>
+      </div>
+      <div class="pacote-card fade-in">
+        <div class="pacote-num">02 · automações</div>
+        <h3>Automação de processo</h3>
+        <p>Elimina retrabalho entre sistemas: formulários, planilhas, ERPs, WhatsApp, e-mail e webhooks.</p>
+        <ul>
+          <li>Mapeamento do processo atual</li>
+          <li>Fluxo automatizado (gatilho → ação)</li>
+          <li>Tratamento de erro e logs</li>
+          <li>Checklist de operação</li>
+        </ul>
+        <div class="pacote-meta">ganho típico: horas/semana liberadas</div>
+        <a class="btn primary" href="contato.html" style="font-size:12.5px;padding:10px 16px">pedir proposta →</a>
+      </div>
+      <div class="pacote-card fade-in">
+        <div class="pacote-num">03 · dados</div>
+        <h3>Dashboard de indicadores</h3>
+        <p>Do dado bruto ao painel: centraliza fontes, define KPIs e entrega visão para decisão.</p>
+        <ul>
+          <li>Inventário de fontes e qualidade</li>
+          <li>Pipeline de atualização</li>
+          <li>Dashboard (ops ou gestão)</li>
+          <li>Documentação dos indicadores</li>
+        </ul>
+        <div class="pacote-meta">objetivo: 1 fonte da verdade</div>
+        <a class="btn primary" href="contato.html" style="font-size:12.5px;padding:10px 16px">pedir proposta →</a>
+      </div>
+    </div>
+    <p class="sec-link">
+      <a href="pacotes.html">detalhes dos pacotes →</a>
+      · <a href="ferramenta-checklist.html">checklist grátis antes de fechar escopo →</a>
+    </p>
+  </div>
+</section>
+
+<!-- 3. PROJETOS EM PRODUÇÃO -->
 <section id="projetos">
   <div class="wrap">
     <div class="sec-head"><span class="amber">$</span> ls -la projetos/ --status</div>
@@ -230,42 +428,73 @@
   </div>
 </section>
 
-
+<!-- 4. RESULTADOS -->
 <section id="cases">
   <div class="wrap">
     <div class="sec-head"><span class="amber">$</span> cases --resumo</div>
     <h2 class="sec-title">Resultados</h2>
     <p class="sec-sub">Números ilustrativos com base em entregas típicas — substitua pelos seus cases reais com autorização.</p>
     <div class="tools-grid">
-      <div class="tool">
+      <div class="tool fade-in">
         <div class="tool-name">Automação de atendimento</div>
         <div class="tool-desc"><strong>~12 h/semana</strong> a menos de trabalho manual em agenda e confirmações.<br><strong>Antes:</strong> ida e volta no WhatsApp.<br><strong>Depois:</strong> fluxo assistido + registro centralizado (ex.: ZapAgendador IA).</div>
       </div>
-      <div class="tool">
+      <div class="tool fade-in">
         <div class="tool-name">Dados operacionais</div>
         <div class="tool-desc"><strong>1 painel</strong> no lugar de planilhas espalhadas.<br><strong>Antes:</strong> indicadores em 5+ arquivos.<br><strong>Depois:</strong> visão única atualizada para decisão de ops/gestão.</div>
       </div>
-      <div class="tool">
+      <div class="tool fade-in">
         <div class="tool-name">Produto em produção</div>
         <div class="tool-desc"><strong>API type-safe</strong> e deploy contínuo.<br><strong>Antes:</strong> evolução ad hoc.<br><strong>Depois:</strong> stack estável em cloud (SaaS multi-tenant).</div>
       </div>
-      <div class="tool">
+      <div class="tool fade-in">
         <div class="tool-name">Cluster k3s + GitOps</div>
         <div class="tool-desc"><strong>Commit → produção</strong> com fluxo repetível.<br><strong>Antes:</strong> deploy manual e pouco rastreável.<br><strong>Depois:</strong> ArgoCD, CI/CD e runbooks para operação.</div>
       </div>
-      <div class="tool">
+      <div class="tool fade-in">
         <div class="tool-name">SaaS em produção</div>
         <div class="tool-desc"><strong>Stack type-safe</strong> e operação estável em cloud.<br><strong>Antes:</strong> evolução ad hoc da API.<br><strong>Depois:</strong> produto multi-tenant com deploy controlado.</div>
       </div>
     </div>
-    <p class="inline-style-6">
-      <a href="servicos.html" class="inline-style-7">ver serviços →</a>
-      · <a href="como-contratar.html" class="inline-style-8">como contratar →</a>
+  </div>
+</section>
+
+<!-- 5. COMO TRABALHAMOS -->
+<section id="processo">
+  <div class="wrap">
+    <div class="sec-head"><span class="amber">$</span> process --from diagnostico --to entrega</div>
+    <h2 class="sec-title">Como trabalhamos</h2>
+    <p class="sec-sub">Fluxo padrão. Prazos e entregáveis são fechados na proposta.</p>
+    <div class="processo-grid">
+      <div class="processo-step fade-in">
+        <div class="num">01</div>
+        <h3>Diagnóstico</h3>
+        <p>Entendimento do problema, dados disponíveis e objetivos de negócio. Escopo de software, automação ou analytics.</p>
+      </div>
+      <div class="processo-step fade-in">
+        <div class="num">02</div>
+        <h3>Proposta</h3>
+        <p>Escopo, premissas, entregáveis e janelas de trabalho. Sem surpresa no meio do caminho.</p>
+      </div>
+      <div class="processo-step fade-in">
+        <div class="num">03</div>
+        <h3>Implementação</h3>
+        <p>Configuração, automação e validação em ambiente controlado antes de promover a produção.</p>
+      </div>
+      <div class="processo-step fade-in">
+        <div class="num">04</div>
+        <h3>Entrega & handoff</h3>
+        <p>Código, documentação, treinamento rápido e transferência para o time responsável.</p>
+      </div>
+    </div>
+    <p class="sec-link">
+      <a href="como-contratar.html">como contratar →</a>
+      · <a href="servicos.html">serviços completos →</a>
     </p>
   </div>
 </section>
 
-
+<!-- 6. ARQUITETURA -->
 <section id="arquitetura">
   <div class="wrap">
     <div class="sec-head"><span class="amber">$</span> architecture --overview</div>
@@ -275,18 +504,21 @@
   </div>
 </section>
 
+<!-- 7. FERRAMENTAS -->
 <section id="ferramentas">
   <div class="wrap">
     <div class="sec-head"><span class="amber">$</span> ls ferramentas/</div>
     <h2 class="sec-title">Ferramentas gratuitas</h2>
     <p class="sec-sub">Dois caminhos: acelerar o código com IA, ou resolver o dia a dia com utilitários prontos.</p>
     <div class="tools-grid">
-      <div class="tool"><div class="tool-name"><a href="ia.html">Ferramentas de IA →</a></div><div class="tool-desc">Gerador de SQL, explorador de código legado, commits inteligentes, mock data — motor local, pra dev.</div></div>
-      <div class="tool"><div class="tool-name"><a href="ferramentas.html">Ferramentas grátis →</a></div><div class="tool-desc">Contratos, precificação, conversor de arquivos, QR Code, MEI, senha segura, vagas, produtividade, jogos.</div></div>
+      <div class="tool fade-in"><div class="tool-name"><a href="ia.html">Ferramentas de IA →</a></div><div class="tool-desc">Gerador de SQL, explorador de código legado, commits inteligentes, mock data — motor local, pra dev.</div></div>
+      <div class="tool fade-in"><div class="tool-name"><a href="ferramentas.html">Ferramentas grátis →</a></div><div class="tool-desc">Contratos, precificação, conversor de arquivos, QR Code, MEI, senha segura, vagas, produtividade, jogos.</div></div>
+      <div class="tool fade-in"><div class="tool-name"><a href="ferramenta-checklist.html">Checklist grátis →</a></div><div class="tool-desc">Diagnóstico rápido antes de fechar escopo de software, automação ou dashboard.</div></div>
     </div>
   </div>
 </section>
 
+<!-- 8. STACK -->
 <section id="skills">
   <div class="wrap">
     <div class="sec-head"><span class="amber">$</span> cat skills.yaml</div>
@@ -305,9 +537,10 @@
 
 <div class="wrap cta-final" id="contato">
   <h2>Vamos trabalhar juntos?</h2>
-  <p>Abertos a novos projetos em desenvolvimento, automações e análises de dados.</p>
+  <p>Abertos a novos projetos em desenvolvimento, automações e análises de dados. Pacotes com escopo fechado ou sob medida após diagnóstico.</p>
   <div class="inline-style-10">
     <a class="btn primary" href="contato.html">fale conosco</a>
+    <a class="btn ghost" href="pacotes.html">ver pacotes</a>
     <a class="btn ghost" href="servicos.html">ver serviços</a>
   </div>
 </div>
@@ -330,10 +563,10 @@
 const siteSearch = document.getElementById('siteSearch');
   const siteSearchCount = document.getElementById('siteSearchCount');
   const siteSearchPages = document.getElementById('siteSearchPages');
-  const searchableItems = document.querySelectorAll('.proj, .tool, .skills-table tr');
+  const searchableItems = document.querySelectorAll('.proj-card, .tool, .skills-table tr, .entrega-card, .pacote-card, .processo-step');
   const pageIndex = [
     { q: 'início home index', href: 'index.html', label: 'Início' },
-    { q: 'serviços services infra kubernetes observabilidade', href: 'servicos.html', label: 'Serviços' },
+    { q: 'serviços services infra devops observabilidade', href: 'servicos.html', label: 'Serviços' },
     { q: 'como contratar proposta', href: 'como-contratar.html', label: 'Como contratar' },
     { q: 'pacotes mvp automação dashboard preço', href: 'pacotes.html', label: 'Pacotes' },
     { q: 'ia inteligência artificial ferramentas prompts rag agentes', href: 'ia.html', label: 'Ferramentas de IA' },
@@ -351,7 +584,7 @@ const siteSearch = document.getElementById('siteSearch');
     { q: 'privacidade lgpd', href: 'privacidade.html', label: 'Privacidade' },
     { q: 'docker observabilidade stack', href: 'artigo-observabilidade-docker.html', label: 'Artigo: Observabilidade Docker' },
     { q: 'proxmox homelab', href: 'artigo-proxmox-homelab.html', label: 'Artigo: Proxmox' },
-    { q: 'k3s kubernetes', href: 'artigo-k3s-homelab.html', label: 'Artigo: k3s' },
+    { q: 'k3s devops', href: 'artigo-k3s-homelab.html', label: 'Artigo: k3s' },
     { q: 'hardening linux ssh ufw', href: 'artigo-hardening-linux.html', label: 'Artigo: Hardening Linux' },
     { q: 'aws cloud', href: 'artigo-aws-cloud.html', label: 'Artigo: AWS' },
     { q: 'opentelemetry otel', href: 'artigo-opentelemetry.html', label: 'Artigo: OpenTelemetry' },
