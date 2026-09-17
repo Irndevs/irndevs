@@ -363,16 +363,45 @@
     if (res.error) throw res.error;
   }
 
-  // ---------- Admin (requires is_admin on profile; RLS still limits to own data unless using service role) ----------
-  // Note: full admin across all users requires Edge Function with service_role.
-  // Here we expose helpers that work when the logged user has is_admin=true AND policies allow.
+  // ---------- Admin (requires is_admin on profile; policies em supabase/admin-policies.sql) ----------
   async function adminListAllOrders() {
     var sb = getClient();
     if (!(await isAdmin())) throw new Error('Acesso admin necessário.');
-    // Without service role, RLS still restricts. Document that admin needs Edge Function.
     var res = await sb.from('orders').select('*, profiles(email, full_name)').order('created_at', { ascending: false });
     if (res.error) throw res.error;
     return res.data || [];
+  }
+
+  async function adminUpdateOrderStatus(id, status, extra) {
+    var sb = getClient();
+    if (!(await isAdmin())) throw new Error('Acesso admin necessário.');
+    var patch = Object.assign({ status: status }, extra || {});
+    var res = await sb.from('orders').update(patch).eq('id', id).select().single();
+    if (res.error) throw res.error;
+    return res.data;
+  }
+
+  async function adminListAllQuotes() {
+    var sb = getClient();
+    if (!(await isAdmin())) throw new Error('Acesso admin necessário.');
+    var res = await sb.from('quotes').select('*, profiles(email, full_name)').order('created_at', { ascending: false });
+    if (res.error) throw res.error;
+    return res.data || [];
+  }
+
+  async function adminRespondQuote(id, fields) {
+    var sb = getClient();
+    if (!(await isAdmin())) throw new Error('Acesso admin necessário.');
+    var patch = {
+      admin_response: fields.admin_response || null,
+      admin_amount_cents: fields.admin_amount_cents != null ? fields.admin_amount_cents : null,
+      admin_deadline: fields.admin_deadline || null,
+      status: fields.status || 'respondido',
+      responded_at: new Date().toISOString()
+    };
+    var res = await sb.from('quotes').update(patch).eq('id', id).select().single();
+    if (res.error) throw res.error;
+    return res.data;
   }
 
   // ---------- Guards ----------
@@ -473,6 +502,9 @@
     listIaResults: listIaResults,
     deleteIaResult: deleteIaResult,
     adminListAllOrders: adminListAllOrders,
+    adminUpdateOrderStatus: adminUpdateOrderStatus,
+    adminListAllQuotes: adminListAllQuotes,
+    adminRespondQuote: adminRespondQuote,
     requireAuth: requireAuth,
     paintNavAuth: paintNavAuth,
     setMsg: setMsg

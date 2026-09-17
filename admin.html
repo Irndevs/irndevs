@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin — IRN Devs</title>
+<meta name="description" content="Painel administrativo interno da IRN Devs — orçamentos e pedidos de todos os clientes. Acesso restrito.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/dash-shell.css">
@@ -13,25 +14,29 @@
 <div class="dash-shell">
   <aside class="dash-side">
     <div class="dash-side-brand"><span>$</span> admin</div>
-    <a class="active" href="admin.html">pedidos (visão)</a>
+    <a class="active" href="admin.html">pedidos e orçamentos</a>
     <a href="area-cliente.html">portal cliente</a>
     <a href="index.html">← site</a>
   </aside>
   <main class="dash-main">
-    <h1 class="dash-h1">Painel admin (mínimo)</h1>
-    <p class="dash-lede">Visão limitada pelo RLS. Para ver <strong>todos</strong> os clientes, use uma Edge Function com <code>service_role</code> (não exponha no front).</p>
+    <h1 class="dash-h1">Painel admin</h1>
+    <p class="dash-lede">Orçamentos e pedidos de todos os clientes (liberado por policy de admin no Supabase — veja <code>supabase/admin-policies.sql</code>).</p>
     <div class="dash-card" style="margin-bottom:16px">
       <div class="dash-card-title">como ativar admin</div>
       <ol style="color:var(--dash-dim);font-size:14px;line-height:1.7;padding-left:18px">
         <li>No Supabase SQL: <code>update profiles set is_admin = true where email = 'seu@email.com';</code></li>
-        <li>Crie policies admin ou Edge Functions com service_role para listar todos os orders/quotes</li>
+        <li>Rode <code>supabase/admin-policies.sql</code> no SQL Editor (uma vez só)</li>
         <li>Configure Storage bucket <code>order-files</code> (privado) + policies</li>
         <li>Para e-mail real: conecte Resend/SendGrid via Edge Function ao inserir em <code>notifications</code></li>
       </ol>
     </div>
+    <div class="dash-card" style="margin-bottom:16px">
+      <div class="dash-card-title">orçamentos</div>
+      <div id="quotesList"><p style="color:var(--dash-faint)">Carregando…</p></div>
+    </div>
     <div class="dash-card">
-      <div class="dash-card-title">seus pedidos (como admin logado)</div>
-      <div id="list"><p style="color:var(--dash-faint)">Carregando…</p></div>
+      <div class="dash-card-title">pedidos de todos os clientes</div>
+      <div id="ordersList"><p style="color:var(--dash-faint)">Carregando…</p></div>
     </div>
   </main>
 </div>
@@ -40,26 +45,127 @@
 <script src="assets/js/auth.js" defer></script>
 <script src="assets/js/auth-gates.js" defer></script>
 <script>
-document.addEventListener('DOMContentLoaded', async function () {
-  if (!(await IRNAuthGates.guardPage())) return;
-  var admin = false;
-  try { admin = await IRNAuth.isAdmin(); } catch (e) {}
-  var box = document.getElementById('list');
-  if (!admin) {
-    box.innerHTML = '<p style="color:#e88">Seu perfil não tem is_admin=true. Rode o SQL indicado acima.</p>';
-    return;
+(function () {
+  var ORDER_STATUSES = ['recebido', 'em_analise', 'em_execucao', 'aguardando_cliente', 'entregue', 'cancelado'];
+  var fieldStyle = 'background:var(--dash-panel);border:1px solid var(--dash-border);color:var(--dash-text);' +
+    'border-radius:6px;padding:8px 10px;font-family:var(--dash-sans);font-size:13.5px';
+
+  function reaisToCents(v) {
+    var n = parseFloat(String(v).replace(',', '.'));
+    return isNaN(n) ? null : Math.round(n * 100);
   }
-  try {
-    var rows = await IRNAuth.listOrders();
-    if (!rows.length) { box.innerHTML = '<p style="color:var(--dash-faint)">Nenhum pedido na sua conta.</p>'; return; }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  function renderQuotes(rows, box) {
+    if (!rows.length) { box.innerHTML = '<p style="color:var(--dash-faint)">Nenhum orçamento no sistema ainda.</p>'; return; }
+    var pendentes = rows.filter(function (q) { return q.status === 'enviado' || q.status === 'em_analise'; });
+    var outros = rows.filter(function (q) { return q.status !== 'enviado' && q.status !== 'em_analise'; });
+
+    var html = '';
+    if (pendentes.length) {
+      html += pendentes.map(function (q) {
+        var cliente = (q.profiles && (q.profiles.full_name || q.profiles.email)) || 'cliente desconhecido';
+        return '<div class="dash-list-item" data-quote-row="' + q.id + '">' +
+          '<div class="dash-list-head">#' + q.id + ' · ' + esc(q.title) + ' · <span style="color:var(--dash-amber)">' + q.status + '</span></div>' +
+          '<div class="dash-list-body" style="color:var(--dash-faint)">' + esc(cliente) + (q.notes ? '<br>' + esc(q.notes) : '') + '</div>' +
+          '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">' +
+          '<input type="number" step="0.01" placeholder="valor (R$)" class="q-amount" style="' + fieldStyle + ';width:120px">' +
+          '<input type="text" placeholder="prazo (ex: 10 dias úteis)" class="q-deadline" style="' + fieldStyle + ';flex:1;min-width:160px">' +
+          '</div>' +
+          '<textarea placeholder="resposta pro cliente" class="q-response" style="' + fieldStyle + ';width:100%;margin-top:8px;min-height:60px;resize:vertical"></textarea>' +
+          '<button type="button" class="dash-btn" data-send-quote="' + q.id + '" style="margin-top:8px">enviar resposta</button>' +
+          '</div>';
+      }).join('');
+    }
+    if (outros.length) {
+      html += outros.map(function (q) {
+        var cliente = (q.profiles && (q.profiles.full_name || q.profiles.email)) || 'cliente desconhecido';
+        return '<div class="dash-list-item"><div class="dash-list-head">#' + q.id + ' · ' + esc(q.title) + ' · ' + q.status + '</div>' +
+          '<div class="dash-list-body" style="color:var(--dash-faint)">' + esc(cliente) +
+          (q.admin_response ? '<br>resposta: ' + esc(q.admin_response) : '') + '</div></div>';
+      }).join('');
+    }
+    box.innerHTML = html || '<p style="color:var(--dash-faint)">Nenhum orçamento pendente.</p>';
+
+    box.addEventListener('click', async function (e) {
+      var btn = e.target.closest('[data-send-quote]');
+      if (!btn) return;
+      var id = btn.getAttribute('data-send-quote');
+      var row = box.querySelector('[data-quote-row="' + id + '"]');
+      var amount = reaisToCents(row.querySelector('.q-amount').value);
+      var deadline = row.querySelector('.q-deadline').value.trim();
+      var response = row.querySelector('.q-response').value.trim();
+      if (!response) { alert('Escreva uma resposta pro cliente antes de enviar.'); return; }
+      btn.disabled = true; btn.textContent = 'enviando…';
+      try {
+        await IRNAuth.adminRespondQuote(id, { admin_response: response, admin_amount_cents: amount, admin_deadline: deadline, status: 'respondido' });
+        loadQuotes();
+      } catch (err) {
+        alert('Erro ao enviar: ' + (err.message || err));
+        btn.disabled = false; btn.textContent = 'enviar resposta';
+      }
+    });
+  }
+
+  function renderOrders(rows, box) {
+    if (!rows.length) { box.innerHTML = '<p style="color:var(--dash-faint)">Nenhum pedido no sistema ainda.</p>'; return; }
     box.innerHTML = rows.map(function (r) {
-      return '<div class="dash-list-item"><div class="dash-list-head">#' + r.id + ' · ' + r.status +
-        '</div><div class="dash-list-body">' + (r.title||'') + '<br><a href="pedido.html?id=' + r.id + '">abrir →</a></div></div>';
+      var cliente = (r.profiles && (r.profiles.full_name || r.profiles.email)) || 'cliente desconhecido';
+      var options = ORDER_STATUSES.map(function (s) {
+        return '<option value="' + s + '"' + (s === r.status ? ' selected' : '') + '>' + s + '</option>';
+      }).join('');
+      return '<div class="dash-list-item"><div class="dash-list-head">#' + r.id + ' · ' + esc(r.title) + '</div>' +
+        '<div class="dash-list-body" style="color:var(--dash-faint)">' + esc(cliente) + '<br><a href="pedido.html?id=' + r.id + '">abrir →</a></div>' +
+        '<div style="display:flex;gap:8px;margin-top:10px;align-items:center">' +
+        '<select class="o-status" style="' + fieldStyle + '">' + options + '</select>' +
+        '<button type="button" class="dash-btn ghost" data-save-order="' + r.id + '">salvar status</button>' +
+        '</div></div>';
     }).join('');
-  } catch (e) {
-    box.innerHTML = '<p style="color:#e88">' + (e.message||e) + '</p>';
+
+    box.addEventListener('click', async function (e) {
+      var btn = e.target.closest('[data-save-order]');
+      if (!btn) return;
+      var id = btn.getAttribute('data-save-order');
+      var select = btn.parentElement.querySelector('.o-status');
+      btn.disabled = true; btn.textContent = 'salvando…';
+      try {
+        await IRNAuth.adminUpdateOrderStatus(id, select.value);
+        btn.textContent = 'salvo ✓';
+        setTimeout(function () { btn.disabled = false; btn.textContent = 'salvar status'; }, 1500);
+      } catch (err) {
+        alert('Erro ao salvar: ' + (err.message || err));
+        btn.disabled = false; btn.textContent = 'salvar status';
+      }
+    });
   }
-});
+
+  var quotesBox, ordersBox;
+  async function loadQuotes() {
+    quotesBox.innerHTML = '<p style="color:var(--dash-faint)">Carregando…</p>';
+    try { renderQuotes(await IRNAuth.adminListAllQuotes(), quotesBox); }
+    catch (e) { quotesBox.innerHTML = '<p style="color:#e88">' + (e.message || e) + '</p>'; }
+  }
+  async function loadOrders() {
+    ordersBox.innerHTML = '<p style="color:var(--dash-faint)">Carregando…</p>';
+    try { renderOrders(await IRNAuth.adminListAllOrders(), ordersBox); }
+    catch (e) { ordersBox.innerHTML = '<p style="color:#e88">' + (e.message || e) + '</p>'; }
+  }
+
+  document.addEventListener('DOMContentLoaded', async function () {
+    if (!(await IRNAuthGates.guardPage())) return;
+    quotesBox = document.getElementById('quotesList');
+    ordersBox = document.getElementById('ordersList');
+    var admin = false;
+    try { admin = await IRNAuth.isAdmin(); } catch (e) {}
+    if (!admin) {
+      var msg = '<p style="color:#e88">Seu perfil não tem is_admin=true. Rode o SQL indicado acima.</p>';
+      quotesBox.innerHTML = msg; ordersBox.innerHTML = '';
+      return;
+    }
+    loadQuotes();
+    loadOrders();
+  });
+})();
 </script>
 </body>
 </html>

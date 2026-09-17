@@ -189,6 +189,16 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://irndevs.com/cursos.html</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://irndevs.com/cursos.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://irndevs.com/cursos.html"/>
+  </url>
+  <url><loc>https://irndevs.com/orcamentos.html</loc><lastmod>2026-09-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://irndevs.com/ferramentas.html</loc><lastmod>2026-09-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url>
     <loc>https://irndevs.com/certificado-python.html</loc>
     <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
@@ -242,6 +252,14 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url><loc>https://irndevs.com/curso-python-modulo-1.html</loc><lastmod>2026-09-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://irndevs.com/curso-python-modulo-2.html</loc><lastmod>2026-09-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://irndevs.com/curso-python-modulo-3.html</loc><lastmod>2026-09-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://irndevs.com/curso-python-modulo-4.html</loc><lastmod>2026-09-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://irndevs.com/curso-python-modulo-5.html</loc><lastmod>2026-09-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://irndevs.com/curso-python-modulo-6.html</loc><lastmod>2026-09-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://irndevs.com/curso-python-modulo-7.html</loc><lastmod>2026-09-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://irndevs.com/curso-python-modulo-8.html</loc><lastmod>2026-09-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url>
     <loc>https://irndevs.com/certificado-docker.html</loc>
     <lastmod>2026-09-16</lastmod>
@@ -289,6 +307,8 @@
 
   <url><loc>https://irndevs.com/artigo-hybrid-search.html</loc><lastmod>2026-09-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://irndevs.com/demo-mock-data.html</loc><lastmod>2026-09-16</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://irndevs.com/demo-legado.html</loc><lastmod>2026-09-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://irndevs.com/demo-sql.html</loc><lastmod>2026-09-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 
   <url><loc>https://irndevs.com/artigo-agentes-langchain.html</loc><lastmod>2026-09-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://irndevs.com/demo-commit-ia.html</loc><lastmod>2026-09-16</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
