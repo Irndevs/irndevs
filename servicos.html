@@ -50,7 +50,7 @@
 <div class="wrap page-head">
   <div class="sec-head"><span class="amber">$</span> cat servicos.yaml</div>
   <h1>Serviços</h1>
-  <p>A IRN Devs entrega software, automações e análises de dados — do diagnóstico à solução em produção, com handoff claro.</p>
+  <p>A IRN Devs entrega software, automações e análises de dados — do diagnóstico à solução em produção, com handoff claro.</p><p class="inline-style-9">Não sabe qual frente faz sentido? <a href="diagnostico.html">Comece por um diagnóstico gratuito de 30 minutos</a>. Respondemos em até 1 dia útil.</p><p class="inline-style-9">Não sabe qual frente faz sentido? <a href="diagnostico.html">Comece por um diagnóstico gratuito de 30 minutos</a>. Respondemos em até 1 dia útil.</p>
 </div>
 
 <section>
@@ -59,15 +59,15 @@
     <h2 class="sec-title">O que entregamos</h2>
     <p class="sec-sub">Três frentes que se combinam em produtos e operações reais.</p>
     <div class="svc-grid">
-      <div class="svc">
+      <div class="svc" id="desenvolvimento">
         <h3>desenvolvimento</h3>
         <p>Web apps, APIs, SaaS e integrações. TypeScript/Node, Python, React/Vite — do MVP à evolução em produção.</p>
       </div>
-      <div class="svc">
+      <div class="svc" id="automacoes">
         <h3>automações</h3>
         <p>Fluxos entre sistemas, bots, webhooks, filas e IA aplicada para reduzir trabalho manual e erros operacionais.</p>
       </div>
-      <div class="svc">
+      <div class="svc" id="dados">
         <h3>análises de dados</h3>
         <p>Coleta, transformação e visualização: SQL, pipelines leves, dashboards e indicadores para decisão.</p>
       </div>
@@ -99,7 +99,7 @@
   <div class="wrap">
     <div class="sec-head"><span class="amber">$</span> cases --resumo</div>
     <h2 class="sec-title">Cases (resumo)</h2>
-    <p class="sec-sub">Exemplos do tipo de resultado que buscamos em cada entrega.</p>
+    <p class="sec-sub">Exemplos do tipo de entrega e impacto que buscamos. Os resultados publicados devem ser verificáveis e podem ser anonimizados.</p>
     <div class="case">
       <div class="tag">saas · agendamento</div>
       <h3>ZapAgendador IA</h3>
@@ -161,8 +161,44 @@
 <div class="wrap cta-final">
   <h2>Próximo passo</h2>
   <p>Conte o problema de infraestrutura. Retornamos com enquadramento de escopo.</p>
-  <a class="btn primary" href="contato.html">falar com a IRN Devs</a>
+  <a class="btn primary" href="diagnostico.html">agendar diagnóstico gratuito</a>
 </div>
+
+
+<section id="faq" class="faq-section" aria-labelledby="faq-title">
+  <div class="wrap faq-wrap">
+    <h2 id="faq-title">Perguntas frequentes</h2>
+    <details class="faq-item">
+      <summary class="faq-q">Quanto tempo leva um projeto?</summary>
+      <p class="faq-a">MVPs em 2–4 semanas. Projetos maiores seguem cronograma após o briefing e alinhamento de escopo.</p>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Vocês trabalham com quê?</summary>
+      <p class="faq-a">Software, automações Python, APIs, Docker/k3s, observabilidade, dados e integrações em produção.</p>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Atendem remotamente?</summary>
+      <p class="faq-a">Sim. Todo o fluxo (briefing, execução, handoff e suporte) é remoto, com canais claros de comunicação.</p>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Como funciona o suporte após a entrega?</summary>
+      <p class="faq-a">Incluímos período de estabilização e documentação. Suporte contínuo ou plantão pode entrar no contrato conforme a necessidade.</p>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Como contratar?</summary>
+      <p class="faq-a">Pelo <a href="contato.html">formulário de contato</a> ou pela página <a href="como-contratar.html">como contratar</a>. Respondemos com enquadramento de escopo.</p>
+    </details>
+  </div>
+</section>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Quanto tempo leva um projeto?","acceptedAnswer":{"@type":"Answer","text":"MVPs em 2–4 semanas. Projetos maiores seguem cronograma após o briefing e alinhamento de escopo."}},
+{"@type":"Question","name":"Vocês trabalham com quê?","acceptedAnswer":{"@type":"Answer","text":"Software, automações Python, APIs, Docker/k3s, observabilidade, dados e integrações em produção."}},
+{"@type":"Question","name":"Atendem remotamente?","acceptedAnswer":{"@type":"Answer","text":"Sim. Todo o fluxo (briefing, execução, handoff e suporte) é remoto, com canais claros de comunicação."}},
+{"@type":"Question","name":"Como funciona o suporte após a entrega?","acceptedAnswer":{"@type":"Answer","text":"Incluímos período de estabilização e documentação. Suporte contínuo ou plantão pode entrar no contrato conforme a necessidade."}},
+{"@type":"Question","name":"Como contratar?","acceptedAnswer":{"@type":"Answer","text":"Pelo formulário de contato ou pela página como contratar. Respondemos com enquadramento de escopo."}}
+]}
+</script>
 
 <footer class="site-footer-v2" role="contentinfo">
   <div class="wrap footer-grid">
@@ -217,33 +253,7 @@
     </div>
   </div>
 </footer>
-<script src="assets/js/site-nav.js?v=20260917a" defer></script>
-
-<section id="faq">
-  <div class="wrap inline-style-1">
-    <h2>Perguntas frequentes</h2>
-    <details class="inline-style-2">
-      <summary class="inline-style-3">Quanto tempo leva um projeto?</summary>
-      <p class="inline-style-4">MVPs em 2–4 semanas. Projetos maiores seguem cronograma após briefing.</p>
-    </details>
-    <details class="inline-style-5">
-      <summary class="inline-style-6">Vocês trabalham com quê?</summary>
-      <p class="inline-style-7">Software, automações Python, APIs, Docker/k3s, observabilidade e dados.</p>
-    </details>
-    <details class="inline-style-8">
-      <summary class="inline-style-9">Como contratar?</summary>
-      <p class="inline-style-10">Pelo formulário de contato ou página <a href="como-contratar.html" class="inline-style-11">como contratar</a>.</p>
-    </details>
-  </div>
-</section>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"Quanto tempo leva um projeto?","acceptedAnswer":{"@type":"Answer","text":"MVPs em 2–4 semanas. Projetos maiores seguem cronograma após briefing."}},
-{"@type":"Question","name":"Vocês trabalham com quê?","acceptedAnswer":{"@type":"Answer","text":"Software, automações Python, APIs, Docker/k3s, observabilidade e dados."}},
-{"@type":"Question","name":"Como contratar?","acceptedAnswer":{"@type":"Answer","text":"Pelo formulário de contato ou página como contratar."}}
-]}
-</script>
-
-  <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<script src="assets/js/site-nav.js?v=20260917d" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 </body>
 </html>

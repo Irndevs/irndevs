@@ -65,7 +65,7 @@
 <div class="wrap page-head">
   <div class="sec-head"><span class="amber">$</span> cat contato.yaml</div>
   <h1>Entre em Contato</h1>
-  <p>A IRN Devs está aberta a projetos de desenvolvimento, automações e análises de dados.</p>
+  <p>Conte o problema e nós ajudamos a enquadrar o próximo passo. Para uma conversa inicial mais objetiva, <a href="diagnostico.html">conheça o diagnóstico gratuito de 30 minutos</a>.</p><p class="inline-style-9"><strong>Prazo de resposta:</strong> retornamos em até 1 dia útil.</p>
 </div>
 
 <div class="wrap grid">
@@ -104,7 +104,7 @@
 
     <div class="status-box">
       <div class="row"><span class="dot"></span>disponível para oportunidades</div>
-      <p>Disponível para projetos de infraestrutura.</p>
+      <p>Disponível para projetos de software, automação, dados e infraestrutura. Respondemos em até 1 dia útil.</p>
     </div>
 
     <div class="social-row">
@@ -117,7 +117,7 @@
 
   <div class="term-form">
     <div class="sec-head"><span class="amber">$</span> ./enviar-mensagem.sh</div>
-    <div class="success-message" id="successMessage">✅ mensagem enviada — a IRN Devs retorna em breve.</div>
+    <div class="success-message" id="successMessage">✅ mensagem enviada — retornaremos em até 1 dia útil para alinhar o próximo passo.</div>
     <form id="contactForm" action="https://formsubmit.co/contato@irndevs.com" method="POST" novalidate>
       <input type="hidden" name="_subject" value="IRN Devs — contato pelo site">
       <input type="hidden" name="_captcha" value="true">
@@ -147,8 +147,30 @@
           <option value="auto">Observabilidade</option>
           <option value="dados">análises de dados</option>
           <option value="cloud">Cloud (AWS)</option>
+          <option value="Diagnostico gratuito">Diagnóstico gratuito de 30 minutos</option>
           <option value="outro">Outro</option>
         </select>
+      </div>
+      <div class="frow">
+        <div class="fgroup">
+          <label for="timeline" class="flabel">prazo desejado</label>
+          <select id="timeline" name="timeline" class="fselect">
+            <option value="">selecione se souber</option>
+            <option value="Sem urgência">Sem urgência</option>
+            <option value="Próximos 30 dias">Próximos 30 dias</option>
+            <option value="Próximos 90 dias">Próximos 90 dias</option>
+            <option value="Urgente">Preciso avaliar com urgência</option>
+          </select>
+        </div>
+        <div class="fgroup">
+          <label for="budget" class="flabel">faixa de investimento (opcional)</label>
+          <select id="budget" name="budget" class="fselect">
+            <option value="">prefiro conversar primeiro</option>
+            <option value="Até R$ 5 mil">Até R$ 5 mil</option>
+            <option value="R$ 5 mil a R$ 15 mil">R$ 5 mil a R$ 15 mil</option>
+            <option value="Acima de R$ 15 mil">Acima de R$ 15 mil</option>
+          </select>
+        </div>
       </div>
       <div class="fgroup">
         <label for="message" class="flabel">mensagem *</label>
@@ -263,7 +285,11 @@
         'Automação de processo': 'Olá, IRN Devs.\n\nTenho interesse no pacote Automação de processo.\n\nProcesso atual (passos manuais):\n-\n\nSistemas envolvidos:\n-\n\nVolume aproximado (ex.: N casos/semana):\n-\n',
         'Dashboard de indicadores': 'Olá, IRN Devs.\n\nTenho interesse no pacote Dashboard de indicadores.\n\nFontes de dados:\n-\n\nIndicadores que preciso ver:\n-\n\nQuem usa o painel:\n-\n',
         'Checklist automacao': 'Olá, IRN Devs.\n\nGerei o checklist de automação no site e gostaria de ajuda para implementar os itens pendentes.\n\n(Cole aqui o texto do checklist, se quiser.)\n\n',
-        'Checklist dados': 'Olá, IRN Devs.\n\nGerei o checklist de pipeline de dados no site e gostaria de ajuda para implementar os itens pendentes.\n\n(Cole aqui o texto do checklist, se quiser.)\n\n'
+        'Checklist dados': 'Olá, IRN Devs.
+
+Tenho interesse em um diagnóstico gratuito de 30 minutos.
+
+\n\nGerei o checklist de pipeline de dados no site e gostaria de ajuda para implementar os itens pendentes.\n\n(Cole aqui o texto do checklist, se quiser.)\n\n'
       };
       if (sel && assunto) {
         var found = false;

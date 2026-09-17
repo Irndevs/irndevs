@@ -607,3 +607,6 @@ body.has-site-nav > nav:not(.sn-bottom) {
 }
 
 @import url("footer.css");
+
+.inline-style-9{display:block;color:#a4aa9d;font-size:14px;margin-top:14px}.inline-style-9 a{color:#e8a33d;text-decoration:underline;text-underline-offset:3px}.inline-style-8{display:inline-block;color:#a4aa9d;font-size:13px;margin-left:12px}
+.article-cta{padding:42px 0;border-top:1px solid #1f251d;border-bottom:1px solid #1f251d;background:#171b16}.article-cta .wrap{max-width:980px}.article-cta h2{margin:0 0 8px;font-size:22px}.article-cta p{color:#a4aa9d;margin:0 0 18px}

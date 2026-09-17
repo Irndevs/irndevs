@@ -13,6 +13,7 @@ last -ai
 sudo ss -lntp</code></pre><p>Centralize logs quando houver mais de um servidor. Registre usuário, origem, motivo do acesso e janela de manutenção. Em ambientes maiores, um bastion reduz a quantidade de servidores expostos diretamente.</p><h2 id="check">5. Checklist final</h2><ul><li>Chave Ed25519 com passphrase</li><li>Root sem login</li><li>Senha desabilitada após teste</li><li>AllowUsers ou grupo administrativo</li><li>Logs revisados</li><li>Plano de recuperação disponível</li></ul><h2 id="troubleshooting">6. Troubleshooting</h2><p>Se uma chave não funciona, confirme permissões de <code>~/.ssh</code>, o usuário efetivo, o agente carregado e a saída detalhada de <code>ssh -vv</code>. Verifique também se o daemon carregou o arquivo de configuração esperado e se um include não está sobrescrevendo a regra.</p><pre><code>chmod 700 ~/.ssh
 chmod 600 ~/.ssh/authorized_keys
 
+<section class="article-cta" aria-label="Próximo passo"><div class="wrap"><h2>Quer aplicar isso ao seu contexto?</h2><p>Se esse problema existe na sua operação, podemos analisar o cenário em um diagnóstico gratuito de 30 minutos.</p><a class="btn primary" href="diagnostico.html">solicitar diagnóstico gratuito →</a></div></section>
 <footer class="site-footer-v2" role="contentinfo">
   <div class="wrap footer-grid">
     <div class="footer-brand">

@@ -11,6 +11,7 @@ restic restore latest --target /tmp/restore
 diff -ru /srv/app /tmp/restore/srv/app</code></pre><div class="warn"><strong>ATENÇÃO</strong> Backup sem restore é apenas uma intenção. Agende testes parciais e registre arquivos, permissões e tempo de recuperação.</div><h2 id="check">5. Checklist final</h2><ul><li>Destino externo</li><li>Senha fora do servidor</li><li>Retenção definida</li><li>Alertas de falha</li><li>Restore testado</li></ul><h2 id="automacao">6. Automação e alertas</h2><p>O job de backup precisa produzir uma saída verificável. Registre início, fim, quantidade de snapshots e código de saída. Um timer systemd permite definir janela, dependências de rede e histórico no journal.</p><pre><code>systemctl list-timers --all
 journalctl -u restic-backup --since yesterday
 
+<section class="article-cta" aria-label="Próximo passo"><div class="wrap"><h2>Quer aplicar isso ao seu contexto?</h2><p>Se esse problema existe na sua operação, podemos analisar o cenário em um diagnóstico gratuito de 30 minutos.</p><a class="btn primary" href="diagnostico.html">solicitar diagnóstico gratuito →</a></div></section>
 <footer class="site-footer-v2" role="contentinfo">
   <div class="wrap footer-grid">
     <div class="footer-brand">
