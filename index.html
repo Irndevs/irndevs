@@ -185,6 +185,106 @@
     @media (min-width: 861px) {
       .proj-grid-limit .proj-card:nth-child(n+7) { display: none; }
     }
+
+    /* ---- FOOTER (estrutura tipo Vex) ---- */
+    .site-footer-v2 {
+      margin-top: 24px;
+      padding: 48px 0 0;
+      border-top: 1px solid var(--bg-line);
+      background: var(--bg-raised);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 32px 28px;
+      padding-bottom: 36px;
+    }
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 520px) {
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    }
+    .footer-brand .footer-logo {
+      font-family: var(--mono);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .footer-brand p {
+      margin: 0 0 16px;
+      font-size: 13.5px;
+      color: var(--text-dim);
+      line-height: 1.5;
+      max-width: 28ch;
+    }
+    .footer-social {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .footer-social a {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      border: 1px solid var(--bg-line);
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: color .15s, border-color .15s;
+    }
+    .footer-social a:hover {
+      color: var(--amber);
+      border-color: var(--amber-dim);
+    }
+    .footer-col h3 {
+      margin: 0 0 14px;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--amber);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .footer-col ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .footer-col li {
+      margin-bottom: 8px;
+    }
+    .footer-col a {
+      font-size: 13.5px;
+      color: var(--text-dim);
+      transition: color .15s;
+    }
+    .footer-col a:hover { color: var(--amber); }
+    .footer-meta {
+      font-size: 13.5px;
+      color: var(--text-faint);
+    }
+    .footer-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 24px 28px;
+      border-top: 1px solid var(--bg-line);
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-faint);
+    }
+    .footer-bottom-links {
+      display: flex;
+      gap: 16px;
+    }
+    .footer-bottom-links a {
+      color: var(--text-dim);
+    }
+    .footer-bottom-links a:hover { color: var(--amber); }
   </style>
 </head>
 <body>
@@ -428,38 +528,7 @@
   </div>
 </section>
 
-<!-- 4. RESULTADOS -->
-<section id="cases">
-  <div class="wrap">
-    <div class="sec-head"><span class="amber">$</span> cases --resumo</div>
-    <h2 class="sec-title">Resultados</h2>
-    <p class="sec-sub">Números ilustrativos com base em entregas típicas — substitua pelos seus cases reais com autorização.</p>
-    <div class="tools-grid">
-      <div class="tool fade-in">
-        <div class="tool-name">Automação de atendimento</div>
-        <div class="tool-desc"><strong>~12 h/semana</strong> a menos de trabalho manual em agenda e confirmações.<br><strong>Antes:</strong> ida e volta no WhatsApp.<br><strong>Depois:</strong> fluxo assistido + registro centralizado (ex.: ZapAgendador IA).</div>
-      </div>
-      <div class="tool fade-in">
-        <div class="tool-name">Dados operacionais</div>
-        <div class="tool-desc"><strong>1 painel</strong> no lugar de planilhas espalhadas.<br><strong>Antes:</strong> indicadores em 5+ arquivos.<br><strong>Depois:</strong> visão única atualizada para decisão de ops/gestão.</div>
-      </div>
-      <div class="tool fade-in">
-        <div class="tool-name">Produto em produção</div>
-        <div class="tool-desc"><strong>API type-safe</strong> e deploy contínuo.<br><strong>Antes:</strong> evolução ad hoc.<br><strong>Depois:</strong> stack estável em cloud (SaaS multi-tenant).</div>
-      </div>
-      <div class="tool fade-in">
-        <div class="tool-name">Cluster k3s + GitOps</div>
-        <div class="tool-desc"><strong>Commit → produção</strong> com fluxo repetível.<br><strong>Antes:</strong> deploy manual e pouco rastreável.<br><strong>Depois:</strong> ArgoCD, CI/CD e runbooks para operação.</div>
-      </div>
-      <div class="tool fade-in">
-        <div class="tool-name">SaaS em produção</div>
-        <div class="tool-desc"><strong>Stack type-safe</strong> e operação estável em cloud.<br><strong>Antes:</strong> evolução ad hoc da API.<br><strong>Depois:</strong> produto multi-tenant com deploy controlado.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 5. COMO TRABALHAMOS -->
+<!-- 4. COMO TRABALHAMOS -->
 <section id="processo">
   <div class="wrap">
     <div class="sec-head"><span class="amber">$</span> process --from diagnostico --to entrega</div>
@@ -545,15 +614,56 @@
   </div>
 </div>
 
-<footer>
-  <div class="wrap">
-    <div>© 2026 irndevs</div>
-    <div class="inline-style-11">
+<footer class="site-footer-v2">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">IRN Devs</div>
+      <p>Software, automações e dados em produção — stacks que já rodam de verdade, com handoff claro.</p>
+      <div class="footer-social">
+        <a href="https://github.com/iri-afk" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
+        <a href="mailto:contato@irndevs.com" aria-label="E-mail">E-mail</a>
+        <a href="en/index.html">EN</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h3>Links rápidos</h3>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="servicos.html">Serviços</a></li>
+        <li><a href="pacotes.html">Pacotes</a></li>
+        <li><a href="#projetos">Projetos</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Recursos</h3>
+      <ul>
+        <li><a href="ferramenta-checklist.html">Checklist grátis</a></li>
+        <li><a href="ferramentas.html">Ferramentas grátis</a></li>
+        <li><a href="ia.html">Ferramentas de IA</a></li>
+        <li><a href="cursos.html">Cursos</a></li>
+        <li><a href="homelab.html">Homelab</a></li>
+        <li><a href="como-contratar.html">Como contratar</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Contato</h3>
+      <ul>
+        <li><a href="mailto:contato@irndevs.com">contato@irndevs.com</a></li>
+        <li><a href="contato.html">Formulário de contato</a></li>
+        <li><span class="footer-meta">Atendimento remoto</span></li>
+        <li><span class="footer-meta">Disponível para projetos</span></li>
+        <li><a href="privacidade.html">Privacidade</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <div>© 2026 IRN Devs</div>
+    <div class="footer-bottom-links">
       <a href="jogos.html">jogos</a>
       <a href="produtividade.html">produtividade</a>
-      <a href="mailto:contato@irndevs.com">contato@irndevs.com</a>
       <a href="privacidade.html">privacidade</a>
-      <a href="en/index.html">EN</a>
     </div>
   </div>
 </footer>
