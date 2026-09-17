@@ -11,8 +11,8 @@
 <meta property="og:title" content="IRN Devs — Desenvolvimento de Software">
 <meta property="og:description" content="IRN Devs: desenvolvimento de software, automações e análises de dados — produtos e integrações em produção.">
 <link rel="stylesheet" href="assets/css/pages/index.css?v=20260917h">
-  <link rel="stylesheet" href="assets/css/site-nav.css" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="assets/css/site-nav.css"></noscript>
+  <link rel="stylesheet" href="assets/css/site-nav.css?v=20260917c" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="assets/css/site-nav.css?v=20260917c"></noscript>
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
@@ -285,11 +285,54 @@
       color: var(--text-dim);
     }
     .footer-bottom-links a:hover { color: var(--amber); }
+
+    /* ---- Acessibilidade ---- */
+    .status-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 28px;
+      width: 100%;
+      font-family: var(--mono);
+      font-size: 12.5px;
+    }
+    .status-list .item { list-style: none; }
+    :focus-visible {
+      outline: 2px solid var(--amber);
+      outline-offset: 3px;
+    }
+    .btn:focus-visible,
+    a:focus-visible,
+    input:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--amber);
+      outline-offset: 3px;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .skills-table caption {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-faint);
+      text-align: left;
+      padding-bottom: 8px;
+    }
   </style>
 </head>
 <body>
 <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
-<main id="conteudo">
+<main id="conteudo" role="main" tabindex="-1">
 
 <!-- nav: site-nav.js -->
 
@@ -306,13 +349,13 @@
           <a class="btn ghost" href="ferramenta-checklist.html">checklist grátis</a>
           <a class="btn ghost" href="contato.html">contato</a>
         </div>
-        <div class="home-search" id="buscar">
-          <label for="siteSearch"><span class="amber">$</span> buscar no site</label>
+        <div class="home-search" id="buscar" role="search">
+          <label for="siteSearch"><span class="amber" aria-hidden="true">$</span> buscar no site</label>
           <div class="search-row">
-            <input id="siteSearch" type="search" placeholder="k3s, grafana, pacotes, blog..." autocomplete="off" enterkeyhint="search">
-            <span id="siteSearchCount" aria-live="polite"></span>
+            <input id="siteSearch" type="search" placeholder="k3s, grafana, pacotes, blog..." autocomplete="off" enterkeyhint="search" aria-describedby="siteSearchCount">
+            <span id="siteSearchCount" aria-live="polite" class="sr-only-when-empty"></span>
           </div>
-          <div id="siteSearchPages" class="search-pages" hidden></div>
+          <div id="siteSearchPages" class="search-pages" hidden role="listbox" aria-label="Páginas encontradas"></div>
         </div>
       </div>
       <div class="term-card" aria-hidden="true">
@@ -332,19 +375,21 @@
   </div>
 </header>
 
-<div class="status">
+<div class="status" role="region" aria-label="Status operacional">
   <div class="wrap">
-    <div class="item"><span class="dot"></span><b>dev</b> — apps e APIs em produção</div>
-    <div class="item"><span class="dot"></span><b>Homelab</b> — Docker, 6 VMs ativas</div>
-    <div class="item"><span class="dot"></span><b>Observabilidade</b> — testes automatizados e Grafana</div>
+    <ul class="status-list">
+      <li class="item"><span class="dot" aria-hidden="true"></span><b>dev</b> — apps e APIs em produção</li>
+      <li class="item"><span class="dot" aria-hidden="true"></span><b>Homelab</b> — Docker, 6 VMs ativas</li>
+      <li class="item"><span class="dot" aria-hidden="true"></span><b>Observabilidade</b> — testes automatizados e Grafana</li>
+    </ul>
   </div>
 </div>
 
 <!-- 1. O QUE ENTREGAMOS -->
-<section id="entregamos">
+<section id="entregamos" aria-labelledby="titulo-entregamos">
   <div class="wrap">
-    <div class="sec-head"><span class="amber">$</span> cat entregas.yaml</div>
-    <h2 class="sec-title">O que entregamos</h2>
+    <div class="sec-head" aria-hidden="true"><span class="amber">$</span> cat entregas.yaml</div>
+    <h2 class="sec-title" id="titulo-entregamos">O que entregamos</h2>
     <p class="sec-sub">Três frentes que se combinam em produtos e operações reais.</p>
     <div class="entregamos-grid">
       <div class="entrega-card fade-in">
@@ -385,10 +430,10 @@
 </section>
 
 <!-- 2. PACOTES (oferta clara) -->
-<section id="pacotes">
+<section id="pacotes" aria-labelledby="titulo-pacotes">
   <div class="wrap">
-    <div class="sec-head"><span class="amber">$</span> cat ofertas.yaml</div>
-    <h2 class="sec-title">Pacotes para começar rápido</h2>
+    <div class="sec-head" aria-hidden="true"><span class="amber">$</span> cat ofertas.yaml</div>
+    <h2 class="sec-title" id="titulo-pacotes">Pacotes para começar rápido</h2>
     <p class="sec-sub">Três entradas claras. Escopo fechado — evolução sob medida depois do diagnóstico.</p>
     <div class="pacotes-grid">
       <div class="pacote-card fade-in">
@@ -439,10 +484,10 @@
 </section>
 
 <!-- 3. PROJETOS EM PRODUÇÃO -->
-<section id="projetos">
+<section id="projetos" aria-labelledby="titulo-projetos">
   <div class="wrap">
-    <div class="sec-head"><span class="amber">$</span> ls -la projetos/ --status</div>
-    <h2 class="sec-title">Projetos em produção</h2>
+    <div class="sec-head" aria-hidden="true"><span class="amber">$</span> ls -la projetos/ --status</div>
+    <h2 class="sec-title" id="titulo-projetos">Projetos em produção</h2>
     <p class="sec-sub">Status real de deploy — o que está de pé agora, não maquete de portfólio.</p>
     <div class="proj-grid">
     <div class="proj-card fade-in"><div class="status-tag live">● produção</div><div>
@@ -529,10 +574,10 @@
 </section>
 
 <!-- 4. COMO TRABALHAMOS -->
-<section id="processo">
+<section id="processo" aria-labelledby="titulo-processo">
   <div class="wrap">
-    <div class="sec-head"><span class="amber">$</span> process --from diagnostico --to entrega</div>
-    <h2 class="sec-title">Como trabalhamos</h2>
+    <div class="sec-head" aria-hidden="true"><span class="amber">$</span> process --from diagnostico --to entrega</div>
+    <h2 class="sec-title" id="titulo-processo">Como trabalhamos</h2>
     <p class="sec-sub">Fluxo padrão. Prazos e entregáveis são fechados na proposta.</p>
     <div class="processo-grid">
       <div class="processo-step fade-in">
@@ -564,20 +609,20 @@
 </section>
 
 <!-- 6. ARQUITETURA -->
-<section id="arquitetura">
+<section id="arquitetura" aria-labelledby="titulo-arquitetura">
   <div class="wrap">
-    <div class="sec-head"><span class="amber">$</span> architecture --overview</div>
-    <h2 class="sec-title">Visão da stack</h2>
+    <div class="sec-head" aria-hidden="true"><span class="amber">$</span> architecture --overview</div>
+    <h2 class="sec-title" id="titulo-arquitetura">Visão da stack</h2>
     <p class="sec-sub">Do bare-metal à observabilidade — o mesmo modelo usado nos projetos.</p>
     <img src="assets/img/diagram-stack.svg" alt="Diagrama da stack IRN Devs" width="720" height="320" style="width:100%;max-width:720px;height:auto;aspect-ratio:720/320" loading="lazy" decoding="async" class="inline-style-9">
   </div>
 </section>
 
 <!-- 7. FERRAMENTAS -->
-<section id="ferramentas">
+<section id="ferramentas" aria-labelledby="titulo-ferramentas">
   <div class="wrap">
-    <div class="sec-head"><span class="amber">$</span> ls ferramentas/</div>
-    <h2 class="sec-title">Ferramentas gratuitas</h2>
+    <div class="sec-head" aria-hidden="true"><span class="amber">$</span> ls ferramentas/</div>
+    <h2 class="sec-title" id="titulo-ferramentas">Ferramentas gratuitas</h2>
     <p class="sec-sub">Dois caminhos: acelerar o código com IA, ou resolver o dia a dia com utilitários prontos.</p>
     <div class="tools-grid">
       <div class="tool fade-in"><div class="tool-name"><a href="ia.html">Ferramentas de IA →</a></div><div class="tool-desc">Gerador de SQL, explorador de código legado, commits inteligentes, mock data — motor local, pra dev.</div></div>
@@ -588,11 +633,12 @@
 </section>
 
 <!-- 8. STACK -->
-<section id="skills">
+<section id="skills" aria-labelledby="titulo-skills">
   <div class="wrap">
-    <div class="sec-head"><span class="amber">$</span> cat skills.yaml</div>
-    <h2 class="sec-title">Stack</h2>
+    <div class="sec-head" aria-hidden="true"><span class="amber">$</span> cat skills.yaml</div>
+    <h2 class="sec-title" id="titulo-skills">Stack</h2>
     <table class="skills-table">
+      <caption class="sr-only">Stack técnica da IRN Devs por área</caption>
       <tr><td>sistemas & redes</td><td>Linux, SSH hardening, Cloudflare Tunnels, acesso seguro, UFW, Fail2ban</td></tr>
       <tr><td>virtualização</td><td>Docker, LXC, Kubernetes (k3s)</td></tr>
       <tr><td>desenvolvimento</td><td>TypeScript, Node, Python, React/Vite, APIs</td></tr>
@@ -604,7 +650,7 @@
   </div>
 </section>
 
-<div class="wrap cta-final" id="contato">
+<div class="wrap cta-final" id="contato" role="region" aria-label="Chamada para contato">
   <h2>Vamos trabalhar juntos?</h2>
   <p>Abertos a novos projetos em desenvolvimento, automações e análises de dados. Pacotes com escopo fechado ou sob medida após diagnóstico.</p>
   <div class="inline-style-10">
@@ -614,7 +660,7 @@
   </div>
 </div>
 
-<footer class="site-footer-v2">
+<footer class="site-footer-v2" role="contentinfo">
   <div class="wrap footer-grid">
     <div class="footer-brand">
       <div class="footer-logo">IRN Devs</div>
@@ -747,7 +793,7 @@ const siteSearch = document.getElementById('siteSearch');
   document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
 </script>
 
-  <script src="assets/js/site-nav.js?v=20260917a" defer></script>
+  <script src="assets/js/site-nav.js?v=20260917c" defer></script>
 
   <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 </body>

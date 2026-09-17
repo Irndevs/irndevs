@@ -10,3 +10,57 @@ sudo systemctl reload ssh</code></pre><h2 id="auditoria">4. Investigação e rot
 last -ai
 sudo ss -lntp</code></pre><p>Centralize logs quando houver mais de um servidor. Registre usuário, origem, motivo do acesso e janela de manutenção. Em ambientes maiores, um bastion reduz a quantidade de servidores expostos diretamente.</p><h2 id="check">5. Checklist final</h2><ul><li>Chave Ed25519 com passphrase</li><li>Root sem login</li><li>Senha desabilitada após teste</li><li>AllowUsers ou grupo administrativo</li><li>Logs revisados</li><li>Plano de recuperação disponível</li></ul><h2 id="troubleshooting">6. Troubleshooting</h2><p>Se uma chave não funciona, confirme permissões de <code>~/.ssh</code>, o usuário efetivo, o agente carregado e a saída detalhada de <code>ssh -vv</code>. Verifique também se o daemon carregou o arquivo de configuração esperado e se um include não está sobrescrevendo a regra.</p><pre><code>chmod 700 ~/.ssh
 chmod 600 ~/.ssh/authorized_keys
+
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">IRN Devs</div>
+      <p>Software, automações e dados em produção — stacks que já rodam de verdade, com handoff claro.</p>
+      <div class="footer-social">
+        <a href="https://github.com/iri-afk" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
+        <a href="mailto:contato@irndevs.com" aria-label="E-mail">E-mail</a>
+        <a href="en/index.html">EN</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h3>Links rápidos</h3>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="servicos.html">Serviços</a></li>
+        <li><a href="pacotes.html">Pacotes</a></li>
+        <li><a href="index.html#projetos">Projetos</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Recursos</h3>
+      <ul>
+        <li><a href="ferramenta-checklist.html">Checklist grátis</a></li>
+        <li><a href="ferramentas.html">Ferramentas grátis</a></li>
+        <li><a href="ia.html">Ferramentas de IA</a></li>
+        <li><a href="cursos.html">Cursos</a></li>
+        <li><a href="homelab.html">Homelab</a></li>
+        <li><a href="como-contratar.html">Como contratar</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Contato</h3>
+      <ul>
+        <li><a href="mailto:contato@irndevs.com">contato@irndevs.com</a></li>
+        <li><a href="contato.html">Formulário de contato</a></li>
+        <li><span class="footer-meta">Atendimento remoto</span></li>
+        <li><span class="footer-meta">Disponível para projetos</span></li>
+        <li><a href="privacidade.html">Privacidade</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <div>© 2026 IRN Devs</div>
+    <div class="footer-bottom-links">
+      <a href="jogos.html">jogos</a>
+      <a href="produtividade.html">produtividade</a>
+      <a href="privacidade.html">privacidade</a>
+    </div>
+  </div>
+</footer>

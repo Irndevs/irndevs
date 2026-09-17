@@ -18,3 +18,57 @@ journalctl -u irn-worker -f</code></pre><h2 id="falhas">3. Diagnóstico de falha
 journalctl -u irn-worker -b --no-pager
 systemctl reset-failed irn-worker</code></pre><div class="tip"><strong>DICA</strong> Não esconda falhas com um loop infinito. Deixe o processo terminar com código de erro e configure o supervisor para reiniciar com limites.</div><h2 id="seguranca">4. Segurança e limites</h2><p>Use usuário dedicado, caminhos absolutos, arquivos de ambiente protegidos e limites de memória conforme o risco. Nunca coloque segredos diretamente na unit versionada.</p><h2 id="check">5. Checklist</h2><ul><li>Usuário dedicado</li><li>WorkingDirectory explícito</li><li>Restart controlado</li><li>Logs no journal</li><li>Daemon recarregado após alteração</li><li>Rollback documentado</li></ul><h2 id="troubleshooting">5. Troubleshooting</h2><p>Erros comuns são caminho relativo, ambiente virtual inexistente e permissões incorretas. Reproduza o comando como o mesmo usuário da unit antes de culpar o systemd. Para testar uma alteração, use <code>systemd-analyze verify</code> e recarregue o daemon.</p><pre><code>sudo systemd-analyze verify /etc/systemd/system/irn-worker.service
 sudo -u worker /opt/worker/.venv/bin/python /opt/worker/worker.py
+
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">IRN Devs</div>
+      <p>Software, automações e dados em produção — stacks que já rodam de verdade, com handoff claro.</p>
+      <div class="footer-social">
+        <a href="https://github.com/iri-afk" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
+        <a href="mailto:contato@irndevs.com" aria-label="E-mail">E-mail</a>
+        <a href="en/index.html">EN</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h3>Links rápidos</h3>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="servicos.html">Serviços</a></li>
+        <li><a href="pacotes.html">Pacotes</a></li>
+        <li><a href="index.html#projetos">Projetos</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Recursos</h3>
+      <ul>
+        <li><a href="ferramenta-checklist.html">Checklist grátis</a></li>
+        <li><a href="ferramentas.html">Ferramentas grátis</a></li>
+        <li><a href="ia.html">Ferramentas de IA</a></li>
+        <li><a href="cursos.html">Cursos</a></li>
+        <li><a href="homelab.html">Homelab</a></li>
+        <li><a href="como-contratar.html">Como contratar</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Contato</h3>
+      <ul>
+        <li><a href="mailto:contato@irndevs.com">contato@irndevs.com</a></li>
+        <li><a href="contato.html">Formulário de contato</a></li>
+        <li><span class="footer-meta">Atendimento remoto</span></li>
+        <li><span class="footer-meta">Disponível para projetos</span></li>
+        <li><a href="privacidade.html">Privacidade</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <div>© 2026 IRN Devs</div>
+    <div class="footer-bottom-links">
+      <a href="jogos.html">jogos</a>
+      <a href="produtividade.html">produtividade</a>
+      <a href="privacidade.html">privacidade</a>
+    </div>
+  </div>
+</footer>

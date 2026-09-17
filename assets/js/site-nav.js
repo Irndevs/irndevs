@@ -121,7 +121,7 @@
     root.id = 'siteNavRoot';
     root.innerHTML =
       '<header class="sn-top" role="banner">' +
-      (isInternal ? '' : '<button type="button" class="sn-burger" id="snBurger" aria-label="Abrir menu">☰</button>') +
+      (isInternal ? '' : '<button type="button" class="sn-burger" id="snBurger" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="snDrawer">☰</button>') +
       '<a href="index.html" class="sn-logo" aria-label="IRN Devs">' +
       '<img src="assets/img/logo-irndevs.svg" alt="~/irndevs $" width="160" height="32" loading="eager" decoding="async" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline\'">' +
       '<span class="sn-logo-text" style="display:none">~/irndevs <span>$</span></span>' +
@@ -134,7 +134,7 @@
       '</header>' +
       (isInternal ? '' :
         '<div class="sn-overlay" id="snOverlay" hidden></div>' +
-        '<aside class="sn-drawer" id="snDrawer" aria-hidden="true">' +
+        '<aside class="sn-drawer" id="snDrawer" role="dialog" aria-modal="true" aria-label="Menu de navegação" aria-hidden="true">' +
         '<div class="sn-drawer-head">' +
         '<a href="index.html" class="brand"><span class="brand-full">~/irndevs <span>$</span></span><span class="brand-mini">$</span></a>' +
         '<button type="button" class="sn-close" id="snClose" aria-label="Fechar">✕</button>' +
@@ -151,76 +151,100 @@
     var overlay = document.getElementById('snOverlay');
     var burger = document.getElementById('snBurger');
     var closeBtn = document.getElementById('snClose');
-    var MOBILE_QUERY = window.matchMedia('(max-width: 899px)');
-    var pinned = false;
 
-    function openMobile() {
+    var lastFocus = null;
+
+    function getFocusable(container) {
+      if (!container) return [];
+      return Array.prototype.slice.call(
+        container.querySelectorAll(
+          'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter(function (el) {
+        return el.offsetParent !== null || el === document.activeElement;
+      });
+    }
+
+    function openMenu() {
+      if (!drawer) return;
+      lastFocus = document.activeElement;
       drawer.classList.add('open');
-      overlay.classList.add('open');
-      overlay.hidden = false;
+      if (overlay) {
+        overlay.classList.add('open');
+        overlay.hidden = false;
+      }
       drawer.setAttribute('aria-hidden', 'false');
+      if (burger) {
+        burger.setAttribute('aria-expanded', 'true');
+        burger.setAttribute('aria-pressed', 'true');
+        burger.setAttribute('aria-label', 'Fechar menu de navegação');
+      }
       document.body.style.overflow = 'hidden';
+      // foca o botão fechar ou o primeiro link
+      var focusables = getFocusable(drawer);
+      var target = closeBtn || focusables[0];
+      if (target) {
+        setTimeout(function () { target.focus(); }, 50);
+      }
     }
-    function closeMobile() {
+    function closeMenu() {
+      if (!drawer) return;
       drawer.classList.remove('open');
-      overlay.classList.remove('open');
-      overlay.hidden = true;
+      drawer.classList.remove('pinned');
+      if (overlay) {
+        overlay.classList.remove('open');
+        overlay.hidden = true;
+      }
       drawer.setAttribute('aria-hidden', 'true');
+      if (burger) {
+        burger.setAttribute('aria-expanded', 'false');
+        burger.setAttribute('aria-pressed', 'false');
+        burger.setAttribute('aria-label', 'Abrir menu de navegação');
+      }
       document.body.style.overflow = '';
-    }
-    function updateExpandedState() {
-      document.body.classList.toggle('nav-expanded', pinned && !MOBILE_QUERY.matches);
-    }
-    function setPinned(v) {
-      pinned = v;
-      drawer.classList.toggle('pinned', pinned);
-      if (burger) burger.setAttribute('aria-pressed', pinned ? 'true' : 'false');
-      updateExpandedState();
+      document.body.classList.remove('nav-expanded');
+      if (lastFocus && typeof lastFocus.focus === 'function') {
+        lastFocus.focus();
+      } else if (burger) {
+        burger.focus();
+      }
     }
     function handleBurgerClick() {
-      if (MOBILE_QUERY.matches) {
-        drawer.classList.contains('open') ? closeMobile() : openMobile();
-      } else {
-        setPinned(!pinned);
-      }
+      if (drawer && drawer.classList.contains('open')) closeMenu();
+      else openMenu();
     }
 
     if (burger) burger.addEventListener('click', handleBurgerClick);
-    if (closeBtn) closeBtn.addEventListener('click', function () {
-      if (MOBILE_QUERY.matches) closeMobile();
-      else setPinned(false);
-    });
-    if (overlay) overlay.addEventListener('click', closeMobile);
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    if (overlay) overlay.addEventListener('click', closeMenu);
     if (drawer) {
       drawer.querySelectorAll('a').forEach(function (link) {
-        link.addEventListener('click', function () {
-          if (MOBILE_QUERY.matches) closeMobile();
-        });
+        link.addEventListener('click', closeMenu);
+      });
+      // trap de foco dentro do menu aberto
+      drawer.addEventListener('keydown', function (e) {
+        if (e.key !== 'Tab' || !drawer.classList.contains('open')) return;
+        var focusables = getFocusable(drawer);
+        if (!focusables.length) return;
+        var first = focusables[0];
+        var last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
       });
     }
     document.addEventListener('keydown', function (e) {
-      if (e.key !== 'Escape') return;
-      if (MOBILE_QUERY.matches) closeMobile();
-      else setPinned(false);
+      if (e.key === 'Escape') closeMenu();
     });
-    MOBILE_QUERY.addEventListener('change', function (e) {
-      if (e.matches) {
-        drawer.classList.remove('pinned');
-        drawer.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('nav-expanded');
-      } else {
-        closeMobile();
-        drawer.setAttribute('aria-hidden', 'false');
-      }
-      updateExpandedState();
-    });
-    if (drawer) drawer.setAttribute('aria-hidden', MOBILE_QUERY.matches ? 'true' : 'false');
+    if (drawer) drawer.setAttribute('aria-hidden', 'true');
 
     window.addEventListener('pageshow', function (e) {
       if (!e.persisted) return;
-      setPinned(false);
-      closeMobile();
-      updateExpandedState();
+      closeMenu();
     });
 
     /* Floating social links (mobile sticky + desktop) */
