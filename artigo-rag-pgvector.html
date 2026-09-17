@@ -38,7 +38,6 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"O que é RAG com pgvector?","acceptedAnswer":{"@type":"Answer","text":"RAG (Retrieval-Augmented Generation) com pgvector é uma técnica que combina busca semântica em PostgreSQL com um LLM para responder perguntas com base em documentos da empresa."}},{"@type":"Question","name":"Por que usar pgvector em vez de um vector database dedicado?","acceptedAnswer":{"@type":"Answer","text":"pgvector permite manter tudo no PostgreSQL, simplificando a stack, reduzindo custos e aproveitando transações e backups já existentes."}},{"@type":"Question","name":"Qual o tamanho mínimo de chunks recomendado?","acceptedAnswer":{"@type":"Answer","text":"Em geral 300–800 tokens com overlap de 10–20%. O ideal depende do tipo de documento e do modelo de embedding."}},{"@type":"Question","name":"Como avaliar a qualidade do RAG em produção?","acceptedAnswer":{"@type":"Answer","text":"Use métricas como hit rate, MRR, faithfulness e relevância humana. Monitore também latência e taxa de alucinação."}}]}</script>
   <link rel="stylesheet" href="assets/css/footer.css?v=20260917d">
   <link rel="stylesheet" href="assets/css/pages/artigo-rag-pgvector.css">
-  <link rel="stylesheet" href="assets/css/irndevs-theme.css?v=20260917a">
 </head>
 <body>
 <!-- nav: site-nav.js -->
