@@ -52,6 +52,8 @@
     {
       label: 'ferramentas',
       items: [
+        { href: 'ia.html', label: 'ferramentas de IA', ico: '✦' },
+        { href: 'ferramentas.html', label: 'ferramentas grátis', ico: '▣' },
         { href: 'ferramenta-checklist.html', label: 'checklist grátis', ico: '✓' },
         { href: 'produtividade.html', label: 'produtividade', ico: '⏱' },
         { href: 'jogos.html', label: 'jogos', ico: '▶' }

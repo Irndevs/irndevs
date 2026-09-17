@@ -277,23 +277,12 @@
 
 <section id="ferramentas">
   <div class="wrap">
-    <div class="sec-head"><span class="amber">$</span> ls ferramentas/ --gratuitas</div>
+    <div class="sec-head"><span class="amber">$</span> ls ferramentas/</div>
     <h2 class="sec-title">Ferramentas gratuitas</h2>
-    <p class="sec-sub">Mini-produtos deployados na Vercel, sem backend na maioria — direto no navegador.</p>
+    <p class="sec-sub">Dois caminhos: acelerar o código com IA, ou resolver o dia a dia com utilitários prontos.</p>
     <div class="tools-grid">
-      <div class="tool"><div class="tool-name"><a href="ferramenta-checklist.html">Checklist grátis</a></div><div class="tool-desc">Automação de processo ou pipeline de dados — gere um plano no navegador.</div></div>
-      <div class="tool"><div class="tool-name"><a href="pacotes.html">Pacotes</a></div><div class="tool-desc">MVP web · Automação de processo · Dashboard de indicadores.</div></div>
-
-      <div class="tool"><div class="tool-name"><a href="https://contratos.irndevs.com">Gerador de Contratos</a></div><div class="tool-desc">Prestação de serviço, aluguel, NDA — exporta em PDF.</div></div>
-      <div class="tool"><div class="tool-name"><a href="https://precificacao.irndevs.com">Calculadora de Precificação</a></div><div class="tool-desc">Preço/hora ou de venda com custos, impostos e margem.</div></div>
-      <div class="tool"><div class="tool-name"><a href="https://converter.irndevs.com">Conversor de Arquivos</a></div><div class="tool-desc">CSV↔JSON, texto→slug, Markdown→HTML.</div></div>
-      <div class="tool"><div class="tool-name"><a href="https://links.irndevs.com">Encurtador de Links</a></div><div class="tool-desc">Dashboard de cliques com gráfico de acesso.</div></div>
-      <div class="tool"><div class="tool-name"><a href="https://qrcode.irndevs.com">Gerador de QR Code</a></div><div class="tool-desc">Link, Wi-Fi, WhatsApp ou e-mail — download em PNG.</div></div>
-      <div class="tool"><div class="tool-name"><a href="https://mei.irndevs.com">Calculadora MEI</a></div><div class="tool-desc">Estima DAS mensal e limite anual de faturamento.</div></div>
-      <div class="tool"><div class="tool-name"><a href="https://senha.irndevs.com">Gerador de Senha Segura</a></div><div class="tool-desc">Senhas aleatórias com indicador de força.</div></div>
-      <div class="tool"><div class="tool-name"><a href="https://vagas.irndevs.com">Buscador de Vagas</a></div><div class="tool-desc">RemoteOK + Adzuna, com filtro de palavra-chave e salário.</div></div>
-      <div class="tool"><div class="tool-name"><a href="produtividade.html">Produtividade</a></div><div class="tool-desc">To-do, pomodoro e scratchpad — tudo local no navegador.</div></div>
-      <div class="tool"><div class="tool-name"><a href="jogos.html">Minijogos</a></div><div class="tool-desc">Snake, Memory, Reflexo e Quiz no estilo terminal.</div></div>
+      <div class="tool"><div class="tool-name"><a href="ia.html">Ferramentas de IA →</a></div><div class="tool-desc">Gerador de SQL, explorador de código legado, commits inteligentes, mock data — motor local, pra dev.</div></div>
+      <div class="tool"><div class="tool-name"><a href="ferramentas.html">Ferramentas grátis →</a></div><div class="tool-desc">Contratos, precificação, conversor de arquivos, QR Code, MEI, senha segura, vagas, produtividade, jogos.</div></div>
     </div>
   </div>
 </section>
@@ -346,6 +335,11 @@ const siteSearch = document.getElementById('siteSearch');
     { q: 'início home index', href: 'index.html', label: 'Início' },
     { q: 'serviços services infra kubernetes observabilidade', href: 'servicos.html', label: 'Serviços' },
     { q: 'como contratar proposta', href: 'como-contratar.html', label: 'Como contratar' },
+    { q: 'pacotes mvp automação dashboard preço', href: 'pacotes.html', label: 'Pacotes' },
+    { q: 'ia inteligência artificial ferramentas prompts rag agentes', href: 'ia.html', label: 'Ferramentas de IA' },
+    { q: 'ferramentas grátis utilitários contratos senha qrcode mei', href: 'ferramentas.html', label: 'Ferramentas grátis' },
+    { q: 'checklist grátis diagnóstico', href: 'ferramenta-checklist.html', label: 'Checklist grátis' },
+    { q: 'cursos linux docker python módulos', href: 'cursos.html', label: 'Cursos' },
     { q: 'sobre about empresa', href: 'sobre.html', label: 'Sobre' },
     { q: 'blog artigos posts', href: 'blog.html', label: 'Blog' },
     { q: 'contato contact email', href: 'contato.html', label: 'Contato' },
@@ -410,8 +404,8 @@ const siteSearch = document.getElementById('siteSearch');
   document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
 </script>
 
-  <script src="assets/js/site-nav.js?v=20260916c" defer></script>
+  <script src="assets/js/site-nav.js?v=20260917a" defer></script>
 
-  <script src="assets/js/chat-bot.js?v=20260916e" defer></script>
+  <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 </body>
 </html>

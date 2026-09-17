@@ -54,6 +54,36 @@
   btn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>';
   document.body.appendChild(btn);
 
+  /* Mantém a bolha do chat acima do bloco de redes sociais (#irn-float-cta),
+     mesmo quando o usuário expande as redes e o bloco cresce em altura. */
+  var CHAT_SAFE_GAP = 16;
+  function syncChatBtnPosition() {
+    var floatCta = document.getElementById('irn-float-cta');
+    if (floatCta) {
+      var rect = floatCta.getBoundingClientRect();
+      var bottomOffset = Math.round(window.innerHeight - rect.top + CHAT_SAFE_GAP);
+      btn.style.bottom = bottomOffset + 'px';
+    } else {
+      btn.style.bottom = '24px';
+    }
+  }
+  syncChatBtnPosition();
+  window.addEventListener('resize', syncChatBtnPosition);
+  window.addEventListener('orientationchange', syncChatBtnPosition);
+  if (window.ResizeObserver) {
+    var floatCtaEl = document.getElementById('irn-float-cta');
+    if (floatCtaEl) {
+      new ResizeObserver(syncChatBtnPosition).observe(floatCtaEl);
+    } else {
+      /* site-nav.js pode ainda não ter montado o bloco de redes; tenta de novo em breve */
+      setTimeout(function () {
+        var el = document.getElementById('irn-float-cta');
+        if (el) new ResizeObserver(syncChatBtnPosition).observe(el);
+        syncChatBtnPosition();
+      }, 300);
+    }
+  }
+
   var win = document.createElement('div');
   win.id = 'irn-chat-win';
   win.setAttribute('role', 'dialog');
@@ -206,10 +236,9 @@
     var low = t.toLowerCase();
 
     if (/humano|atendente|pessoa|falar com|whatsapp|suporte|atendimento/.test(low)) {
-      botMsg('Perfeito! Abrindo o contato...');
+      botMsg('Perfeito! Abrindo o contato em uma nova aba...');
       setTimeout(function () {
-        window.location.href = 'contato.html?assunto=Atendimento';
-        closeChat();
+        window.open('contato.html?assunto=Atendimento', '_blank', 'noopener');
       }, 800);
       return;
     }
@@ -238,7 +267,7 @@
         div.className = 'irn-msg bot';
         div.innerHTML =
           'Prefere falar com um humano?<br>' +
-          '<a href="contato.html?assunto=Atendimento" class="irn-wa-btn">✉️ Abrir contato</a>';
+          '<a href="contato.html?assunto=Atendimento" target="_blank" rel="noopener" class="irn-wa-btn">✉️ Abrir contato</a>';
         box.appendChild(div);
         box.scrollTop = box.scrollHeight;
       }, 500);

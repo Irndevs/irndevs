@@ -243,107 +243,8 @@ Clínica veterinária com histórico de consultas, pets e tutores.">copiar promp
   <div class="wrap">
     <div class="section-kicker">$ cat tutoriais-ia.md</div>
     <h2>Conteúdos e tutoriais de IA</h2>
-    <p class="section-intro">Material orientado a quem vai colocar IA em produção: integração de APIs, RAG, frameworks de agentes, prompt engineering e bancos vetoriais.</p>
-
-    <div class="content-block">
-      <h3 class="sub-heading">Integração de IA na prática</h3>
-      <div class="content-grid">
-        <article class="content-card">
-          <span class="content-tag">guia prático</span>
-          <h3>Integração de APIs de IA</h3>
-          <p>Passo a passo para conectar OpenAI, Anthropic (Claude) e Google Gemini em aplicações web e mobile (Node.js, Python, PHP e similares). Autenticação, rate limit, streaming e tratamento de erros.</p>
-          <ul class="content-list">
-            <li>Chaves e variáveis de ambiente seguras</li>
-            <li>Clientes oficiais vs. HTTP direto</li>
-            <li>Streaming de respostas no front-end</li>
-          </ul>
-          <a class="content-link" href="artigo-apis-ia.html">ler artigo →</a>
-        </article>
-        <article class="content-card">
-          <span class="content-tag">conceitos + código</span>
-          <h3>Introdução a RAG</h3>
-          <p>Retrieval-Augmented Generation: como alimentar a IA com PDFs, wikis e bancos da própria empresa para criar um assistente customizado com citações e menos alucinações.</p>
-          <ul class="content-list">
-            <li>Chunking e embeddings</li>
-            <li>Retrieval + geração com fontes</li>
-            <li>Quando RAG não é a solução certa</li>
-          </ul>
-          <a class="content-link" href="artigo-rag-pgvector.html">ler artigo →</a>
-          <a class="content-link" href="artigo-checklist-rag.html" style="margin-left:12px">checklist produção →</a>
-          <a class="content-link" href="artigo-avaliacao-rag.html" style="margin-left:12px">avaliação de RAG →</a>
-          <a class="content-link" href="artigo-guardrails-agentes.html" style="margin-left:12px">guardrails agentes →</a>
-        </article>
-        <article class="content-card">
-          <span class="content-tag">frameworks</span>
-          <h3>LangChain, LlamaIndex e CrewAI</h3>
-          <p>Guias visuais de como montar agentes autônomos que usam ferramentas, memória e orquestração para tarefas complexas (pesquisa, triagem, geração de relatórios).</p>
-          <ul class="content-list">
-            <li>Chains vs. agents</li>
-            <li>Tools e function calling</li>
-            <li>Crews multi-agente</li>
-          </ul>
-          <a class="content-link" href="artigo-agentes-langchain.html">ler artigo →</a>
-        </article>
-
-      </div>
-    </div>
-
-    <div class="content-block">
-      <h3 class="sub-heading">Engenharia de prompt e otimização</h3>
-      <div class="content-grid">
-        <article class="content-card">
-          <span class="content-tag">para engenheiros</span>
-          <h3>Prompt engineering para software</h3>
-          <p>Como escrever instruções avançadas para gerar código sem bugs óbvios, desenhar arquiteturas, revisar PRs e resolver problemas de infraestrutura com menos idas e vindas.</p>
-          <ul class="content-list">
-            <li>Papel + restrições + formato de saída</li>
-            <li>Few-shot e exemplos negativos</li>
-            <li>Avaliação e regressão de prompts</li>
-          </ul>
-          <a class="content-link" href="#laboratorio">ver prompts no laboratório →</a>
-        </article>
-        <article class="content-card">
-          <span class="content-tag">privacidade</span>
-          <h3>Seu próprio Copilot local</h3>
-          <p>Rode modelos open-source (Llama 3, Mistral, Qwen, etc.) na máquina com Ollama. Código nunca sai do seu ambiente — ideal para código proprietário e compliance.</p>
-          <ul class="content-list">
-            <li>Instalação e modelos recomendados</li>
-            <li>Integração com VS Code / Neovim</li>
-            <li>Limites de hardware e quantização</li>
-          </ul>
-          <a class="content-link" href="artigo-ollama-local.html">ler artigo →</a>
-        </article>
-      </div>
-    </div>
-
-    <div class="content-block">
-      <h3 class="sub-heading">Bancos de dados vetoriais e busca semântica</h3>
-      <div class="content-grid">
-        <article class="content-card">
-          <span class="content-tag">fundamentos</span>
-          <h3>O que são Vector Databases?</h3>
-          <p>Explicação direta de bancos focados em IA (Pinecone, Chroma, Milvus, pgvector no PostgreSQL): como funcionam embeddings, similaridade e por que isso muda busca e recomendação.</p>
-          <ul class="content-list">
-            <li>Embeddings e distância (cosine, L2)</li>
-            <li>Quando usar pgvector vs. serviço dedicado</li>
-            <li>Indexação e escala</li>
-          </ul>
-          <a class="content-link" href="artigo-rag-pgvector.html">ver na prática com pgvector →</a>
-        </article>
-        <article class="content-card">
-          <span class="content-tag">prática</span>
-          <h3>Busca semântica em produção</h3>
-          <p>Do protótipo ao serviço: indexar documentação, filtrar por metadados, combinar keyword + vetor e medir qualidade das respostas.</p>
-          <ul class="content-list">
-            <li>Hybrid search</li>
-            <li>Filtros e multi-tenancy</li>
-            <li>Métricas de retrieval</li>
-          </ul>
-          <a class="content-link" href="artigo-hybrid-search.html">ler artigo →</a>
-        </article>
-      </div>
-    </div>
-
+    <p class="section-intro">Integração de APIs, RAG, frameworks de agentes, prompt engineering e bancos vetoriais — os artigos completos ficam no blog, filtrados por IA.</p>
+    <a class="content-link" href="blog.html?cat=ia">ver todos os artigos de IA no blog →</a>
   </div>
 </section>
 
@@ -485,13 +386,17 @@ considerações de versionamento.</code></pre>
 
 <section id="historico-ia" style="padding:40px 0">
   <div class="wrap">
-    <div class="section-kicker">$ cat ~/.irn/ia-history</div>
-    <h2>Histórico local das ferramentas</h2>
-    <p class="section-intro">Últimos resultados salvos neste browser (localStorage). Nada é enviado à nuvem até você usar “salvar na conta”.</p>
-    <div id="iaHistoryList" style="font-family:var(--mono,monospace);font-size:13px;color:var(--text-dim,#a8b0a0)">carregando…</div>
-    <div style="margin-top:12px">
-      <button type="button" id="btnClearHistory" class="copy-prompt" style="cursor:pointer">limpar histórico</button>
-    </div>
+    <details>
+      <summary style="cursor:pointer;font-family:var(--mono,monospace);font-size:13px;color:var(--amber,#e8a33d)">$ cat ~/.irn/ia-history <span style="color:var(--text-dim,#a8b0a0)">(clique pra expandir)</span></summary>
+      <div style="margin-top:16px">
+        <h2>Histórico local das ferramentas</h2>
+        <p class="section-intro">Últimos resultados salvos neste browser (localStorage). Nada é enviado à nuvem até você usar “salvar na conta”.</p>
+        <div id="iaHistoryList" style="font-family:var(--mono,monospace);font-size:13px;color:var(--text-dim,#a8b0a0)">carregando…</div>
+        <div style="margin-top:12px">
+          <button type="button" id="btnClearHistory" class="copy-prompt" style="cursor:pointer">limpar histórico</button>
+        </div>
+      </div>
+    </details>
   </div>
 </section>
 <script src="assets/js/ia-history.js?v=20260916v8"></script>
@@ -523,7 +428,7 @@ considerações de versionamento.</code></pre>
     <div><a href="mailto:contato@irndevs.com">contato@irndevs.com</a> · <a href="privacidade.html">privacidade</a></div>
   </div>
 </footer>
-<script src="assets/js/site-nav.js?v=20260916d" defer></script>
+<script src="assets/js/site-nav.js?v=20260917a" defer></script>
 <script>
 document.querySelectorAll('.copy-prompt').forEach(function(button){
   var original = button.textContent.trim();
@@ -538,6 +443,6 @@ document.querySelectorAll('.copy-prompt').forEach(function(button){
   });
 });
 </script>
-<script src="assets/js/chat-bot.js?v=20260916e" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 </body>
 </html>
