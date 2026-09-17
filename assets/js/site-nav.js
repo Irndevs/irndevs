@@ -63,7 +63,7 @@
       label: 'conteúdo',
       items: [
         { href: 'blog.html', label: 'blog', ico: '≡' },
-		{ href: 'cursos.html', label: 'cursos', ico: '◈' },
+        { href: 'cursos.html', label: 'cursos', ico: '◈' },
         { href: 'homelab.html', label: 'homelab', ico: '▣' },
         { href: 'sobre.html', label: 'sobre', ico: 'i' }
       ]
@@ -71,10 +71,10 @@
     {
       label: 'conta',
       items: [
-        { href: 'login.html', label: 'entrar', ico: '⚿' },
-        { href: 'cadastro.html', label: 'cadastro', ico: '+' },
-        { href: 'conta.html', label: 'minha conta', ico: '●' },
-        { href: 'area-cliente.html', label: 'área do cliente', ico: '◆' }
+        { href: 'login.html', label: 'entrar', ico: '⚿', auth: 'guest' },
+        { href: 'cadastro.html', label: 'cadastro', ico: '+', auth: 'guest' },
+        { href: 'conta.html', label: 'minha conta', ico: '●', auth: 'user' },
+        { href: 'area-cliente.html', label: 'área do cliente', ico: '◆', auth: 'user' }
       ]
     },
     {
@@ -96,7 +96,11 @@
   ];
 
   function linkHtml(l) {
-    return '<a href="' + l.href + '" class="' + (cls(l.href).trim() + (l.extraClass ? ' ' + l.extraClass : '')).trim() + '"><span class="ico">' + l.ico + '</span><span class="label">' + l.label + '</span></a>';
+    var extra = (cls(l.href).trim() + (l.extraClass ? ' ' + l.extraClass : '')).trim();
+    var style = '';
+    // Por padrão esconde itens só-logado (paintNavAuth mostra se houver sessão)
+    if (l.auth === 'user') style = ' style="display:none"';
+    return '<a href="' + l.href + '" class="' + extra + '"' + style + '><span class="ico">' + l.ico + '</span><span class="label">' + l.label + '</span></a>';
   }
 
   function mount() {
@@ -113,9 +117,18 @@
     }).join('');
     var bottomHtml = bottomItems.map(linkHtml).join('');
 
+    /* Avatar de login: círculo com ícone de usuário (estado deslogado por padrão).
+       paintNavAuth() em auth.js troca para avatar com inicial quando logado. */
     var authSlot = isInternal
-      ? '<div class="sn-auth-slot dash-topbar-user" data-auth-slot><a href="index.html">← site</a></div>'
-      : '<div class="sn-auth-slot" data-auth-slot><a class="sn-auth-login" href="login.html">entrar</a><a class="sn-auth-primary" href="cadastro.html">cadastro</a></div>';
+      ? '<div class="sn-auth-slot dash-topbar-user" data-auth-slot><a href="index.html" class="sn-back-site">← site</a></div>'
+      : '<div class="sn-auth-slot" data-auth-slot>' +
+        '<a class="sn-avatar sn-avatar--guest" href="login.html" title="Entrar / cadastro" aria-label="Entrar ou criar conta">' +
+        '<svg class="sn-avatar-ico" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">' +
+        '<circle cx="12" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="1.6"/>' +
+        '<path d="M5 19.5c0-3.5 3.1-6 7-6s7 2.5 7 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>' +
+        '</svg></a>' +
+        '<a class="sn-auth-signup" href="cadastro.html">cadastro</a>' +
+        '</div>';
 
     var root = document.createElement('div');
     root.id = 'siteNavRoot';
@@ -284,10 +297,48 @@
     }
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', mount);
-  } else {
+  function loadAuthThenPaint() {
+    if (window.IRNAuth && typeof window.IRNAuth.paintNavAuth === 'function') {
+      window.IRNAuth.paintNavAuth();
+      return;
+    }
+    // Carrega supabase + auth em páginas públicas para o avatar refletir a sessão
+    function ensureScript(src, attrs) {
+      return new Promise(function (resolve) {
+        if (document.querySelector('script[src="' + src + '"]')) { resolve(); return; }
+        var s = document.createElement('script');
+        s.src = src;
+        s.defer = true;
+        if (attrs) Object.keys(attrs).forEach(function (k) { s.setAttribute(k, attrs[k]); });
+        s.onload = function () { resolve(); };
+        s.onerror = function () { resolve(); };
+        document.head.appendChild(s);
+      });
+    }
+    ensureScript('assets/js/supabase-config.js')
+      .then(function () {
+        return ensureScript('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js', {
+          integrity: 'sha384-GFr3yTh5lJznCbZfpTtXnwboFsxqtTQoeTZCRHhE0579KrRmlCzen5AA8ohaB5ug',
+          crossorigin: 'anonymous'
+        });
+      })
+      .then(function () { return ensureScript('assets/js/auth.js'); })
+      .then(function () {
+        // auth.js se auto-pinta no DOMContentLoaded; força de novo
+        if (window.IRNAuth && typeof window.IRNAuth.paintNavAuth === 'function') {
+          window.IRNAuth.paintNavAuth();
+        }
+      });
+  }
+
+  function boot() {
     mount();
+    loadAuthThenPaint();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
   }
 
   /* PWA: service worker site-wide + botão de instalar quando disponível */

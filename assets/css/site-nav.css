@@ -400,11 +400,11 @@ body.has-site-nav > nav:not(.sn-bottom) {
 }
 .sn-group-label { display: block; }
 
-/* ---- Slot auth no topo ---- */
+/* ---- Slot auth no topo (avatar redondo) ---- */
 .sn-auth-slot {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   margin-left: auto;
   margin-right: 8px;
   flex-shrink: 0;
@@ -414,32 +414,105 @@ body.has-site-nav > nav:not(.sn-bottom) {
 .sn-auth-slot a {
   color: var(--nav-dim);
   text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid transparent;
   white-space: nowrap;
 }
 .sn-auth-slot a:hover {
   color: var(--nav-amber);
+}
+
+/* Botão circular de usuário / login */
+.sn-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  text-decoration: none;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
+  box-sizing: border-box;
+}
+.sn-avatar--guest {
+  color: var(--nav-amber);
+  background: rgba(232, 163, 61, 0.08);
+  border: 1.5px solid rgba(232, 163, 61, 0.55);
+}
+.sn-avatar--guest:hover {
+  background: rgba(232, 163, 61, 0.18);
+  border-color: var(--nav-amber);
+  box-shadow: 0 0 0 3px rgba(232, 163, 61, 0.15);
+  transform: scale(1.05);
+  color: var(--nav-amber);
+}
+.sn-avatar--user {
+  color: #0c0e0b;
+  background: var(--nav-amber);
+  border: 1.5px solid var(--nav-amber);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0;
+}
+.sn-avatar--user:hover {
+  background: #f0b34f;
+  border-color: #f0b34f;
+  box-shadow: 0 0 0 3px rgba(232, 163, 61, 0.25);
+  transform: scale(1.05);
+  color: #0c0e0b;
+}
+.sn-avatar--sm {
+  width: 32px;
+  height: 32px;
+  font-size: 13px;
+}
+.sn-avatar-letter {
+  line-height: 1;
+  user-select: none;
+}
+.sn-avatar-ico {
+  display: block;
+}
+
+/* Link "cadastro" discreto ao lado do avatar guest */
+.sn-auth-signup {
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  color: var(--nav-dim) !important;
+  font-size: 12.5px;
+}
+.sn-auth-signup:hover {
+  color: var(--nav-amber) !important;
   background: rgba(232, 163, 61, 0.08);
 }
-.sn-auth-slot a.sn-auth-login {
-  color: var(--nav-amber);
-  border-color: rgba(232, 163, 61, 0.55);
+
+/* Link "portal" ao lado do avatar logado */
+.sn-auth-portal {
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(232, 163, 61, 0.4);
+  color: var(--nav-amber) !important;
+  font-size: 12.5px;
 }
-.sn-auth-slot a.sn-auth-primary {
-  color: var(--nav-bg);
-  background: var(--nav-amber);
+.sn-auth-portal:hover {
+  background: rgba(232, 163, 61, 0.12);
   border-color: var(--nav-amber);
-  font-weight: 600;
 }
-.sn-auth-slot a.sn-auth-primary:hover {
-  box-shadow: 0 0 0 3px rgba(232, 163, 61, 0.2);
+
+.sn-auth-label {
+  font-size: 12.5px;
+  color: var(--nav-dim);
 }
+.sn-back-site {
+  font-size: 12.5px;
+  opacity: 0.85;
+}
+
 @media (max-width: 899px) {
-  .sn-auth-slot { margin-right: 0; }
-  .sn-auth-slot { gap: 4px; }
-  .sn-auth-slot a { padding: 6px 7px; font-size: 11px; }
+  .sn-auth-slot { margin-right: 0; gap: 6px; }
+  .sn-avatar { width: 34px; height: 34px; }
+  .sn-auth-signup,
+  .sn-auth-portal { display: none; } /* no mobile: só o círculo; cadastro/portal via drawer */
   .sn-logo img { width: 104px; height: auto; }
   .sn-top-links a.sn-top-ia { padding: 7px 9px; font-size: 11px; }
   .sn-top-cta { display: none; }

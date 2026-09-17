@@ -419,24 +419,56 @@
   // ---------- Nav paint ----------
   async function paintNavAuth() {
     var u = null;
+    var profile = null;
     try { u = await user(); } catch (e) {}
+    if (u) {
+      try { profile = await getProfile(); } catch (e) {}
+    }
+
+    function initialFromUser() {
+      var name = (profile && (profile.full_name || profile.name)) || (u && (u.user_metadata && u.user_metadata.full_name)) || (u && u.email) || '?';
+      name = String(name).trim();
+      if (!name) return '?';
+      // primeira letra legível (ignora email se tiver nome)
+      var ch = name.charAt(0).toUpperCase();
+      if (ch === name.charAt(0) && /[a-zA-ZÀ-ú0-9]/.test(ch)) return ch;
+      return ch || '?';
+    }
+
+    function avatarGuestHtml() {
+      return '<a class="sn-avatar sn-avatar--guest" href="login.html" title="Entrar / cadastro" aria-label="Entrar ou criar conta">' +
+        '<svg class="sn-avatar-ico" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">' +
+        '<circle cx="12" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="1.6"/>' +
+        '<path d="M5 19.5c0-3.5 3.1-6 7-6s7 2.5 7 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>' +
+        '</svg></a>' +
+        '<a class="sn-auth-signup" href="cadastro.html">cadastro</a>';
+    }
+
+    function avatarUserHtml() {
+      var letter = initialFromUser();
+      var email = (u && u.email) || '';
+      var title = email ? ('Conta · ' + email) : 'Minha conta';
+      return '<a class="sn-avatar sn-avatar--user" href="conta.html" title="' + title.replace(/"/g, '&quot;') + '" aria-label="Minha conta">' +
+        '<span class="sn-avatar-letter">' + letter + '</span></a>' +
+        '<a class="sn-auth-portal" href="area-cliente.html" title="Área do cliente">portal</a>';
+    }
 
     function fillSlots() {
       document.querySelectorAll('[data-auth-slot]').forEach(function (node) {
         if (node.classList.contains('dash-topbar-user')) {
           if (u) {
-            node.innerHTML = '<span style="opacity:.7">' + (u.email || 'conta') + '</span>' +
-              '<a href="conta.html">conta</a><a href="index.html">← site</a>';
+            var letter = initialFromUser();
+            node.innerHTML =
+              '<a class="sn-avatar sn-avatar--user sn-avatar--sm" href="conta.html" title="' + ((u.email || 'conta').replace(/"/g, '&quot;')) + '" aria-label="Minha conta">' +
+              '<span class="sn-avatar-letter">' + letter + '</span></a>' +
+              '<a href="conta.html" class="sn-auth-label">conta</a>' +
+              '<a href="index.html" class="sn-back-site">← site</a>';
           } else {
-            node.innerHTML = '<a href="login.html">entrar</a><a href="index.html">← site</a>';
+            node.innerHTML = '<a href="login.html">entrar</a><a href="index.html" class="sn-back-site">← site</a>';
           }
           return;
         }
-        if (u) {
-          node.innerHTML = '<a href="conta.html">conta</a><a href="area-cliente.html">portal</a>';
-        } else {
-          node.innerHTML = '<a href="login.html">entrar</a><a class="sn-auth-primary" href="cadastro.html">cadastro</a>';
-        }
+        node.innerHTML = u ? avatarUserHtml() : avatarGuestHtml();
       });
     }
 
@@ -444,13 +476,14 @@
       var root = document.getElementById('siteNavRoot');
       if (!root) return false;
       fillSlots();
+      // Drawer: login/cadastro só deslogado; minha conta / área do cliente só logado
       root.querySelectorAll('.sn-drawer a[href="login.html"], .sn-drawer a[href="cadastro.html"], .sn-drawer a[href="conta.html"], .sn-drawer a[href="area-cliente.html"]').forEach(function (a) {
         var href = (a.getAttribute('href') || '').toLowerCase();
         if (u) {
           if (href.indexOf('login') !== -1 || href.indexOf('cadastro') !== -1) a.style.display = 'none';
           else a.style.display = '';
         } else {
-          if (href.indexOf('conta') !== -1 || href.indexOf('area-cliente') !== -1) a.style.display = 'none';
+          if (href.indexOf('conta.html') !== -1 || href.indexOf('area-cliente') !== -1) a.style.display = 'none';
           else a.style.display = '';
         }
       });
