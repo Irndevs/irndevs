@@ -71,6 +71,7 @@
   }
 </style>
   <link rel="stylesheet" href="assets/css/footer.css?v=20260917d">
+  <link rel="stylesheet" href="assets/css/pages/demo-mock-data.css">
 </head>
 <body>
 <div class="wrap crumb"><a href="index.html">~</a> / <a href="ia.html">ia</a> / <span>demo-mock</span></div>
@@ -93,16 +94,16 @@
     </div>
     <div class="demo-row">
       <div>
-        <label for="domainDesc" style="margin-top:0">descrição (opcional)</label>
+        <label for="domainDesc" class="inline-style-1">descrição (opcional)</label>
         <textarea id="domainDesc" placeholder="Ex.: clínica com tutores, pets, consultas e status de vacina"></textarea>
       </div>
       <div>
-        <label for="countInput" style="margin-top:0">registros</label>
+        <label for="countInput" class="inline-style-2">registros</label>
         <input type="number" id="countInput" min="3" max="20" value="8">
       </div>
     </div>
-    <label for="schemaInput" style="margin-top:12px">schema opcional (ex: id:id, name:name, email:email, status:enum:ativo|inativo)</label>
-    <input type="text" id="schemaInput" placeholder="deixe vazio para usar domínio pré-definido" style="width:100%;background:#0c0e0b;border:1px solid var(--border,#2a3028);color:#b8c4a8;font-family:var(--mono,monospace);font-size:12.5px;padding:10px 12px;box-sizing:border-box;margin-bottom:8px">
+    <label for="schemaInput" class="inline-style-3">schema opcional (ex: id:id, name:name, email:email, status:enum:ativo|inativo)</label>
+    <input type="text" id="schemaInput" placeholder="deixe vazio para usar domínio pré-definido" class="inline-style-4">
     <div class="demo-actions">
       <button type="button" class="demo-btn" id="btnGenerate">gerar JSON</button>
       <button type="button" class="demo-btn secondary" id="btnCopyPrompt">copiar prompt para IA</button>
@@ -114,7 +115,7 @@
     <label>resultado</label>
     <div class="demo-result empty" id="resultBox">escolha um domínio e clique em gerar JSON</div>
     <div class="demo-meta" id="resultMeta"></div>
-    <div class="demo-actions" style="margin-top:12px">
+    <div class="demo-actions inline-style-5">
       <button type="button" class="demo-btn secondary" id="btnCopyResult" disabled>copiar JSON</button>
     </div>
   </div>
@@ -123,10 +124,10 @@
     <strong>como funciona</strong> · Templates locais com nomes, datas e relações entre entidades. Não chama API. Use “copiar prompt para IA” quando precisar de campos customizados ou volume maior.
   </div>
 
-  <p style="margin-top:28px;font-family:var(--mono,monospace);font-size:13px;color:var(--text-faint,#5a6258)">
-    <a href="ia.html" style="color:var(--ia-amber,#c9a227)">← hub de IA</a>
-    · <a href="demo-commit-ia.html" style="color:var(--ia-amber,#c9a227)">demo: commits</a>
-    · <a href="artigo-hybrid-search.html" style="color:var(--ia-amber,#c9a227)">artigo: hybrid search</a>
+  <p class="inline-style-6">
+    <a href="ia.html" class="inline-style-7">← hub de IA</a>
+    · <a href="demo-commit-ia.html" class="inline-style-8">demo: commits</a>
+    · <a href="artigo-hybrid-search.html" class="inline-style-9">artigo: hybrid search</a>
   </p>
 </div>
 
@@ -464,7 +465,7 @@
   });
 })();
 </script>
-<p style="margin:24px 0"><button type="button" id="btnSaveIa" style="background:#e8a33d;color:#10130f;border:0;padding:10px 16px;border-radius:8px;font-weight:600;cursor:pointer">salvar resultado na conta</button></p>
+<p class="inline-style-10"><button type="button" id="btnSaveIa" class="inline-style-11">salvar resultado na conta</button></p>
 <script>
 document.addEventListener("DOMContentLoaded",function(){
   var b=document.getElementById("btnSaveIa");

@@ -37,6 +37,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"IA: RAG com pgvector","step":[{"@type":"HowToStep","name":"Setup Postgres + pgvector","text":"Instale extensão e crie tabela"},{"@type":"HowToStep","name":"Gerar embeddings","text":"Processe documentos"},{"@type":"HowToStep","name":"Implementar retrieval","text":"Query por similaridade"},{"@type":"HowToStep","name":"Integrar LLM","text":"Monte o prompt RAG"},{"@type":"HowToStep","name":"Testar e otimizar","text":"Avalie respostas"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"O que é RAG com pgvector?","acceptedAnswer":{"@type":"Answer","text":"RAG (Retrieval-Augmented Generation) com pgvector é uma técnica que combina busca semântica em PostgreSQL com um LLM para responder perguntas com base em documentos da empresa."}},{"@type":"Question","name":"Por que usar pgvector em vez de um vector database dedicado?","acceptedAnswer":{"@type":"Answer","text":"pgvector permite manter tudo no PostgreSQL, simplificando a stack, reduzindo custos e aproveitando transações e backups já existentes."}},{"@type":"Question","name":"Qual o tamanho mínimo de chunks recomendado?","acceptedAnswer":{"@type":"Answer","text":"Em geral 300–800 tokens com overlap de 10–20%. O ideal depende do tipo de documento e do modelo de embedding."}},{"@type":"Question","name":"Como avaliar a qualidade do RAG em produção?","acceptedAnswer":{"@type":"Answer","text":"Use métricas como hit rate, MRR, faithfulness e relevância humana. Monitore também latência e taxa de alucinação."}}]}</script>
   <link rel="stylesheet" href="assets/css/footer.css?v=20260917d">
+  <link rel="stylesheet" href="assets/css/pages/artigo-rag-pgvector.css">
 </head>
 <body>
 <!-- nav: site-nav.js -->
@@ -188,10 +189,10 @@ Pergunta do usuário: {pergunta}</code></pre>
     <p>Com esse esqueleto você já tem um assistente interno utilizável. O resto é iteração sobre qualidade dos chunks, modelo de embedding e prompt de geração.</p>
     <p class="next-link"><a href="ia.html">← voltar ao hub de IA</a> · <a href="artigo-ollama-local.html">próximo: Copilot local com Ollama →</a></p>
   </article>
-<div class="wrap" style="margin-top:2rem"><h2>Leia também</h2><ul><li><a href="artigo-checklist-rag.html">IA: Checklist de produção para RAG</a></li><li><a href="artigo-hybrid-search.html">IA: Busca semântica e hybrid search</a></li><li><a href="artigo-ollama-local.html">IA: Ollama local</a></li><li><a href="ia.html">Hub de IA</a></li></ul></div>
+<div class="wrap inline-style-1"><h2>Leia também</h2><ul><li><a href="artigo-checklist-rag.html">IA: Checklist de produção para RAG</a></li><li><a href="artigo-hybrid-search.html">IA: Busca semântica e hybrid search</a></li><li><a href="artigo-ollama-local.html">IA: Ollama local</a></li><li><a href="ia.html">Hub de IA</a></li></ul></div>
 </div>
 
-<div class="wrap" style="margin-top:2.5rem;padding:1.5rem;border:1px solid var(--border,#2a3126);border-radius:12px;background:var(--bg-raised,#171b16)"><h2 style="margin-bottom:0.5rem">Quer implementar isso na sua empresa?</h2><p style="color:var(--text-dim,#8f9587);margin-bottom:1rem">Ajudamos times a colocar RAG, agentes e modelos locais em produção com segurança e observabilidade.</p><p><a href="contato.html" style="display:inline-block;background:#e8a33d;color:#10130f;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600;margin-right:12px">Falar com a IRN Devs</a> <a href="como-contratar.html" style="color:#e8a33d;text-decoration:underline">Como contratar →</a></p></div>
+<div class="wrap inline-style-2"><h2 class="inline-style-3">Quer implementar isso na sua empresa?</h2><p class="inline-style-4">Ajudamos times a colocar RAG, agentes e modelos locais em produção com segurança e observabilidade.</p><p><a href="contato.html" class="inline-style-5">Falar com a IRN Devs</a> <a href="como-contratar.html" class="inline-style-6">Como contratar →</a></p></div>
 <footer class="site-footer-v2" role="contentinfo">
   <div class="wrap footer-grid">
     <div class="footer-brand">

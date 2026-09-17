@@ -37,6 +37,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"IA: Checklist de produção para RAG","step":[{"@type":"HowToStep","name":"Preparar dados","text":"Limpe e estruture documentos"},{"@type":"HowToStep","name":"Escolher embeddings","text":"Selecione modelo de embedding adequado"},{"@type":"HowToStep","name":"Indexar com pgvector","text":"Crie índices e teste retrieval"},{"@type":"HowToStep","name":"Avaliar qualidade","text":"Meça precisão e latência"},{"@type":"HowToStep","name":"Monitorar em produção","text":"Logs, alertas e feedback"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Quais são os itens críticos de um checklist de RAG em produção?","acceptedAnswer":{"@type":"Answer","text":"Dados limpos, embeddings consistentes, avaliação de retrieval, monitoramento de latência, fallback e controle de alucinações."}},{"@type":"Question","name":"Preciso de um vector database separado?","acceptedAnswer":{"@type":"Answer","text":"Não necessariamente. pgvector no PostgreSQL atende bem a maioria dos casos até dezenas de milhões de vetores."}},{"@type":"Question","name":"Como evitar alucinações no RAG?","acceptedAnswer":{"@type":"Answer","text":"Use prompts que forçam citação de fontes, filtre por score de similaridade e implemente guardrails de verificação."}}]}</script>
   <link rel="stylesheet" href="assets/css/footer.css?v=20260917d">
+  <link rel="stylesheet" href="assets/css/pages/artigo-checklist-rag.css">
 </head>
 <body>
 <!-- nav: site-nav.js -->
@@ -138,10 +139,10 @@
     <p>Se a maior parte dos itens ainda estiver aberta, o sistema é um protótipo útil — não um produto. Feche segurança e isolamento de tenant antes de escala de usuários.</p>
     <p class="next-link"><a href="artigo-rag-pgvector.html">← RAG com pgvector</a> · <a href="artigo-hybrid-search.html">hybrid search</a> · <a href="ia.html">hub de IA</a></p>
   </article>
-<div class="wrap" style="margin-top:2rem"><h2>Leia também</h2><ul><li><a href="artigo-rag-pgvector.html">IA: RAG com pgvector</a></li><li><a href="artigo-checklist-rag.html">IA: Checklist RAG</a></li><li><a href="artigo-hybrid-search.html">IA: Hybrid search</a></li><li><a href="ia.html">Hub de IA</a></li></ul></div>
+<div class="wrap inline-style-1"><h2>Leia também</h2><ul><li><a href="artigo-rag-pgvector.html">IA: RAG com pgvector</a></li><li><a href="artigo-checklist-rag.html">IA: Checklist RAG</a></li><li><a href="artigo-hybrid-search.html">IA: Hybrid search</a></li><li><a href="ia.html">Hub de IA</a></li></ul></div>
 </div>
 
-<div class="wrap" style="margin-top:2.5rem;padding:1.5rem;border:1px solid var(--border,#2a3126);border-radius:12px;background:var(--bg-raised,#171b16)"><h2 style="margin-bottom:0.5rem">Quer implementar isso na sua empresa?</h2><p style="color:var(--text-dim,#8f9587);margin-bottom:1rem">Ajudamos times a colocar RAG, agentes e modelos locais em produção com segurança e observabilidade.</p><p><a href="contato.html" style="display:inline-block;background:#e8a33d;color:#10130f;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600;margin-right:12px">Falar com a IRN Devs</a> <a href="como-contratar.html" style="color:#e8a33d;text-decoration:underline">Como contratar →</a></p></div>
+<div class="wrap inline-style-2"><h2 class="inline-style-3">Quer implementar isso na sua empresa?</h2><p class="inline-style-4">Ajudamos times a colocar RAG, agentes e modelos locais em produção com segurança e observabilidade.</p><p><a href="contato.html" class="inline-style-5">Falar com a IRN Devs</a> <a href="como-contratar.html" class="inline-style-6">Como contratar →</a></p></div>
 <footer class="site-footer-v2" role="contentinfo">
   <div class="wrap footer-grid">
     <div class="footer-brand">

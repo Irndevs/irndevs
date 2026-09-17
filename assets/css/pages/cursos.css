@@ -58,3 +58,7 @@ footer a:hover{color:var(--amber)}
   .mod-item{padding:14px 15px;gap:12px}
   .mod-name{font-size:14px}
 }
+
+.inline-style-1 { margin-left:10px }
+.inline-style-2 { margin-left:10px }
+.inline-style-3 { margin-left:10px }

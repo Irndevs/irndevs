@@ -1,7 +1,7 @@
 :root {
     --bg: #10130f; --bg-raised: #171b16; --bg-line: #1f251d; --border: #2a3126;
     --amber: #e8a33d; --amber-dim: #b3801f; --green: #7fae6a; --red: #c9694f;
-    --text: #eae6d9; --text-dim: #8f9587; --text-faint: #5c6157;
+    --text: #eae6d9; --text-dim: #8f9587; --text-faint: #828a7c;
     --mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace; --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -103,3 +103,7 @@
 .inline-style-3 { color:var(--text-dim); }
 .inline-style-4 { display:none }
 .inline-style-5 { display:flex; gap:20px; }
+
+.inline-style-1 { display:none!important }
+.inline-style-2 { font-size:12.5px;color:var(--text-faint);font-family:var(--mono);margin:12px 0 16px;line-height:1.5 }
+.inline-style-3 { color:var(--amber) }

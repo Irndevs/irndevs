@@ -1,6 +1,6 @@
 :root {
     --bg: #10130f; --border: #2a3126; --amber: #e8a33d; --green: #7fae6a;
-    --text: #eae6d9; --text-dim: #8f9587; --text-faint: #5c6157;
+    --text: #eae6d9; --text-dim: #8f9587; --text-faint: #828a7c;
     --mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace; --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }

@@ -1,0 +1,13 @@
+/* IRN Devs — estilos específicos de demo-mock-data.html */
+
+.inline-style-1 { margin-top:0 }
+.inline-style-2 { margin-top:0 }
+.inline-style-3 { margin-top:12px }
+.inline-style-4 { width:100%;background:#0c0e0b;border:1px solid var(--border,#2a3028);color:#b8c4a8;font-family:var(--mono,monospace);font-size:12.5px;padding:10px 12px;box-sizing:border-box;margin-bottom:8px }
+.inline-style-5 { margin-top:12px }
+.inline-style-6 { margin-top:28px;font-family:var(--mono,monospace);font-size:13px;color:var(--text-faint,#5a6258) }
+.inline-style-7 { color:var(--ia-amber,#c9a227) }
+.inline-style-8 { color:var(--ia-amber,#c9a227) }
+.inline-style-9 { color:var(--ia-amber,#c9a227) }
+.inline-style-10 { margin:24px 0 }
+.inline-style-11 { background:#e8a33d;color:#10130f;border:0;padding:10px 16px;border-radius:8px;font-weight:600;cursor:pointer }

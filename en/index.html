@@ -15,7 +15,7 @@
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
 
 <style>
-  :root{--bg:#10130f;--border:#2a3126;--amber:#e8a33d;--green:#7fae6a;--text:#eae6d9;--dim:#8f9587;--faint:#5c6157;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+  :root{--bg:#10130f;--border:#2a3126;--amber:#e8a33d;--green:#7fae6a;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
   a{color:var(--amber);text-decoration:none}
@@ -23,6 +23,8 @@
   .lang{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:24px}
   .term{background:#171b16;border:1px solid var(--border);padding:18px 20px;font-family:var(--mono);font-size:13.5px;line-height:1.7;margin-bottom:28px}
   .green{color:var(--green)}.dim{color:var(--faint)}.amber{color:var(--amber)}
+  .lang-current{color:var(--amber)}
+  .section-title{margin-top:32px;font-size:20px}
   h1{font-size:28px;margin-bottom:12px}
   p{color:var(--dim);margin-bottom:14px}
   .links{display:flex;flex-wrap:wrap;gap:16px;margin-top:28px;font-family:var(--mono);font-size:13px}
@@ -40,7 +42,7 @@
 </head>
 <body>
 <div class="wrap">
-  <p class="lang"><a href="../index.html">PT</a> · <strong style="color:var(--amber)">EN</strong></p>
+  <p class="lang"><a href="../index.html">PT</a> · <strong class="lang-current">EN</strong></p>
   <div class="term">
     <div><span class="green">irn@serv-irn</span><span class="dim">:~$</span> whoami --role</div>
     <div class="amber">dev · automation · analytics</div>
@@ -59,7 +61,7 @@
     <a href="mailto:contato@irndevs.com">contato@irndevs.com</a>
   </div>
 
-  <h2 style="margin-top:32px;font-size:20px">AI for production teams</h2>
+  <h2 class="section-title">AI for production teams</h2>
   <p>We help teams ship RAG systems, local models (Ollama), agents with guardrails, and hybrid search — with the same operational discipline we apply to infrastructure.</p>
   <p>Core topics: retrieval quality evaluation, prompt security, cost control, and observability for LLM workloads.</p>
   <div class="links">

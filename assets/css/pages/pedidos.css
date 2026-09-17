@@ -1,0 +1,5 @@
+/* IRN Devs — estilos específicos de pedidos.html */
+
+.inline-style-1 { color:#e88;font-family:var(--dash-mono);font-size:13px }
+.inline-style-2 { color:var(--dash-faint);font-family:var(--dash-mono);font-size:13px }
+.inline-style-3 { margin-top:6px;font-size:12px;color:var(--dash-amber) }

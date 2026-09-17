@@ -21,6 +21,7 @@
 <meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
 <meta property="og:site_name" content="IRN Devs">
   <link rel="stylesheet" href="assets/css/footer.css?v=20260917d">
+  <link rel="stylesheet" href="assets/css/pages/area-cliente.css">
 </head>
 <body class="dash-app">
 <div class="dash-shell">
@@ -47,9 +48,9 @@
       <div class="dash-stat"><a href="conta.html#checklists"><div class="dash-stat-value" id="statChecklists">—</div><div class="dash-stat-label">checklists</div></a></div>
       <div class="dash-stat"><div class="dash-stat-value" id="statStatus">OK</div><div class="dash-stat-label">status</div></div>
     </div>
-    <div class="dash-card" style="margin-bottom:16px">
-      <div class="dash-card-title">notificações <a href="#" id="markAllRead" style="float:right;font-size:12px;color:var(--dash-amber)">marcar todas como lidas</a></div>
-      <div id="notifList"><p style="color:var(--dash-faint);font-size:13px">Carregando…</p></div>
+    <div class="dash-card inline-style-1">
+      <div class="dash-card-title">notificações <a href="#" id="markAllRead" class="inline-style-2">marcar todas como lidas</a></div>
+      <div id="notifList"><p class="inline-style-3">Carregando…</p></div>
     </div>
     <div class="dash-card">
       <div class="dash-card-title">atividade recente</div>
@@ -80,13 +81,13 @@ document.addEventListener('DOMContentLoaded', async function () {
     var notifs = await IRNAuth.listNotifications(10);
     var nbox = document.getElementById('notifList');
     if (nbox) {
-      if (!notifs.length) nbox.innerHTML = '<p style="color:var(--dash-faint);font-size:13px">Nenhuma notificação.</p>';
+      if (!notifs.length) nbox.innerHTML = '<p class="inline-style-4">Nenhuma notificação.</p>';
       else {
         nbox.innerHTML = notifs.map(function(n){
-          var unread = !n.read_at ? 'font-weight:600;' : '';
-          return '<div style="padding:8px 0;border-bottom:1px solid var(--dash-border);' + unread + '">' +
-            '<div style="font-size:13px">' + (n.title||'') + '</div>' +
-            '<div style="font-size:12px;color:var(--dash-faint)">' + (n.body||'') + ' · ' +
+          var cls = 'dash-notif' + (!n.read_at ? ' dash-notif--unread' : '');
+          return '<div class="' + cls + '">' +
+            '<div class="inline-style-5">' + (n.title||'') + '</div>' +
+            '<div class="inline-style-6">' + (n.body||'') + ' · ' +
             new Date(n.created_at).toLocaleString('pt-BR') + '</div></div>';
         }).join('');
       }
@@ -107,7 +108,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   items.sort(function (a, b) { return new Date(b.t) - new Date(a.t); });
   var box = document.getElementById('activity');
   if (!items.length) {
-    box.innerHTML = '<p style="color:var(--dash-faint);font-family:var(--dash-mono);font-size:13px">Nenhuma atividade ainda.</p>';
+    box.innerHTML = '<p class="inline-style-7">Nenhuma atividade ainda.</p>';
     return;
   }
   items.slice(0, 10).forEach(function (it) {
@@ -133,7 +134,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     card.className = 'dash-card';
     card.style.marginTop = '16px';
     card.innerHTML = '<div class="dash-card-title">curso python</div>' +
-      '<p style="font-family:var(--dash-mono);font-size:13px;color:var(--dash-dim)">' + done + ' / 8 módulos concluídos</p>' +
+      '<p class="inline-style-8">' + done + ' / 8 módulos concluídos</p>' +
       '<a href="cursos.html" class="dash-link-amber">continuar curso →</a>' +
       (done >= 8 ? ' · <a href="certificado-python.html" class="dash-link-amber">certificado</a>' : '');
     host.parentNode.insertBefore(card, host.nextSibling);

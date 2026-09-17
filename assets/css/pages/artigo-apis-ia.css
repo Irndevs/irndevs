@@ -1,0 +1,7 @@
+/* IRN Devs — estilos específicos de artigo-apis-ia.html */
+
+.inline-style-1 { margin-top:2.5rem;padding:1.5rem;border:1px solid var(--border,#2a3126);border-radius:12px;background:var(--bg-raised,#171b16) }
+.inline-style-2 { margin-bottom:0.5rem }
+.inline-style-3 { color:var(--text-dim,#8f9587);margin-bottom:1rem }
+.inline-style-4 { display:inline-block;background:#e8a33d;color:#10130f;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600;margin-right:12px }
+.inline-style-5 { color:#e8a33d;text-decoration:underline }

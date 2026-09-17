@@ -21,22 +21,22 @@
   <main class="dash-main">
     <h1 class="dash-h1">Painel admin</h1>
     <p class="dash-lede">Orçamentos e pedidos de todos os clientes (liberado por policy de admin no Supabase — veja <code>supabase/admin-policies.sql</code>).</p>
-    <div class="dash-card" style="margin-bottom:16px">
+    <div class="dash-card inline-style-1">
       <div class="dash-card-title">como ativar admin</div>
-      <ol style="color:var(--dash-dim);font-size:14px;line-height:1.7;padding-left:18px">
+      <ol class="inline-style-2">
         <li>No Supabase SQL: <code>update profiles set is_admin = true where email = 'seu@email.com';</code></li>
         <li>Rode <code>supabase/admin-policies.sql</code> no SQL Editor (uma vez só)</li>
         <li>Configure Storage bucket <code>order-files</code> (privado) + policies</li>
         <li>Para e-mail real: conecte Resend/SendGrid via Edge Function ao inserir em <code>notifications</code></li>
       </ol>
     </div>
-    <div class="dash-card" style="margin-bottom:16px">
+    <div class="dash-card inline-style-3">
       <div class="dash-card-title">orçamentos</div>
-      <div id="quotesList"><p style="color:var(--dash-faint)">Carregando…</p></div>
+      <div id="quotesList"><p class="inline-style-4">Carregando…</p></div>
     </div>
     <div class="dash-card">
       <div class="dash-card-title">pedidos de todos os clientes</div>
-      <div id="ordersList"><p style="color:var(--dash-faint)">Carregando…</p></div>
+      <div id="ordersList"><p class="inline-style-5">Carregando…</p></div>
     </div>
   </main>
 </div>
@@ -47,8 +47,6 @@
 <script>
 (function () {
   var ORDER_STATUSES = ['recebido', 'em_analise', 'em_execucao', 'aguardando_cliente', 'entregue', 'cancelado'];
-  var fieldStyle = 'background:var(--dash-panel);border:1px solid var(--dash-border);color:var(--dash-text);' +
-    'border-radius:6px;padding:8px 10px;font-family:var(--dash-sans);font-size:13.5px';
 
   function reaisToCents(v) {
     var n = parseFloat(String(v).replace(',', '.'));
@@ -57,7 +55,7 @@
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
   function renderQuotes(rows, box) {
-    if (!rows.length) { box.innerHTML = '<p style="color:var(--dash-faint)">Nenhum orçamento no sistema ainda.</p>'; return; }
+    if (!rows.length) { box.innerHTML = '<p class="inline-style-6">Nenhum orçamento no sistema ainda.</p>'; return; }
     var pendentes = rows.filter(function (q) { return q.status === 'enviado' || q.status === 'em_analise'; });
     var outros = rows.filter(function (q) { return q.status !== 'enviado' && q.status !== 'em_analise'; });
 
@@ -66,14 +64,14 @@
       html += pendentes.map(function (q) {
         var cliente = (q.profiles && (q.profiles.full_name || q.profiles.email)) || 'cliente desconhecido';
         return '<div class="dash-list-item" data-quote-row="' + q.id + '">' +
-          '<div class="dash-list-head">#' + q.id + ' · ' + esc(q.title) + ' · <span style="color:var(--dash-amber)">' + q.status + '</span></div>' +
-          '<div class="dash-list-body" style="color:var(--dash-faint)">' + esc(cliente) + (q.notes ? '<br>' + esc(q.notes) : '') + '</div>' +
-          '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">' +
-          '<input type="number" step="0.01" placeholder="valor (R$)" class="q-amount" style="' + fieldStyle + ';width:120px">' +
-          '<input type="text" placeholder="prazo (ex: 10 dias úteis)" class="q-deadline" style="' + fieldStyle + ';flex:1;min-width:160px">' +
+          '<div class="dash-list-head">#' + q.id + ' · ' + esc(q.title) + ' · <span class="inline-style-7">' + q.status + '</span></div>' +
+          '<div class="dash-list-body inline-style-8">' + esc(cliente) + (q.notes ? '<br>' + esc(q.notes) : '') + '</div>' +
+          '<div class="inline-style-9">' +
+          '<input type="number" step="0.01" placeholder="valor (R$)" class="q-amount dash-input dash-input--amount">' +
+          '<input type="text" placeholder="prazo (ex: 10 dias úteis)" class="q-deadline dash-input dash-input--grow">' +
           '</div>' +
-          '<textarea placeholder="resposta pro cliente" class="q-response" style="' + fieldStyle + ';width:100%;margin-top:8px;min-height:60px;resize:vertical"></textarea>' +
-          '<button type="button" class="dash-btn" data-send-quote="' + q.id + '" style="margin-top:8px">enviar resposta</button>' +
+          '<textarea placeholder="resposta pro cliente" class="q-response dash-input dash-input--block"></textarea>' +
+          '<button type="button" class="dash-btn inline-style-10" data-send-quote="' + q.id + '">enviar resposta</button>' +
           '</div>';
       }).join('');
     }
@@ -81,11 +79,11 @@
       html += outros.map(function (q) {
         var cliente = (q.profiles && (q.profiles.full_name || q.profiles.email)) || 'cliente desconhecido';
         return '<div class="dash-list-item"><div class="dash-list-head">#' + q.id + ' · ' + esc(q.title) + ' · ' + q.status + '</div>' +
-          '<div class="dash-list-body" style="color:var(--dash-faint)">' + esc(cliente) +
+          '<div class="dash-list-body inline-style-11">' + esc(cliente) +
           (q.admin_response ? '<br>resposta: ' + esc(q.admin_response) : '') + '</div></div>';
       }).join('');
     }
-    box.innerHTML = html || '<p style="color:var(--dash-faint)">Nenhum orçamento pendente.</p>';
+    box.innerHTML = html || '<p class="inline-style-12">Nenhum orçamento pendente.</p>';
 
     box.addEventListener('click', async function (e) {
       var btn = e.target.closest('[data-send-quote]');
@@ -108,16 +106,16 @@
   }
 
   function renderOrders(rows, box) {
-    if (!rows.length) { box.innerHTML = '<p style="color:var(--dash-faint)">Nenhum pedido no sistema ainda.</p>'; return; }
+    if (!rows.length) { box.innerHTML = '<p class="inline-style-13">Nenhum pedido no sistema ainda.</p>'; return; }
     box.innerHTML = rows.map(function (r) {
       var cliente = (r.profiles && (r.profiles.full_name || r.profiles.email)) || 'cliente desconhecido';
       var options = ORDER_STATUSES.map(function (s) {
         return '<option value="' + s + '"' + (s === r.status ? ' selected' : '') + '>' + s + '</option>';
       }).join('');
       return '<div class="dash-list-item"><div class="dash-list-head">#' + r.id + ' · ' + esc(r.title) + '</div>' +
-        '<div class="dash-list-body" style="color:var(--dash-faint)">' + esc(cliente) + '<br><a href="pedido.html?id=' + r.id + '">abrir →</a></div>' +
-        '<div style="display:flex;gap:8px;margin-top:10px;align-items:center">' +
-        '<select class="o-status" style="' + fieldStyle + '">' + options + '</select>' +
+        '<div class="dash-list-body inline-style-14">' + esc(cliente) + '<br><a href="pedido.html?id=' + r.id + '">abrir →</a></div>' +
+        '<div class="inline-style-15">' +
+        '<select class="o-status dash-input">' + options + '</select>' +
         '<button type="button" class="dash-btn ghost" data-save-order="' + r.id + '">salvar status</button>' +
         '</div></div>';
     }).join('');
@@ -141,14 +139,14 @@
 
   var quotesBox, ordersBox;
   async function loadQuotes() {
-    quotesBox.innerHTML = '<p style="color:var(--dash-faint)">Carregando…</p>';
+    quotesBox.innerHTML = '<p class="inline-style-16">Carregando…</p>';
     try { renderQuotes(await IRNAuth.adminListAllQuotes(), quotesBox); }
-    catch (e) { quotesBox.innerHTML = '<p style="color:#e88">' + (e.message || e) + '</p>'; }
+    catch (e) { quotesBox.innerHTML = '<p class="inline-style-17">' + (e.message || e) + '</p>'; }
   }
   async function loadOrders() {
-    ordersBox.innerHTML = '<p style="color:var(--dash-faint)">Carregando…</p>';
+    ordersBox.innerHTML = '<p class="inline-style-18">Carregando…</p>';
     try { renderOrders(await IRNAuth.adminListAllOrders(), ordersBox); }
-    catch (e) { ordersBox.innerHTML = '<p style="color:#e88">' + (e.message || e) + '</p>'; }
+    catch (e) { ordersBox.innerHTML = '<p class="inline-style-19">' + (e.message || e) + '</p>'; }
   }
 
   document.addEventListener('DOMContentLoaded', async function () {
@@ -158,7 +156,7 @@
     var admin = false;
     try { admin = await IRNAuth.isAdmin(); } catch (e) {}
     if (!admin) {
-      var msg = '<p style="color:#e88">Seu perfil não tem is_admin=true. Rode o SQL indicado acima.</p>';
+      var msg = '<p class="inline-style-20">Seu perfil não tem is_admin=true. Rode o SQL indicado acima.</p>';
       quotesBox.innerHTML = msg; ordersBox.innerHTML = '';
       return;
     }

@@ -11,7 +11,7 @@
   --dash-amber-dim: #b3801f;
   --dash-text: #eae6d9;
   --dash-dim: #8f9587;
-  --dash-faint: #6b7166;
+  --dash-faint: #8a9183;
   --dash-green: #7fae6a;
   --dash-mono: ui-monospace, 'Cascadia Code', Menlo, Consolas, monospace;
   --dash-sans: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
@@ -376,3 +376,24 @@ body.dash-app .sn-burger { display: none !important; }
 .dash-sep{margin-top:22px;padding-top:18px;border-top:1px solid var(--dash-border)}
 .dash-faint-sm{font-family:var(--dash-mono);font-size:12.5px;color:var(--dash-faint);margin-bottom:12px}
 
+
+/* Semantic utilities for dynamic JS (admin / pedido / area-cliente) */
+.dash-error { color: #e88; }
+.dash-status { color: var(--dash-amber); }
+.dash-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; align-items: center; }
+.dash-actions--spaced { margin-top: 8px; }
+.dash-input {
+  background: var(--dash-raised);
+  border: 1px solid var(--dash-border);
+  color: var(--dash-text);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-family: var(--dash-mono);
+  font-size: 13px;
+}
+.dash-input--amount { width: 120px; }
+.dash-input--grow { flex: 1; min-width: 160px; }
+.dash-input--block { width: 100%; margin-top: 8px; min-height: 60px; resize: vertical; }
+.dash-card--spaced { margin-bottom: 16px; }
+.dash-notif { padding: 8px 0; border-bottom: 1px solid var(--dash-border); }
+.dash-notif--unread { font-weight: 600; }

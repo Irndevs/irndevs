@@ -1,0 +1,8 @@
+.quote-actions { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .quote-actions button { padding: 8px 14px; border-radius: 8px; border: 0; cursor: pointer; font-weight: 600; font-size: 13px; }
+  .btn-accept { background: var(--dash-green); color: #0c0e0b; }
+  .btn-refuse { background: transparent; color: #e88; border: 1px solid #e88 !important; }
+  .new-quote { margin-bottom: 20px; }
+  .new-quote input, .new-quote textarea { width: 100%; background: var(--dash-raised); border: 1px solid var(--dash-border); color: var(--dash-text); padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; font-family: inherit; }
+  .new-quote button { background: var(--dash-amber); color: #10130f; border: 0; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+  .admin-box { background: var(--dash-raised); border: 1px solid var(--dash-border); border-radius: 8px; padding: 12px; margin-top: 8px; font-size: 13px; }

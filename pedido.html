@@ -31,6 +31,7 @@
   .msg-form button { background: var(--dash-amber); color: #10130f; border: 0; padding: 10px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; }
 </style>
   <link rel="stylesheet" href="assets/css/footer.css?v=20260917d">
+  <link rel="stylesheet" href="assets/css/pages/pedido.css">
 </head>
 <body class="dash-app">
 <div class="dash-shell">
@@ -46,33 +47,33 @@
     <p class="dash-crumb"><a href="area-cliente.html">portal</a> / <a href="pedidos.html">pedidos</a> / <span id="crumbId">#—</span></p>
     <h1 class="dash-h1" id="title">Carregando…</h1>
     <p class="dash-lede"><span class="status-badge" id="statusBadge">—</span>
-      <span id="amount" style="margin-left:12px;color:var(--dash-dim)"></span>
-      <span id="expected" style="margin-left:12px;color:var(--dash-faint);font-size:13px"></span>
+      <span id="amount" class="inline-style-1"></span>
+      <span id="expected" class="inline-style-2"></span>
     </p>
 
-    <div class="dash-card" style="margin-bottom:16px">
+    <div class="dash-card inline-style-3">
       <div class="dash-card-title">notas</div>
-      <p id="notes" style="color:var(--dash-dim);font-size:14px;white-space:pre-wrap">—</p>
+      <p id="notes" class="inline-style-4">—</p>
     </div>
 
-    <div class="dash-card" style="margin-bottom:16px">
+    <div class="dash-card inline-style-5">
       <div class="dash-card-title">timeline</div>
       <ul class="timeline" id="timeline"><li><span class="ev-text">Carregando…</span></li></ul>
     </div>
 
-    <div class="dash-card" style="margin-bottom:16px">
+    <div class="dash-card inline-style-6">
       <div class="dash-card-title">arquivos</div>
-      <div id="files"><p style="color:var(--dash-faint);font-size:13px">Nenhum arquivo.</p></div>
+      <div id="files"><p class="inline-style-7">Nenhum arquivo.</p></div>
       <div class="upload-zone">
         <input type="file" id="fileInput" />
-        <button type="button" id="btnUpload" style="margin-top:8px;background:var(--dash-amber);color:#10130f;border:0;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600">enviar arquivo</button>
-        <p id="uploadMsg" style="font-size:12px;color:var(--dash-faint);margin-top:6px"></p>
+        <button type="button" id="btnUpload" class="inline-style-8">enviar arquivo</button>
+        <p id="uploadMsg" class="inline-style-9"></p>
       </div>
     </div>
 
     <div class="dash-card">
       <div class="dash-card-title">mensagens</div>
-      <div id="messages"><p style="color:var(--dash-faint);font-size:13px">Nenhuma mensagem.</p></div>
+      <div id="messages"><p class="inline-style-10">Nenhuma mensagem.</p></div>
       <div class="msg-form">
         <input type="text" id="msgInput" placeholder="Escreva uma mensagem…" maxlength="2000" />
         <button type="button" id="btnMsg">enviar</button>
@@ -131,13 +132,13 @@ document.addEventListener('DOMContentLoaded', async function () {
     var files = [];
     try { files = await IRNAuth.listOrderFiles(id); } catch (e) {}
     var box = document.getElementById('files');
-    if (!files.length) { box.innerHTML = '<p style="color:var(--dash-faint);font-size:13px">Nenhum arquivo.</p>'; return; }
+    if (!files.length) { box.innerHTML = '<p class="inline-style-11">Nenhum arquivo.</p>'; return; }
     box.innerHTML = '';
     for (var i = 0; i < files.length; i++) {
       (function (f) {
         var row = document.createElement('div');
         row.className = 'file-row';
-        row.innerHTML = '<strong>' + f.file_name + '</strong> <span style="color:var(--dash-faint);font-size:12px">' +
+        row.innerHTML = '<strong>' + f.file_name + '</strong> <span class="inline-style-12">' +
           (f.file_size ? (f.file_size / 1024).toFixed(1) + ' KB' : '') + ' · ' +
           new Date(f.created_at).toLocaleString('pt-BR') + '</span> ';
         var a = document.createElement('a');
@@ -176,9 +177,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     var msgs = [];
     try { msgs = await IRNAuth.listOrderMessages(id); } catch (e) {}
     var box = document.getElementById('messages');
-    if (!msgs.length) { box.innerHTML = '<p style="color:var(--dash-faint);font-size:13px">Nenhuma mensagem.</p>'; return; }
+    if (!msgs.length) { box.innerHTML = '<p class="inline-style-13">Nenhuma mensagem.</p>'; return; }
     box.innerHTML = msgs.map(function (m) {
-      return '<div class="msg-row' + (m.is_admin ? ' admin' : '') + '"><div style="font-size:12px;color:var(--dash-faint)">' +
+      return '<div class="msg-row' + (m.is_admin ? ' admin' : '') + '"><div class="inline-style-14">' +
         new Date(m.created_at).toLocaleString('pt-BR') + (m.is_admin ? ' · equipe' : ' · você') +
         '</div><div>' + (m.body || '').replace(/</g, '&lt;') + '</div></div>';
     }).join('');

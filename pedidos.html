@@ -21,6 +21,7 @@
 <meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
 <meta property="og:site_name" content="IRN Devs">
   <link rel="stylesheet" href="assets/css/footer.css?v=20260917d">
+  <link rel="stylesheet" href="assets/css/pages/pedidos.css">
 </head>
 <body class="dash-app">
 <div class="dash-shell">
@@ -58,7 +59,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   var rows = [];
   try { rows = await IRNAuth.listOrders(); }
   catch (e) {
-    box.innerHTML = '<p style="color:#e88;font-family:var(--dash-mono);font-size:13px">Erro: ' + (e.message||e) + '. Rode supabase/schema.sql se as tabelas não existirem.</p>';
+    box.innerHTML = '<p class="inline-style-1">Erro: ' + (e.message||e) + '. Rode supabase/schema.sql se as tabelas não existirem.</p>';
     return;
   }
   document.getElementById('statTotal').textContent = rows.length;
@@ -71,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   document.getElementById('statA').textContent = active;
   document.getElementById('statB').textContent = done;
   if (!rows.length) {
-    box.innerHTML = '<p style="color:var(--dash-faint);font-family:var(--dash-mono);font-size:13px">Nenhum registro ainda.</p>';
+    box.innerHTML = '<p class="inline-style-2">Nenhum registro ainda.</p>';
     return;
   }
   function money(c, cur) {
@@ -92,7 +93,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       money(r.amount_cents, r.currency) + '</span></div><div class="dash-list-body">' +
       (r.title||'') + (r.notes ? '<br>' + r.notes : '') + '<br>' +
       (r.created_at ? new Date(r.created_at).toLocaleString('pt-BR') : '') +
-      '</div><div style="margin-top:6px;font-size:12px;color:var(--dash-amber)">ver detalhe →</div>';
+      '</div><div class="inline-style-3">ver detalhe →</div>';
     box.appendChild(d);
   });
 });

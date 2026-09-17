@@ -21,6 +21,7 @@
 <meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
 <meta property="og:site_name" content="IRN Devs">
   <link rel="stylesheet" href="assets/css/footer.css?v=20260917d">
+  <link rel="stylesheet" href="assets/css/pages/conta.css">
 </head>
 <body class="dash-app">
 <div class="dash-shell">
@@ -57,7 +58,7 @@
         orçamentos
       </a>
     </div>
-    <div class="dash-side-group" style="margin-top:auto">
+    <div class="dash-side-group inline-style-1">
       <a href="index.html">← voltar ao site</a>
       <button type="button" class="dash-nav-item" id="btnOutSide">sair</button>
     </div>
@@ -135,9 +136,9 @@
           <button class="dash-btn" type="submit">alterar senha →</button>
         </form>
         <div class="dash-sep">
-          <p style="font-family:var(--dash-mono);font-size:12.5px;color:var(--dash-faint);margin-bottom:12px">Encerrar sessão neste dispositivo.</p>
+          <p class="inline-style-2">Encerrar sessão neste dispositivo.</p>
           <button class="dash-btn ghost" type="button" id="btnOut">sair</button>
-          <p style="margin-top:14px"><a href="contato.html" class="dash-faint-sm">solicitar exclusão de conta →</a></p>
+          <p class="inline-style-3"><a href="contato.html" class="dash-faint-sm">solicitar exclusão de conta →</a></p>
         </div>
       </div>
     </section>
@@ -147,7 +148,7 @@
       <div class="dash-card">
         <div class="dash-card-title">checklists salvos</div>
         <div id="list"></div>
-        <p style="margin-top:14px;font-family:var(--dash-mono);font-size:13px">
+        <p class="inline-style-4">
           <a href="ferramenta-checklist.html" class="dash-link-amber">gerar novo checklist</a>
           · <a href="pacotes.html" class="dash-link-amber">pacotes</a>
         </p>
@@ -277,7 +278,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
       }
     } catch (e) {
-      box.innerHTML = '<p style="color:#e88;font-family:var(--dash-mono);font-size:13px">Erro: ' + (e.message || e) + '</p>';
+      box.innerHTML = '<p class="inline-style-5">Erro: ' + (e.message || e) + '</p>';
     }
     try {
       var orders = await IRNAuth.listOrders();

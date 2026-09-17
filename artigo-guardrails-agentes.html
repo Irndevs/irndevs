@@ -31,6 +31,7 @@
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"O que são guardrails em agentes de IA?","acceptedAnswer":{"@type":"Answer","text":"São restrições e validações que limitam o que o agente pode fazer: tools permitidas, orçamento de tokens, timeouts e aprovação humana em ações sensíveis."}},{"@type":"Question","name":"Como evitar prompt injection em agentes?","acceptedAnswer":{"@type":"Answer","text":"Separe instruções de sistema de dados do usuário, valide saídas de tools, use structured output e nunca execute comandos diretamente a partir de texto não confiável."}},{"@type":"Question","name":"Quando usar human-in-the-loop?","acceptedAnswer":{"@type":"Answer","text":"Em qualquer ação irreversível ou de alto impacto: envio de e-mail, alteração de dados, pagamentos, deploy ou acesso a sistemas críticos."}}]}
 </script>
   <link rel="stylesheet" href="assets/css/footer.css?v=20260917d">
+  <link rel="stylesheet" href="assets/css/pages/artigo-guardrails-agentes.css">
 </head>
 <body>
 <div class="wrap crumb">
@@ -111,7 +112,7 @@ allowed_tools = {"search_docs", "get_ticket", "create_draft"}
     <p>Logue: prompt, tool calls, argumentos, resultados, tokens e decisão final. Sem trilha de auditoria você não consegue debugar nem provar o que aconteceu.</p>
   </article>
 
-  <div class="wrap" style="margin-top:2rem"><h2>Leia também</h2><ul>
+  <div class="wrap inline-style-1"><h2>Leia também</h2><ul>
     <li><a href="artigo-agentes-langchain.html">IA: Agentes com LangChain</a></li>
     <li><a href="artigo-checklist-rag.html">IA: Checklist de produção para RAG</a></li>
     <li><a href="artigo-avaliacao-rag.html">IA: Avaliação de RAG em produção</a></li>
@@ -119,10 +120,10 @@ allowed_tools = {"search_docs", "get_ticket", "create_draft"}
   </ul></div>
 </div>
 
-<div class="wrap" style="margin-top:2.5rem;padding:1.5rem;border:1px solid var(--border,#2a3126);border-radius:12px;background:var(--bg-raised,#171b16)">
-  <h2 style="margin-bottom:0.5rem">Quer implementar isso na sua empresa?</h2>
-  <p style="color:var(--text-dim,#8f9587);margin-bottom:1rem">Ajudamos times a colocar RAG, agentes e modelos locais em produção com segurança e observabilidade.</p>
-  <p><a href="contato.html" style="display:inline-block;background:#e8a33d;color:#10130f;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600;margin-right:12px">Falar com a IRN Devs</a> <a href="como-contratar.html" style="color:#e8a33d;text-decoration:underline">Como contratar →</a></p>
+<div class="wrap inline-style-2">
+  <h2 class="inline-style-3">Quer implementar isso na sua empresa?</h2>
+  <p class="inline-style-4">Ajudamos times a colocar RAG, agentes e modelos locais em produção com segurança e observabilidade.</p>
+  <p><a href="contato.html" class="inline-style-5">Falar com a IRN Devs</a> <a href="como-contratar.html" class="inline-style-6">Como contratar →</a></p>
 </div>
 
 <footer class="site-footer-v2" role="contentinfo">
