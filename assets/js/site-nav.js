@@ -34,7 +34,25 @@
     { href: 'index.html#projetos', label: 'projetos', ico: '▸' },
     { href: 'servicos.html', label: 'serviços', ico: '⚙' },
     { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
-    { href: 'ferramentas.html', label: 'ferramentas', ico: '▣', extraClass: 'sn-top-tools' },
+    {
+      href: 'ferramentas.html',
+      label: 'ferramentas',
+      ico: '▣',
+      extraClass: 'sn-top-tools',
+      dropdown: true,
+      children: [
+        { href: 'ferramentas.html', label: 'Todas as ferramentas', ico: '▣' },
+        { href: 'ferramenta-salario-liquido.html', label: 'Salário Líquido CLT', ico: '₽' },
+        { href: 'ferramenta-clt-pj.html', label: 'CLT vs PJ', ico: '⇄' },
+        { href: 'ferramenta-link-whatsapp.html', label: 'Link WhatsApp', ico: '✉' },
+        { href: 'ferramenta-biometria-saude.html', label: 'Biometria & Saúde', ico: '♥' },
+        { href: 'ferramenta-esportivas.html', label: 'Esportivas', ico: '⚡' },
+        { href: 'ferramenta-macros.html', label: 'Macros Fitness', ico: '⚖' },
+        { href: 'ferramenta-prompt.html', label: 'Melhorador de Prompt', ico: '✦' },
+        { href: 'ferramenta-json.html', label: 'Validador JSON', ico: '{ }' },
+        { href: 'ia.html', label: 'Hub de IA', ico: '✦' }
+      ]
+    },
     { href: 'cursos.html', label: 'cursos', ico: '◈' },
     { href: 'ia.html', label: 'IA', ico: '✦', extraClass: 'sn-top-ia' }
   ];
@@ -112,6 +130,30 @@
     return '<a href="' + l.href + '" class="' + extra + '"' + style + '><span class="ico">' + l.ico + '</span><span class="label">' + l.label + '</span></a>';
   }
 
+  function topItemHtml(l) {
+    if (!l.dropdown || !l.children || !l.children.length) {
+      return linkHtml(l);
+    }
+    var extra = (cls(l.href).trim() + (l.extraClass ? ' ' + l.extraClass : '')).trim();
+    // marcar ativo se a página atual for ferramentas ou qualquer filho
+    var isDropActive = cls(l.href) || l.children.some(function (c) { return cls(c.href); });
+    if (isDropActive && extra.indexOf('active') === -1) extra = (extra + ' active').trim();
+
+    var childrenHtml = l.children.map(function (c) {
+      return '<a href="' + c.href + '" class="sn-dd-item' + cls(c.href) + '" role="menuitem">' +
+        '<span class="ico">' + (c.ico || '·') + '</span><span class="label">' + c.label + '</span></a>';
+    }).join('');
+
+    return '<div class="sn-dropdown' + (isDropActive ? ' is-active' : '') + '" data-dropdown>' +
+      '<a href="' + l.href + '" class="sn-dd-trigger ' + extra + '" aria-haspopup="true" aria-expanded="false" data-dd-trigger>' +
+      '<span class="ico">' + l.ico + '</span><span class="label">' + l.label + '</span>' +
+      '<span class="sn-dd-caret" aria-hidden="true">▾</span></a>' +
+      '<div class="sn-dd-panel" role="menu" hidden data-dd-panel>' +
+      '<div class="sn-dd-head">ferramentas prioritárias</div>' +
+      childrenHtml +
+      '</div></div>';
+  }
+
   function mount() {
     document.querySelectorAll('body > nav:not(.sn-bottom)').forEach(function (legacyNav) {
       legacyNav.remove();
@@ -119,7 +161,7 @@
     document.body.classList.add('has-site-nav');
     if (isInternal) document.body.classList.add('dash-app');
 
-    var topLinksHtml = topLinks.map(linkHtml).join('');
+    var topLinksHtml = topLinks.map(topItemHtml).join('');
     var drawerHtml = drawerGroups.map(function (g) {
       return '<div class="sn-group"><div class="sn-group-label">' + g.label + '</div>' +
         g.items.map(linkHtml).join('') + '</div>';
@@ -252,6 +294,101 @@
     if (burger) burger.addEventListener('click', handleBurgerClick);
     if (closeBtn) closeBtn.addEventListener('click', closeMenu);
     if (overlay) overlay.addEventListener('click', closeMenu);
+
+    /* ---- Dropdown Ferramentas (topo desktop) ---- */
+    (function bindDropdowns() {
+      var drops = root.querySelectorAll('[data-dropdown]');
+      if (!drops.length) return;
+
+      function closeAll(except) {
+        drops.forEach(function (dd) {
+          if (except && dd === except) return;
+          dd.classList.remove('open');
+          var t = dd.querySelector('[data-dd-trigger]');
+          var p = dd.querySelector('[data-dd-panel]');
+          if (t) t.setAttribute('aria-expanded', 'false');
+          // delay hidden para a animação CSS de saída (~220ms)
+          if (p) {
+            setTimeout(function () {
+              if (!dd.classList.contains('open')) p.hidden = true;
+            }, 220);
+          }
+        });
+      }
+
+      function openDd(dd) {
+        closeAll(dd);
+        var t = dd.querySelector('[data-dd-trigger]');
+        var p = dd.querySelector('[data-dd-panel]');
+        if (p) p.hidden = false;
+        // force reflow antes de adicionar .open (garante animação de entrada)
+        void dd.offsetWidth;
+        dd.classList.add('open');
+        if (t) t.setAttribute('aria-expanded', 'true');
+      }
+
+      drops.forEach(function (dd) {
+        var trigger = dd.querySelector('[data-dd-trigger]');
+        var panel = dd.querySelector('[data-dd-panel]');
+        if (!trigger || !panel) return;
+
+        var closeTimer = null;
+        function cancelClose() {
+          if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+        }
+        function scheduleClose() {
+          cancelClose();
+          closeTimer = setTimeout(function () { closeAll(); }, 180);
+        }
+
+        // Hover (desktop)
+        dd.addEventListener('mouseenter', function () {
+          cancelClose();
+          openDd(dd);
+        });
+        dd.addEventListener('mouseleave', scheduleClose);
+
+        // Click no trigger: alterna (útil em touch / teclado)
+        trigger.addEventListener('click', function (e) {
+          // se já está aberto e o usuário quer ir para a página, deixa seguir
+          // se está fechado, abre e impede navegação imediata no primeiro toque
+          if (!dd.classList.contains('open')) {
+            e.preventDefault();
+            openDd(dd);
+          }
+        });
+
+        // Teclado
+        trigger.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+            if (!dd.classList.contains('open')) {
+              e.preventDefault();
+              openDd(dd);
+              var first = panel.querySelector('a');
+              if (first) first.focus();
+            }
+          }
+          if (e.key === 'Escape') {
+            closeAll();
+            trigger.focus();
+          }
+        });
+
+        panel.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            closeAll();
+            trigger.focus();
+          }
+        });
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest || !e.target.closest('[data-dropdown]')) {
+          closeAll();
+        }
+      });
+    })();
+
     if (drawer) {
       drawer.querySelectorAll('a').forEach(function (link) {
         link.addEventListener('click', closeMenu);
