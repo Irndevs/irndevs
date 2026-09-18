@@ -1,0 +1,87 @@
+/* IRN Devs — paleta estendida (cyan, rust, slate, gold, plum)
+   Arquivo aditivo: só declara variáveis/classes novas, não sobrescreve nada
+   do CSS existente em cada página. Seguro para carregar em qualquer página. */
+:root {
+  --teal: #57b8b0;
+  --teal-dim: #3d8f88;
+  --danger: #c65b4a;
+  --danger-dim: #a3483a;
+  --slate: #7c8fa3;
+  --slate-dim: #5f7286;
+  --gold: #d1b25c;
+  --gold-dim: #ab8f45;
+  --plum: #a3708f;
+  --plum-dim: #82566f;
+}
+
+.text-teal { color: var(--teal); }
+.text-danger { color: var(--danger); }
+.text-slate { color: var(--slate); }
+.text-gold { color: var(--gold); }
+.text-plum { color: var(--plum); }
+
+.badge-teal,
+.badge-danger,
+.badge-slate,
+.badge-gold,
+.badge-plum {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+.badge-teal {
+  color: var(--teal);
+  background: rgba(87, 184, 176, 0.12);
+  border: 1px solid rgba(87, 184, 176, 0.35);
+}
+.badge-danger {
+  color: var(--danger);
+  background: rgba(198, 91, 74, 0.12);
+  border: 1px solid rgba(198, 91, 74, 0.35);
+}
+.badge-slate {
+  color: var(--slate);
+  background: rgba(124, 143, 163, 0.12);
+  border: 1px solid rgba(124, 143, 163, 0.35);
+}
+.badge-gold {
+  color: var(--gold);
+  background: rgba(209, 178, 92, 0.12);
+  border: 1px solid rgba(209, 178, 92, 0.35);
+}
+.badge-plum {
+  color: var(--plum);
+  background: rgba(163, 112, 143, 0.12);
+  border: 1px solid rgba(163, 112, 143, 0.35);
+}
+
+/* estados de alerta prontos (formulários, avisos, banners) */
+.alert-danger {
+  border-left: 3px solid var(--danger);
+  background: rgba(198, 91, 74, 0.08);
+  color: var(--text, #eae6d9);
+  padding: 12px 14px;
+  border-radius: 4px;
+}
+.alert-info {
+  border-left: 3px solid var(--teal);
+  background: rgba(87, 184, 176, 0.08);
+  color: var(--text, #eae6d9);
+  padding: 12px 14px;
+  border-radius: 4px;
+}
+
+/* link padrão em texto corrido — usa teal pra diferenciar de CTA (âmbar) */
+.link-teal {
+  color: var(--teal);
+  text-decoration: underline;
+  text-decoration-color: rgba(87, 184, 176, 0.4);
+  text-underline-offset: 3px;
+}
+.link-teal:hover { text-decoration-color: var(--teal); }
