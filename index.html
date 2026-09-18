@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="IRN Devs — Desenvolvimento de Software">
 <meta property="og:description" content="IRN Devs: desenvolvimento de software, automações e análises de dados — produtos e integrações em produção.">
-<link rel="stylesheet" href="assets/css/pages/index.css?v=20260918carousel2">
+<link rel="stylesheet" href="assets/css/pages/index.css?v=20260918carousel3">
   <link rel="stylesheet" href="assets/css/site-nav.css?v=20260918search2" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="assets/css/site-nav.css?v=20260918search2"></noscript>
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
@@ -738,9 +738,14 @@
     var prev = document.getElementById('projPrev');
     var next = document.getElementById('projNext');
     var dotsWrap = document.getElementById('projDots');
+    var carousel = document.getElementById('projCarousel');
     if (!track) return;
     var cards = Array.prototype.slice.call(track.querySelectorAll('.proj-card'));
     if (!cards.length) return;
+
+    var AUTO_MS = 4500;
+    var autoTimer = null;
+    var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function cardWidth() {
       var c = cards[0];
@@ -749,37 +754,57 @@
       var gap = parseFloat(style.gap || style.columnGap || '14') || 14;
       return c.getBoundingClientRect().width + gap;
     }
-    function scrollByCard(dir) {
-      track.scrollBy({ left: dir * cardWidth(), behavior: 'smooth' });
+    function currentIndex() {
+      var w = cardWidth();
+      if (w <= 0) return 0;
+      return Math.max(0, Math.min(cards.length - 1, Math.round(track.scrollLeft / w)));
     }
-    if (prev) prev.addEventListener('click', function () { scrollByCard(-1); });
-    if (next) next.addEventListener('click', function () { scrollByCard(1); });
+    function goTo(i, smooth) {
+      i = ((i % cards.length) + cards.length) % cards.length;
+      var left = cards[i].offsetLeft - track.offsetLeft;
+      track.scrollTo({ left: left, behavior: smooth === false ? 'auto' : 'smooth' });
+    }
+    function scrollByCard(dir) {
+      var next = currentIndex() + dir;
+      if (next >= cards.length) next = 0;
+      if (next < 0) next = cards.length - 1;
+      goTo(next);
+    }
+    function stopAuto() {
+      if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+    }
+    function startAuto() {
+      stopAuto();
+      if (reducedMotion) return;
+      autoTimer = setInterval(function () {
+        if (document.hidden) return;
+        var i = currentIndex() + 1;
+        if (i >= cards.length) i = 0;
+        goTo(i);
+      }, AUTO_MS);
+    }
 
-    // dots
+    if (prev) prev.addEventListener('click', function () { scrollByCard(-1); startAuto(); });
+    if (next) next.addEventListener('click', function () { scrollByCard(1); startAuto(); });
+
     if (dotsWrap) {
       dotsWrap.innerHTML = cards.map(function (_, i) {
         return '<button type="button" class="proj-dot" role="tab" aria-label="Ir para projeto ' + (i + 1) + '" data-i="' + i + '"></button>';
       }).join('');
       dotsWrap.querySelectorAll('.proj-dot').forEach(function (btn) {
         btn.addEventListener('click', function () {
-          var i = parseInt(btn.getAttribute('data-i'), 10);
-          var left = cards[i].offsetLeft - track.offsetLeft;
-          track.scrollTo({ left: left, behavior: 'smooth' });
+          goTo(parseInt(btn.getAttribute('data-i'), 10));
+          startAuto();
         });
       });
     }
     function updateDots() {
       if (!dotsWrap) return;
-      var scroll = track.scrollLeft;
-      var w = cardWidth();
-      var idx = Math.round(scroll / w);
-      idx = Math.max(0, Math.min(cards.length - 1, idx));
+      var idx = currentIndex();
       dotsWrap.querySelectorAll('.proj-dot').forEach(function (d, i) {
         d.classList.toggle('active', i === idx);
         d.setAttribute('aria-selected', i === idx ? 'true' : 'false');
       });
-      if (prev) prev.disabled = scroll <= 4;
-      if (next) next.disabled = scroll + track.clientWidth >= track.scrollWidth - 8;
     }
     track.addEventListener('scroll', function () {
       window.requestAnimationFrame(updateDots);
@@ -787,11 +812,22 @@
     window.addEventListener('resize', updateDots);
     updateDots();
 
-    // keyboard on track
     track.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowLeft') { e.preventDefault(); scrollByCard(-1); }
-      if (e.key === 'ArrowRight') { e.preventDefault(); scrollByCard(1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); scrollByCard(-1); startAuto(); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); scrollByCard(1); startAuto(); }
     });
+
+    // pausa no hover / toque; retoma ao sair
+    var root = carousel || track;
+    root.addEventListener('mouseenter', stopAuto);
+    root.addEventListener('mouseleave', startAuto);
+    root.addEventListener('touchstart', stopAuto, { passive: true });
+    root.addEventListener('touchend', function () { setTimeout(startAuto, 2500); }, { passive: true });
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) stopAuto(); else startAuto();
+    });
+
+    startAuto();
   })();
 
   const io = new IntersectionObserver((entries) => {
