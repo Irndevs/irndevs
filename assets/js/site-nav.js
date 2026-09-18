@@ -43,6 +43,7 @@
       label: 'produto',
       items: [
         { href: 'index.html', label: 'início', ico: '⌂' },
+        { href: 'diagnostico.html', label: 'diagnóstico grátis', ico: '⚡' },
         { href: 'index.html#projetos', label: 'projetos', ico: '▸' },
         { href: 'servicos.html', label: 'serviços', ico: '⚙' },
         { href: 'pacotes.html', label: 'pacotes', ico: '▣' },

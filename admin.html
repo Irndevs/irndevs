@@ -10,8 +10,14 @@
 <link rel="stylesheet" href="assets/css/dash-shell.css">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+.skip-link{position:absolute;left:-9999px;top:0;background:#e8a33d;color:#10130f;padding:8px 12px;z-index:10000;font-family:monospace;font-size:14px}
+.skip-link:focus{left:8px;top:8px}
+</style>
 </head>
 <body class="dash-app">
+<a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+
 <div class="dash-shell">
   <aside class="dash-side">
     <div class="dash-side-brand"><span>$</span> admin</div>
@@ -19,7 +25,7 @@
     <a href="area-cliente.html">portal cliente</a>
     <a href="index.html">← site</a>
   </aside>
-  <main class="dash-main">
+  <main id="conteudo" class="dash-main" role="main" tabindex="-1">
     <h1 class="dash-h1">Painel admin</h1>
     <p class="dash-lede">Orçamentos e pedidos de todos os clientes (liberado por policy de admin no Supabase — veja <code>supabase/admin-policies.sql</code>).</p>
     <div class="dash-card inline-style-1">

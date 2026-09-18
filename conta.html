@@ -25,6 +25,8 @@
 <link rel="stylesheet" href="assets/css/palette-extra.css">
 </head>
 <body class="dash-app">
+<a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+
 <div class="dash-shell">
   <aside class="dash-side" id="dashSide">
     <div class="dash-side-brand"><span>$</span> conta</div>
@@ -65,7 +67,7 @@
     </div>
   </aside>
 
-  <main class="dash-main">
+  <main id="conteudo" class="dash-main" role="main" tabindex="-1">
     <p class="dash-crumb"><a href="index.html">~</a> / conta</p>
     <h1 class="dash-h1">Minha conta</h1>
     <p class="dash-lede" id="hello">Carregando sessão…</p>
@@ -162,7 +164,7 @@
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" integrity="sha384-GFr3yTh5lJznCbZfpTtXnwboFsxqtTQoeTZCRHhE0579KrRmlCzen5AA8ohaB5ug" crossorigin="anonymous"></script>
 <script src="assets/js/auth.js" defer></script>
 <script src="assets/js/auth-gates.js" defer></script>
-<script src="assets/js/site-nav.js?v=20260917a" defer></script>
+<script src="assets/js/site-nav.js?v=20260918a11y" defer></script>
 <script>
 document.addEventListener('DOMContentLoaded', async function () {
   function setMsg(id, text, ok) {

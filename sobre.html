@@ -44,6 +44,9 @@
 <body>
 
 <!-- nav: site-nav.js -->
+<a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+<main id="conteudo" role="main" tabindex="-1">
+
 
 <div class="wrap breadcrumb"><a href="index.html">início</a> / sobre</div>
 
@@ -220,6 +223,8 @@
     </div>
   </div>
 </footer>
+</main>
+
 
 <script>
   const io = new IntersectionObserver((entries) => {
@@ -233,7 +238,7 @@
   document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
 </script>
 
-  <script src="assets/js/site-nav.js?v=20260917a" defer></script>
+  <script src="assets/js/site-nav.js?v=20260918a11y" defer></script>
   <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 </body>
 </html>
