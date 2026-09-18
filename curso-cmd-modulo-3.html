@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Módulo 3: Rede e diagnóstico — Comandos Linux e Windows | IRN Devs</title>
+<meta name="description" content="IP, DNS, portas abertas e teste de conectividade — os comandos que resolvem 80% dos “a rede caiu”.">
+<meta name="author" content="IRN Devs">
+<link rel="canonical" href="https://irndevs.com/curso-cmd-modulo-3.html">
+<link rel="stylesheet" href="assets/css/pages/curso-python.css">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918menu">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260917d">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<style>
+.cmp{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:14px}
+.cmp th,.cmp td{border:1px solid #2a3126;padding:10px 12px;text-align:left;vertical-align:top}
+.cmp th{background:#171b16;color:#e8a33d;font-family:ui-monospace,monospace;font-size:12px}
+.cmp code{font-size:12.5px}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"Comandos Linux e Windows lado a lado","description":"Curso introdutório comparando comandos essenciais de Linux (Bash) e Windows (PowerShell).","provider":{"@type":"Organization","name":"IRN Devs","url":"https://irndevs.com"},"inLanguage":"pt-BR"}</script>
+</head>
+<body data-course="cmd">
+<a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+<main id="conteudo" role="main" tabindex="-1">
+<article class="wrap">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#cmd">comandos linux e windows</a> / módulo 3</nav>
+  <div class="sec-head"><span class="amber">$</span> cmd modulo_3</div>
+  <h1>Rede e diagnóstico</h1>
+  <p class="lede">IP, DNS, portas abertas e teste de conectividade — os comandos que resolvem 80% dos “a rede caiu”.</p>
+  <div id="irn-progress-bar" data-progress="cmd"></div>
+
+  <h2>O que você vai aprender</h2>
+  <ul>
+    <li>Ver IP e rotas</li>
+    <li>Testar DNS e conectividade</li>
+    <li>Ver quem escuta em qual porta</li>
+  </ul>
+  <h2>1. Endereço e interface</h2>
+  <table class="cmp">
+    <thead><tr><th>Ação</th><th>Linux</th><th>Windows</th></tr></thead>
+    <tbody>
+      <tr><td>IPs</td><td><code>ip a</code></td><td><code>ipconfig</code> / <code>Get-NetIPAddress</code></td></tr>
+      <tr><td>Rotas</td><td><code>ip r</code></td><td><code>route print</code> / <code>Get-NetRoute</code></td></tr>
+      <tr><td>DNS</td><td><code>resolvectl status</code></td><td><code>Get-DnsClientServerAddress</code></td></tr>
+    </tbody>
+  </table>
+  <h2>2. Conectividade</h2>
+  <pre><code># Linux
+ping -c 4 1.1.1.1
+curl -I https://example.com
+dig example.com
+ss -lntp          # portas em escuta
+traceroute 1.1.1.1
+
+# Windows
+ping 1.1.1.1
+Test-NetConnection example.com -Port 443
+Resolve-DnsName example.com
+netstat -ano | findstr LISTENING
+tracert 1.1.1.1</code></pre>
+  <h2>3. Porta em uso</h2>
+  <pre><code># Linux — quem usa a 443
+sudo ss -lntp | grep :443
+sudo lsof -i :443
+
+# Windows
+netstat -ano | findstr :443
+Get-NetTCPConnection -LocalPort 443</code></pre>
+  <div class="warn"><strong>ATENÇÃO</strong> Em produção, <code>ping</code> pode estar bloqueado por firewall. Prefira testar a porta real do serviço (443, 22, etc.).</div>
+
+
+  <h2>Trilha do curso</h2>
+  <div class="mod-grid">
+    <a class="mod-card" href="curso-cmd-modulo-1.html"><span class="mod-card-n">01</span><span class="mod-card-name">Navegação e arquivos</span></a><a class="mod-card" href="curso-cmd-modulo-2.html"><span class="mod-card-n">02</span><span class="mod-card-name">Processos e serviços</span></a><a class="mod-card active" href="curso-cmd-modulo-3.html"><span class="mod-card-n">03</span><span class="mod-card-name">Rede e diagnóstico</span></a><a class="mod-card" href="curso-cmd-modulo-4.html"><span class="mod-card-n">04</span><span class="mod-card-name">Usuários e permissões</span></a><a class="mod-card" href="curso-cmd-modulo-5.html"><span class="mod-card-n">05</span><span class="mod-card-name">Automação e scripts</span></a><a class="mod-card" href="curso-cmd-modulo-6.html"><span class="mod-card-n">06</span><span class="mod-card-name">Cheatsheet e projeto final</span></a>
+  </div>
+  <div class="aula-progress">
+    <a class="btn ghost" href="curso-cmd-modulo-2.html">← anterior</a>
+    <span class="dots"><b></b><b></b><b class="on"></b><b></b><b></b><b></b></span>
+    <a class="btn primary" href="curso-cmd-modulo-4.html">próximo →</a>
+  </div>
+
+</article>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">IRN Devs</div>
+      <p>Software, automações e dados em produção — stacks que já rodam de verdade, com handoff claro.</p>
+      <div class="footer-social">
+        <a href="https://github.com/iri-afk" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
+        <a href="mailto:contato@irndevs.com" aria-label="E-mail">E-mail</a>
+        <a href="en/index.html">EN</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h3>Links rápidos</h3>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="servicos.html">Serviços</a></li>
+        <li><a href="pacotes.html">Pacotes</a></li>
+        <li><a href="index.html#projetos">Projetos</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Recursos</h3>
+      <ul>
+        <li><a href="ferramenta-checklist.html">Checklist grátis</a></li>
+        <li><a href="ferramentas.html">Ferramentas grátis</a></li>
+        <li><a href="ia.html">Ferramentas de IA</a></li>
+        <li><a href="cursos.html">Cursos</a></li>
+        <li><a href="homelab.html">Homelab</a></li>
+        <li><a href="como-contratar.html">Como contratar</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Contato</h3>
+      <ul>
+        <li><a href="mailto:contato@irndevs.com">contato@irndevs.com</a></li>
+        <li><a href="contato.html">Formulário de contato</a></li>
+        <li><span class="footer-meta">Atendimento remoto</span></li>
+        <li><span class="footer-meta">Disponível para projetos</span></li>
+        <li><a href="privacidade.html">Privacidade</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <div>© 2026 IRN Devs</div>
+    <div class="footer-bottom-links">
+      <a href="jogos.html">jogos</a>
+      <a href="produtividade.html">produtividade</a>
+      <a href="privacidade.html">privacidade</a>
+    </div>
+  </div>
+</footer>
+</main>
+<script src="assets/js/site-nav.js?v=20260918a11y" defer></script>
+<script src="assets/js/curso-progress.js?v=20260916d" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+</body>
+</html>

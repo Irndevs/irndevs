@@ -11,7 +11,7 @@
 <meta property="og:title" content="Blog — IRN Devs | Desenvolvimento de software e Observabilidade">
 <meta property="og:description" content="Artigos técnicos sobre Docker, k3s, Grafana, Prometheus, OpenTelemetry, Linux e hardening de servidores.">
 <link rel="stylesheet" href="assets/css/pages/blog.css">
-  <link rel="stylesheet" href="assets/css/site-nav.css">
+  <link rel="stylesheet" href="assets/css/site-nav.css?v=20260918menu">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
@@ -155,7 +155,7 @@
   <div class="search-box" id="buscar">
     <label for="postSearch"><span aria-hidden="true">$</span> buscar artigos</label>
      <input id="postSearch" type="search" placeholder="ex.: Docker, Linux, Kubernetes..." autocomplete="off">
-     <span id="searchCount" aria-live="polite">22 artigos</span>
+     <span id="searchCount" aria-live="polite">27 artigos</span>
    </div>
   <div class="filters">
     <button class="filter-btn active" data-category="all">todos</button>
@@ -170,6 +170,73 @@
 </div>
 
 <div class="wrap posts" id="postsList">
+
+  <div class="post" data-category="devops">
+    <div class="post-meta-col">
+      <span class="date">18 set 2026</span>
+      <span class="post-tag">devops</span>
+      <span>9 min</span>
+    </div>
+    <div>
+      <div class="post-title"><a href="artigo-git-fluxo-producao.html">Git em produção: branch, PR e deploy sem drama</a></div>
+      <p class="post-excerpt">Fluxo prático de Git para times pequenos: main protegida, feature branches, PR com checklist e deploy previsível.</p>
+      <div class="post-stack"><span>Git</span><span>CI/CD</span><span>produção</span></div>
+      <a class="read-more" href="artigo-git-fluxo-producao.html">ler artigo →</a>
+    </div>
+  </div>
+  <div class="post" data-category="ops">
+    <div class="post-meta-col">
+      <span class="date">18 set 2026</span>
+      <span class="post-tag">ops</span>
+      <span>10 min</span>
+    </div>
+    <div>
+      <div class="post-title"><a href="artigo-cron-vs-task-scheduler.html">Cron no Linux e Agendador de Tarefas no Windows</a></div>
+      <p class="post-excerpt">Como agendar jobs em Linux (cron/systemd timers) e no Windows (Task Scheduler), com exemplos equivalentes.</p>
+      <div class="post-stack"><span>Linux</span><span>Windows</span><span>cron</span></div>
+      <a class="read-more" href="artigo-cron-vs-task-scheduler.html">ler artigo →</a>
+    </div>
+  </div>
+  <div class="post" data-category="seguranca">
+    <div class="post-meta-col">
+      <span class="date">18 set 2026</span>
+      <span class="post-tag">segurança</span>
+      <span>8 min</span>
+    </div>
+    <div>
+      <div class="post-title"><a href="artigo-firewall-ufw-windows.html">Firewall básico: UFW no Linux e Windows Firewall</a></div>
+      <p class="post-excerpt">Regras mínimas para expor só o necessário — comandos equivalentes nos dois sistemas.</p>
+      <div class="post-stack"><span>UFW</span><span>Windows Firewall</span><span>hardening</span></div>
+      <a class="read-more" href="artigo-firewall-ufw-windows.html">ler artigo →</a>
+    </div>
+  </div>
+  <div class="post" data-category="linux">
+    <div class="post-meta-col">
+      <span class="date">18 set 2026</span>
+      <span class="post-tag">linux</span>
+      <span>7 min</span>
+    </div>
+    <div>
+      <div class="post-title"><a href="artigo-tmux-sessoes-remotas.html">Tmux: sessões que sobrevivem à queda de SSH</a></div>
+      <p class="post-excerpt">Sessões nomeadas, detach e fluxo mínimo para não perder trabalho quando a conexão cai.</p>
+      <div class="post-stack"><span>tmux</span><span>SSH</span><span>Linux</span></div>
+      <a class="read-more" href="artigo-tmux-sessoes-remotas.html">ler artigo →</a>
+    </div>
+  </div>
+  <div class="post" data-category="ops">
+    <div class="post-meta-col">
+      <span class="date">18 set 2026</span>
+      <span class="post-tag">ops</span>
+      <span>9 min</span>
+    </div>
+    <div>
+      <div class="post-title"><a href="artigo-logs-journalctl-event-viewer.html">Ler logs: journalctl no Linux e Event Viewer no Windows</a></div>
+      <p class="post-excerpt">Filtros essenciais para diagnosticar serviço e erros — lado a lado nos dois sistemas.</p>
+      <div class="post-stack"><span>journalctl</span><span>Event Viewer</span><span>logs</span></div>
+      <a class="read-more" href="artigo-logs-journalctl-event-viewer.html">ler artigo →</a>
+    </div>
+  </div>
+
   <div class="post" data-category="ia">
     <div class="post-meta-col">
       <span class="date">16 set 2026</span>

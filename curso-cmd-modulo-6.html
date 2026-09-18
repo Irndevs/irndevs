@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Módulo 6: Cheatsheet e projeto final — Comandos Linux e Windows | IRN Devs</title>
+<meta name="description" content="Tabela rápida de equivalências e um exercício prático nos dois sistemas.">
+<meta name="author" content="IRN Devs">
+<link rel="canonical" href="https://irndevs.com/curso-cmd-modulo-6.html">
+<link rel="stylesheet" href="assets/css/pages/curso-python.css">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918menu">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260917d">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<style>
+.cmp{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:14px}
+.cmp th,.cmp td{border:1px solid #2a3126;padding:10px 12px;text-align:left;vertical-align:top}
+.cmp th{background:#171b16;color:#e8a33d;font-family:ui-monospace,monospace;font-size:12px}
+.cmp code{font-size:12.5px}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"Comandos Linux e Windows lado a lado","description":"Curso introdutório comparando comandos essenciais de Linux (Bash) e Windows (PowerShell).","provider":{"@type":"Organization","name":"IRN Devs","url":"https://irndevs.com"},"inLanguage":"pt-BR"}</script>
+</head>
+<body data-course="cmd">
+<a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+<main id="conteudo" role="main" tabindex="-1">
+<article class="wrap">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#cmd">comandos linux e windows</a> / módulo 6</nav>
+  <div class="sec-head"><span class="amber">$</span> cmd modulo_6</div>
+  <h1>Cheatsheet e projeto final</h1>
+  <p class="lede">Tabela rápida de equivalências e um exercício prático nos dois sistemas.</p>
+  <div id="irn-progress-bar" data-progress="cmd"></div>
+
+  <h2>Cheatsheet rápido</h2>
+  <table class="cmp">
+    <thead><tr><th>Tarefa</th><th>Linux</th><th>Windows (PowerShell)</th></tr></thead>
+    <tbody>
+      <tr><td>Onde estou</td><td><code>pwd</code></td><td><code>pwd</code></td></tr>
+      <tr><td>Listar</td><td><code>ls -lah</code></td><td><code>Get-ChildItem</code></td></tr>
+      <tr><td>Buscar texto</td><td><code>grep -R "erro" .</code></td><td><code>Select-String -Path * -Pattern erro</code></td></tr>
+      <tr><td>Disco</td><td><code>df -h</code></td><td><code>Get-PSDrive</code></td></tr>
+      <tr><td>Memória</td><td><code>free -h</code></td><td><code>Get-CimInstance Win32_OperatingSystem</code></td></tr>
+      <tr><td>Portas</td><td><code>ss -lntp</code></td><td><code>netstat -ano</code></td></tr>
+      <tr><td>Serviço status</td><td><code>systemctl status X</code></td><td><code>Get-Service X</code></td></tr>
+      <tr><td>Logs</td><td><code>journalctl -u X</code></td><td><code>Get-WinEvent</code></td></tr>
+    </tbody>
+  </table>
+  <h2>Projeto final</h2>
+  <p>Escolha <strong>um</strong> sistema e faça:</p>
+  <ol>
+    <li>Criar pasta <code>ops-lab</code> com 3 arquivos de log fictícios</li>
+    <li>Script que imprime as 5 últimas linhas de cada log</li>
+    <li>Listar processos que mais usam CPU</li>
+    <li>Mostrar se a porta 443 está em escuta</li>
+  </ol>
+  <p>Depois repita no outro sistema. O objetivo não é memorizar tudo: é saber <em>onde olhar</em> e traduzir o comando.</p>
+  <div class="tip"><strong>Próximo passo</strong> Siga para o curso <a href="curso-linux-modulo-1.html">Linux e servidores</a> ou leia os artigos de firewall e logs no blog.</div>
+
+
+  <h2>Trilha do curso</h2>
+  <div class="mod-grid">
+    <a class="mod-card" href="curso-cmd-modulo-1.html"><span class="mod-card-n">01</span><span class="mod-card-name">Navegação e arquivos</span></a><a class="mod-card" href="curso-cmd-modulo-2.html"><span class="mod-card-n">02</span><span class="mod-card-name">Processos e serviços</span></a><a class="mod-card" href="curso-cmd-modulo-3.html"><span class="mod-card-n">03</span><span class="mod-card-name">Rede e diagnóstico</span></a><a class="mod-card" href="curso-cmd-modulo-4.html"><span class="mod-card-n">04</span><span class="mod-card-name">Usuários e permissões</span></a><a class="mod-card" href="curso-cmd-modulo-5.html"><span class="mod-card-n">05</span><span class="mod-card-name">Automação e scripts</span></a><a class="mod-card active" href="curso-cmd-modulo-6.html"><span class="mod-card-n">06</span><span class="mod-card-name">Cheatsheet e projeto final</span></a>
+  </div>
+  <div class="aula-progress">
+    <a class="btn ghost" href="curso-cmd-modulo-5.html">← anterior</a>
+    <span class="dots"><b></b><b></b><b></b><b></b><b></b><b class="on"></b></span>
+    <a class="btn primary" href="cursos.html">concluir →</a>
+  </div>
+
+</article>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">IRN Devs</div>
+      <p>Software, automações e dados em produção — stacks que já rodam de verdade, com handoff claro.</p>
+      <div class="footer-social">
+        <a href="https://github.com/iri-afk" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
+        <a href="mailto:contato@irndevs.com" aria-label="E-mail">E-mail</a>
+        <a href="en/index.html">EN</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h3>Links rápidos</h3>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="servicos.html">Serviços</a></li>
+        <li><a href="pacotes.html">Pacotes</a></li>
+        <li><a href="index.html#projetos">Projetos</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Recursos</h3>
+      <ul>
+        <li><a href="ferramenta-checklist.html">Checklist grátis</a></li>
+        <li><a href="ferramentas.html">Ferramentas grátis</a></li>
+        <li><a href="ia.html">Ferramentas de IA</a></li>
+        <li><a href="cursos.html">Cursos</a></li>
+        <li><a href="homelab.html">Homelab</a></li>
+        <li><a href="como-contratar.html">Como contratar</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Contato</h3>
+      <ul>
+        <li><a href="mailto:contato@irndevs.com">contato@irndevs.com</a></li>
+        <li><a href="contato.html">Formulário de contato</a></li>
+        <li><span class="footer-meta">Atendimento remoto</span></li>
+        <li><span class="footer-meta">Disponível para projetos</span></li>
+        <li><a href="privacidade.html">Privacidade</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <div>© 2026 IRN Devs</div>
+    <div class="footer-bottom-links">
+      <a href="jogos.html">jogos</a>
+      <a href="produtividade.html">produtividade</a>
+      <a href="privacidade.html">privacidade</a>
+    </div>
+  </div>
+</footer>
+</main>
+<script src="assets/js/site-nav.js?v=20260918a11y" defer></script>
+<script src="assets/js/curso-progress.js?v=20260916d" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+</body>
+</html>

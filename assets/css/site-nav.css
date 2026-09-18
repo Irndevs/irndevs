@@ -179,6 +179,7 @@ body.has-site-nav { padding-top: var(--nav-top-h); }
   top: 0;
   left: 0;
   height: 100vh;
+  height: 100dvh;
   background: var(--nav-raised);
   border-right: 1px solid var(--nav-border);
   z-index: 1004;
@@ -187,12 +188,22 @@ body.has-site-nav { padding-top: var(--nav-top-h); }
   font-family: var(--nav-mono);
   overflow-x: hidden;
   overflow-y: auto;
-  scrollbar-width: none;
+  /* scrollbar sutil — usuário precisa ver que há mais itens abaixo */
+  scrollbar-width: thin;
+  scrollbar-color: #3a4a32 transparent;
 }
 .sn-drawer::-webkit-scrollbar {
-  width: 0;
-  height: 0;
+  width: 6px;
+}
+.sn-drawer::-webkit-scrollbar-track {
   background: transparent;
+}
+.sn-drawer::-webkit-scrollbar-thumb {
+  background: #3a4a32;
+  border-radius: 4px;
+}
+.sn-drawer::-webkit-scrollbar-thumb:hover {
+  background: #e8a33d;
 }
 
 .sn-drawer-head {
@@ -239,13 +250,15 @@ body.has-site-nav { padding-top: var(--nav-top-h); }
   flex-direction: column;
   flex: 1;
   min-height: 0;
-  justify-content: space-between;
+  justify-content: flex-start;
+  padding-bottom: 24px;
+  overflow-y: visible;
 }
 .sn-drawer a {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 6px 18px;
+  padding: 5px 18px;
   color: var(--nav-dim);
   text-decoration: none;
   font-size: 15px;
@@ -304,7 +317,7 @@ body.has-site-nav { padding-top: var(--nav-top-h); }
 .sn-close { display: inline-flex; align-items: center; justify-content: center; }
 .sn-drawer-label { display: block; }
 .sn-drawer a {
-  padding: 8px 18px;
+  padding: 6px 18px;
   justify-content: flex-start;
 }
 .sn-group-label { display: block; }

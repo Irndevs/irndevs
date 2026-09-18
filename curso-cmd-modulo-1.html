@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Módulo 1: Navegação e arquivos — Comandos Linux e Windows | IRN Devs</title>
+<meta name="description" content="Onde estou, listar, copiar, mover e editar — os mesmos gestos no Bash e no PowerShell.">
+<meta name="author" content="IRN Devs">
+<link rel="canonical" href="https://irndevs.com/curso-cmd-modulo-1.html">
+<link rel="stylesheet" href="assets/css/pages/curso-python.css">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918menu">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260917d">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<style>
+.cmp{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:14px}
+.cmp th,.cmp td{border:1px solid #2a3126;padding:10px 12px;text-align:left;vertical-align:top}
+.cmp th{background:#171b16;color:#e8a33d;font-family:ui-monospace,monospace;font-size:12px}
+.cmp code{font-size:12.5px}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"Comandos Linux e Windows lado a lado","description":"Curso introdutório comparando comandos essenciais de Linux (Bash) e Windows (PowerShell).","provider":{"@type":"Organization","name":"IRN Devs","url":"https://irndevs.com"},"inLanguage":"pt-BR"}</script>
+</head>
+<body data-course="cmd">
+<a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+<main id="conteudo" role="main" tabindex="-1">
+<article class="wrap">
+  <nav class="breadcrumb"><a href="index.html">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#cmd">comandos linux e windows</a> / módulo 1</nav>
+  <div class="sec-head"><span class="amber">$</span> cmd modulo_1</div>
+  <h1>Navegação e arquivos</h1>
+  <p class="lede">Onde estou, listar, copiar, mover e editar — os mesmos gestos no Bash e no PowerShell.</p>
+  <div id="irn-progress-bar" data-progress="cmd"></div>
+
+  <h2>O que você vai aprender</h2>
+  <ul>
+    <li>Ver diretório atual e listar conteúdo</li>
+    <li>Criar, copiar, mover e apagar arquivos</li>
+    <li>Diferenças de caminho (barra vs barra invertida)</li>
+    <li>Editar texto rápido no terminal</li>
+  </ul>
+  <h2>1. Onde estou e o que tem aqui</h2>
+  <table class="cmp">
+    <thead><tr><th>Ação</th><th>Linux (Bash)</th><th>Windows (PowerShell)</th></tr></thead>
+    <tbody>
+      <tr><td>Diretório atual</td><td><code>pwd</code></td><td><code>pwd</code> ou <code>Get-Location</code></td></tr>
+      <tr><td>Listar</td><td><code>ls -lah</code></td><td><code>ls</code> ou <code>Get-ChildItem</code></td></tr>
+      <tr><td>Mudar pasta</td><td><code>cd /var/log</code></td><td><code>cd C:\Windows\Logs</code></td></tr>
+      <tr><td>Criar pasta</td><td><code>mkdir -p apps/logs</code></td><td><code>mkdir apps\logs</code></td></tr>
+    </tbody>
+  </table>
+  <pre><code># Linux
+pwd
+ls -lah
+cd ~
+mkdir -p projetos/demo
+touch projetos/demo/README.md
+
+# Windows PowerShell
+pwd
+Get-ChildItem
+cd $HOME
+mkdir projetos\demo
+New-Item projetos\demo\README.md -ItemType File</code></pre>
+  <h2>2. Copiar, mover, apagar</h2>
+  <table class="cmp">
+    <thead><tr><th>Ação</th><th>Linux</th><th>Windows</th></tr></thead>
+    <tbody>
+      <tr><td>Copiar arquivo</td><td><code>cp a.txt b.txt</code></td><td><code>Copy-Item a.txt b.txt</code></td></tr>
+      <tr><td>Copiar pasta</td><td><code>cp -r src/ dst/</code></td><td><code>Copy-Item src dst -Recurse</code></td></tr>
+      <tr><td>Mover/renomear</td><td><code>mv old.txt new.txt</code></td><td><code>Move-Item old.txt new.txt</code></td></tr>
+      <tr><td>Apagar</td><td><code>rm -rf pasta/</code></td><td><code>Remove-Item pasta -Recurse -Force</code></td></tr>
+    </tbody>
+  </table>
+  <div class="warn"><strong>ATENÇÃO</strong> <code>rm -rf</code> e <code>Remove-Item -Recurse -Force</code> não pedem confirmação. Teste em pasta de rascunho.</div>
+  <h2>3. Ver e editar conteúdo</h2>
+  <pre><code># Linux
+cat arquivo.txt
+less arquivo.txt
+nano arquivo.txt   # ou vim
+
+# Windows
+Get-Content arquivo.txt
+Get-Content arquivo.txt -TotalCount 20
+notepad arquivo.txt</code></pre>
+  <div class="tip"><strong>DICA</strong> No PowerShell muitos aliases existem (<code>ls</code>, <code>cd</code>, <code>cat</code>). Em scripts longos, prefira os cmdlets completos (<code>Get-ChildItem</code>) para clareza.</div>
+
+
+  <h2>Trilha do curso</h2>
+  <div class="mod-grid">
+    <a class="mod-card active" href="curso-cmd-modulo-1.html"><span class="mod-card-n">01</span><span class="mod-card-name">Navegação e arquivos</span></a><a class="mod-card" href="curso-cmd-modulo-2.html"><span class="mod-card-n">02</span><span class="mod-card-name">Processos e serviços</span></a><a class="mod-card" href="curso-cmd-modulo-3.html"><span class="mod-card-n">03</span><span class="mod-card-name">Rede e diagnóstico</span></a><a class="mod-card" href="curso-cmd-modulo-4.html"><span class="mod-card-n">04</span><span class="mod-card-name">Usuários e permissões</span></a><a class="mod-card" href="curso-cmd-modulo-5.html"><span class="mod-card-n">05</span><span class="mod-card-name">Automação e scripts</span></a><a class="mod-card" href="curso-cmd-modulo-6.html"><span class="mod-card-n">06</span><span class="mod-card-name">Cheatsheet e projeto final</span></a>
+  </div>
+  <div class="aula-progress">
+    <a class="btn ghost" href="cursos.html">← todos os cursos</a>
+    <span class="dots"><b class="on"></b><b></b><b></b><b></b><b></b><b></b></span>
+    <a class="btn primary" href="curso-cmd-modulo-2.html">próximo →</a>
+  </div>
+
+</article>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">IRN Devs</div>
+      <p>Software, automações e dados em produção — stacks que já rodam de verdade, com handoff claro.</p>
+      <div class="footer-social">
+        <a href="https://github.com/iri-afk" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
+        <a href="mailto:contato@irndevs.com" aria-label="E-mail">E-mail</a>
+        <a href="en/index.html">EN</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h3>Links rápidos</h3>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="servicos.html">Serviços</a></li>
+        <li><a href="pacotes.html">Pacotes</a></li>
+        <li><a href="index.html#projetos">Projetos</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Recursos</h3>
+      <ul>
+        <li><a href="ferramenta-checklist.html">Checklist grátis</a></li>
+        <li><a href="ferramentas.html">Ferramentas grátis</a></li>
+        <li><a href="ia.html">Ferramentas de IA</a></li>
+        <li><a href="cursos.html">Cursos</a></li>
+        <li><a href="homelab.html">Homelab</a></li>
+        <li><a href="como-contratar.html">Como contratar</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Contato</h3>
+      <ul>
+        <li><a href="mailto:contato@irndevs.com">contato@irndevs.com</a></li>
+        <li><a href="contato.html">Formulário de contato</a></li>
+        <li><span class="footer-meta">Atendimento remoto</span></li>
+        <li><span class="footer-meta">Disponível para projetos</span></li>
+        <li><a href="privacidade.html">Privacidade</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <div>© 2026 IRN Devs</div>
+    <div class="footer-bottom-links">
+      <a href="jogos.html">jogos</a>
+      <a href="produtividade.html">produtividade</a>
+      <a href="privacidade.html">privacidade</a>
+    </div>
+  </div>
+</footer>
+</main>
+<script src="assets/js/site-nav.js?v=20260918a11y" defer></script>
+<script src="assets/js/curso-progress.js?v=20260916d" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+</body>
+</html>
