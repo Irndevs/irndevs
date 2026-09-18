@@ -297,16 +297,16 @@ h2.sec-title {
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: #3a4a32 transparent;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge legacy */
   padding: 8px 4px 20px;
   outline: none;
   scroll-behavior: smooth;
 }
-#projetos .proj-track::-webkit-scrollbar { height: 6px; }
-#projetos .proj-track::-webkit-scrollbar-thumb {
-  background: #3a4a32;
-  border-radius: 3px;
+#projetos .proj-track::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+  height: 0;
+  width: 0;
 }
 #projetos .proj-card {
   flex: 0 0 300px !important;

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Macronutrientes — IRN Devs</title>
+<meta name="description" content="Calcule proteínas, carboidratos e gorduras por objetivo. Ferramenta fitness gratuita.">
+<link rel="canonical" href="https://irndevs.com/ferramenta-macros.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918menu">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:640px;margin:0 auto;padding:28px 20px 80px}
+.crumb{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:14px}
+.sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
+.amber{color:var(--amber)}
+h1{font-size:26px;margin-bottom:8px}
+.lede{color:var(--dim);margin-bottom:24px;font-size:15px}
+.card{background:var(--raised);border:1px solid var(--border);border-radius:12px;padding:22px}
+label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px}
+input,select{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:#10130f;color:var(--text);font-size:15px;margin-bottom:14px}
+.btn{width:100%;padding:14px;background:var(--amber);color:#10130f;border:none;border-radius:10px;font-weight:700;cursor:pointer}
+.result{display:none;margin-top:16px;padding:16px;border-radius:10px;background:#1a2218;border:1px solid var(--border)}
+.result.show{display:block}
+.result .big{font-size:24px;font-weight:800;color:var(--amber);margin-bottom:10px}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px}
+.row:last-child{border:none}
+.note{margin-top:16px;font-size:12px;color:var(--faint)}
+</style>
+</head>
+<body>
+<main id="conteudo">
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / <a href="ferramentas.html">ferramentas</a> / macros</p>
+  <div class="sec-head"><span class="amber">$</span> calc macros --fitness</div>
+  <h1>Calculadora de Macronutrientes</h1>
+  <p class="lede">Estime proteínas, carboidratos e gorduras conforme seu objetivo.</p>
+  <div class="card">
+    <label>Sexo</label>
+    <select id="sexo"><option value="M">Masculino</option><option value="F">Feminino</option></select>
+    <label>Peso (kg)</label>
+    <input type="number" id="peso" placeholder="75" step="0.1">
+    <label>Altura (cm)</label>
+    <input type="number" id="altura" placeholder="175">
+    <label>Idade</label>
+    <input type="number" id="idade" placeholder="30">
+    <label>Atividade</label>
+    <select id="atv">
+      <option value="1.2">Sedentário</option>
+      <option value="1.375">Leve (1-3x/sem)</option>
+      <option value="1.55" selected>Moderado (3-5x)</option>
+      <option value="1.725">Intenso (6-7x)</option>
+      <option value="1.9">Muito intenso</option>
+    </select>
+    <label>Objetivo</label>
+    <select id="obj">
+      <option value="-400">Emagrecer</option>
+      <option value="0" selected>Manter</option>
+      <option value="300">Ganhar massa</option>
+    </select>
+    <button class="btn" onclick="calc()">Calcular macros</button>
+    <div class="result" id="res">
+      <div class="big" id="kcal">—</div>
+      <div class="row"><span>Proteína</span><span id="p">—</span></div>
+      <div class="row"><span>Carboidrato</span><span id="c">—</span></div>
+      <div class="row"><span>Gordura</span><span id="g">—</span></div>
+    </div>
+  </div>
+  <p class="note">Estimativa (Mifflin-St Jeor + distribuição 30/40/30). Consulte nutricionista para plano individualizado.</p>
+</div>
+<script>
+function calc(){
+  const sexo=document.getElementById('sexo').value;
+  const peso=+document.getElementById('peso').value;
+  const alt=+document.getElementById('altura').value;
+  const idade=+document.getElementById('idade').value;
+  const atv=+document.getElementById('atv').value;
+  const obj=+document.getElementById('obj').value;
+  if(!peso||!alt||!idade){alert('Preencha peso, altura e idade.');return;}
+  let tmb=sexo==='M'?(10*peso)+(6.25*alt)-(5*idade)+5:(10*peso)+(6.25*alt)-(5*idade)-161;
+  const kcal=Math.round(tmb*atv+obj);
+  const p=Math.round((kcal*0.30)/4);
+  const c=Math.round((kcal*0.40)/4);
+  const g=Math.round((kcal*0.30)/9);
+  document.getElementById('kcal').textContent=kcal+' kcal/dia';
+  document.getElementById('p').textContent=p+' g';
+  document.getElementById('c').textContent=c+' g';
+  document.getElementById('g').textContent=g+' g';
+  document.getElementById('res').classList.add('show');
+}
+</script>
+<script src="assets/js/site-nav.js?v=20260918tools" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
+    <div>© 2026 IRN Devs</div>
+    <div><a href="ferramentas.html">ferramentas</a></div>
+  </div>
+</footer>
+</main>
+</body>
+</html>

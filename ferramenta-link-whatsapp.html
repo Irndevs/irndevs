@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de Link WhatsApp — IRN Devs</title>
+<meta name="description" content="Crie link wa.me com mensagem pronta. Ferramenta gratuita IRN Devs.">
+<link rel="canonical" href="https://irndevs.com/ferramenta-link-whatsapp.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918menu">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:640px;margin:0 auto;padding:28px 20px 80px}
+.crumb{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:14px}
+.sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
+.amber{color:var(--amber)}
+h1{font-size:26px;margin-bottom:8px}
+.lede{color:var(--dim);margin-bottom:24px;font-size:15px}
+.card{background:var(--raised);border:1px solid var(--border);border-radius:12px;padding:22px}
+label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px}
+input,textarea{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:#10130f;color:var(--text);font-size:15px;margin-bottom:14px;font-family:inherit}
+textarea{min-height:90px;resize:vertical}
+input:focus,textarea:focus{outline:none;border-color:var(--amber)}
+.btn{width:100%;padding:14px;background:var(--amber);color:#10130f;border:none;border-radius:10px;font-weight:700;font-size:15px;cursor:pointer;margin-bottom:10px}
+.btn2{width:100%;padding:12px;background:transparent;color:var(--amber);border:1px solid var(--border);border-radius:10px;font-weight:600;cursor:pointer}
+.result{display:none;margin-top:16px;padding:14px;border-radius:10px;background:#1a2218;border:1px solid var(--border);word-break:break-all;font-family:var(--mono);font-size:13px}
+.result.show{display:block}
+</style>
+</head>
+<body>
+<main id="conteudo">
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / <a href="ferramentas.html">ferramentas</a> / link whatsapp</p>
+  <div class="sec-head"><span class="amber">$</span> gen link-whatsapp</div>
+  <h1>Gerador de Link WhatsApp</h1>
+  <p class="lede">Crie um link wa.me com mensagem pronta para lojas, suporte e campanhas.</p>
+  <div class="card">
+    <label for="fone">Número (com DDD, só números)</label>
+    <input type="text" id="fone" placeholder="Ex: 11999999999">
+    <label for="msg">Mensagem (opcional)</label>
+    <textarea id="msg" placeholder="Olá! Vim pelo site e quero saber mais."></textarea>
+    <button class="btn" onclick="gerar()">Gerar link</button>
+    <button class="btn2" onclick="copiar()" id="btnCopy" style="display:none">Copiar link</button>
+    <div class="result" id="res"></div>
+  </div>
+</div>
+<script>
+let last='';
+function gerar(){
+  let n=document.getElementById('fone').value.replace(/\D/g,'');
+  if(n.length<10){alert('Informe um número válido com DDD.');return;}
+  if(!n.startsWith('55'))n='55'+n;
+  const m=document.getElementById('msg').value.trim();
+  last='https://wa.me/'+n+(m?'?text='+encodeURIComponent(m):'');
+  document.getElementById('res').textContent=last;
+  document.getElementById('res').classList.add('show');
+  document.getElementById('btnCopy').style.display='block';
+}
+function copiar(){
+  if(!last)return;
+  navigator.clipboard.writeText(last).then(()=>alert('Link copiado!')).catch(()=>prompt('Copie:',last));
+}
+</script>
+<script src="assets/js/site-nav.js?v=20260918tools" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
+    <div>© 2026 IRN Devs</div>
+    <div><a href="ferramentas.html">ferramentas</a> · <a href="contato.html">contato</a></div>
+  </div>
+</footer>
+</main>
+</body>
+</html>

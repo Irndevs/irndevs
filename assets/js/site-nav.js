@@ -34,6 +34,7 @@
     { href: 'index.html#projetos', label: 'projetos', ico: '▸' },
     { href: 'servicos.html', label: 'serviços', ico: '⚙' },
     { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
+    { href: 'ferramentas.html', label: 'ferramentas', ico: '▣', extraClass: 'sn-top-tools' },
     { href: 'cursos.html', label: 'cursos', ico: '◈' },
     { href: 'ia.html', label: 'IA', ico: '✦', extraClass: 'sn-top-ia' }
   ];
@@ -51,10 +52,18 @@
       ]
     },
     {
-      label: 'ferramentas',
+      label: 'ferramentas prioritárias',
       items: [
-        { href: 'ia.html', label: 'ferramentas de IA', ico: '✦' },
-        { href: 'ferramentas.html', label: 'ferramentas grátis', ico: '▣' },
+        { href: 'ferramentas.html', label: 'todas as ferramentas', ico: '▣' },
+        { href: 'ferramenta-salario-liquido.html', label: 'salário líquido CLT', ico: '₽' },
+        { href: 'ferramenta-clt-pj.html', label: 'CLT vs PJ', ico: '⇄' },
+        { href: 'ferramenta-link-whatsapp.html', label: 'link WhatsApp', ico: '✉' },
+        { href: 'ferramenta-biometria-saude.html', label: 'biometria & saúde', ico: '♥' },
+        { href: 'ferramenta-esportivas.html', label: 'esporte & performance', ico: '⚡' },
+        { href: 'ferramenta-macros.html', label: 'macros fitness', ico: '⚖' },
+        { href: 'ferramenta-prompt.html', label: 'melhorador de prompt', ico: '✦' },
+        { href: 'ferramenta-json.html', label: 'validador JSON', ico: '{ }' },
+        { href: 'ia.html', label: 'hub de IA', ico: '✦' },
         { href: 'ferramenta-checklist.html', label: 'checklist grátis', ico: '✓' },
         { href: 'produtividade.html', label: 'produtividade', ico: '⏱' },
         { href: 'jogos.html', label: 'jogos', ico: '▶' }
@@ -89,11 +98,10 @@
 
   var bottomItems = [
     { href: 'index.html', label: 'início', ico: '⌂' },
-    { href: 'index.html#projetos', label: 'projetos', ico: '▸' },
+    { href: 'ferramentas.html', label: 'tools', ico: '▣' },
     { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
-    { href: 'cursos.html', label: 'cursos', ico: '◈' },
+    { href: 'ia.html', label: 'IA', ico: '✦' },
     { href: 'contato.html', label: 'contato', ico: '@' }
-	
   ];
 
   function linkHtml(l) {
@@ -285,6 +293,14 @@
       { q: 'cursos python docker linux', href: 'cursos.html', label: 'Cursos' },
       { q: 'ia ferramentas sql commit', href: 'ia.html', label: 'Ferramentas de IA' },
       { q: 'ferramentas gratis checklist', href: 'ferramentas.html', label: 'Ferramentas grátis' },
+      { q: 'biometria saude corporativa imc roi', href: 'ferramenta-biometria-saude.html', label: 'Biometria & Saúde Corporativa' },
+      { q: 'esporte performance 1rm vo2 pace zonas fc', href: 'ferramenta-esportivas.html', label: 'Calculadoras Esportivas' },
+      { q: 'salario liquido clt inss irrf', href: 'ferramenta-salario-liquido.html', label: 'Salário Líquido CLT' },
+      { q: 'clt pj comparar freela', href: 'ferramenta-clt-pj.html', label: 'Simulador CLT vs PJ' },
+      { q: 'whatsapp link wa.me gerador', href: 'ferramenta-link-whatsapp.html', label: 'Gerador Link WhatsApp' },
+      { q: 'macros proteina carboidrato fitness', href: 'ferramenta-macros.html', label: 'Calculadora de Macros' },
+      { q: 'prompt chatgpt midjourney melhorar', href: 'ferramenta-prompt.html', label: 'Melhorador de Prompt' },
+      { q: 'json formatar validar minificar', href: 'ferramenta-json.html', label: 'Validador JSON' },
       { q: 'diagnostico', href: 'diagnostico.html', label: 'Diagnóstico gratuito' },
       { q: 'contato', href: 'contato.html', label: 'Contato' },
       { q: 'blog artigos', href: 'blog.html', label: 'Blog' },

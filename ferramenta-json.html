@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Validador e Formatador JSON — IRN Devs</title>
+<meta name="description" content="Valide e formate JSON no navegador. Ferramenta gratuita para desenvolvedores.">
+<link rel="canonical" href="https://irndevs.com/ferramenta-json.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918menu">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:800px;margin:0 auto;padding:28px 20px 80px}
+.crumb{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:14px}
+.sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
+.amber{color:var(--amber)}
+h1{font-size:26px;margin-bottom:8px}
+.lede{color:var(--dim);margin-bottom:20px;font-size:15px}
+textarea{width:100%;min-height:220px;padding:14px;border:1px solid var(--border);border-radius:10px;background:#0c0e0b;color:var(--text);font-family:var(--mono);font-size:13px;margin-bottom:12px}
+textarea:focus{outline:none;border-color:var(--amber)}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.btn{padding:12px 18px;background:var(--amber);color:#10130f;border:none;border-radius:8px;font-weight:700;cursor:pointer}
+.btn2{padding:12px 18px;background:var(--raised);color:var(--text);border:1px solid var(--border);border-radius:8px;cursor:pointer}
+.status{font-family:var(--mono);font-size:13px;margin-bottom:8px}
+.ok{color:#4ade80}.err{color:#f87171}
+</style>
+</head>
+<body>
+<main id="conteudo">
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / <a href="ferramentas.html">ferramentas</a> / json</p>
+  <div class="sec-head"><span class="amber">$</span> jq --format --validate</div>
+  <h1>Validador e Formatador JSON</h1>
+  <p class="lede">Cole o JSON, valide a sintaxe e formate com indentação.</p>
+  <textarea id="in" placeholder='{"exemplo": true, "lista": [1,2,3]}'></textarea>
+  <div class="btns">
+    <button class="btn" onclick="formatar()">Formatar + Validar</button>
+    <button class="btn2" onclick="minificar()">Minificar</button>
+    <button class="btn2" onclick="copiar()">Copiar</button>
+  </div>
+  <div class="status" id="st"></div>
+</div>
+<script>
+function formatar(){
+  const el=document.getElementById('in');
+  try{
+    const o=JSON.parse(el.value);
+    el.value=JSON.stringify(o,null,2);
+    document.getElementById('st').innerHTML='<span class="ok">✓ JSON válido</span>';
+  }catch(e){
+    document.getElementById('st').innerHTML='<span class="err">✗ '+e.message+'</span>';
+  }
+}
+function minificar(){
+  const el=document.getElementById('in');
+  try{
+    el.value=JSON.stringify(JSON.parse(el.value));
+    document.getElementById('st').innerHTML='<span class="ok">✓ Minificado</span>';
+  }catch(e){
+    document.getElementById('st').innerHTML='<span class="err">✗ '+e.message+'</span>';
+  }
+}
+function copiar(){
+  navigator.clipboard.writeText(document.getElementById('in').value).then(()=>alert('Copiado!'));
+}
+</script>
+<script src="assets/js/site-nav.js?v=20260918tools" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
+    <div>© 2026 IRN Devs</div>
+    <div><a href="ferramentas.html">ferramentas</a></div>
+  </div>
+</footer>
+</main>
+</body>
+</html>

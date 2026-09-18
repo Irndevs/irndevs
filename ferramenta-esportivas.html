@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadoras Esportivas e Performance | Treinamento e Performance</title>
+  <meta name="description" content="Calculadoras gratuitas de performance esportiva: zonas de frequência cardíaca, 1RM, VO2 Máx, pace de corrida e calorias para atletas. Ideal para personal trainers, academias e atletas.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #dbeafe;
+      --secondary: #0f172a;
+      --accent: #f97316;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
+      color: white;
+      padding: 60px 0 70px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -15%;
+      width: 55%;
+      height: 180%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 1; text-align: center; }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(8px);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .hero h1 {
+      font-size: clamp(1.9rem, 5vw, 2.75rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      opacity: 0.95;
+      max-width: 620px;
+      margin: 0 auto 28px;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary { background: white; color: var(--primary-dark); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+
+    .btn-outline {
+      background: transparent;
+      color: white;
+      border: 2px solid rgba(255,255,255,0.6);
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.15); border-color: white; }
+
+    .btn-accent { background: var(--accent); color: white; }
+    .btn-accent:hover { background: #ea580c; transform: translateY(-2px); }
+
+    /* Benefits */
+    .benefits {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 0;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      text-align: center;
+    }
+
+    .benefit-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .benefit-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--primary-light);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+
+    .benefit-item strong { font-size: 0.95rem; color: var(--secondary); }
+    .benefit-item span { font-size: 0.85rem; color: var(--text-muted); }
+
+    /* Main */
+    .main { padding: 50px 0 60px; }
+
+    .section-title { text-align: center; margin-bottom: 40px; }
+    .section-title h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 8px;
+    }
+    .section-title p { color: var(--text-muted); max-width: 520px; margin: 0 auto; }
+
+    /* Tabs */
+    .calc-tabs {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .tab-btn {
+      padding: 10px 18px;
+      border-radius: 50px;
+      border: 1.5px solid var(--border);
+      background: var(--card);
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .tab-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    .calc-panel { display: none; animation: fadeIn 0.3s ease; }
+    .calc-panel.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .calc-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .calc-header {
+      background: linear-gradient(90deg, var(--primary-dark), var(--primary));
+      color: white;
+      padding: 20px 28px;
+    }
+
+    .calc-header h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 4px; }
+    .calc-header p { font-size: 0.9rem; opacity: 0.9; }
+
+    .calc-body { padding: 28px; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 520px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    .form-group { margin-bottom: 16px; }
+
+    .form-group label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--secondary);
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color 0.2s;
+      background: #fff;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 16px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+
+    .radio-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .btn-calc {
+      width: 100%;
+      padding: 14px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s;
+    }
+    .btn-calc:hover { background: var(--primary-dark); }
+
+    /* Result */
+    .result-box {
+      margin-top: 24px;
+      padding: 20px;
+      border-radius: 10px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      display: none;
+    }
+    .result-box.show { display: block; animation: fadeIn 0.3s ease; }
+
+    .result-main {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 4px;
+    }
+
+    .result-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .result-class {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .class-normal { background: #d1fae5; color: #065f46; }
+    .class-warning { background: #fef3c7; color: #92400e; }
+    .class-info { background: #e0f2fe; color: #075985; }
+    .class-accent { background: #ffedd5; color: #9a3412; }
+
+    .result-details {
+      margin-top: 14px;
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    /* Zones grid */
+    .zones-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .zone-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      background: white;
+      border: 1px solid var(--border);
+    }
+
+    .zone-row .zone-name { font-weight: 600; }
+    .zone-row .zone-bpm { color: var(--primary-dark); font-weight: 700; }
+
+    .zone-1 { border-left: 4px solid #94a3b8; }
+    .zone-2 { border-left: 4px solid #22c55e; }
+    .zone-3 { border-left: 4px solid #eab308; }
+    .zone-4 { border-left: 4px solid #f97316; }
+    .zone-5 { border-left: 4px solid #ef4444; }
+
+    /* 1RM table */
+    .rm-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 0.9rem;
+    }
+    .rm-table th, .rm-table td {
+      padding: 8px 10px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .rm-table th { background: #f1f5f9; font-weight: 600; }
+
+    /* Features */
+    .features {
+      padding: 50px 0;
+      background: var(--card);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      padding: 24px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    .feature-card:hover { border-color: var(--primary); box-shadow: var(--shadow); }
+    .feature-card .icon { font-size: 1.8rem; margin-bottom: 12px; }
+    .feature-card h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--secondary); }
+    .feature-card p { font-size: 0.9rem; color: var(--text-muted); }
+
+    /* CTA */
+    .cta-section {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: 60px 0;
+      margin-top: 20px;
+    }
+
+    .cta-content {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .cta-content h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 12px; }
+    .cta-content p { opacity: 0.9; margin-bottom: 28px; font-size: 1.05rem; }
+
+    .lead-form {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 14px;
+      padding: 28px;
+      text-align: left;
+    }
+
+    .lead-form .form-row { margin-bottom: 12px; }
+    .lead-form input, .lead-form select {
+      background: rgba(255,255,255,0.95);
+      border: none;
+    }
+    .lead-form label { color: rgba(255,255,255,0.85); }
+
+    .form-note {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--secondary);
+      color: rgba(255,255,255,0.7);
+      padding: 30px 0;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .disclaimer {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+      max-width: 600px;
+      margin: 24px auto 0;
+      padding: 0 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container hero-content">
+      <div class="badge">Ferramentas gratuitas para atletas, personal e academias</div>
+      <h1>Calculadoras Esportivas<br>e Performance</h1>
+      <p>Calcule zonas de treino, 1RM, VO2 Máx, pace de corrida e necessidade calórica. Ferramentas práticas para quem treina sério ou trabalha com performance.</p>
+      <div class="hero-cta">
+        <a href="#calculadoras" class="btn btn-primary">Usar Calculadoras</a>
+        <a href="#contato" class="btn btn-outline">Falar com Especialista</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- BENEFITS -->
+  <section class="benefits">
+    <div class="container">
+      <div class="benefits-grid">
+        <div class="benefit-item">
+          <div class="benefit-icon">❤️</div>
+          <strong>Zonas de FC</strong>
+          <span>Treino mais eficiente</span>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon">🏋️</div>
+          <strong>1RM estimado</strong>
+          <span>Cargas precisas</span>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon">🏃</div>
+          <strong>Pace & VO2</strong>
+          <span>Performance de corrida</span>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon">🔥</div>
+          <strong>Calorias</strong>
+          <span>Para atletas</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALCULADORAS -->
+  <section class="main" id="calculadoras">
+    <div class="container">
+      <div class="section-title">
+        <h2>Escolha uma calculadora</h2>
+        <p>Ferramentas baseadas em fórmulas consagradas da ciência do esporte.</p>
+      </div>
+
+      <div class="calc-tabs">
+        <button class="tab-btn active" data-tab="fc">Zonas de FC</button>
+        <button class="tab-btn" data-tab="rm">1RM</button>
+        <button class="tab-btn" data-tab="vo2">VO2 Máx</button>
+        <button class="tab-btn" data-tab="pace">Pace Corrida</button>
+        <button class="tab-btn" data-tab="calorias">Calorias Atleta</button>
+      </div>
+
+      <!-- ZONAS DE FREQUÊNCIA CARDÍACA -->
+      <div class="calc-panel active" id="panel-fc">
+        <div class="calc-card">
+          <div class="calc-header">
+            <h3>Zonas de Frequência Cardíaca</h3>
+            <p>Método de Karvonen (reserva de frequência cardíaca) — mais preciso</p>
+          </div>
+          <div class="calc-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fc-idade">Idade (anos)</label>
+                <input type="number" id="fc-idade" placeholder="Ex: 32" min="15" max="80">
+              </div>
+              <div class="form-group">
+                <label for="fc-repouso">FC de repouso (bpm)</label>
+                <input type="number" id="fc-repouso" placeholder="Ex: 62" min="40" max="100">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="fc-max">FC máxima (opcional — deixe em branco para estimar)</label>
+              <input type="number" id="fc-max" placeholder="Ex: 188 (ou deixe vazio)" min="120" max="220">
+            </div>
+            <button class="btn-calc" onclick="calcularZonasFC()">Calcular Zonas de Treino</button>
+            <div class="result-box" id="result-fc">
+              <div class="result-main" id="fc-valor">—</div>
+              <div class="result-label">Frequência Cardíaca Máxima estimada</div>
+              <div class="zones-grid" id="fc-zonas"></div>
+              <div class="result-details" id="fc-detalhes"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1RM -->
+      <div class="calc-panel" id="panel-rm">
+        <div class="calc-card">
+          <div class="calc-header">
+            <h3>Calculadora de 1RM (One Rep Max)</h3>
+            <p>Estime sua carga máxima com base em repetições submáximas (fórmula de Epley)</p>
+          </div>
+          <div class="calc-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="rm-carga">Carga levantada (kg)</label>
+                <input type="number" id="rm-carga" placeholder="Ex: 80" step="0.5" min="1">
+              </div>
+              <div class="form-group">
+                <label for="rm-reps">Repetições realizadas</label>
+                <input type="number" id="rm-reps" placeholder="Ex: 6" min="1" max="12">
+              </div>
+            </div>
+            <button class="btn-calc" onclick="calcular1RM()">Calcular 1RM</button>
+            <div class="result-box" id="result-rm">
+              <div class="result-main" id="rm-valor">—</div>
+              <div class="result-label">1RM estimado (fórmula de Epley)</div>
+              <div id="rm-tabela"></div>
+              <div class="result-details" id="rm-detalhes"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VO2 MÁX -->
+      <div class="calc-panel" id="panel-vo2">
+        <div class="calc-card">
+          <div class="calc-header">
+            <h3>Estimativa de VO2 Máximo</h3>
+            <p>Fórmula simplificada a partir de corrida de 12 minutos (Cooper) ou dados básicos</p>
+          </div>
+          <div class="calc-body">
+            <div class="form-group">
+              <label>Método de cálculo</label>
+              <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="vo2-metodo" value="cooper" checked> Teste de Cooper (12 min)</label>
+                <label class="radio-label"><input type="radio" name="vo2-metodo" value="idade"> Estimativa por idade/sexo</label>
+              </div>
+            </div>
+            <div id="vo2-cooper-fields">
+              <div class="form-group">
+                <label for="vo2-distancia">Distância percorrida em 12 min (metros)</label>
+                <input type="number" id="vo2-distancia" placeholder="Ex: 2400" min="1000" max="4000">
+              </div>
+            </div>
+            <div id="vo2-idade-fields" style="display:none;">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="vo2-idade">Idade</label>
+                  <input type="number" id="vo2-idade" placeholder="Ex: 30" min="15" max="70">
+                </div>
+                <div class="form-group">
+                  <label>Sexo</label>
+                  <div class="radio-group" style="margin-top:8px;">
+                    <label class="radio-label"><input type="radio" name="vo2-sexo" value="M" checked> Masculino</label>
+                    <label class="radio-label"><input type="radio" name="vo2-sexo" value="F"> Feminino</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="btn-calc" onclick="calcularVO2()">Calcular VO2 Máx</button>
+            <div class="result-box" id="result-vo2">
+              <div class="result-main" id="vo2-valor">—</div>
+              <div class="result-label">VO2 Máximo estimado (ml/kg/min)</div>
+              <span class="result-class" id="vo2-class"></span>
+              <div class="result-details" id="vo2-detalhes"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PACE CORRIDA -->
+      <div class="calc-panel" id="panel-pace">
+        <div class="calc-card">
+          <div class="calc-header">
+            <h3>Calculadora de Pace (Ritmo de Corrida)</h3>
+            <p>Descubra seu ritmo por km e tempo projetado para diferentes distâncias</p>
+          </div>
+          <div class="calc-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="pace-distancia">Distância (km)</label>
+                <input type="number" id="pace-distancia" placeholder="Ex: 5" step="0.1" min="0.5">
+              </div>
+              <div class="form-group">
+                <label for="pace-tempo">Tempo total (minutos)</label>
+                <input type="number" id="pace-tempo" placeholder="Ex: 28" step="0.1" min="1">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="pace-segundos">Segundos (opcional)</label>
+              <input type="number" id="pace-segundos" placeholder="Ex: 30" min="0" max="59" value="0">
+            </div>
+            <button class="btn-calc" onclick="calcularPace()">Calcular Pace</button>
+            <div class="result-box" id="result-pace">
+              <div class="result-main" id="pace-valor">—</div>
+              <div class="result-label">Ritmo médio por quilômetro</div>
+              <div class="result-details" id="pace-detalhes"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CALORIAS ATLETA -->
+      <div class="calc-panel" id="panel-calorias">
+        <div class="calc-card">
+          <div class="calc-header">
+            <h3>Necessidade Calórica para Atletas</h3>
+            <p>TMB (Mifflin-St Jeor) + fator de atividade esportiva</p>
+          </div>
+          <div class="calc-body">
+            <div class="form-group">
+              <label>Sexo</label>
+              <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="cal-sexo" value="M" checked> Masculino</label>
+                <label class="radio-label"><input type="radio" name="cal-sexo" value="F"> Feminino</label>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="cal-peso">Peso (kg)</label>
+                <input type="number" id="cal-peso" placeholder="Ex: 75" step="0.1">
+              </div>
+              <div class="form-group">
+                <label for="cal-altura">Altura (cm)</label>
+                <input type="number" id="cal-altura" placeholder="Ex: 178" step="1">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="cal-idade">Idade</label>
+                <input type="number" id="cal-idade" placeholder="Ex: 28" min="15" max="70">
+              </div>
+              <div class="form-group">
+                <label for="cal-atividade">Nível de atividade</label>
+                <select id="cal-atividade">
+                  <option value="1.2">Sedentário (pouco ou nenhum exercício)</option>
+                  <option value="1.375">Leve (1-3x/semana)</option>
+                  <option value="1.55" selected>Moderado (3-5x/semana)</option>
+                  <option value="1.725">Intenso (6-7x/semana)</option>
+                  <option value="1.9">Muito intenso / atleta (2x/dia)</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="cal-objetivo">Objetivo</label>
+              <select id="cal-objetivo">
+                <option value="0">Manutenção</option>
+                <option value="-300">Perda de gordura (déficit leve)</option>
+                <option value="-500">Perda de gordura (déficit moderado)</option>
+                <option value="250">Ganho de massa (superávit leve)</option>
+                <option value="400">Ganho de massa (superávit moderado)</option>
+              </select>
+            </div>
+            <button class="btn-calc" onclick="calcularCalorias()">Calcular Necessidade Calórica</button>
+            <div class="result-box" id="result-calorias">
+              <div class="result-main" id="cal-valor">—</div>
+              <div class="result-label">Calorias diárias recomendadas</div>
+              <div class="result-details" id="cal-detalhes"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="disclaimer">
+        Estas calculadoras são ferramentas de apoio. Resultados são estimativas baseadas em fórmulas científicas amplamente utilizadas. Consulte um profissional de educação física ou médico antes de mudanças intensas no treino ou dieta.
+      </p>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="container">
+      <div class="section-title">
+        <h2>Para quem serve essas ferramentas?</h2>
+        <p>Atletas amadores, personal trainers, academias e programas esportivos corporativos.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="icon">🏃</div>
+          <h3>Corredores e endurance</h3>
+          <p>Zonas de FC, pace e VO2 Máx para planejar treinos de corrida, ciclismo e natação com mais precisão.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">💪</div>
+          <h3>Musculação e força</h3>
+          <p>1RM estimado e progressão de cargas. Ideal para periodização e acompanhamento de alunos.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🏋️</div>
+          <h3>Personal Trainers</h3>
+          <p>Ferramentas rápidas para usar com clientes em avaliações e prescrição de treinos.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🏢</div>
+          <h3>Academias e empresas</h3>
+          <p>Engaje alunos e colaboradores com calculadoras práticas e gere leads para seus serviços.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="contato">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Quer uma solução completa de performance?</h2>
+        <p>Assessoria esportiva, programas para academias ou bem-estar corporativo com foco em esporte. Preencha e falamos com você.</p>
+        
+        <form class="lead-form" id="leadForm" onsubmit="enviarLead(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="lead-nome">Nome completo *</label>
+              <input type="text" id="lead-nome" required placeholder="Seu nome">
+            </div>
+            <div class="form-group">
+              <label for="lead-tipo">Você é *</label>
+              <select id="lead-tipo" required>
+                <option value="">Selecione</option>
+                <option value="atleta">Atleta / praticante</option>
+                <option value="personal">Personal Trainer</option>
+                <option value="academia">Academia / Studio</option>
+                <option value="empresa">Empresa / RH</option>
+                <option value="outro">Outro</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="lead-email">E-mail *</label>
+              <input type="email" id="lead-email" required placeholder="seu@email.com">
+            </div>
+            <div class="form-group">
+              <label for="lead-telefone">WhatsApp *</label>
+              <input type="tel" id="lead-telefone" required placeholder="(11) 99999-9999">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lead-interesse">Principal interesse</label>
+            <select id="lead-interesse">
+              <option value="">Selecione</option>
+              <option value="avaliacao">Avaliação física / performance</option>
+              <option value="treino">Prescrição de treinos</option>
+              <option value="academia">Solução para academia</option>
+              <option value="corporativo">Esporte corporativo</option>
+              <option value="consultoria">Consultoria esportiva</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-accent" style="width:100%; justify-content:center; margin-top:8px;">
+            Quero saber mais
+          </button>
+          <p class="form-note">Seus dados são tratados com confidencialidade. Não enviamos spam.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 · Calculadoras Esportivas e Performance</p>
+      <p style="margin-top:6px; font-size:0.8rem;">Página pronta para captar leads de atletas, personais e academias. Personalize com sua marca.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Tabs
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.calc-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Toggle VO2 fields
+    document.querySelectorAll('input[name="vo2-metodo"]').forEach(r => {
+      r.addEventListener('change', () => {
+        const isCooper = r.value === 'cooper';
+        document.getElementById('vo2-cooper-fields').style.display = isCooper ? 'block' : 'none';
+        document.getElementById('vo2-idade-fields').style.display = isCooper ? 'none' : 'block';
+      });
+    });
+
+    // === ZONAS DE FC (Karvonen) ===
+    function calcularZonasFC() {
+      const idade = parseFloat(document.getElementById('fc-idade').value);
+      const fcRepouso = parseFloat(document.getElementById('fc-repouso').value);
+      let fcMax = parseFloat(document.getElementById('fc-max').value);
+
+      if (!idade || !fcRepouso) {
+        alert('Informe idade e FC de repouso.');
+        return;
+      }
+
+      if (!fcMax) {
+        // Tanaka: 208 - 0.7 * idade (melhor que 220-idade)
+        fcMax = 208 - (0.7 * idade);
+      }
+
+      const reserva = fcMax - fcRepouso;
+
+      // Zonas Karvonen
+      const zonas = [
+        { nome: 'Zona 1 — Recuperação', min: 0.50, max: 0.60, classe: 'zone-1' },
+        { nome: 'Zona 2 — Aeróbica leve', min: 0.60, max: 0.70, classe: 'zone-2' },
+        { nome: 'Zona 3 — Aeróbica moderada', min: 0.70, max: 0.80, classe: 'zone-3' },
+        { nome: 'Zona 4 — Limiar / Limite', min: 0.80, max: 0.90, classe: 'zone-4' },
+        { nome: 'Zona 5 — Máxima / VO2', min: 0.90, max: 1.00, classe: 'zone-5' }
+      ];
+
+      let html = '';
+      zonas.forEach(z => {
+        const bpmMin = Math.round(fcRepouso + (reserva * z.min));
+        const bpmMax = Math.round(fcRepouso + (reserva * z.max));
+        html += `<div class="zone-row ${z.classe}">
+          <span class="zone-name">${z.nome}</span>
+          <span class="zone-bpm">${bpmMin} – ${bpmMax} bpm</span>
+        </div>`;
+      });
+
+      document.getElementById('fc-valor').textContent = Math.round(fcMax) + ' bpm';
+      document.getElementById('fc-zonas').innerHTML = html;
+      document.getElementById('fc-detalhes').innerHTML = 
+        `FC de repouso: <strong>${fcRepouso} bpm</strong> · Reserva de FC: <strong>${Math.round(reserva)} bpm</strong>.<br>
+         Método de Karvonen é considerado mais individualizado que percentuais fixos da FC máxima.`;
+      document.getElementById('result-fc').classList.add('show');
+    }
+
+    // === 1RM (Epley) ===
+    function calcular1RM() {
+      const carga = parseFloat(document.getElementById('rm-carga').value);
+      const reps = parseFloat(document.getElementById('rm-reps').value);
+
+      if (!carga || !reps || reps < 1 || reps > 12) {
+        alert('Informe carga e repetições (1 a 12).');
+        return;
+      }
+
+      // Epley: 1RM = carga * (1 + reps/30)
+      const umRM = carga * (1 + reps / 30);
+
+      // Percentuais comuns
+      const percentuais = [100, 95, 90, 85, 80, 75, 70, 65, 60];
+      let tabela = `<table class="rm-table"><thead><tr><th>% 1RM</th><th>Carga (kg)</th><th>Reps estimadas</th></tr></thead><tbody>`;
+      
+      percentuais.forEach(p => {
+        const kg = (umRM * p / 100).toFixed(1);
+        // Estimativa aproximada de reps
+        let repsEst = '1';
+        if (p <= 60) repsEst = '15+';
+        else if (p <= 65) repsEst = '12-15';
+        else if (p <= 70) repsEst = '10-12';
+        else if (p <= 75) repsEst = '8-10';
+        else if (p <= 80) repsEst = '6-8';
+        else if (p <= 85) repsEst = '4-6';
+        else if (p <= 90) repsEst = '3-4';
+        else if (p <= 95) repsEst = '2-3';
+        tabela += `<tr><td>${p}%</td><td>${kg}</td><td>${repsEst}</td></tr>`;
+      });
+      tabela += `</tbody></table>`;
+
+      document.getElementById('rm-valor').textContent = umRM.toFixed(1) + ' kg';
+      document.getElementById('rm-tabela').innerHTML = tabela;
+      document.getElementById('rm-detalhes').innerHTML = 
+        `Baseado em <strong>${carga} kg × ${reps} reps</strong>. Fórmula de Epley é uma das mais usadas para estimativa de 1RM. Use como referência e teste com segurança.`;
+      document.getElementById('result-rm').classList.add('show');
+    }
+
+    // === VO2 MÁX ===
+    function calcularVO2() {
+      const metodo = document.querySelector('input[name="vo2-metodo"]:checked').value;
+      let vo2, classificacao, classe, detalhes;
+
+      if (metodo === 'cooper') {
+        const dist = parseFloat(document.getElementById('vo2-distancia').value);
+        if (!dist || dist < 1000) {
+          alert('Informe a distância percorrida em 12 minutos (metros).');
+          return;
+        }
+        // Cooper: VO2 = (distância em metros - 504.9) / 44.73
+        vo2 = (dist - 504.9) / 44.73;
+        detalhes = `Baseado no Teste de Cooper (12 minutos). Distância: <strong>${dist} m</strong>.`;
+      } else {
+        const idade = parseFloat(document.getElementById('vo2-idade').value);
+        const sexo = document.querySelector('input[name="vo2-sexo"]:checked').value;
+        if (!idade) {
+          alert('Informe a idade.');
+          return;
+        }
+        // Estimativa simples por idade e sexo (valores médios de referência)
+        if (sexo === 'M') {
+          vo2 = 60 - (0.55 * idade); // aproximação para homens ativos
+        } else {
+          vo2 = 48 - (0.45 * idade);
+        }
+        detalhes = `Estimativa aproximada por idade e sexo. Para maior precisão, realize o Teste de Cooper ou teste ergométrico.`;
+      }
+
+      // Classificação simplificada (valores médios adultos)
+      if (vo2 >= 50) { classificacao = 'Excelente'; classe = 'class-normal'; }
+      else if (vo2 >= 42) { classificacao = 'Bom'; classe = 'class-normal'; }
+      else if (vo2 >= 35) { classificacao = 'Médio'; classe = 'class-info'; }
+      else if (vo2 >= 28) { classificacao = 'Abaixo da média'; classe = 'class-warning'; }
+      else { classificacao = 'Baixo'; classe = 'class-warning'; }
+
+      document.getElementById('vo2-valor').textContent = vo2.toFixed(1);
+      const classEl = document.getElementById('vo2-class');
+      classEl.textContent = classificacao;
+      classEl.className = 'result-class ' + classe;
+      document.getElementById('vo2-detalhes').innerHTML = detalhes + `<br>VO2 Máx é um dos melhores indicadores de capacidade aeróbica.`;
+      document.getElementById('result-vo2').classList.add('show');
+    }
+
+    // === PACE ===
+    function calcularPace() {
+      const dist = parseFloat(document.getElementById('pace-distancia').value);
+      const min = parseFloat(document.getElementById('pace-tempo').value);
+      const seg = parseFloat(document.getElementById('pace-segundos').value) || 0;
+
+      if (!dist || !min) {
+        alert('Informe distância e tempo.');
+        return;
+      }
+
+      const tempoTotalSeg = (min * 60) + seg;
+      const paceSegPorKm = tempoTotalSeg / dist;
+      const paceMin = Math.floor(paceSegPorKm / 60);
+      const paceSeg = Math.round(paceSegPorKm % 60);
+
+      // Projeções
+      const distancias = [
+        { nome: '5 km', km: 5 },
+        { nome: '10 km', km: 10 },
+        { nome: 'Meia Maratona (21,1 km)', km: 21.1 },
+        { nome: 'Maratona (42,2 km)', km: 42.2 }
+      ];
+
+      let proj = '<strong>Projeção de tempo (mesmo ritmo):</strong><br>';
+      distancias.forEach(d => {
+        const totalSeg = paceSegPorKm * d.km;
+        const h = Math.floor(totalSeg / 3600);
+        const m = Math.floor((totalSeg % 3600) / 60);
+        const s = Math.round(totalSeg % 60);
+        const tempoStr = h > 0 ? `${h}h ${m.toString().padStart(2,'0')}min ${s.toString().padStart(2,'0')}s` : `${m}min ${s.toString().padStart(2,'0')}s`;
+        proj += `${d.nome}: <strong>${tempoStr}</strong><br>`;
+      });
+
+      document.getElementById('pace-valor').textContent = `${paceMin}:${paceSeg.toString().padStart(2,'0')} /km`;
+      document.getElementById('pace-detalhes').innerHTML = proj;
+      document.getElementById('result-pace').classList.add('show');
+    }
+
+    // === CALORIAS ===
+    function calcularCalorias() {
+      const sexo = document.querySelector('input[name="cal-sexo"]:checked').value;
+      const peso = parseFloat(document.getElementById('cal-peso').value);
+      const altura = parseFloat(document.getElementById('cal-altura').value);
+      const idade = parseFloat(document.getElementById('cal-idade').value);
+      const atividade = parseFloat(document.getElementById('cal-atividade').value);
+      const objetivo = parseFloat(document.getElementById('cal-objetivo').value);
+
+      if (!peso || !altura || !idade) {
+        alert('Preencha peso, altura e idade.');
+        return;
+      }
+
+      // Mifflin-St Jeor
+      let tmb;
+      if (sexo === 'M') {
+        tmb = (10 * peso) + (6.25 * altura) - (5 * idade) + 5;
+      } else {
+        tmb = (10 * peso) + (6.25 * altura) - (5 * idade) - 161;
+      }
+
+      const tdee = tmb * atividade;
+      const final = tdee + objetivo;
+
+      // Macros aproximados (exemplo: 30% prot, 35% carb, 35% gord)
+      const prot = Math.round((final * 0.30) / 4);
+      const carb = Math.round((final * 0.35) / 4);
+      const gord = Math.round((final * 0.35) / 9);
+
+      document.getElementById('cal-valor').textContent = Math.round(final) + ' kcal';
+      document.getElementById('cal-detalhes').innerHTML = 
+        `TMB (Mifflin-St Jeor): <strong>${Math.round(tmb)} kcal</strong><br>
+         Gasto total estimado (TDEE): <strong>${Math.round(tdee)} kcal</strong><br>
+         Ajuste pelo objetivo: <strong>${objetivo >= 0 ? '+' : ''}${objetivo} kcal</strong><br><br>
+         <strong>Distribuição sugerida de macros:</strong><br>
+         Proteína: ~${prot} g · Carboidrato: ~${carb} g · Gordura: ~${gord} g<br>
+         <em>Ajuste conforme preferência e tipo de treino. Consulte nutricionista para plano individualizado.</em>`;
+      document.getElementById('result-calorias').classList.add('show');
+    }
+
+    // === LEAD ===
+    function enviarLead(e) {
+      e.preventDefault();
+      const nome = document.getElementById('lead-nome').value;
+      const tipo = document.getElementById('lead-tipo').value;
+      const email = document.getElementById('lead-email').value;
+      const telefone = document.getElementById('lead-telefone').value;
+      const interesse = document.getElementById('lead-interesse').value;
+
+      const msg = encodeURIComponent(
+        `Olá! Vim pela página de Calculadoras Esportivas e Performance.\n\n` +
+        `Nome: ${nome}\nTipo: ${tipo}\nE-mail: ${email}\nWhatsApp: ${telefone}\n` +
+        `Interesse: ${interesse || 'não informado'}`
+      );
+
+      // TROQUE PELO SEU NÚMERO (formato internacional)
+      const whatsapp = '5511999999999';
+      window.open(`https://wa.me/${whatsapp}?text=${msg}`, '_blank');
+
+      alert('Obrigado! Você será redirecionado para o WhatsApp.');
+      document.getElementById('leadForm').reset();
+    }
+  </script>
+</body>
+</html>

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ferramentas gratuitas — Utilitários — IRN Devs</title>
-<meta name="description" content="Ferramentas gratuitas da IRN Devs: gerador de contratos, precificação, conversor de arquivos, QR Code, calculadora MEI, senha segura e mais — direto no navegador.">
+<title>Ferramentas gratuitas — Categorizadas — IRN Devs</title>
+<meta name="description" content="Ferramentas gratuitas da IRN Devs organizadas por categoria: Saúde & Corporativo, Esporte & Performance, Produtividade, Utilitários e Dev.">
 <link rel="canonical" href="https://irndevs.com/ferramentas.html">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
@@ -22,19 +22,50 @@
   .sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
   .amber{color:var(--amber)}
   h1{font-size:28px;margin-bottom:10px}
-  .lede{color:var(--dim);max-width:560px;margin-bottom:12px}
+  .lede{color:var(--dim);max-width:620px;margin-bottom:12px}
   .cross{font-size:13.5px;color:var(--dim);margin-bottom:28px}
+
+  /* Category filters */
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+  .filter-btn{
+    font-family:var(--mono);font-size:12.5px;
+    padding:8px 14px;border-radius:8px;
+    border:1px solid var(--border);background:var(--raised);
+    color:var(--dim);cursor:pointer;transition:all .15s;
+  }
+  .filter-btn:hover{border-color:var(--amber);color:var(--amber)}
+  .filter-btn.active{background:var(--amber);color:#10130f;border-color:var(--amber);font-weight:600}
+
+  .cat-block{margin-bottom:36px}
+  .cat-block.hidden{display:none}
+  .cat-title{
+    font-family:var(--mono);font-size:13px;color:var(--faint);
+    margin-bottom:12px;display:flex;align-items:center;gap:8px;
+  }
+  .cat-title span.tag{
+    background:var(--raised);border:1px solid var(--border);
+    padding:2px 8px;border-radius:6px;font-size:11px;color:var(--amber);
+  }
+
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-  .tool{background:var(--raised);border:1px solid var(--border);border-radius:10px;padding:18px}
+  .tool{background:var(--raised);border:1px solid var(--border);border-radius:10px;padding:18px;transition:border-color .15s}
+  .tool:hover{border-color:var(--amber)}
   .tool a.name{font-size:16px;font-weight:600;color:var(--text);display:block;margin-bottom:6px}
   .tool a.name:hover{color:var(--amber)}
   .tool .desc{color:var(--dim);font-size:13.5px}
+  .tool .badge{
+    display:inline-block;margin-top:10px;font-family:var(--mono);
+    font-size:11px;padding:3px 8px;border-radius:6px;
+    background:#1a2218;border:1px solid var(--border);color:var(--faint);
+  }
+  .tool .badge.new{color:var(--amber);border-color:#5a4a20}
+
   .note{margin-top:28px;font-size:13.5px;color:var(--dim)}
 </style>
   <link rel="stylesheet" href="assets/css/motion.css">
 
-<meta property="og:title" content="Ferramentas gratuitas — Utilitários — IRN Devs">
-<meta property="og:description" content="Ferramentas gratuitas da IRN Devs: contratos, precificação, conversor de arquivos, QR Code, MEI, senha segura e mais.">
+<meta property="og:title" content="Ferramentas gratuitas — Categorizadas — IRN Devs">
+<meta property="og:description" content="Ferramentas gratuitas organizadas por categoria: Saúde, Esporte, Produtividade, Utilitários e Dev.">
 <meta property="og:url" content="https://irndevs.com/ferramentas.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
@@ -45,7 +76,7 @@
     "@type": "CollectionPage",
     "name": "Ferramentas gratuitas",
     "url": "https://irndevs.com/ferramentas.html",
-    "description": "Utilitários gratuitos da IRN Devs, sem IA — contratos, precificação, conversor de arquivos, QR Code, MEI, senha segura, entre outros.",
+    "description": "Utilitários gratuitos da IRN Devs organizados por categoria.",
     "isPartOf": {"@type": "WebSite", "name": "IRN Devs", "url": "https://irndevs.com/"}
   }
   </script>
@@ -59,62 +90,163 @@
 
 <div class="wrap">
   <p class="crumb"><a href="index.html">~</a> / ferramentas</p>
-  <div class="sec-head"><span class="amber">$</span> ls ferramentas/ --gratuitas</div>
+  <div class="sec-head"><span class="amber">$</span> ls ferramentas/ --categorizadas</div>
   <h1>Ferramentas gratuitas</h1>
-  <p class="lede">Mini-produtos utilitários, sem backend na maioria — direto no navegador. Sem IA: são scripts de resolução direta.</p>
+  <p class="lede">Mini-produtos utilitários organizados por nicho. A maioria roda direto no navegador, sem backend.</p>
   <p class="cross">Procurando ferramentas de IA pra dev (SQL, refatoração, prompts)? Isso fica no <a href="ia.html">hub de IA →</a></p>
 
-  <div class="grid">
-    <article class="tool">
-      <a class="name" href="ferramenta-checklist.html">Checklist grátis</a>
-      <p class="desc">Automação de processo ou pipeline de dados — gere um plano no navegador.</p>
-    </article>
-    <article class="tool">
-      <a class="name" href="https://contratos.irndevs.com">Gerador de Contratos</a>
-      <p class="desc">Prestação de serviço, aluguel, NDA — exporta em PDF.</p>
-    </article>
-    <article class="tool">
-      <a class="name" href="https://precificacao.irndevs.com">Calculadora de Precificação</a>
-      <p class="desc">Preço/hora ou de venda com custos, impostos e margem.</p>
-    </article>
-    <article class="tool">
-      <a class="name" href="https://converter.irndevs.com">Conversor de Arquivos</a>
-      <p class="desc">CSV↔JSON, texto→slug, Markdown→HTML.</p>
-    </article>
-    <article class="tool">
-      <a class="name" href="https://links.irndevs.com">Encurtador de Links</a>
-      <p class="desc">Dashboard de cliques com gráfico de acesso.</p>
-    </article>
-    <article class="tool">
-      <a class="name" href="https://qrcode.irndevs.com">Gerador de QR Code</a>
-      <p class="desc">Link, Wi-Fi, WhatsApp ou e-mail — download em PNG.</p>
-    </article>
-    <article class="tool">
-      <a class="name" href="https://mei.irndevs.com">Calculadora MEI</a>
-      <p class="desc">Estima DAS mensal e limite anual de faturamento.</p>
-    </article>
-    <article class="tool">
-      <a class="name" href="https://senha.irndevs.com">Gerador de Senha Segura</a>
-      <p class="desc">Senhas aleatórias com indicador de força.</p>
-    </article>
-    <article class="tool">
-      <a class="name" href="https://vagas.irndevs.com">Buscador de Vagas</a>
-      <p class="desc">RemoteOK + Adzuna, com filtro de palavra-chave e salário.</p>
-    </article>
-    <article class="tool">
-      <a class="name" href="produtividade.html">Produtividade</a>
-      <p class="desc">To-do, pomodoro e scratchpad — tudo local no navegador.</p>
-    </article>
-    <article class="tool">
-      <a class="name" href="jogos.html">Minijogos</a>
-      <p class="desc">Snake, Memory, Reflexo e Quiz no estilo terminal.</p>
-    </article>
+  <!-- FILTERS -->
+  <div class="filters" role="tablist" aria-label="Filtrar por categoria">
+    <button class="filter-btn active" data-cat="all" role="tab" aria-selected="true">todas</button>
+    <button class="filter-btn" data-cat="saude" role="tab">saúde & corporativo</button>
+    <button class="filter-btn" data-cat="esporte" role="tab">esporte & performance</button>
+    <button class="filter-btn" data-cat="produtividade" role="tab">produtividade</button>
+    <button class="filter-btn" data-cat="utilitarios" role="tab">utilitários</button>
+    <button class="filter-btn" data-cat="dev" role="tab">dev</button>
+  </div>
+
+  <!-- 8 PRIORITÁRIAS -->
+  <div class="cat-block" data-cat="saude">
+    <div class="cat-title">8 prioritárias <span class="tag">destaque</span></div>
+    <div class="grid">
+      <article class="tool"><a class="name" href="ferramenta-salario-liquido.html">Salário Líquido CLT</a><p class="desc">INSS + IRRF a partir do salário bruto.</p><span class="badge new">finanças</span></article>
+      <article class="tool"><a class="name" href="ferramenta-clt-pj.html">CLT vs PJ</a><p class="desc">Compare ganho líquido aproximado.</p><span class="badge new">carreira</span></article>
+      <article class="tool"><a class="name" href="ferramenta-link-whatsapp.html">Link WhatsApp</a><p class="desc">wa.me com mensagem pronta.</p><span class="badge new">marketing</span></article>
+      <article class="tool"><a class="name" href="ferramenta-biometria-saude.html">Biometria & Saúde</a><p class="desc">IMC, gordura, peso ideal e ROI corporativo.</p><span class="badge new">saúde</span></article>
+      <article class="tool"><a class="name" href="ferramenta-esportivas.html">Esportivas</a><p class="desc">Zonas FC, 1RM, VO2, pace e calorias.</p><span class="badge new">esporte</span></article>
+      <article class="tool"><a class="name" href="ferramenta-macros.html">Macros Fitness</a><p class="desc">Proteína, carbo e gordura por objetivo.</p><span class="badge new">fitness</span></article>
+      <article class="tool"><a class="name" href="ferramenta-prompt.html">Melhorador de Prompt</a><p class="desc">Prompt profissional para ChatGPT e Midjourney.</p><span class="badge new">IA</span></article>
+      <article class="tool"><a class="name" href="ferramenta-json.html">Validador JSON</a><p class="desc">Valida, formata e minifica JSON.</p><span class="badge new">dev</span></article>
+    </div>
+  </div>
+
+  <!-- SAÚDE -->
+  <div class="cat-block" data-cat="saude">
+    <div class="cat-title">saúde & corporativo</div>
+    <div class="grid">
+      <article class="tool"><a class="name" href="ferramenta-biometria-saude.html">Biometria & Saúde Corporativa</a><p class="desc">IMC, gordura, peso ideal e ROI de bem-estar.</p><span class="badge">saúde</span></article>
+      <article class="tool"><a class="name" href="ferramenta-checklist.html">Checklist grátis</a><p class="desc">Plano de automação ou pipeline no navegador.</p><span class="badge">diagnóstico</span></article>
+    </div>
+  </div>
+
+  <!-- ESPORTE -->
+  <div class="cat-block" data-cat="esporte">
+    <div class="cat-title">esporte & performance</div>
+    <div class="grid">
+      <article class="tool"><a class="name" href="ferramenta-esportivas.html">Calculadoras Esportivas</a><p class="desc">Zonas FC, 1RM, VO2 Máx, pace e calorias.</p><span class="badge">esporte</span></article>
+      <article class="tool"><a class="name" href="ferramenta-macros.html">Macros Fitness</a><p class="desc">Macros por objetivo (emagrecer, manter, ganhar).</p><span class="badge">fitness</span></article>
+    </div>
+  </div>
+
+  <!-- PRODUTIVIDADE -->
+  <div class="cat-block" data-cat="produtividade">
+    <div class="cat-title">produtividade & negócios</div>
+    <div class="grid">
+      <article class="tool"><a class="name" href="ferramenta-salario-liquido.html">Salário Líquido CLT</a><p class="desc">Descontos INSS e IRRF.</p><span class="badge">finanças</span></article>
+      <article class="tool"><a class="name" href="ferramenta-clt-pj.html">CLT vs PJ</a><p class="desc">Comparativo de ganho líquido.</p><span class="badge">carreira</span></article>
+      <article class="tool"><a class="name" href="ferramenta-link-whatsapp.html">Link WhatsApp</a><p class="desc">wa.me com mensagem.</p><span class="badge">marketing</span></article>
+      <article class="tool"><a class="name" href="produtividade.html">Produtividade</a><p class="desc">To-do, pomodoro e scratchpad.</p><span class="badge">local</span></article>
+      <article class="tool"><a class="name" href="https://precificacao.irndevs.com">Precificação</a><p class="desc">Preço/hora com custos e margem.</p><span class="badge">negócios</span></article>
+      <article class="tool"><a class="name" href="https://contratos.irndevs.com">Contratos</a><p class="desc">Minutas em PDF.</p><span class="badge">negócios</span></article>
+    </div>
+  </div>
+
+  <!-- UTILITÁRIOS -->
+  <div class="cat-block" data-cat="utilitarios">
+    <div class="cat-title">utilitários</div>
+    <div class="grid">
+      <article class="tool">
+        <a class="name" href="https://converter.irndevs.com">Conversor de Arquivos</a>
+        <p class="desc">CSV↔JSON, texto→slug, Markdown→HTML.</p>
+        <span class="badge">conversão</span>
+      </article>
+      <article class="tool">
+        <a class="name" href="https://links.irndevs.com">Encurtador de Links</a>
+        <p class="desc">Dashboard de cliques com gráfico de acesso.</p>
+        <span class="badge">links</span>
+      </article>
+      <article class="tool">
+        <a class="name" href="https://qrcode.irndevs.com">Gerador de QR Code</a>
+        <p class="desc">Link, Wi-Fi, WhatsApp ou e-mail — download em PNG.</p>
+        <span class="badge">qr</span>
+      </article>
+      <article class="tool">
+        <a class="name" href="https://mei.irndevs.com">Calculadora MEI</a>
+        <p class="desc">Estima DAS mensal e limite anual de faturamento.</p>
+        <span class="badge">mei</span>
+      </article>
+      <article class="tool">
+        <a class="name" href="https://senha.irndevs.com">Gerador de Senha Segura</a>
+        <p class="desc">Senhas aleatórias com indicador de força.</p>
+        <span class="badge">segurança</span>
+      </article>
+      <article class="tool">
+        <a class="name" href="jogos.html">Minijogos</a>
+        <p class="desc">Snake, Memory, Reflexo e Quiz no estilo terminal.</p>
+        <span class="badge">jogos</span>
+      </article>
+    </div>
+  </div>
+
+  <!-- DEV -->
+  <div class="cat-block" data-cat="dev">
+    <div class="cat-title">dev</div>
+    <div class="grid">
+      <article class="tool">
+        <a class="name" href="ferramenta-json.html">Validador JSON</a>
+        <p class="desc">Valida, formata e minifica JSON no navegador.</p>
+        <span class="badge">dev</span>
+      </article>
+      <article class="tool">
+        <a class="name" href="ferramenta-prompt.html">Melhorador de Prompt</a>
+        <p class="desc">Prompts profissionais para ChatGPT, Claude e Midjourney.</p>
+        <span class="badge">ia</span>
+      </article>
+      <article class="tool">
+        <a class="name" href="ia.html">Hub de IA para Devs</a>
+        <p class="desc">Gerador de SQL, explorador de código legado, commits inteligentes, mock data.</p>
+        <span class="badge">ia</span>
+      </article>
+      <article class="tool">
+        <a class="name" href="https://vagas.irndevs.com">Buscador de Vagas</a>
+        <p class="desc">RemoteOK + Adzuna, com filtro de palavra-chave e salário.</p>
+        <span class="badge">carreira</span>
+      </article>
+      <article class="tool">
+        <a class="name" href="ferramenta-checklist.html">Checklist de projeto</a>
+        <p class="desc">Diagnóstico rápido antes de fechar escopo de software, automação ou dashboard.</p>
+        <span class="badge">diagnóstico</span>
+      </article>
+    </div>
   </div>
 
   <p class="note">
     Precisa de algo sob medida? Veja os <a href="pacotes.html">pacotes</a> ou fale sobre <a href="servicos.html">serviços</a>.
   </p>
 </div>
+
+<script>
+  // Category filter
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      const cat = btn.dataset.cat;
+      document.querySelectorAll('.cat-block').forEach(block => {
+        if (cat === 'all' || block.dataset.cat === cat) {
+          block.classList.remove('hidden');
+        } else {
+          block.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>
+
 <script src="assets/js/site-nav.js?v=20260918a11y" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 <footer class="site-footer-v2" role="contentinfo">

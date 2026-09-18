@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador CLT vs PJ — IRN Devs</title>
+<meta name="description" content="Compare ganhos reais entre CLT e PJ. Ferramenta gratuita para profissionais e freelancers.">
+<link rel="canonical" href="https://irndevs.com/ferramenta-clt-pj.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918menu">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:640px;margin:0 auto;padding:28px 20px 80px}
+.crumb{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:14px}
+.sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
+.amber{color:var(--amber)}
+h1{font-size:26px;margin-bottom:8px}
+.lede{color:var(--dim);margin-bottom:20px;font-size:15px}
+.card{background:var(--raised);border:1px solid var(--border);border-radius:12px;padding:22px}
+label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px}
+input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:#10130f;color:var(--text);font-size:15px;margin-bottom:14px}
+.btn{width:100%;padding:14px;background:var(--amber);color:#10130f;border:none;border-radius:10px;font-weight:700;cursor:pointer}
+.result{display:none;margin-top:16px}
+.result.show{display:block}
+.box{padding:14px;border-radius:10px;background:#1a2218;border:1px solid var(--border);margin-bottom:10px}
+.box .t{font-size:12px;color:var(--faint);margin-bottom:4px}
+.box .v{font-size:22px;font-weight:800;color:var(--amber)}
+.note{margin-top:14px;font-size:12px;color:var(--faint)}
+</style>
+</head>
+<body>
+<main id="conteudo">
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / <a href="ferramentas.html">ferramentas</a> / clt-pj</p>
+  <div class="sec-head"><span class="amber">$</span> compare --clt --pj</div>
+  <h1>Simulador CLT vs PJ</h1>
+  <p class="lede">Compare de forma simplificada o ganho líquido aproximado nos dois regimes.</p>
+  <div class="card">
+    <label>Proposta CLT — salário bruto mensal (R$)</label>
+    <input type="number" id="clt" placeholder="8000">
+    <label>Proposta PJ — valor mensal do contrato (R$)</label>
+    <input type="number" id="pj" placeholder="12000">
+    <label>Custo mensal PJ estimado (contabilidade, INSS, impostos %) — use 15 a 25</label>
+    <input type="number" id="custo" placeholder="20" value="20">
+    <button class="btn" onclick="cmp()">Comparar</button>
+    <div class="result" id="res">
+      <div class="box"><div class="t">CLT líquido estimado</div><div class="v" id="vclt">—</div></div>
+      <div class="box"><div class="t">PJ líquido estimado</div><div class="v" id="vpj">—</div></div>
+      <div class="box"><div class="t">Diferença mensal</div><div class="v" id="diff">—</div></div>
+    </div>
+  </div>
+  <p class="note">Estimativa educativa. CLT usa desconto aproximado de 20–27%. PJ desconta o % informado. Consulte contador para decisão real.</p>
+</div>
+<script>
+function cmp(){
+  const clt=+document.getElementById('clt').value;
+  const pj=+document.getElementById('pj').value;
+  const custo=(+document.getElementById('custo').value||20)/100;
+  if(!clt||!pj){alert('Preencha os dois valores.');return;}
+  // CLT: desconto aproximado progressivo ~22% médio
+  const liqClt=clt*0.78;
+  const liqPj=pj*(1-custo);
+  const d=liqPj-liqClt;
+  document.getElementById('vclt').textContent='R$ '+liqClt.toLocaleString('pt-BR',{maximumFractionDigits:0});
+  document.getElementById('vpj').textContent='R$ '+liqPj.toLocaleString('pt-BR',{maximumFractionDigits:0});
+  document.getElementById('diff').textContent=(d>=0?'+':'')+'R$ '+d.toLocaleString('pt-BR',{maximumFractionDigits:0});
+  document.getElementById('res').classList.add('show');
+}
+</script>
+<script src="assets/js/site-nav.js?v=20260918tools" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
+    <div>© 2026 IRN Devs</div>
+    <div><a href="ferramentas.html">ferramentas</a></div>
+  </div>
+</footer>
+</main>
+</body>
+</html>

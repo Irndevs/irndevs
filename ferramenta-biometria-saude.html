@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadoras de Biometria e Saúde Corporativa | Bem-estar Empresarial</title>
+  <meta name="description" content="Ferramentas gratuitas de biometria e saúde corporativa. Calcule IMC, gordura corporal, peso ideal e ROI de programas de bem-estar. Ideal para RH e empresas.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0d9488;
+      --primary-dark: #0f766e;
+      --primary-light: #ccfbf1;
+      --secondary: #1e293b;
+      --accent: #f59e0b;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header / Hero */
+    .hero {
+      background: linear-gradient(135deg, #0f766e 0%, #0d9488 50%, #14b8a6 100%);
+      color: white;
+      padding: 60px 0 70px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 60%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(8px);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .hero h1 {
+      font-size: clamp(1.9rem, 5vw, 2.75rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      opacity: 0.95;
+      max-width: 620px;
+      margin: 0 auto 28px;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: white;
+      color: var(--primary-dark);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: white;
+      border: 2px solid rgba(255,255,255,0.6);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: white;
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-accent:hover {
+      background: #d97706;
+      transform: translateY(-2px);
+    }
+
+    /* Benefits strip */
+    .benefits {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 0;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      text-align: center;
+    }
+
+    .benefit-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .benefit-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--primary-light);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+
+    .benefit-item strong {
+      font-size: 0.95rem;
+      color: var(--secondary);
+    }
+
+    .benefit-item span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Main section */
+    .main {
+      padding: 50px 0 60px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-title h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 8px;
+    }
+
+    .section-title p {
+      color: var(--text-muted);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* Calculators grid */
+    .calc-tabs {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .tab-btn {
+      padding: 10px 20px;
+      border-radius: 50px;
+      border: 1.5px solid var(--border);
+      background: var(--card);
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    .calc-panel {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .calc-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .calc-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .calc-header {
+      background: linear-gradient(90deg, var(--primary-dark), var(--primary));
+      color: white;
+      padding: 20px 28px;
+    }
+
+    .calc-header h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .calc-header p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .calc-body {
+      padding: 28px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 520px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--secondary);
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color 0.2s;
+      background: #fff;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 16px;
+      margin-top: 6px;
+    }
+
+    .radio-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .btn-calc {
+      width: 100%;
+      padding: 14px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s;
+    }
+
+    .btn-calc:hover {
+      background: var(--primary-dark);
+    }
+
+    /* Result box */
+    .result-box {
+      margin-top: 24px;
+      padding: 20px;
+      border-radius: 10px;
+      background: #f0fdfa;
+      border: 1px solid #99f6e4;
+      display: none;
+    }
+
+    .result-box.show {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .result-main {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 4px;
+    }
+
+    .result-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .result-class {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .class-normal { background: #d1fae5; color: #065f46; }
+    .class-warning { background: #fef3c7; color: #92400e; }
+    .class-danger { background: #fee2e2; color: #991b1b; }
+    .class-info { background: #e0f2fe; color: #075985; }
+
+    .result-details {
+      margin-top: 14px;
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    /* Corporate ROI specific */
+    .roi-highlight {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 520px) {
+      .roi-highlight {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .roi-item {
+      background: white;
+      border-radius: 8px;
+      padding: 14px;
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+
+    .roi-item .value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .roi-item .label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: white;
+      padding: 60px 0;
+      margin-top: 20px;
+    }
+
+    .cta-content {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .cta-content h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .cta-content p {
+      opacity: 0.9;
+      margin-bottom: 28px;
+      font-size: 1.05rem;
+    }
+
+    .lead-form {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 14px;
+      padding: 28px;
+      text-align: left;
+    }
+
+    .lead-form .form-row {
+      margin-bottom: 12px;
+    }
+
+    .lead-form input,
+    .lead-form select {
+      background: rgba(255,255,255,0.95);
+      border: none;
+    }
+
+    .lead-form label {
+      color: rgba(255,255,255,0.85);
+    }
+
+    .form-note {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    /* Features for companies */
+    .features {
+      padding: 50px 0;
+      background: var(--card);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      padding: 24px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+
+    .feature-card:hover {
+      border-color: var(--primary);
+      box-shadow: var(--shadow);
+    }
+
+    .feature-card .icon {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      color: var(--secondary);
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--secondary);
+      color: rgba(255,255,255,0.7);
+      padding: 30px 0;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .footer a {
+      color: #5eead4;
+      text-decoration: none;
+    }
+
+    /* Disclaimer */
+    .disclaimer {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+      max-width: 600px;
+      margin: 24px auto 0;
+      padding: 0 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container hero-content">
+      <div class="badge">Ferramentas gratuitas para RH e Empresas</div>
+      <h1>Calculadoras de Biometria<br>e Saúde Corporativa</h1>
+      <p>Avalie a saúde dos colaboradores, calcule o ROI de programas de bem-estar e tome decisões baseadas em dados. Ideal para gestores de RH e saúde ocupacional.</p>
+      <div class="hero-cta">
+        <a href="#calculadoras" class="btn btn-primary">Usar Calculadoras</a>
+        <a href="#contato" class="btn btn-outline">Solicitar Demonstração</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- BENEFITS -->
+  <section class="benefits">
+    <div class="container">
+      <div class="benefits-grid">
+        <div class="benefit-item">
+          <div class="benefit-icon">📊</div>
+          <strong>Dados em tempo real</strong>
+          <span>Resultados instantâneos</span>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon">🏢</div>
+          <strong>Foco corporativo</strong>
+          <span>Pensado para empresas</span>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon">💰</div>
+          <strong>ROI mensurável</strong>
+          <span>Justifique investimentos</span>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon">🔒</div>
+          <strong>Privacidade</strong>
+          <span>Sem armazenamento de dados</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALCULADORAS -->
+  <section class="main" id="calculadoras">
+    <div class="container">
+      <div class="section-title">
+        <h2>Escolha uma calculadora</h2>
+        <p>Ferramentas práticas para avaliação biométrica individual e análise de programas de saúde corporativa.</p>
+      </div>
+
+      <div class="calc-tabs">
+        <button class="tab-btn active" data-tab="imc">IMC</button>
+        <button class="tab-btn" data-tab="gordura">Gordura Corporal</button>
+        <button class="tab-btn" data-tab="peso">Peso Ideal</button>
+        <button class="tab-btn" data-tab="roi">ROI Saúde Corporativa</button>
+      </div>
+
+      <!-- IMC -->
+      <div class="calc-panel active" id="panel-imc">
+        <div class="calc-card">
+          <div class="calc-header">
+            <h3>Calculadora de IMC</h3>
+            <p>Índice de Massa Corporal — classificação segundo a OMS</p>
+          </div>
+          <div class="calc-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="imc-peso">Peso (kg)</label>
+                <input type="number" id="imc-peso" placeholder="Ex: 75" step="0.1" min="30" max="300">
+              </div>
+              <div class="form-group">
+                <label for="imc-altura">Altura (cm)</label>
+                <input type="number" id="imc-altura" placeholder="Ex: 175" step="1" min="100" max="250">
+              </div>
+            </div>
+            <button class="btn-calc" onclick="calcularIMC()">Calcular IMC</button>
+            <div class="result-box" id="result-imc">
+              <div class="result-main" id="imc-valor">—</div>
+              <div class="result-label">Seu Índice de Massa Corporal</div>
+              <span class="result-class" id="imc-class"></span>
+              <div class="result-details" id="imc-detalhes"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GORDURA CORPORAL -->
+      <div class="calc-panel" id="panel-gordura">
+        <div class="calc-card">
+          <div class="calc-header">
+            <h3>Calculadora de Gordura Corporal</h3>
+            <p>Método da Marinha dos EUA (US Navy) — mais preciso que o IMC</p>
+          </div>
+          <div class="calc-body">
+            <div class="form-group">
+              <label>Sexo</label>
+              <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="gordura-sexo" value="M" checked> Masculino</label>
+                <label class="radio-label"><input type="radio" name="gordura-sexo" value="F"> Feminino</label>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="gordura-altura">Altura (cm)</label>
+                <input type="number" id="gordura-altura" placeholder="Ex: 175" step="1">
+              </div>
+              <div class="form-group">
+                <label for="gordura-pescoco">Pescoço (cm)</label>
+                <input type="number" id="gordura-pescoco" placeholder="Ex: 38" step="0.1">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="gordura-cintura">Cintura (cm)</label>
+                <input type="number" id="gordura-cintura" placeholder="Ex: 85" step="0.1">
+              </div>
+              <div class="form-group" id="group-quadril" style="display:none;">
+                <label for="gordura-quadril">Quadril (cm)</label>
+                <input type="number" id="gordura-quadril" placeholder="Ex: 95" step="0.1">
+              </div>
+            </div>
+            <button class="btn-calc" onclick="calcularGordura()">Calcular Gordura Corporal</button>
+            <div class="result-box" id="result-gordura">
+              <div class="result-main" id="gordura-valor">—</div>
+              <div class="result-label">Percentual de gordura corporal estimado</div>
+              <span class="result-class" id="gordura-class"></span>
+              <div class="result-details" id="gordura-detalhes"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PESO IDEAL -->
+      <div class="calc-panel" id="panel-peso">
+        <div class="calc-card">
+          <div class="calc-header">
+            <h3>Calculadora de Peso Ideal</h3>
+            <p>Fórmulas de Devine e Robinson — referência amplamente usada</p>
+          </div>
+          <div class="calc-body">
+            <div class="form-group">
+              <label>Sexo</label>
+              <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="peso-sexo" value="M" checked> Masculino</label>
+                <label class="radio-label"><input type="radio" name="peso-sexo" value="F"> Feminino</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="peso-altura">Altura (cm)</label>
+              <input type="number" id="peso-altura" placeholder="Ex: 175" step="1">
+            </div>
+            <button class="btn-calc" onclick="calcularPesoIdeal()">Calcular Peso Ideal</button>
+            <div class="result-box" id="result-peso">
+              <div class="result-main" id="peso-valor">—</div>
+              <div class="result-label">Peso ideal estimado (média das fórmulas)</div>
+              <div class="result-details" id="peso-detalhes"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROI SAÚDE CORPORATIVA -->
+      <div class="calc-panel" id="panel-roi">
+        <div class="calc-card">
+          <div class="calc-header">
+            <h3>Calculadora de ROI — Saúde Corporativa</h3>
+            <p>Estime o retorno sobre investimento em programas de bem-estar</p>
+          </div>
+          <div class="calc-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="roi-colaboradores">Nº de colaboradores</label>
+                <input type="number" id="roi-colaboradores" placeholder="Ex: 200" min="10">
+              </div>
+              <div class="form-group">
+                <label for="roi-custo-convenio">Custo mensal convênio por pessoa (R$)</label>
+                <input type="number" id="roi-custo-convenio" placeholder="Ex: 450" step="1">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="roi-investimento">Investimento mensal no programa (R$)</label>
+                <input type="number" id="roi-investimento" placeholder="Ex: 25" step="1">
+              </div>
+              <div class="form-group">
+                <label for="roi-adesao">Taxa de adesão estimada (%)</label>
+                <input type="number" id="roi-adesao" placeholder="Ex: 60" min="10" max="100" value="60">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="roi-reducao-sinistro">Redução esperada na sinistralidade (%)</label>
+                <input type="number" id="roi-reducao-sinistro" placeholder="Ex: 12" min="0" max="50" value="12">
+              </div>
+              <div class="form-group">
+                <label for="roi-reducao-absenteismo">Redução esperada no absenteísmo (%)</label>
+                <input type="number" id="roi-reducao-absenteismo" placeholder="Ex: 15" min="0" max="50" value="15">
+              </div>
+            </div>
+            <button class="btn-calc" onclick="calcularROI()">Calcular ROI do Programa</button>
+            <div class="result-box" id="result-roi">
+              <div class="result-main" id="roi-valor">—</div>
+              <div class="result-label">ROI estimado no primeiro ano</div>
+              <div class="roi-highlight">
+                <div class="roi-item">
+                  <div class="value" id="roi-economia">—</div>
+                  <div class="label">Economia anual</div>
+                </div>
+                <div class="roi-item">
+                  <div class="value" id="roi-payback">—</div>
+                  <div class="label">Payback</div>
+                </div>
+                <div class="roi-item">
+                  <div class="value" id="roi-ratio">—</div>
+                  <div class="label">Retorno por R$ 1</div>
+                </div>
+              </div>
+              <div class="result-details" id="roi-detalhes" style="margin-top:16px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="disclaimer">
+        Estas calculadoras são ferramentas educativas e de apoio à decisão. Não substituem avaliação profissional de saúde ou análise financeira detalhada. Os resultados de ROI são estimativas baseadas em benchmarks de mercado.
+      </p>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="container">
+      <div class="section-title">
+        <h2>Por que investir em Saúde Corporativa?</h2>
+        <p>Empresas que cuidam da saúde dos colaboradores colhem resultados mensuráveis.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="icon">📉</div>
+          <h3>Redução de custos</h3>
+          <p>Programas bem estruturados reduzem sinistralidade do plano de saúde e absenteísmo, gerando economia real.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🚀</div>
+          <h3>Mais produtividade</h3>
+          <p>Colaboradores saudáveis têm menos presenteísmo e maior engajamento no dia a dia.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">❤️</div>
+          <h3>Retenção de talentos</h3>
+          <p>Benefícios de bem-estar aumentam a satisfação e ajudam a atrair e reter profissionais.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">📈</div>
+          <h3>Dados para decisão</h3>
+          <p>Biometria e indicadores de saúde permitem ações preventivas e personalizadas por área.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / LEAD CAPTURE -->
+  <section class="cta-section" id="contato">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Quer uma solução completa para sua empresa?</h2>
+        <p>Oferecemos programas personalizados de biometria, bem-estar e saúde corporativa. Preencha o formulário e nossa equipe entra em contato.</p>
+        
+        <form class="lead-form" id="leadForm" onsubmit="enviarLead(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="lead-nome">Nome completo *</label>
+              <input type="text" id="lead-nome" required placeholder="Seu nome">
+            </div>
+            <div class="form-group">
+              <label for="lead-empresa">Empresa *</label>
+              <input type="text" id="lead-empresa" required placeholder="Nome da empresa">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="lead-email">E-mail corporativo *</label>
+              <input type="email" id="lead-email" required placeholder="seu@empresa.com">
+            </div>
+            <div class="form-group">
+              <label for="lead-telefone">WhatsApp / Telefone *</label>
+              <input type="tel" id="lead-telefone" required placeholder="(11) 99999-9999">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lead-colaboradores">Nº aproximado de colaboradores</label>
+            <select id="lead-colaboradores">
+              <option value="">Selecione</option>
+              <option value="1-50">1 a 50</option>
+              <option value="51-200">51 a 200</option>
+              <option value="201-500">201 a 500</option>
+              <option value="501-1000">501 a 1.000</option>
+              <option value="1000+">Mais de 1.000</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="lead-interesse">Principal interesse</label>
+            <select id="lead-interesse">
+              <option value="">Selecione</option>
+              <option value="biometria">Avaliação biométrica / check-up</option>
+              <option value="bem-estar">Programa de bem-estar</option>
+              <option value="roi">Consultoria de ROI em saúde</option>
+              <option value="completo">Solução completa</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-accent" style="width:100%; justify-content:center; margin-top:8px;">
+            Quero receber uma proposta
+          </button>
+          <p class="form-note">Seus dados são tratados com confidencialidade. Não enviamos spam.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 · Calculadoras de Biometria e Saúde Corporativa</p>
+      <p style="margin-top:6px; font-size:0.8rem;">Página desenvolvida para captar leads e apresentar soluções de bem-estar empresarial. Personalize com sua marca e contatos.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Tabs
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.calc-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Mostrar campo quadril para mulheres
+    document.querySelectorAll('input[name="gordura-sexo"]').forEach(r => {
+      r.addEventListener('change', () => {
+        document.getElementById('group-quadril').style.display = r.value === 'F' ? 'block' : 'none';
+      });
+    });
+
+    // === IMC ===
+    function calcularIMC() {
+      const peso = parseFloat(document.getElementById('imc-peso').value);
+      const alturaCm = parseFloat(document.getElementById('imc-altura').value);
+      if (!peso || !alturaCm || peso < 30 || alturaCm < 100) {
+        alert('Preencha peso e altura válidos.');
+        return;
+      }
+      const altura = alturaCm / 100;
+      const imc = peso / (altura * altura);
+      const valor = imc.toFixed(1);
+
+      let classificacao, classe, detalhes;
+      if (imc < 18.5) {
+        classificacao = 'Baixo peso';
+        classe = 'class-info';
+        detalhes = 'IMC abaixo do ideal. Recomenda-se avaliação nutricional e acompanhamento médico.';
+      } else if (imc < 25) {
+        classificacao = 'Peso normal';
+        classe = 'class-normal';
+        detalhes = 'Parabéns! Seu IMC está na faixa considerada saudável pela OMS.';
+      } else if (imc < 30) {
+        classificacao = 'Sobrepeso';
+        classe = 'class-warning';
+        detalhes = 'Atenção: sobrepeso aumenta riscos cardiovasculares. Considere hábitos de alimentação e atividade física.';
+      } else if (imc < 35) {
+        classificacao = 'Obesidade grau I';
+        classe = 'class-danger';
+        detalhes = 'Obesidade grau I. Recomenda-se acompanhamento profissional multiprofissional.';
+      } else if (imc < 40) {
+        classificacao = 'Obesidade grau II';
+        classe = 'class-danger';
+        detalhes = 'Obesidade grau II. Busque orientação médica especializada.';
+      } else {
+        classificacao = 'Obesidade grau III';
+        classe = 'class-danger';
+        detalhes = 'Obesidade grau III (mórbida). Avaliação médica urgente é recomendada.';
+      }
+
+      document.getElementById('imc-valor').textContent = valor;
+      const classEl = document.getElementById('imc-class');
+      classEl.textContent = classificacao;
+      classEl.className = 'result-class ' + classe;
+      document.getElementById('imc-detalhes').textContent = detalhes;
+      document.getElementById('result-imc').classList.add('show');
+    }
+
+    // === GORDURA CORPORAL (US Navy) ===
+    function calcularGordura() {
+      const sexo = document.querySelector('input[name="gordura-sexo"]:checked').value;
+      const altura = parseFloat(document.getElementById('gordura-altura').value);
+      const pescoco = parseFloat(document.getElementById('gordura-pescoco').value);
+      const cintura = parseFloat(document.getElementById('gordura-cintura').value);
+      const quadril = parseFloat(document.getElementById('gordura-quadril').value) || 0;
+
+      if (!altura || !pescoco || !cintura || (sexo === 'F' && !quadril)) {
+        alert('Preencha todas as medidas necessárias.');
+        return;
+      }
+
+      let bf;
+      if (sexo === 'M') {
+        // Homens: 495 / (1.0324 - 0.19077 * log10(cintura - pescoco) + 0.15456 * log10(altura)) - 450
+        bf = 495 / (1.0324 - 0.19077 * Math.log10(cintura - pescoco) + 0.15456 * Math.log10(altura)) - 450;
+      } else {
+        // Mulheres: 495 / (1.29579 - 0.35004 * log10(cintura + quadril - pescoco) + 0.22100 * log10(altura)) - 450
+        bf = 495 / (1.29579 - 0.35004 * Math.log10(cintura + quadril - pescoco) + 0.22100 * Math.log10(altura)) - 450;
+      }
+
+      const valor = bf.toFixed(1);
+      let classificacao, classe, detalhes;
+
+      if (sexo === 'M') {
+        if (bf < 6) { classificacao = 'Essencial'; classe = 'class-info'; detalhes = 'Nível muito baixo (atleta extremo). Pode indicar riscos à saúde.'; }
+        else if (bf < 14) { classificacao = 'Atlético'; classe = 'class-normal'; detalhes = 'Excelente composição corporal, típica de atletas.'; }
+        else if (bf < 18) { classificacao = 'Fitness'; classe = 'class-normal'; detalhes = 'Boa composição corporal. Mantenha hábitos saudáveis.'; }
+        else if (bf < 25) { classificacao = 'Aceitável'; classe = 'class-warning'; detalhes = 'Dentro da média. Há espaço para redução de gordura.'; }
+        else { classificacao = 'Elevado'; classe = 'class-danger'; detalhes = 'Percentual elevado. Recomenda-se intervenção com orientação profissional.'; }
+      } else {
+        if (bf < 14) { classificacao = 'Essencial'; classe = 'class-info'; detalhes = 'Nível muito baixo. Avalie com profissional de saúde.'; }
+        else if (bf < 21) { classificacao = 'Atlético'; classe = 'class-normal'; detalhes = 'Excelente composição corporal.'; }
+        else if (bf < 25) { classificacao = 'Fitness'; classe = 'class-normal'; detalhes = 'Boa composição corporal.'; }
+        else if (bf < 32) { classificacao = 'Aceitável'; classe = 'class-warning'; detalhes = 'Dentro da média. Considere melhorias.'; }
+        else { classificacao = 'Elevado'; classe = 'class-danger'; detalhes = 'Percentual elevado. Busque orientação profissional.'; }
+      }
+
+      document.getElementById('gordura-valor').textContent = valor + '%';
+      const classEl = document.getElementById('gordura-class');
+      classEl.textContent = classificacao;
+      classEl.className = 'result-class ' + classe;
+      document.getElementById('gordura-detalhes').textContent = detalhes;
+      document.getElementById('result-gordura').classList.add('show');
+    }
+
+    // === PESO IDEAL ===
+    function calcularPesoIdeal() {
+      const sexo = document.querySelector('input[name="peso-sexo"]:checked').value;
+      const alturaCm = parseFloat(document.getElementById('peso-altura').value);
+      if (!alturaCm || alturaCm < 100) {
+        alert('Informe uma altura válida.');
+        return;
+      }
+      const alturaPol = alturaCm / 2.54;
+      let devine, robinson;
+
+      if (sexo === 'M') {
+        // Devine: 50 + 2.3 * (altura_pol - 60)
+        // Robinson: 52 + 1.9 * (altura_pol - 60)
+        devine = 50 + 2.3 * (alturaPol - 60);
+        robinson = 52 + 1.9 * (alturaPol - 60);
+      } else {
+        // Devine: 45.5 + 2.3 * (altura_pol - 60)
+        // Robinson: 49 + 1.7 * (altura_pol - 60)
+        devine = 45.5 + 2.3 * (alturaPol - 60);
+        robinson = 49 + 1.7 * (alturaPol - 60);
+      }
+
+      const media = ((devine + robinson) / 2).toFixed(1);
+      document.getElementById('peso-valor').textContent = media + ' kg';
+      document.getElementById('peso-detalhes').innerHTML = 
+        `Fórmula de Devine: <strong>${devine.toFixed(1)} kg</strong><br>
+         Fórmula de Robinson: <strong>${robinson.toFixed(1)} kg</strong><br>
+         Faixa aproximada saudável: ${(media * 0.9).toFixed(1)} – ${(media * 1.1).toFixed(1)} kg (varia conforme composição corporal).`;
+      document.getElementById('result-peso').classList.add('show');
+    }
+
+    // === ROI SAÚDE CORPORATIVA ===
+    function calcularROI() {
+      const n = parseFloat(document.getElementById('roi-colaboradores').value);
+      const custoConvenio = parseFloat(document.getElementById('roi-custo-convenio').value);
+      const investPessoa = parseFloat(document.getElementById('roi-investimento').value);
+      const adesao = parseFloat(document.getElementById('roi-adesao').value) / 100;
+      const redSinistro = parseFloat(document.getElementById('roi-reducao-sinistro').value) / 100;
+      const redAbs = parseFloat(document.getElementById('roi-reducao-absenteismo').value) / 100;
+
+      if (!n || !custoConvenio || !investPessoa) {
+        alert('Preencha os campos principais (colaboradores, custo do convênio e investimento).');
+        return;
+      }
+
+      // Custo anual do convênio
+      const custoAnualConvenio = n * custoConvenio * 12;
+      // Investimento anual no programa (sobre aderentes)
+      const aderentes = n * adesao;
+      const investAnual = aderentes * investPessoa * 12;
+
+      // Economia estimada: redução de sinistralidade + redução de absenteísmo (estimativa simplificada)
+      // Absenteísmo: assumimos custo aproximado de 5% da folha, mas usamos proxy via convênio + fator
+      // Simplificação prática usada em benchmarks:
+      const economiaSinistro = custoAnualConvenio * redSinistro;
+      // Absenteísmo: estimativa conservadora de R$ 80/dia * 5 dias médios/ano * redução
+      const economiaAbs = n * 80 * 5 * redAbs; // aproximação
+      const economiaTotal = economiaSinistro + economiaAbs;
+      const beneficioLiquido = economiaTotal - investAnual;
+      const roi = (beneficioLiquido / investAnual) * 100;
+      const paybackMeses = investAnual / (economiaTotal / 12);
+      const ratio = economiaTotal / investAnual;
+
+      document.getElementById('roi-valor').textContent = roi.toFixed(0) + '%';
+      document.getElementById('roi-economia').textContent = 'R$ ' + economiaTotal.toLocaleString('pt-BR', {maximumFractionDigits: 0});
+      document.getElementById('roi-payback').textContent = paybackMeses.toFixed(1) + ' meses';
+      document.getElementById('roi-ratio').textContent = 'R$ ' + ratio.toFixed(2);
+
+      document.getElementById('roi-detalhes').innerHTML = 
+        `Estimativa baseada em <strong>${aderentes.toFixed(0)} colaboradores aderentes</strong> (${(adesao*100).toFixed(0)}% de adesão).<br>
+         Economia com sinistralidade: R$ ${economiaSinistro.toLocaleString('pt-BR', {maximumFractionDigits:0})} · 
+         Economia com absenteísmo (estimada): R$ ${economiaAbs.toLocaleString('pt-BR', {maximumFractionDigits:0})}.<br>
+         <em>Valores são direcionais. Resultados reais dependem do desenho do programa, engajamento e perfil da população.</em>`;
+
+      document.getElementById('result-roi').classList.add('show');
+    }
+
+    // === LEAD FORM ===
+    function enviarLead(e) {
+      e.preventDefault();
+      const nome = document.getElementById('lead-nome').value;
+      const empresa = document.getElementById('lead-empresa').value;
+      const email = document.getElementById('lead-email').value;
+      const telefone = document.getElementById('lead-telefone').value;
+      const colaboradores = document.getElementById('lead-colaboradores').value;
+      const interesse = document.getElementById('lead-interesse').value;
+
+      // Aqui você integra com seu backend, webhook (Make, Zapier), ou envia para WhatsApp
+      // Exemplo: redirecionar para WhatsApp com mensagem pré-preenchida
+      const msg = encodeURIComponent(
+        `Olá! Vim pela página de Calculadoras de Biometria e Saúde Corporativa.\n\n` +
+        `Nome: ${nome}\nEmpresa: ${empresa}\nE-mail: ${email}\nTelefone: ${telefone}\n` +
+        `Colaboradores: ${colaboradores || 'não informado'}\nInteresse: ${interesse || 'não informado'}`
+      );
+
+      // Substitua o número abaixo pelo seu WhatsApp comercial (formato internacional sem +)
+      const whatsapp = '5511999999999'; // <-- TROQUE PELO SEU NÚMERO
+      window.open(`https://wa.me/${whatsapp}?text=${msg}`, '_blank');
+
+      // Feedback visual
+      alert('Obrigado! Você será redirecionado para o WhatsApp para finalizar o contato.');
+      document.getElementById('leadForm').reset();
+    }
+  </script>
+</body>
+</html>

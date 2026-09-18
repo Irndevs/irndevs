@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Melhorador de Prompt (IA) — IRN Devs</title>
+<meta name="description" content="Transforme ideias simples em prompts profissionais para ChatGPT, Claude e Midjourney.">
+<link rel="canonical" href="https://irndevs.com/ferramenta-prompt.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918menu">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:700px;margin:0 auto;padding:28px 20px 80px}
+.crumb{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:14px}
+.sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
+.amber{color:var(--amber)}
+h1{font-size:26px;margin-bottom:8px}
+.lede{color:var(--dim);margin-bottom:20px;font-size:15px}
+label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px}
+textarea,select{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:#0c0e0b;color:var(--text);font-size:14px;margin-bottom:14px;font-family:inherit}
+textarea{min-height:100px}
+.btn{width:100%;padding:14px;background:var(--amber);color:#10130f;border:none;border-radius:10px;font-weight:700;cursor:pointer}
+.out{display:none;margin-top:16px;padding:16px;border-radius:10px;background:var(--raised);border:1px solid var(--border);white-space:pre-wrap;font-size:14px;line-height:1.5}
+.out.show{display:block}
+.btn2{margin-top:10px;padding:10px 16px;background:transparent;border:1px solid var(--border);color:var(--amber);border-radius:8px;cursor:pointer}
+</style>
+</head>
+<body>
+<main id="conteudo">
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / <a href="ferramentas.html">ferramentas</a> / prompt</p>
+  <div class="sec-head"><span class="amber">$</span> enhance --prompt</div>
+  <h1>Melhorador de Prompt</h1>
+  <p class="lede">Transforme uma ideia simples em um prompt mais claro e estruturado para ChatGPT, Claude ou Midjourney.</p>
+  <label>Tipo de uso</label>
+  <select id="tipo">
+    <option value="texto">Texto / ChatGPT / Claude</option>
+    <option value="imagem">Imagem / Midjourney / Flux</option>
+    <option value="codigo">Código / Programação</option>
+  </select>
+  <label>Sua ideia (prompt simples)</label>
+  <textarea id="ideia" placeholder="Ex: um post sobre produtividade para LinkedIn"></textarea>
+  <button class="btn" onclick="melhorar()">Melhorar prompt</button>
+  <div class="out" id="out"></div>
+  <button class="btn2" id="copy" style="display:none" onclick="copiar()">Copiar prompt</button>
+</div>
+<script>
+function melhorar(){
+  const ideia=document.getElementById('ideia').value.trim();
+  const tipo=document.getElementById('tipo').value;
+  if(!ideia){alert('Digite uma ideia.');return;}
+  let p='';
+  if(tipo==='texto'){
+    p='Atue como especialista no tema. Objetivo: entregar um resultado claro, útil e bem estruturado.\n\n'+
+      'Contexto do usuário: '+ideia+'\n\n'+
+      'Instruções:\n- Responda em português do Brasil\n- Use estrutura com títulos e tópicos quando fizer sentido\n- Seja específico e acionável\n- Evite enrolação\n\n'+
+      'Formato desejado: resultado pronto para uso.';
+  } else if(tipo==='imagem'){
+    p=ideia+', highly detailed, professional composition, sharp focus, natural lighting, high quality, 8k --ar 16:9 --stylize 250';
+  } else {
+    p='Você é um engenheiro de software sênior.\n\nTarefa: '+ideia+'\n\nRequisitos:\n- Código limpo e legível\n- Explique decisões importantes em comentários curtos\n- Inclua exemplo de uso se aplicável\n- Linguagem moderna e boas práticas\n\nEntregue apenas o necessário, sem enrolação.';
+  }
+  document.getElementById('out').textContent=p;
+  document.getElementById('out').classList.add('show');
+  document.getElementById('copy').style.display='inline-block';
+  window._prompt=p;
+}
+function copiar(){
+  navigator.clipboard.writeText(window._prompt||'').then(()=>alert('Copiado!'));
+}
+</script>
+<script src="assets/js/site-nav.js?v=20260918tools" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
+    <div>© 2026 IRN Devs</div>
+    <div><a href="ia.html">IA</a> · <a href="ferramentas.html">ferramentas</a></div>
+  </div>
+</footer>
+</main>
+</body>
+</html>
