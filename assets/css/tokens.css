@@ -1,0 +1,17 @@
+/**
+ * IRN Devs — tokens e breakpoints de referência
+ * Use estes valores ao criar CSS novo. Nav já alinhada em 900px.
+ *
+ * Breakpoints (mobile-first):
+ *   sm: 640px   — tablets pequenos / mobile landscape
+ *   md: 900px   — tablet landscape / desktop (site-nav)
+ *   lg: 1100px  — desktop (largura típica do .wrap)
+ *
+ * Em max-width use: 639px, 899px, 1099px
+ */
+:root {
+  --bp-sm: 640px;
+  --bp-md: 900px;
+  --bp-lg: 1100px;
+  --wrap-max: 1100px;
+}

@@ -29,13 +29,13 @@ footer.site-footer-v2,
   padding: 0 24px 36px !important;
   width: 100% !important;
 }
-@media (max-width: 900px) {
+@media (max-width: 899px) {
   .site-footer-v2 .wrap.footer-grid,
   .site-footer-v2 .footer-grid {
     grid-template-columns: 1fr 1fr !important;
   }
 }
-@media (max-width: 520px) {
+@media (max-width: 639px) {
   .site-footer-v2 .wrap.footer-grid,
   .site-footer-v2 .footer-grid {
     grid-template-columns: 1fr !important;

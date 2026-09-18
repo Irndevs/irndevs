@@ -55,7 +55,7 @@
   footer { border-top: 1px solid var(--bg-line); padding: 36px 0; }
   footer .wrap { max-width: 980px; display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 13px; color: var(--text-faint); flex-wrap: wrap; gap: 12px; }
   footer a:hover { color: var(--amber); }
-  @media (max-width: 640px) {
+  @media (max-width: 639px) {
     nav .wrap { height: auto; flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; gap: 8px; }
     .navlinks { gap: 14px; font-size: 12.5px; flex-wrap: wrap; }
     .article-head h1 { font-size: 22px; }
