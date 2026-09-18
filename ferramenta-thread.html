@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Divisor de Threads para X (Twitter) — IRN Devs</title>
+<meta name="description" content="Cole um texto longo e divida automaticamente em tweets de até 280 caracteres, prontos para publicar em thread.">
+<link rel="canonical" href="https://irndevs.com/ferramenta-thread.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:680px;margin:0 auto;padding:28px 20px 80px}
+.crumb{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:14px}
+.sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
+.amber{color:var(--amber)}
+h1{font-size:26px;margin-bottom:8px}
+.lede{color:var(--dim);margin-bottom:20px;font-size:15px}
+.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.tab{flex:1;min-width:120px;padding:10px;text-align:center;border:1px solid var(--border);border-radius:8px;background:var(--raised);color:var(--dim);cursor:pointer;font-size:13px}
+.tab.active{background:var(--amber);color:#10130f;border-color:var(--amber);font-weight:700}
+.card{background:var(--raised);border:1px solid var(--border);border-radius:12px;padding:22px;display:none}
+.card.show{display:block}
+.card.solo{display:block}
+label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px}
+input,select,textarea{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:#10130f;color:var(--text);font-size:15px;margin-bottom:14px;font-family:inherit}
+textarea{min-height:120px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.btn{width:100%;padding:14px;background:var(--amber);color:#10130f;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-size:15px}
+.result{display:none;margin-top:16px;padding:16px;border-radius:10px;background:#1a2218;border:1px solid var(--border)}
+.result.show{display:block}
+.big{font-size:24px;font-weight:800;color:var(--amber);margin-bottom:10px}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;gap:12px}
+.row:last-child{border:none}
+.ok{color:#4ade80}.warn{color:#f87171}
+.note{margin-top:14px;font-size:12px;color:var(--faint)}
+.teams{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.team{background:#10130f;border:1px solid var(--border);border-radius:8px;padding:12px}
+.team h3{font-size:14px;color:var(--amber);margin-bottom:8px}
+.team li{font-size:13px;padding:4px 0;list-style:none;border-bottom:1px solid #1a2218}
+.team li:last-child{border:none}
+.font-preview{font-size:18px;word-break:break-word;line-height:1.6;padding:12px;background:#10130f;border-radius:8px;margin-top:8px;border:1px solid var(--border)}
+.copy-btn{margin-top:8px;padding:8px 12px;font-size:12px;background:transparent;border:1px solid var(--border);color:var(--amber);border-radius:6px;cursor:pointer}
+@media(max-width:520px){.row2,.row3,.teams{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main id="conteudo">
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / <a href="ferramentas.html">ferramentas</a> / divisor de threads</p>
+  <div class="sec-head"><span class="amber">$</span> split --thread --280 --twitter</div>
+  <h1>Divisor de Threads</h1>
+  <p class="lede">Quebra o texto em blocos de até 280 caracteres, respeitando frases quando possível.</p>
+  <div class="card solo">
+    <div><label>Texto completo</label>
+      <textarea id="txt" placeholder="Cole aqui o texto da thread...">O X (Twitter) limita cada post a 280 caracteres. Com esta ferramenta você cola um texto longo e recebe os blocos numerados, prontos para copiar e publicar em sequência. Ideal para threads de conteúdo, lançamentos e storytelling.</textarea>
+    </div>
+    <div class="row2">
+      <div><label>Limite por post</label><input type="number" id="lim" value="280" min="50" max="280"></div>
+      <div><label>Numeração</label>
+        <select id="num"><option value="1">1/N no final</option><option value="0">Sem numeração</option></select>
+      </div>
+    </div>
+    <button class="btn" onclick="dividir()">Dividir thread</button>
+    <div class="result" id="res">
+      <div class="big" id="big">—</div>
+      <div id="parts"></div>
+    </div>
+  </div>
+</div>
+<script>
+function dividir(){
+  var text=document.getElementById('txt').value.trim();
+  var lim=+document.getElementById('lim').value||280;
+  var num=document.getElementById('num').value==='1';
+  if(!text){alert('Cole um texto.');return;}
+  // reserve space for " n/m"
+  var reserve=num?6:0;
+  var max=lim-reserve;
+  var chunks=[];
+  var rest=text;
+  while(rest.length){
+    if(rest.length<=max){chunks.push(rest);break;}
+    var slice=rest.slice(0,max);
+    var cut=Math.max(slice.lastIndexOf('. '), slice.lastIndexOf('? '), slice.lastIndexOf('! '), slice.lastIndexOf('\n'), slice.lastIndexOf(' '));
+    if(cut<max*0.4) cut=max;
+    else cut=cut+1;
+    chunks.push(rest.slice(0,cut).trim());
+    rest=rest.slice(cut).trim();
+  }
+  var total=chunks.length;
+  document.getElementById('big').textContent=total+' post'+(total>1?'s':'');
+  document.getElementById('parts').innerHTML=chunks.map(function(c,i){
+    var body=c+(num?(' '+(i+1)+'/'+total):'');
+    return '<div class="row" style="flex-direction:column;align-items:stretch">'+
+      '<span style="color:var(--faint);font-size:12px">Post '+(i+1)+' · '+body.length+' caracteres</span>'+
+      '<div class="font-preview" id="th-'+i+'">'+body.replace(/</g,'&lt;')+'</div>'+
+      '<button class="copy-btn" onclick="copiar('+i+')">copiar</button></div>';
+  }).join('');
+  document.getElementById('res').classList.add('show');
+  window._chunks=chunks.map(function(c,i){return c+(num?(' '+(i+1)+'/'+total):'');});
+}
+function copiar(i){
+  var t=(window._chunks||[])[i]||'';
+  navigator.clipboard.writeText(t).then(function(){alert('Copiado!');}).catch(function(){prompt('Copie:',t);});
+}
+</script>
+
+<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
+    <div>© 2026 IRN Devs</div>
+    <div><a href="ferramentas.html">ferramentas</a></div>
+  </div>
+</footer>
+</main>
+</body>
+</html>

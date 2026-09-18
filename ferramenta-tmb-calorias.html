@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de TMB e Calorias Diárias — IRN Devs</title>
+<meta name="description" content="Calcule a Taxa Metabólica Basal (Harris-Benedict) e o gasto calórico diário conforme seu nível de atividade.">
+<link rel="canonical" href="https://irndevs.com/ferramenta-tmb-calorias.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:680px;margin:0 auto;padding:28px 20px 80px}
+.crumb{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:14px}
+.sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
+.amber{color:var(--amber)}
+h1{font-size:26px;margin-bottom:8px}
+.lede{color:var(--dim);margin-bottom:20px;font-size:15px}
+.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.tab{flex:1;min-width:120px;padding:10px;text-align:center;border:1px solid var(--border);border-radius:8px;background:var(--raised);color:var(--dim);cursor:pointer;font-size:13px}
+.tab.active{background:var(--amber);color:#10130f;border-color:var(--amber);font-weight:700}
+.card{background:var(--raised);border:1px solid var(--border);border-radius:12px;padding:22px;display:none}
+.card.show{display:block}
+.card.solo{display:block}
+label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px}
+input,select,textarea{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:#10130f;color:var(--text);font-size:15px;margin-bottom:14px;font-family:inherit}
+textarea{min-height:120px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.btn{width:100%;padding:14px;background:var(--amber);color:#10130f;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-size:15px}
+.result{display:none;margin-top:16px;padding:16px;border-radius:10px;background:#1a2218;border:1px solid var(--border)}
+.result.show{display:block}
+.big{font-size:24px;font-weight:800;color:var(--amber);margin-bottom:10px}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;gap:12px}
+.row:last-child{border:none}
+.ok{color:#4ade80}.warn{color:#f87171}
+.note{margin-top:14px;font-size:12px;color:var(--faint)}
+.teams{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.team{background:#10130f;border:1px solid var(--border);border-radius:8px;padding:12px}
+.team h3{font-size:14px;color:var(--amber);margin-bottom:8px}
+.team li{font-size:13px;padding:4px 0;list-style:none;border-bottom:1px solid #1a2218}
+.team li:last-child{border:none}
+.font-preview{font-size:18px;word-break:break-word;line-height:1.6;padding:12px;background:#10130f;border-radius:8px;margin-top:8px;border:1px solid var(--border)}
+.copy-btn{margin-top:8px;padding:8px 12px;font-size:12px;background:transparent;border:1px solid var(--border);color:var(--amber);border-radius:6px;cursor:pointer}
+@media(max-width:520px){.row2,.row3,.teams{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main id="conteudo">
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / <a href="ferramentas.html">ferramentas</a> / tmb e calorias diárias</p>
+  <div class="sec-head"><span class="amber">$</span> calc tmb --harris-benedict --atividade</div>
+  <h1>TMB e Calorias Diárias</h1>
+  <p class="lede">Taxa metabólica basal e calorias para manter, emagrecer ou ganhar massa — fórmula de Harris-Benedict.</p>
+  <div class="card solo">
+    <div class="row2">
+      <div><label>Sexo</label>
+        <select id="sexo"><option value="M">Masculino</option><option value="F">Feminino</option></select>
+      </div>
+      <div><label>Idade (anos)</label><input type="number" id="idade" value="30" min="10" max="100"></div>
+    </div>
+    <div class="row2">
+      <div><label>Peso (kg)</label><input type="number" id="peso" value="75" step="0.1"></div>
+      <div><label>Altura (cm)</label><input type="number" id="altura" value="175" step="1"></div>
+    </div>
+    <div><label>Nível de atividade</label>
+      <select id="ativ">
+        <option value="1.2">Sedentário (pouco ou nenhum exercício)</option>
+        <option value="1.375" selected>Leve (1–3x/semana)</option>
+        <option value="1.55">Moderado (3–5x/semana)</option>
+        <option value="1.725">Intenso (6–7x/semana)</option>
+        <option value="1.9">Atleta (2x/dia)</option>
+      </select>
+    </div>
+    <button class="btn" onclick="calc()">Calcular</button>
+    <div class="result" id="res">
+      <div class="big" id="rTmb">—</div>
+      <div class="row"><span>TMB (repouso)</span><span id="vTmb">—</span></div>
+      <div class="row"><span>Manutenção (TDEE)</span><span id="vMan" class="ok">—</span></div>
+      <div class="row"><span>Emagrecer (−20%)</span><span id="vEma">—</span></div>
+      <div class="row"><span>Ganhar massa (+15%)</span><span id="vGan">—</span></div>
+    </div>
+    <p class="note">Estimativa baseada em Harris-Benedict revisada. Não substitui orientação de nutricionista.</p>
+  </div>
+</div>
+<script>
+function fmt(v){return Math.round(v).toLocaleString('pt-BR')+' kcal';}
+function calc(){
+  var s=document.getElementById('sexo').value;
+  var idade=+document.getElementById('idade').value||30;
+  var peso=+document.getElementById('peso').value||70;
+  var alt=+document.getElementById('altura').value||170;
+  var fat=+document.getElementById('ativ').value||1.2;
+  var tmb = s==='M'
+    ? 88.362 + (13.397*peso) + (4.799*alt) - (5.677*idade)
+    : 447.593 + (9.247*peso) + (3.098*alt) - (4.330*idade);
+  var tdee=tmb*fat;
+  document.getElementById('rTmb').textContent=fmt(tmb)+' TMB';
+  document.getElementById('vTmb').textContent=fmt(tmb);
+  document.getElementById('vMan').textContent=fmt(tdee);
+  document.getElementById('vEma').textContent=fmt(tdee*0.8);
+  document.getElementById('vGan').textContent=fmt(tdee*1.15);
+  document.getElementById('res').classList.add('show');
+}
+</script>
+
+<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
+    <div>© 2026 IRN Devs</div>
+    <div><a href="ferramentas.html">ferramentas</a></div>
+  </div>
+</footer>
+</main>
+</body>
+</html>
