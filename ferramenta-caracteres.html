@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contador de Caracteres e Palavras — IRN Devs</title>
+<meta name="description" content="Conte caracteres, palavras, frases e parágrafos em tempo real, com limites de X/Twitter, Instagram, bio e anúncios.">
+<link rel="canonical" href="https://irndevs.com/ferramenta-caracteres.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:800px;margin:0 auto;padding:28px 20px 80px}
+.crumb{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:14px}
+.sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
+.amber{color:var(--amber)}
+h1{font-size:26px;margin-bottom:8px}
+.lede{color:var(--dim);margin-bottom:20px;font-size:15px}
+textarea{width:100%;min-height:200px;padding:14px;border:1px solid var(--border);border-radius:10px;background:#0c0e0b;color:var(--text);font-family:var(--sans);font-size:14px;margin-bottom:16px}
+textarea:focus{outline:none;border-color:var(--amber)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:20px}
+.stat{background:var(--raised);border:1px solid var(--border);border-radius:10px;padding:14px}
+.stat .num{font-size:22px;font-weight:800;color:var(--amber)}
+.stat .lbl{font-size:12px;color:var(--faint);margin-top:2px}
+.limits{background:var(--raised);border:1px solid var(--border);border-radius:10px;padding:16px}
+.limits h2{font-size:14px;margin-bottom:10px;color:var(--dim)}
+.lim-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13.5px}
+.lim-row:last-child{border:none}
+.lim-ok{color:#4ade80}
+.lim-over{color:#f87171;font-weight:700}
+</style>
+</head>
+<body>
+<main id="conteudo">
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / <a href="ferramentas.html">ferramentas</a> / caracteres</p>
+  <div class="sec-head"><span class="amber">$</span> wc --chars --words --live</div>
+  <h1>Contador de Caracteres e Palavras</h1>
+  <p class="lede">Digite ou cole seu texto. As contagens e os limites de redes sociais atualizam em tempo real.</p>
+  <textarea id="txt" placeholder="Cole ou digite seu texto aqui..."></textarea>
+  <div class="stats">
+    <div class="stat"><div class="num" id="nChars">0</div><div class="lbl">caracteres</div></div>
+    <div class="stat"><div class="num" id="nCharsNs">0</div><div class="lbl">sem espaços</div></div>
+    <div class="stat"><div class="num" id="nWords">0</div><div class="lbl">palavras</div></div>
+    <div class="stat"><div class="num" id="nSent">0</div><div class="lbl">frases</div></div>
+    <div class="stat"><div class="num" id="nPar">0</div><div class="lbl">parágrafos</div></div>
+  </div>
+  <div class="limits">
+    <h2>Limites comuns</h2>
+    <div class="lim-row"><span>X (Twitter) — post</span><span id="lim-x">0 / 280</span></div>
+    <div class="lim-row"><span>Instagram — bio</span><span id="lim-ig">0 / 150</span></div>
+    <div class="lim-row"><span>Instagram/Facebook — legenda</span><span id="lim-caption">0 / 2200</span></div>
+    <div class="lim-row"><span>Meta Ads — título</span><span id="lim-adtitle">0 / 40</span></div>
+    <div class="lim-row"><span>Google — meta description</span><span id="lim-meta">0 / 160</span></div>
+    <div class="lim-row"><span>WhatsApp — status</span><span id="lim-wa">0 / 139</span></div>
+  </div>
+</div>
+<script>
+var limites = [
+  ['lim-x', 280], ['lim-ig', 150], ['lim-caption', 2200],
+  ['lim-adtitle', 40], ['lim-meta', 160], ['lim-wa', 139]
+];
+function atualizar(){
+  var t = document.getElementById('txt').value;
+  var chars = t.length;
+  var charsNs = t.replace(/\s/g,'').length;
+  var words = t.trim() === '' ? 0 : t.trim().split(/\s+/).length;
+  var sent = t.trim() === '' ? 0 : (t.match(/[.!?]+(\s|$)/g) || []).length || (t.trim() ? 1 : 0);
+  var par = t.trim() === '' ? 0 : t.split(/\n\s*\n/).filter(function(p){return p.trim().length;}).length || (t.trim() ? 1 : 0);
+
+  document.getElementById('nChars').textContent = chars;
+  document.getElementById('nCharsNs').textContent = charsNs;
+  document.getElementById('nWords').textContent = words;
+  document.getElementById('nSent').textContent = sent;
+  document.getElementById('nPar').textContent = par;
+
+  limites.forEach(function(l){
+    var el = document.getElementById(l[0]);
+    var max = l[1];
+    el.textContent = chars + ' / ' + max;
+    el.className = chars > max ? 'lim-over' : 'lim-ok';
+  });
+}
+document.getElementById('txt').addEventListener('input', atualizar);
+atualizar();
+</script>
+<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
+    <div>© 2026 IRN Devs</div>
+    <div><a href="ferramentas.html">ferramentas</a></div>
+  </div>
+</footer>
+</main>
+</body>
+</html>

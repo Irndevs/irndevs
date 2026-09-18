@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador de Financiamento Imobiliário — SAC vs Price — IRN Devs</title>
+<meta name="description" content="Simule as parcelas de um financiamento imobiliário e compare o sistema SAC (parcelas decrescentes) com o Price (parcelas fixas).">
+<link rel="canonical" href="https://irndevs.com/ferramenta-financiamento.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:720px;margin:0 auto;padding:28px 20px 80px}
+.crumb{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:14px}
+.sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
+.amber{color:var(--amber)}
+h1{font-size:26px;margin-bottom:8px}
+.lede{color:var(--dim);margin-bottom:24px;font-size:15px}
+.card{background:var(--raised);border:1px solid var(--border);border-radius:12px;padding:22px}
+label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px}
+input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:#10130f;color:var(--text);font-size:15px;margin-bottom:14px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn{width:100%;padding:14px;background:var(--amber);color:#10130f;border:none;border-radius:10px;font-weight:700;cursor:pointer}
+.result{display:none;margin-top:20px}
+.result.show{display:block}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.plan{background:#1a2218;border:1px solid var(--border);border-radius:10px;padding:16px}
+.plan h3{font-size:14px;color:var(--amber);margin-bottom:10px}
+.row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:13.5px}
+.row:last-child{border:none}
+.note{margin-top:16px;font-size:12px;color:var(--faint)}
+@media (max-width:520px){ .compare{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<main id="conteudo">
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / <a href="ferramentas.html">ferramentas</a> / financiamento imobiliário</p>
+  <div class="sec-head"><span class="amber">$</span> sim financiamento --sac --price</div>
+  <h1>Simulador de Financiamento Imobiliário</h1>
+  <p class="lede">Compare o sistema SAC (parcelas que diminuem com o tempo) com o Price (parcela fixa) para o mesmo valor financiado.</p>
+  <div class="card">
+    <label>Valor financiado (R$)</label>
+    <input type="number" id="valor" placeholder="300000">
+    <div class="row2">
+      <div><label>Taxa de juros anual (%)</label><input type="number" id="taxa" placeholder="10.5" step="0.01"></div>
+      <div><label>Prazo (meses)</label><input type="number" id="prazo" placeholder="360"></div>
+    </div>
+    <button class="btn" onclick="calcular()">Simular</button>
+    <div class="result" id="res">
+      <div class="compare">
+        <div class="plan">
+          <h3>SAC — parcelas decrescentes</h3>
+          <div class="row"><span>1ª parcela</span><span id="sacPrimeira">—</span></div>
+          <div class="row"><span>Última parcela</span><span id="sacUltima">—</span></div>
+          <div class="row"><span>Total pago</span><span id="sacTotal">—</span></div>
+          <div class="row"><span>Total de juros</span><span id="sacJuros">—</span></div>
+        </div>
+        <div class="plan">
+          <h3>Price — parcela fixa</h3>
+          <div class="row"><span>Parcela fixa</span><span id="priceParcela">—</span></div>
+          <div class="row"><span>&nbsp;</span><span>&nbsp;</span></div>
+          <div class="row"><span>Total pago</span><span id="priceTotal">—</span></div>
+          <div class="row"><span>Total de juros</span><span id="priceJuros">—</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="note">Simulação simplificada, sem seguros, taxas administrativas ou correção monetária (TR). Consulte seu banco para condições reais.</p>
+  </div>
+</div>
+<script>
+function fmt(v){
+  return 'R$ ' + v.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
+}
+function calcular(){
+  var P = parseFloat(document.getElementById('valor').value);
+  var taxaAnual = parseFloat(document.getElementById('taxa').value);
+  var n = parseInt(document.getElementById('prazo').value, 10);
+  if(!P || !taxaAnual || !n){ alert('Preencha todos os campos.'); return; }
+
+  var i = Math.pow(1 + taxaAnual/100, 1/12) - 1; // taxa mensal equivalente
+
+  // SAC
+  var amortizacao = P / n;
+  var saldoSac = P;
+  var totalSac = 0;
+  var primeiraSac = 0, ultimaSac = 0;
+  for(var m = 1; m <= n; m++){
+    var jurosMes = saldoSac * i;
+    var parcela = amortizacao + jurosMes;
+    if(m === 1) primeiraSac = parcela;
+    if(m === n) ultimaSac = parcela;
+    totalSac += parcela;
+    saldoSac -= amortizacao;
+  }
+
+  // Price
+  var parcelaPrice = P * (i * Math.pow(1+i, n)) / (Math.pow(1+i, n) - 1);
+  var totalPrice = parcelaPrice * n;
+
+  document.getElementById('sacPrimeira').textContent = fmt(primeiraSac);
+  document.getElementById('sacUltima').textContent = fmt(ultimaSac);
+  document.getElementById('sacTotal').textContent = fmt(totalSac);
+  document.getElementById('sacJuros').textContent = fmt(totalSac - P);
+
+  document.getElementById('priceParcela').textContent = fmt(parcelaPrice);
+  document.getElementById('priceTotal').textContent = fmt(totalPrice);
+  document.getElementById('priceJuros').textContent = fmt(totalPrice - P);
+
+  document.getElementById('res').classList.add('show');
+}
+</script>
+<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
+    <div>© 2026 IRN Devs</div>
+    <div><a href="ferramentas.html">ferramentas</a></div>
+  </div>
+</footer>
+</main>
+</body>
+</html>

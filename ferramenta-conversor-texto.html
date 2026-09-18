@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conversor de Texto — Maiúsculas, minúsculas e mais — IRN Devs</title>
+<meta name="description" content="Converta texto para MAIÚSCULAS, minúsculas, Cada Palavra Maiúscula, frase, inverta capitalização e remova espaços duplicados.">
+<link rel="canonical" href="https://irndevs.com/ferramenta-conversor-texto.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:800px;margin:0 auto;padding:28px 20px 80px}
+.crumb{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:14px}
+.sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
+.amber{color:var(--amber)}
+h1{font-size:26px;margin-bottom:8px}
+.lede{color:var(--dim);margin-bottom:20px;font-size:15px}
+textarea{width:100%;min-height:200px;padding:14px;border:1px solid var(--border);border-radius:10px;background:#0c0e0b;color:var(--text);font-family:var(--mono);font-size:13px;margin-bottom:12px}
+textarea:focus{outline:none;border-color:var(--amber)}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.btn2{padding:10px 16px;background:var(--raised);color:var(--text);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:13.5px}
+.btn2:hover{border-color:var(--amber);color:var(--amber)}
+.btn{padding:10px 16px;background:var(--amber);color:#10130f;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:13.5px}
+.status{font-family:var(--mono);font-size:13px;color:var(--faint);margin-top:4px}
+</style>
+</head>
+<body>
+<main id="conteudo">
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / <a href="ferramentas.html">ferramentas</a> / conversor de texto</p>
+  <div class="sec-head"><span class="amber">$</span> tr --case --clean</div>
+  <h1>Conversor de Texto</h1>
+  <p class="lede">Cole o texto e escolha a transformação. Tudo roda no navegador, nada é enviado a servidor.</p>
+  <textarea id="in" placeholder="Cole seu texto aqui..."></textarea>
+  <div class="btns">
+    <button class="btn2" onclick="aplicar('upper')">MAIÚSCULAS</button>
+    <button class="btn2" onclick="aplicar('lower')">minúsculas</button>
+    <button class="btn2" onclick="aplicar('title')">Cada Palavra Maiúscula</button>
+    <button class="btn2" onclick="aplicar('sentence')">Primeira maiúscula</button>
+    <button class="btn2" onclick="aplicar('invert')">iNVERTER cAIXA</button>
+    <button class="btn2" onclick="aplicar('trim')">Remover espaços extras</button>
+    <button class="btn" onclick="copiar()">Copiar</button>
+  </div>
+  <div class="status" id="st"></div>
+</div>
+<script>
+function aplicar(modo){
+  var el = document.getElementById('in');
+  var t = el.value;
+  if(modo === 'upper') t = t.toUpperCase();
+  else if(modo === 'lower') t = t.toLowerCase();
+  else if(modo === 'title') t = t.toLowerCase().replace(/(^|\s)\S/g, function(c){ return c.toUpperCase(); });
+  else if(modo === 'sentence') t = t.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, function(c){ return c.toUpperCase(); });
+  else if(modo === 'invert') t = t.split('').map(function(c){
+    return c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase();
+  }).join('');
+  else if(modo === 'trim') t = t.replace(/[ \t]+/g,' ').replace(/\n{3,}/g,'\n\n').trim();
+  el.value = t;
+  document.getElementById('st').textContent = '✓ aplicado';
+}
+function copiar(){
+  navigator.clipboard.writeText(document.getElementById('in').value).then(function(){
+    document.getElementById('st').textContent = '✓ copiado para a área de transferência';
+  });
+}
+</script>
+<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
+    <div>© 2026 IRN Devs</div>
+    <div><a href="ferramentas.html">ferramentas</a></div>
+  </div>
+</footer>
+</main>
+</body>
+</html>
