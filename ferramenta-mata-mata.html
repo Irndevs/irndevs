@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sorteador de Chaves Mata-Mata — IRN Devs</title>
+<meta name="description" content="Cole a lista de equipes e gere automaticamente as chaves de um torneio eliminatório (oitavas, quartas, semi, final).">
+<link rel="canonical" href="https://irndevs.com/ferramenta-mata-mata.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:720px;margin:0 auto;padding:28px 20px 80px}
+.crumb{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:14px}
+.sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
+.amber{color:var(--amber)}
+h1{font-size:26px;margin-bottom:8px}
+.lede{color:var(--dim);margin-bottom:20px;font-size:15px}
+.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.tab{flex:1;min-width:110px;padding:10px;text-align:center;border:1px solid var(--border);border-radius:8px;background:var(--raised);color:var(--dim);cursor:pointer;font-size:13px}
+.tab.active{background:var(--amber);color:#10130f;border-color:var(--amber);font-weight:700}
+.card{background:var(--raised);border:1px solid var(--border);border-radius:12px;padding:22px;display:none}
+.card.show,.card.solo{display:block}
+label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px}
+input,select,textarea{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:#10130f;color:var(--text);font-size:15px;margin-bottom:14px;font-family:inherit}
+textarea{min-height:110px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.btn{width:100%;padding:14px;background:var(--amber);color:#10130f;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-size:15px}
+.btn.ghost{background:transparent;border:1px solid var(--border);color:var(--amber);margin-top:8px}
+.result{display:none;margin-top:16px;padding:16px;border-radius:10px;background:#1a2218;border:1px solid var(--border)}
+.result.show{display:block}
+.big{font-size:24px;font-weight:800;color:var(--amber);margin-bottom:10px}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;gap:12px}
+.row:last-child{border:none}
+.ok{color:#4ade80}.warn{color:#f87171}
+.note{margin-top:14px;font-size:12px;color:var(--faint)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.tag{background:#10130f;border:1px solid var(--border);padding:6px 10px;border-radius:6px;font-size:13px;cursor:pointer}
+.tag:hover{border-color:var(--amber);color:var(--amber)}
+.bracket{display:grid;gap:10px;margin-top:12px}
+.round{background:#10130f;border:1px solid var(--border);border-radius:8px;padding:12px}
+.round h3{font-size:13px;color:var(--amber);margin-bottom:8px}
+.match{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1a2218;font-size:13px}
+.match:last-child{border:none}
+.timer{font-size:48px;font-weight:800;color:var(--amber);text-align:center;font-family:var(--mono);margin:16px 0}
+.timer-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.schedule{overflow-x:auto;margin-top:12px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:8px;color:var(--faint);font-family:var(--mono);font-size:12px;border-bottom:1px solid var(--border)}
+td{padding:8px;border-bottom:1px solid #1a2218}
+@media(max-width:520px){.row2,.row3,.timer-btns{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main id="conteudo">
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / <a href="ferramentas.html">ferramentas</a> / chaves mata-mata</p>
+  <div class="sec-head"><span class="amber">$</span> sort --chaves --mata-mata --torneio</div>
+  <h1>Chaves Mata-Mata</h1>
+  <p class="lede">A partir de uma lista de times, o sorteio monta os confrontos de cada fase.</p>
+  <div class="card solo">
+    <div><label>Equipes (uma por linha — ideal 4, 8 ou 16)</label>
+      <textarea id="times">Flamengo
+Palmeiras
+Corinthians
+São Paulo
+Santos
+Grêmio
+Internacional
+Atlético-MG</textarea>
+    </div>
+    <button class="btn" onclick="gerar()">Sortear chaves</button>
+    <div class="result" id="res">
+      <div class="big" id="big">—</div>
+      <div class="bracket" id="br"></div>
+    </div>
+    <p class="note">Se o número não for potência de 2, sobram byes (passagem automática) na primeira fase.</p>
+  </div>
+</div>
+<script>
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function nextPow2(n){var p=1;while(p<n)p*=2;return p;}
+function faseName(size){
+  if(size>=16) return 'Oitavas';
+  if(size>=8) return 'Quartas';
+  if(size>=4) return 'Semifinal';
+  if(size>=2) return 'Final';
+  return 'Campeão';
+}
+function gerar(){
+  var teams=document.getElementById('times').value.split(/\n/).map(function(s){return s.trim();}).filter(Boolean);
+  if(teams.length<2){alert('Informe ao menos 2 equipes.');return;}
+  shuffle(teams);
+  var target=nextPow2(teams.length);
+  while(teams.length<target) teams.push('BYE');
+  var rounds=[], current=teams.slice();
+  while(current.length>=2){
+    var matches=[], next=[];
+    for(var i=0;i<current.length;i+=2){
+      var a=current[i], b=current[i+1];
+      matches.push({a:a,b:b});
+      next.push(a.indexOf('BYE')===0?b:b.indexOf('BYE')===0?a:('Vencedor '+(matches.length)));
+    }
+    rounds.push({name:faseName(current.length), matches:matches});
+    current=next;
+    if(current.length===1) break;
+  }
+  document.getElementById('big').textContent=teams.filter(function(t){return t!=='BYE';}).length+' equipes · '+rounds.length+' fases';
+  document.getElementById('br').innerHTML=rounds.map(function(r){
+    return '<div class="round"><h3>'+r.name+'</h3>'+r.matches.map(function(m,i){
+      return '<div class="match"><span>'+m.a+'</span><span style="color:var(--faint)">vs</span><span>'+m.b+'</span></div>';
+    }).join('')+'</div>';
+  }).join('');
+  document.getElementById('res').classList.add('show');
+}
+</script>
+
+<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
+    <div>© 2026 IRN Devs</div>
+    <div><a href="ferramentas.html">ferramentas</a></div>
+  </div>
+</footer>
+</main>
+</body>
+</html>

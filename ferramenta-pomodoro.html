@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cronômetro Pomodoro — IRN Devs</title>
+<meta name="description" content="Timer Pomodoro clássico: 25 min de foco, 5 min de pausa. Roda 100% no navegador, com som ao terminar.">
+<link rel="canonical" href="https://irndevs.com/ferramenta-pomodoro.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:720px;margin:0 auto;padding:28px 20px 80px}
+.crumb{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:14px}
+.sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
+.amber{color:var(--amber)}
+h1{font-size:26px;margin-bottom:8px}
+.lede{color:var(--dim);margin-bottom:20px;font-size:15px}
+.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.tab{flex:1;min-width:110px;padding:10px;text-align:center;border:1px solid var(--border);border-radius:8px;background:var(--raised);color:var(--dim);cursor:pointer;font-size:13px}
+.tab.active{background:var(--amber);color:#10130f;border-color:var(--amber);font-weight:700}
+.card{background:var(--raised);border:1px solid var(--border);border-radius:12px;padding:22px;display:none}
+.card.show,.card.solo{display:block}
+label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px}
+input,select,textarea{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:#10130f;color:var(--text);font-size:15px;margin-bottom:14px;font-family:inherit}
+textarea{min-height:110px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.btn{width:100%;padding:14px;background:var(--amber);color:#10130f;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-size:15px}
+.btn.ghost{background:transparent;border:1px solid var(--border);color:var(--amber);margin-top:8px}
+.result{display:none;margin-top:16px;padding:16px;border-radius:10px;background:#1a2218;border:1px solid var(--border)}
+.result.show{display:block}
+.big{font-size:24px;font-weight:800;color:var(--amber);margin-bottom:10px}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;gap:12px}
+.row:last-child{border:none}
+.ok{color:#4ade80}.warn{color:#f87171}
+.note{margin-top:14px;font-size:12px;color:var(--faint)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.tag{background:#10130f;border:1px solid var(--border);padding:6px 10px;border-radius:6px;font-size:13px;cursor:pointer}
+.tag:hover{border-color:var(--amber);color:var(--amber)}
+.bracket{display:grid;gap:10px;margin-top:12px}
+.round{background:#10130f;border:1px solid var(--border);border-radius:8px;padding:12px}
+.round h3{font-size:13px;color:var(--amber);margin-bottom:8px}
+.match{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1a2218;font-size:13px}
+.match:last-child{border:none}
+.timer{font-size:48px;font-weight:800;color:var(--amber);text-align:center;font-family:var(--mono);margin:16px 0}
+.timer-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.schedule{overflow-x:auto;margin-top:12px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:8px;color:var(--faint);font-family:var(--mono);font-size:12px;border-bottom:1px solid var(--border)}
+td{padding:8px;border-bottom:1px solid #1a2218}
+@media(max-width:520px){.row2,.row3,.timer-btns{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main id="conteudo">
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / <a href="ferramentas.html">ferramentas</a> / pomodoro</p>
+  <div class="sec-head"><span class="amber">$</span> timer --pomodoro --foco --pausa</div>
+  <h1>Pomodoro</h1>
+  <p class="lede">Foque 25 minutos, pause 5. Ciclos longos com pausa de 15 minutos a cada 4 pomodoros.</p>
+  <div class="card solo">
+    <div class="row3">
+      <div><label>Foco (min)</label><input type="number" id="foco" value="25" min="1" max="90"></div>
+      <div><label>Pausa curta</label><input type="number" id="curta" value="5" min="1" max="30"></div>
+      <div><label>Pausa longa</label><input type="number" id="longa" value="15" min="1" max="45"></div>
+    </div>
+    <div class="timer" id="display">25:00</div>
+    <div style="text-align:center;color:var(--dim);margin-bottom:12px" id="mode">modo: foco</div>
+    <div class="timer-btns">
+      <button class="btn" onclick="start()">Iniciar</button>
+      <button class="btn ghost" onclick="pause()" style="margin:0">Pausar</button>
+      <button class="btn ghost" onclick="reset()" style="margin:0">Reset</button>
+    </div>
+    <div class="result show" style="margin-top:16px">
+      <div class="row"><span>Pomodoros concluídos</span><span id="done" class="ok">0</span></div>
+      <div class="row"><span>Próxima pausa longa em</span><span id="until">4 ciclos</span></div>
+    </div>
+    <p class="note">Mantenha esta aba aberta. Notificação do navegador ao terminar (se permitido).</p>
+  </div>
+</div>
+<script>
+var state={secs:25*60, mode:'foco', running:false, done:0, timer:null};
+function pad(n){return (n<10?'0':'')+n;}
+function render(){
+  var m=Math.floor(state.secs/60), s=state.secs%60;
+  document.getElementById('display').textContent=pad(m)+':'+pad(s);
+  document.getElementById('mode').textContent='modo: '+state.mode;
+  document.getElementById('done').textContent=state.done;
+  document.getElementById('until').textContent=(4-(state.done%4))+' ciclo(s)';
+  document.title=(state.running?(pad(m)+':'+pad(s)+' · '):'')+'Pomodoro — IRN Devs';
+}
+function beep(){
+  try{
+    var ctx=new (window.AudioContext||window.webkitAudioContext)();
+    var o=ctx.createOscillator(); var g=ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.frequency.value=880; g.gain.value=0.08; o.start();
+    setTimeout(function(){o.stop();ctx.close();},400);
+  }catch(e){}
+  if(window.Notification&&Notification.permission==='granted'){
+    new Notification('Pomodoro',{body:state.mode==='foco'?'Foco terminou — pause!':'Pausa terminou — de volta ao foco.'});
+  }
+}
+function nextMode(){
+  if(state.mode==='foco'){
+    state.done++;
+    if(state.done%4===0){state.mode='pausa longa'; state.secs=(+document.getElementById('longa').value||15)*60;}
+    else {state.mode='pausa curta'; state.secs=(+document.getElementById('curta').value||5)*60;}
+  } else {
+    state.mode='foco'; state.secs=(+document.getElementById('foco').value||25)*60;
+  }
+  beep();
+}
+function tick(){
+  if(!state.running) return;
+  state.secs--;
+  if(state.secs<0){nextMode();}
+  render();
+}
+function start(){
+  if(state.running) return;
+  if(window.Notification&&Notification.permission==='default') Notification.requestPermission();
+  state.running=true;
+  if(!state.timer) state.timer=setInterval(tick,1000);
+  render();
+}
+function pause(){state.running=false;render();}
+function reset(){
+  state.running=false; state.mode='foco';
+  state.secs=(+document.getElementById('foco').value||25)*60;
+  render();
+}
+render();
+</script>
+
+<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
+    <div>© 2026 IRN Devs</div>
+    <div><a href="ferramentas.html">ferramentas</a></div>
+  </div>
+</footer>
+</main>
+</body>
+</html>
