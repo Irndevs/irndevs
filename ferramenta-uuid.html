@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de UUID / GUID — IRN Devs</title>
+<meta name="description" content="Gere identificadores únicos universais (UUID v4) para bancos de dados, APIs e testes.">
+<link rel="canonical" href="https://irndevs.com/ferramenta-uuid.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:700px;margin:0 auto;padding:28px 20px 80px}
+.crumb{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:14px}
+.sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
+.amber{color:var(--amber)}
+h1{font-size:26px;margin-bottom:8px}
+.lede{color:var(--dim);margin-bottom:20px;font-size:15px}
+.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.tab{flex:1;min-width:100px;padding:10px;text-align:center;border:1px solid var(--border);border-radius:8px;background:var(--raised);color:var(--dim);cursor:pointer;font-size:13px}
+.tab.active{background:var(--amber);color:#10130f;border-color:var(--amber);font-weight:700}
+.card{background:var(--raised);border:1px solid var(--border);border-radius:12px;padding:22px;display:none}
+.card.show,.card.solo{display:block}
+label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px}
+input,select,textarea{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:#10130f;color:var(--text);font-size:15px;margin-bottom:14px;font-family:inherit}
+textarea{min-height:100px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.btn{width:100%;padding:14px;background:var(--amber);color:#10130f;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-size:15px}
+.btn.ghost{background:transparent;border:1px solid var(--border);color:var(--amber);margin-top:8px}
+.result{display:none;margin-top:16px;padding:16px;border-radius:10px;background:#1a2218;border:1px solid var(--border)}
+.result.show{display:block}
+.big{font-size:24px;font-weight:800;color:var(--amber);margin-bottom:10px}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;gap:12px;flex-wrap:wrap}
+.row:last-child{border:none}
+.ok{color:#4ade80}.warn{color:#f87171}
+.note{margin-top:14px;font-size:12px;color:var(--faint)}
+.drop{border:2px dashed var(--border);border-radius:10px;padding:28px;text-align:center;color:var(--dim);cursor:pointer;margin-bottom:14px}
+.drop.over{border-color:var(--amber);color:var(--amber)}
+.preview{max-width:100%;border-radius:8px;margin-top:10px}
+.mono{font-family:var(--mono);font-size:13px;word-break:break-all}
+@media(max-width:520px){.row2,.row3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main id="conteudo">
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / <a href="ferramentas.html">ferramentas</a> / gerador de uuid</p>
+  <div class="sec-head"><span class="amber">$</span> gen --uuid --guid --v4</div>
+  <h1>Gerador de UUID</h1>
+  <p class="lede">UUID v4 criptograficamente aleatório via Web Crypto API do navegador.</p>
+  <div class="card solo">
+    <div class="row2">
+      <div><label>Quantidade</label><input type="number" id="n" value="5" min="1" max="50"></div>
+      <div><label>Formato</label>
+        <select id="fmt"><option value="lower">minúsculas</option><option value="upper">MAIÚSCULAS</option></select>
+      </div>
+    </div>
+    <button class="btn" onclick="gerar()">Gerar UUIDs</button>
+    <div class="result" id="res">
+      <div class="big" id="big">—</div>
+      <div class="mono" id="out" style="line-height:1.8"></div>
+      <button class="btn ghost" onclick="copiar()">Copiar todos</button>
+    </div>
+  </div>
+</div>
+<script>
+function uuid(){
+  if(crypto.randomUUID) return crypto.randomUUID();
+  var b=new Uint8Array(16); crypto.getRandomValues(b);
+  b[6]=(b[6]&0x0f)|0x40; b[8]=(b[8]&0x3f)|0x80;
+  var h=[...b].map(function(x){return x.toString(16).padStart(2,'0');}).join('');
+  return h.slice(0,8)+'-'+h.slice(8,12)+'-'+h.slice(12,16)+'-'+h.slice(16,20)+'-'+h.slice(20);
+}
+function gerar(){
+  var n=Math.min(50,Math.max(1,+document.getElementById('n').value||1));
+  var up=document.getElementById('fmt').value==='upper';
+  var list=[];
+  for(var i=0;i<n;i++){var u=uuid(); list.push(up?u.toUpperCase():u);}
+  window._uuids=list;
+  document.getElementById('big').textContent=n+' UUID(s)';
+  document.getElementById('out').textContent=list.join('\n');
+  document.getElementById('res').classList.add('show');
+}
+function copiar(){var t=(window._uuids||[]).join('\n');navigator.clipboard.writeText(t).then(function(){alert('Copiado!');});}
+gerar();
+</script>
+
+<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
+    <div>© 2026 IRN Devs</div>
+    <div><a href="ferramentas.html">ferramentas</a></div>
+  </div>
+</footer>
+</main>
+</body>
+</html>

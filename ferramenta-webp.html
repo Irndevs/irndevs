@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conversor WEBP ↔ JPG / PNG — IRN Devs</title>
+<meta name="description" content="Converta imagens WEBP, JPG e PNG no navegador — sem enviar nada para servidor.">
+<link rel="canonical" href="https://irndevs.com/ferramenta-webp.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:700px;margin:0 auto;padding:28px 20px 80px}
+.crumb{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:14px}
+.sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
+.amber{color:var(--amber)}
+h1{font-size:26px;margin-bottom:8px}
+.lede{color:var(--dim);margin-bottom:20px;font-size:15px}
+.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.tab{flex:1;min-width:100px;padding:10px;text-align:center;border:1px solid var(--border);border-radius:8px;background:var(--raised);color:var(--dim);cursor:pointer;font-size:13px}
+.tab.active{background:var(--amber);color:#10130f;border-color:var(--amber);font-weight:700}
+.card{background:var(--raised);border:1px solid var(--border);border-radius:12px;padding:22px;display:none}
+.card.show,.card.solo{display:block}
+label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px}
+input,select,textarea{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:#10130f;color:var(--text);font-size:15px;margin-bottom:14px;font-family:inherit}
+textarea{min-height:100px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.btn{width:100%;padding:14px;background:var(--amber);color:#10130f;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-size:15px}
+.btn.ghost{background:transparent;border:1px solid var(--border);color:var(--amber);margin-top:8px}
+.result{display:none;margin-top:16px;padding:16px;border-radius:10px;background:#1a2218;border:1px solid var(--border)}
+.result.show{display:block}
+.big{font-size:24px;font-weight:800;color:var(--amber);margin-bottom:10px}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;gap:12px;flex-wrap:wrap}
+.row:last-child{border:none}
+.ok{color:#4ade80}.warn{color:#f87171}
+.note{margin-top:14px;font-size:12px;color:var(--faint)}
+.drop{border:2px dashed var(--border);border-radius:10px;padding:28px;text-align:center;color:var(--dim);cursor:pointer;margin-bottom:14px}
+.drop.over{border-color:var(--amber);color:var(--amber)}
+.preview{max-width:100%;border-radius:8px;margin-top:10px}
+.mono{font-family:var(--mono);font-size:13px;word-break:break-all}
+@media(max-width:520px){.row2,.row3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main id="conteudo">
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / <a href="ferramentas.html">ferramentas</a> / conversor webp / jpg / png</p>
+  <div class="sec-head"><span class="amber">$</span> convert --webp --jpg --png --canvas</div>
+  <h1>Conversor WEBP / JPG / PNG</h1>
+  <p class="lede">Arraste ou escolha uma imagem. A conversão roda 100% no seu dispositivo via Canvas.</p>
+  <div class="card solo">
+    <div class="drop" id="drop">Arraste uma imagem aqui ou clique para escolher
+      <input type="file" id="file" accept="image/*" style="display:none">
+    </div>
+    <div class="row2">
+      <div><label>Converter para</label>
+        <select id="fmt"><option value="image/jpeg">JPG</option><option value="image/png">PNG</option><option value="image/webp">WEBP</option></select>
+      </div>
+      <div><label>Qualidade JPG/WEBP (0.1–1)</label><input type="number" id="q" value="0.92" min="0.1" max="1" step="0.01"></div>
+    </div>
+    <button class="btn" onclick="document.getElementById('file').click()">Escolher arquivo</button>
+    <div class="result" id="res">
+      <div class="big" id="big">—</div>
+      <img class="preview" id="prev" alt="preview">
+      <a class="btn ghost" id="dl" download style="display:inline-block;text-align:center;text-decoration:none">Baixar convertido</a>
+    </div>
+    <p class="note">Nada é enviado a servidores — processamento local. Arquivos muito grandes podem demorar no celular.</p>
+  </div>
+</div>
+<script>
+var drop=document.getElementById('drop'), file=document.getElementById('file');
+drop.addEventListener('click',function(){file.click();});
+drop.addEventListener('dragover',function(e){e.preventDefault();drop.classList.add('over');});
+drop.addEventListener('dragleave',function(){drop.classList.remove('over');});
+drop.addEventListener('drop',function(e){e.preventDefault();drop.classList.remove('over');if(e.dataTransfer.files[0]) handle(e.dataTransfer.files[0]);});
+file.addEventListener('change',function(){if(file.files[0]) handle(file.files[0]);});
+function handle(f){
+  if(!f.type.match(/^image\//)){alert('Escolha uma imagem.');return;}
+  var reader=new FileReader();
+  reader.onload=function(){
+    var img=new Image();
+    img.onload=function(){
+      var canvas=document.createElement('canvas');
+      canvas.width=img.naturalWidth; canvas.height=img.naturalHeight;
+      canvas.getContext('2d').drawImage(img,0,0);
+      var mime=document.getElementById('fmt').value;
+      var q=+document.getElementById('q').value||0.92;
+      canvas.toBlob(function(blob){
+        var url=URL.createObjectURL(blob);
+        document.getElementById('prev').src=url;
+        var ext=mime==='image/png'?'png':mime==='image/webp'?'webp':'jpg';
+        var a=document.getElementById('dl');
+        a.href=url; a.download=(f.name.replace(/\.[^.]+$/,'')||'imagem')+'.'+ext;
+        document.getElementById('big').textContent=(blob.size/1024).toFixed(1)+' KB · '+img.naturalWidth+'×'+img.naturalHeight;
+        document.getElementById('res').classList.add('show');
+      }, mime, q);
+    };
+    img.src=reader.result;
+  };
+  reader.readAsDataURL(f);
+}
+</script>
+
+<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
+    <div>© 2026 IRN Devs</div>
+    <div><a href="ferramentas.html">ferramentas</a></div>
+  </div>
+</footer>
+</main>
+</body>
+</html>

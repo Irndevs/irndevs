@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baixar Thumbnail do YouTube — IRN Devs</title>
+<meta name="description" content="Cole o link do vídeo e baixe a capa (thumbnail) em alta resolução — maxres, HQ e MQ.">
+<link rel="canonical" href="https://irndevs.com/ferramenta-youtube-thumb.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:700px;margin:0 auto;padding:28px 20px 80px}
+.crumb{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:14px}
+.sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
+.amber{color:var(--amber)}
+h1{font-size:26px;margin-bottom:8px}
+.lede{color:var(--dim);margin-bottom:20px;font-size:15px}
+.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.tab{flex:1;min-width:100px;padding:10px;text-align:center;border:1px solid var(--border);border-radius:8px;background:var(--raised);color:var(--dim);cursor:pointer;font-size:13px}
+.tab.active{background:var(--amber);color:#10130f;border-color:var(--amber);font-weight:700}
+.card{background:var(--raised);border:1px solid var(--border);border-radius:12px;padding:22px;display:none}
+.card.show,.card.solo{display:block}
+label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px}
+input,select,textarea{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:#10130f;color:var(--text);font-size:15px;margin-bottom:14px;font-family:inherit}
+textarea{min-height:100px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.btn{width:100%;padding:14px;background:var(--amber);color:#10130f;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-size:15px}
+.btn.ghost{background:transparent;border:1px solid var(--border);color:var(--amber);margin-top:8px}
+.result{display:none;margin-top:16px;padding:16px;border-radius:10px;background:#1a2218;border:1px solid var(--border)}
+.result.show{display:block}
+.big{font-size:24px;font-weight:800;color:var(--amber);margin-bottom:10px}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;gap:12px;flex-wrap:wrap}
+.row:last-child{border:none}
+.ok{color:#4ade80}.warn{color:#f87171}
+.note{margin-top:14px;font-size:12px;color:var(--faint)}
+.drop{border:2px dashed var(--border);border-radius:10px;padding:28px;text-align:center;color:var(--dim);cursor:pointer;margin-bottom:14px}
+.drop.over{border-color:var(--amber);color:var(--amber)}
+.preview{max-width:100%;border-radius:8px;margin-top:10px}
+.mono{font-family:var(--mono);font-size:13px;word-break:break-all}
+@media(max-width:520px){.row2,.row3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main id="conteudo">
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / <a href="ferramentas.html">ferramentas</a> / thumbnail do youtube</p>
+  <div class="sec-head"><span class="amber">$</span> get --youtube --thumbnail --capa</div>
+  <h1>Thumbnail do YouTube</h1>
+  <p class="lede">Extrai o ID do vídeo e mostra as capas oficiais do YouTube para download.</p>
+  <div class="card solo">
+    <div><label>Link ou ID do vídeo</label><input type="text" id="url" placeholder="https://www.youtube.com/watch?v=..." value=""></div>
+    <button class="btn" onclick="buscar()">Buscar capas</button>
+    <div class="result" id="res">
+      <div class="big" id="big">—</div>
+      <div id="thumbs"></div>
+    </div>
+    <p class="note">As imagens vêm dos servidores do YouTube (img.youtube.com). Use apenas para fins legítimos.</p>
+  </div>
+</div>
+<script>
+function extractId(s){
+  s=(s||'').trim();
+  if(/^[a-zA-Z0-9_-]{11}$/.test(s)) return s;
+  var m=s.match(/[?&]v=([a-zA-Z0-9_-]{11})/)||s.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/)||s.match(/embed\/([a-zA-Z0-9_-]{11})/)||s.match(/shorts\/([a-zA-Z0-9_-]{11})/);
+  return m?m[1]:null;
+}
+function buscar(){
+  var id=extractId(document.getElementById('url').value);
+  if(!id){alert('Não consegui extrair o ID do vídeo.');return;}
+  var sizes=[['maxresdefault','Máxima (1280×720)'],['sddefault','SD'],['hqdefault','HQ'],['mqdefault','Média'],['default','Padrão']];
+  document.getElementById('big').textContent='ID: '+id;
+  document.getElementById('thumbs').innerHTML=sizes.map(function(s){
+    var src='https://img.youtube.com/vi/'+id+'/'+s[0]+'.jpg';
+    return '<div style="margin-bottom:16px"><div style="font-size:12px;color:var(--faint);margin-bottom:6px">'+s[1]+'</div>'+
+      '<img class="preview" src="'+src+'" alt="thumb" onerror="this.parentNode.style.display=\'none\'">'+
+      '<div><a class="btn ghost" style="display:inline-block;width:auto;padding:8px 14px;text-decoration:none" href="'+src+'" target="_blank" rel="noopener" download>abrir / baixar</a></div></div>';
+  }).join('');
+  document.getElementById('res').classList.add('show');
+}
+</script>
+
+<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
+    <div>© 2026 IRN Devs</div>
+    <div><a href="ferramentas.html">ferramentas</a></div>
+  </div>
+</footer>
+</main>
+</body>
+</html>

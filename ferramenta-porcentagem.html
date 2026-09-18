@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Porcentagem — IRN Devs</title>
+<meta name="description" content="Calcule porcentagem de um valor, aumento, desconto e quanto X representa de Y — em segundos.">
+<link rel="canonical" href="https://irndevs.com/ferramenta-porcentagem.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:700px;margin:0 auto;padding:28px 20px 80px}
+.crumb{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:14px}
+.sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
+.amber{color:var(--amber)}
+h1{font-size:26px;margin-bottom:8px}
+.lede{color:var(--dim);margin-bottom:20px;font-size:15px}
+.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.tab{flex:1;min-width:100px;padding:10px;text-align:center;border:1px solid var(--border);border-radius:8px;background:var(--raised);color:var(--dim);cursor:pointer;font-size:13px}
+.tab.active{background:var(--amber);color:#10130f;border-color:var(--amber);font-weight:700}
+.card{background:var(--raised);border:1px solid var(--border);border-radius:12px;padding:22px;display:none}
+.card.show,.card.solo{display:block}
+label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px}
+input,select,textarea{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:#10130f;color:var(--text);font-size:15px;margin-bottom:14px;font-family:inherit}
+textarea{min-height:100px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.btn{width:100%;padding:14px;background:var(--amber);color:#10130f;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-size:15px}
+.btn.ghost{background:transparent;border:1px solid var(--border);color:var(--amber);margin-top:8px}
+.result{display:none;margin-top:16px;padding:16px;border-radius:10px;background:#1a2218;border:1px solid var(--border)}
+.result.show{display:block}
+.big{font-size:24px;font-weight:800;color:var(--amber);margin-bottom:10px}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;gap:12px;flex-wrap:wrap}
+.row:last-child{border:none}
+.ok{color:#4ade80}.warn{color:#f87171}
+.note{margin-top:14px;font-size:12px;color:var(--faint)}
+.drop{border:2px dashed var(--border);border-radius:10px;padding:28px;text-align:center;color:var(--dim);cursor:pointer;margin-bottom:14px}
+.drop.over{border-color:var(--amber);color:var(--amber)}
+.preview{max-width:100%;border-radius:8px;margin-top:10px}
+.mono{font-family:var(--mono);font-size:13px;word-break:break-all}
+@media(max-width:520px){.row2,.row3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main id="conteudo">
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / <a href="ferramentas.html">ferramentas</a> / calculadora de porcentagem</p>
+  <div class="sec-head"><span class="amber">$</span> calc --porcentagem --desconto --aumento</div>
+  <h1>Calculadora de Porcentagem</h1>
+  <p class="lede">Quatro cálculos do dia a dia: % de um número, quanto % um valor é de outro, aumento e desconto.</p>
+  <div class="tabs">
+    <div class="tab active" onclick="aba('a',this)">X% de Y</div>
+    <div class="tab" onclick="aba('b',this)">X é quantos % de Y</div>
+    <div class="tab" onclick="aba('c',this)">Aumento / desconto</div>
+  </div>
+  <div class="card show" id="card-a">
+    <div class="row2">
+      <div><label>Porcentagem (%)</label><input type="number" id="a1" value="15" step="0.01"></div>
+      <div><label>Valor</label><input type="number" id="a2" value="200" step="0.01"></div>
+    </div>
+    <button class="btn" onclick="calcA()">Calcular</button>
+    <div class="result" id="ra"><div class="big" id="ba">—</div></div>
+  </div>
+  <div class="card" id="card-b">
+    <div class="row2">
+      <div><label>Valor parcial</label><input type="number" id="b1" value="30" step="0.01"></div>
+      <div><label>Valor total</label><input type="number" id="b2" value="150" step="0.01"></div>
+    </div>
+    <button class="btn" onclick="calcB()">Calcular</button>
+    <div class="result" id="rb"><div class="big" id="bb">—</div></div>
+  </div>
+  <div class="card" id="card-c">
+    <div class="row2">
+      <div><label>Valor original</label><input type="number" id="c1" value="100" step="0.01"></div>
+      <div><label>Variação (%)</label><input type="number" id="c2" value="10" step="0.01"></div>
+    </div>
+    <div class="row2">
+      <button class="btn" onclick="calcC(1)">Aplicar aumento</button>
+      <button class="btn ghost" style="margin:0" onclick="calcC(-1)">Aplicar desconto</button>
+    </div>
+    <div class="result" id="rc"><div class="big" id="bc">—</div>
+      <div class="row"><span>Diferença</span><span id="cdiff">—</span></div>
+    </div>
+  </div>
+</div>
+<script>
+function aba(id,el){document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});document.querySelectorAll('.card').forEach(function(c){c.classList.remove('show');});el.classList.add('active');document.getElementById('card-'+id).classList.add('show');}
+function calcA(){var p=+document.getElementById('a1').value||0,v=+document.getElementById('a2').value||0;var r=v*p/100;document.getElementById('ba').textContent=r.toLocaleString('pt-BR',{maximumFractionDigits:4});document.getElementById('ra').classList.add('show');}
+function calcB(){var a=+document.getElementById('b1').value||0,b=+document.getElementById('b2').value||1;var r=a/b*100;document.getElementById('bb').textContent=r.toFixed(2).replace('.',',')+' %';document.getElementById('rb').classList.add('show');}
+function calcC(dir){var v=+document.getElementById('c1').value||0,p=+document.getElementById('c2').value||0;var d=v*p/100*dir;var f=v+d;document.getElementById('bc').textContent=f.toLocaleString('pt-BR',{maximumFractionDigits:4});document.getElementById('cdiff').textContent=(d>=0?'+':'')+d.toLocaleString('pt-BR',{maximumFractionDigits:4});document.getElementById('rc').classList.add('show');}
+</script>
+
+<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
+    <div>© 2026 IRN Devs</div>
+    <div><a href="ferramentas.html">ferramentas</a></div>
+  </div>
+</footer>
+</main>
+</body>
+</html>

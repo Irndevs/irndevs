@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de Plano de Aula — IRN Devs</title>
+<meta name="description" content="Monte um plano de aula completo: objetivos, conteúdo, metodologia, recursos e avaliação. Exporte ou imprima.">
+<link rel="canonical" href="https://irndevs.com/ferramenta-plano-aula.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:760px;margin:0 auto;padding:28px 20px 80px}
+.crumb{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:14px}
+.sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
+.amber{color:var(--amber)}
+h1{font-size:26px;margin-bottom:8px}
+.lede{color:var(--dim);margin-bottom:20px;font-size:15px}
+.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.tab{flex:1;min-width:110px;padding:10px;text-align:center;border:1px solid var(--border);border-radius:8px;background:var(--raised);color:var(--dim);cursor:pointer;font-size:13px}
+.tab.active{background:var(--amber);color:#10130f;border-color:var(--amber);font-weight:700}
+.card{background:var(--raised);border:1px solid var(--border);border-radius:12px;padding:22px;display:none}
+.card.show,.card.solo{display:block}
+label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px}
+input,select,textarea{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:#10130f;color:var(--text);font-size:15px;margin-bottom:14px;font-family:inherit}
+textarea{min-height:90px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.btn{width:100%;padding:14px;background:var(--amber);color:#10130f;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-size:15px}
+.btn.ghost{background:transparent;border:1px solid var(--border);color:var(--amber);margin-top:8px}
+.result{display:none;margin-top:16px;padding:16px;border-radius:10px;background:#1a2218;border:1px solid var(--border)}
+.result.show{display:block}
+.big{font-size:20px;font-weight:800;color:var(--amber);margin-bottom:10px}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;gap:12px}
+.row:last-child{border:none}
+.note{margin-top:14px;font-size:12px;color:var(--faint)}
+.plan{font-size:14px;line-height:1.65}
+.plan h2{font-size:15px;color:var(--amber);margin:16px 0 6px;font-family:var(--mono)}
+.plan h2:first-child{margin-top:0}
+.plan p,.plan li{color:var(--text);margin-bottom:4px}
+.plan ul{padding-left:18px;margin-bottom:8px}
+.tpl-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.tpl{background:#10130f;border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;transition:border-color .15s}
+.tpl:hover,.tpl.active{border-color:var(--amber)}
+.tpl h3{font-size:14px;margin-bottom:4px;color:var(--text)}
+.tpl p{font-size:12px;color:var(--dim);margin:0}
+.table-wrap{overflow-x:auto;margin-top:12px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:8px;color:var(--faint);font-family:var(--mono);font-size:11px;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:8px;border-bottom:1px solid #1a2218}
+@media(max-width:560px){.row2,.row3,.tpl-grid{grid-template-columns:1fr}}
+@media print{.crumb,.sec-head,.btn,.tabs,.note,footer,nav,.site-footer-v2{display:none!important}body{background:#fff;color:#000}.card,.result{border:none;background:#fff;padding:0}.plan h2{color:#000}}
+</style>
+</head>
+<body>
+<main id="conteudo">
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / <a href="ferramentas.html">ferramentas</a> / plano de aula</p>
+  <div class="sec-head"><span class="amber">$</span> gen --plano-aula --bncc --professor</div>
+  <h1>Plano de Aula</h1>
+  <p class="lede">Preencha os campos e gere um plano estruturado pronto para imprimir ou copiar — útil para professores e estágios.</p>
+  <div class="card solo">
+    <div class="row2">
+      <div><label>Disciplina / componente</label><input type="text" id="disc" value="Matemática"></div>
+      <div><label>Série / turma</label><input type="text" id="serie" value="8º ano — Turma A"></div>
+    </div>
+    <div class="row2">
+      <div><label>Tema / conteúdo</label><input type="text" id="tema" value="Equações do 1º grau"></div>
+      <div><label>Duração (minutos)</label><input type="number" id="dur" value="50" min="15" max="240"></div>
+    </div>
+    <div class="row2">
+      <div><label>Professor(a)</label><input type="text" id="prof" value=""></div>
+      <div><label>Data</label><input type="date" id="data"></div>
+    </div>
+    <div><label>Objetivo geral</label>
+      <textarea id="obj">Compreender e resolver equações do 1º grau com uma incógnita, aplicando-as em situações-problema do cotidiano.</textarea>
+    </div>
+    <div><label>Objetivos específicos (um por linha)</label>
+      <textarea id="objs">Identificar os termos de uma equação
+Isolar a incógnita corretamente
+Resolver problemas contextualizados
+Verificar a solução substituindo o valor encontrado</textarea>
+    </div>
+    <div class="row2">
+      <div><label>Metodologia</label>
+        <select id="met">
+          <option>Expositiva dialogada</option>
+          <option>Sala de aula invertida</option>
+          <option>Aprendizagem baseada em problemas</option>
+          <option>Trabalho em grupos</option>
+          <option>Gamificação</option>
+          <option>Estação de aprendizagem</option>
+        </select>
+      </div>
+      <div><label>Recursos</label><input type="text" id="rec" value="Quadro, data show, lista de exercícios impressa"></div>
+    </div>
+    <div><label>Desenvolvimento / etapas (um por linha)</label>
+      <textarea id="etapas">Acolhida e chamada (5 min)
+Revisão rápida de expressões algébricas (8 min)
+Exposição do conceito de equação e exemplos (12 min)
+Resolução guiada no quadro (10 min)
+Prática individual ou em duplas (10 min)
+Síntese e registro do que foi aprendido (5 min)</textarea>
+    </div>
+    <div><label>Avaliação</label>
+      <textarea id="aval">Observação da participação; correção da lista; pergunta oral de verificação ao final.</textarea>
+    </div>
+    <div><label>Referências / BNCC (opcional)</label>
+      <input type="text" id="bncc" value="EF08MA08 — Resolver e elaborar problemas que envolvam equações de 1º grau">
+    </div>
+    <button class="btn" onclick="gerar()">Gerar plano de aula</button>
+    <div class="result" id="res">
+      <div class="big">Plano gerado</div>
+      <div class="plan" id="out"></div>
+      <div class="row2" style="margin-top:12px">
+        <button class="btn ghost" style="margin:0" onclick="window.print()">Imprimir / PDF</button>
+        <button class="btn ghost" style="margin:0" onclick="copiar()">Copiar texto</button>
+      </div>
+    </div>
+    <p class="note">Modelo genérico para organização pedagógica. Adapte à sua rede de ensino e ao projeto político-pedagógico da escola.</p>
+  </div>
+</div>
+<script>
+(function(){var d=document.getElementById('data'); if(d && !d.value) d.value=new Date().toISOString().slice(0,10);})();
+function lines(id){return document.getElementById(id).value.split(/\n/).map(function(s){return s.trim();}).filter(Boolean);}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function gerar(){
+  var disc=document.getElementById('disc').value.trim()||'—';
+  var serie=document.getElementById('serie').value.trim()||'—';
+  var tema=document.getElementById('tema').value.trim()||'—';
+  var dur=document.getElementById('dur').value||'50';
+  var prof=document.getElementById('prof').value.trim()||'—';
+  var data=document.getElementById('data').value||'—';
+  if(data && data.indexOf('-')>0){var p=data.split('-'); data=p[2]+'/'+p[1]+'/'+p[0];}
+  var obj=document.getElementById('obj').value.trim();
+  var objs=lines('objs');
+  var met=document.getElementById('met').value;
+  var rec=document.getElementById('rec').value.trim();
+  var etapas=lines('etapas');
+  var aval=document.getElementById('aval').value.trim();
+  var bncc=document.getElementById('bncc').value.trim();
+  var html='<h2>1. Identificação</h2>'+
+    '<p><strong>Disciplina:</strong> '+esc(disc)+'<br><strong>Turma:</strong> '+esc(serie)+'<br><strong>Tema:</strong> '+esc(tema)+
+    '<br><strong>Duração:</strong> '+esc(dur)+' min<br><strong>Professor(a):</strong> '+esc(prof)+'<br><strong>Data:</strong> '+esc(data)+'</p>'+
+    '<h2>2. Objetivo geral</h2><p>'+esc(obj)+'</p>'+
+    '<h2>3. Objetivos específicos</h2><ul>'+objs.map(function(o){return '<li>'+esc(o)+'</li>';}).join('')+'</ul>'+
+    '<h2>4. Metodologia</h2><p>'+esc(met)+'</p>'+
+    '<h2>5. Recursos</h2><p>'+esc(rec)+'</p>'+
+    '<h2>6. Desenvolvimento</h2><ul>'+etapas.map(function(e){return '<li>'+esc(e)+'</li>';}).join('')+'</ul>'+
+    '<h2>7. Avaliação</h2><p>'+esc(aval)+'</p>';
+  if(bncc) html+='<h2>8. Referência / BNCC</h2><p>'+esc(bncc)+'</p>';
+  document.getElementById('out').innerHTML=html;
+  document.getElementById('res').classList.add('show');
+  window._planText = document.getElementById('out').innerText;
+}
+function copiar(){
+  var t=window._planText||'';
+  navigator.clipboard.writeText(t).then(function(){alert('Copiado!');}).catch(function(){prompt('Copie:',t);});
+}
+</script>
+
+<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
+    <div>© 2026 IRN Devs</div>
+    <div><a href="ferramentas.html">ferramentas</a></div>
+  </div>
+</footer>
+</main>
+</body>
+</html>

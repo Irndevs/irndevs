@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de Links UTM (Google Analytics) — IRN Devs</title>
+<meta name="description" content="Monte URLs com parâmetros utm_source, utm_medium, utm_campaign e outros para rastrear campanhas.">
+<link rel="canonical" href="https://irndevs.com/ferramenta-utm.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:700px;margin:0 auto;padding:28px 20px 80px}
+.crumb{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:14px}
+.sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
+.amber{color:var(--amber)}
+h1{font-size:26px;margin-bottom:8px}
+.lede{color:var(--dim);margin-bottom:20px;font-size:15px}
+.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.tab{flex:1;min-width:100px;padding:10px;text-align:center;border:1px solid var(--border);border-radius:8px;background:var(--raised);color:var(--dim);cursor:pointer;font-size:13px}
+.tab.active{background:var(--amber);color:#10130f;border-color:var(--amber);font-weight:700}
+.card{background:var(--raised);border:1px solid var(--border);border-radius:12px;padding:22px;display:none}
+.card.show,.card.solo{display:block}
+label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px}
+input,select,textarea{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:#10130f;color:var(--text);font-size:15px;margin-bottom:14px;font-family:inherit}
+textarea{min-height:100px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.btn{width:100%;padding:14px;background:var(--amber);color:#10130f;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-size:15px}
+.btn.ghost{background:transparent;border:1px solid var(--border);color:var(--amber);margin-top:8px}
+.result{display:none;margin-top:16px;padding:16px;border-radius:10px;background:#1a2218;border:1px solid var(--border)}
+.result.show{display:block}
+.big{font-size:24px;font-weight:800;color:var(--amber);margin-bottom:10px}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;gap:12px;flex-wrap:wrap}
+.row:last-child{border:none}
+.ok{color:#4ade80}.warn{color:#f87171}
+.note{margin-top:14px;font-size:12px;color:var(--faint)}
+.drop{border:2px dashed var(--border);border-radius:10px;padding:28px;text-align:center;color:var(--dim);cursor:pointer;margin-bottom:14px}
+.drop.over{border-color:var(--amber);color:var(--amber)}
+.preview{max-width:100%;border-radius:8px;margin-top:10px}
+.mono{font-family:var(--mono);font-size:13px;word-break:break-all}
+@media(max-width:520px){.row2,.row3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main id="conteudo">
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / <a href="ferramentas.html">ferramentas</a> / gerador de utm</p>
+  <div class="sec-head"><span class="amber">$</span> gen --utm --analytics --campanha</div>
+  <h1>Gerador de UTM</h1>
+  <p class="lede">Preencha os campos e copie o link rastreável pronto para anúncios e posts.</p>
+  <div class="card solo">
+    <div><label>URL base *</label><input type="url" id="base" placeholder="https://seusite.com/pagina" value="https://irndevs.com/"></div>
+    <div class="row2">
+      <div><label>utm_source *</label><input type="text" id="src" value="instagram" placeholder="google, newsletter..."></div>
+      <div><label>utm_medium *</label><input type="text" id="med" value="social" placeholder="cpc, email, social..."></div>
+    </div>
+    <div class="row2">
+      <div><label>utm_campaign</label><input type="text" id="camp" value="lancamento_ferramentas"></div>
+      <div><label>utm_content</label><input type="text" id="cont" placeholder="opcional"></div>
+    </div>
+    <div><label>utm_term</label><input type="text" id="term" placeholder="opcional (palavra-chave paga)"></div>
+    <button class="btn" onclick="gerar()">Gerar link UTM</button>
+    <div class="result" id="res">
+      <div class="big" style="font-size:14px;word-break:break-all" id="out">—</div>
+      <button class="btn ghost" onclick="copiar()">Copiar link</button>
+    </div>
+  </div>
+</div>
+<script>
+function gerar(){
+  var base=document.getElementById('base').value.trim();
+  if(!base){alert('Informe a URL base');return;}
+  var params=[];
+  [['utm_source','src'],['utm_medium','med'],['utm_campaign','camp'],['utm_content','cont'],['utm_term','term']].forEach(function(p){
+    var v=document.getElementById(p[1]).value.trim();
+    if(v) params.push(encodeURIComponent(p[0])+'='+encodeURIComponent(v));
+  });
+  var join=base.indexOf('?')>=0?'&':'?';
+  var url=base+(params.length?join+params.join('&'):'');
+  window._utm=url;
+  document.getElementById('out').textContent=url;
+  document.getElementById('res').classList.add('show');
+}
+function copiar(){navigator.clipboard.writeText(window._utm||'').then(function(){alert('Copiado!');});}
+</script>
+
+<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
+    <div>© 2026 IRN Devs</div>
+    <div><a href="ferramentas.html">ferramentas</a></div>
+  </div>
+</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de Planilhas CSV — IRN Devs</title>
+<meta name="description" content="Gere planilhas prontas em CSV: notas, presença, controle financeiro, estoque, lista de tarefas e mais. Abra no Excel ou Google Sheets.">
+<link rel="canonical" href="https://irndevs.com/ferramenta-planilha.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:760px;margin:0 auto;padding:28px 20px 80px}
+.crumb{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:14px}
+.sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
+.amber{color:var(--amber)}
+h1{font-size:26px;margin-bottom:8px}
+.lede{color:var(--dim);margin-bottom:20px;font-size:15px}
+.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.tab{flex:1;min-width:110px;padding:10px;text-align:center;border:1px solid var(--border);border-radius:8px;background:var(--raised);color:var(--dim);cursor:pointer;font-size:13px}
+.tab.active{background:var(--amber);color:#10130f;border-color:var(--amber);font-weight:700}
+.card{background:var(--raised);border:1px solid var(--border);border-radius:12px;padding:22px;display:none}
+.card.show,.card.solo{display:block}
+label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px}
+input,select,textarea{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:#10130f;color:var(--text);font-size:15px;margin-bottom:14px;font-family:inherit}
+textarea{min-height:90px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.btn{width:100%;padding:14px;background:var(--amber);color:#10130f;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-size:15px}
+.btn.ghost{background:transparent;border:1px solid var(--border);color:var(--amber);margin-top:8px}
+.result{display:none;margin-top:16px;padding:16px;border-radius:10px;background:#1a2218;border:1px solid var(--border)}
+.result.show{display:block}
+.big{font-size:20px;font-weight:800;color:var(--amber);margin-bottom:10px}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;gap:12px}
+.row:last-child{border:none}
+.note{margin-top:14px;font-size:12px;color:var(--faint)}
+.plan{font-size:14px;line-height:1.65}
+.plan h2{font-size:15px;color:var(--amber);margin:16px 0 6px;font-family:var(--mono)}
+.plan h2:first-child{margin-top:0}
+.plan p,.plan li{color:var(--text);margin-bottom:4px}
+.plan ul{padding-left:18px;margin-bottom:8px}
+.tpl-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.tpl{background:#10130f;border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;transition:border-color .15s}
+.tpl:hover,.tpl.active{border-color:var(--amber)}
+.tpl h3{font-size:14px;margin-bottom:4px;color:var(--text)}
+.tpl p{font-size:12px;color:var(--dim);margin:0}
+.table-wrap{overflow-x:auto;margin-top:12px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:8px;color:var(--faint);font-family:var(--mono);font-size:11px;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:8px;border-bottom:1px solid #1a2218}
+@media(max-width:560px){.row2,.row3,.tpl-grid{grid-template-columns:1fr}}
+@media print{.crumb,.sec-head,.btn,.tabs,.note,footer,nav,.site-footer-v2{display:none!important}body{background:#fff;color:#000}.card,.result{border:none;background:#fff;padding:0}.plan h2{color:#000}}
+</style>
+</head>
+<body>
+<main id="conteudo">
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / <a href="ferramentas.html">ferramentas</a> / gerador de planilhas</p>
+  <div class="sec-head"><span class="amber">$</span> gen --planilha --csv --excel --sheets</div>
+  <h1>Gerador de Planilhas</h1>
+  <p class="lede">Escolha um modelo, ajuste quantidades e baixe um CSV para abrir no Excel, LibreOffice ou Google Sheets.</p>
+  <div class="card solo">
+    <p style="font-size:13px;color:var(--dim);margin-bottom:12px">Escolha o modelo:</p>
+    <div class="tpl-grid" id="tpls"></div>
+    <div id="opts"></div>
+    <button class="btn" onclick="gerar()">Gerar e baixar CSV</button>
+    <div class="result" id="res">
+      <div class="big" id="big">—</div>
+      <div class="table-wrap"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+      <button class="btn ghost" onclick="baixar()">Baixar de novo</button>
+    </div>
+    <p class="note">CSV usa separador ponto e vírgula (;) — padrão Brasil para Excel. No Google Sheets: Arquivo → Importar → Enviar.</p>
+  </div>
+</div>
+<script>
+var MODELS={
+  notas:{
+    nome:'Boletim / Notas',
+    desc:'Alunos, 4 bimestres, média e situação',
+    opts:[{id:'n',lab:'Qtd. de alunos',val:15}],
+    headers:['Aluno','B1','B2','B3','B4','Média','Situação'],
+    rows:function(o){
+      var r=[];
+      for(var i=1;i<=o.n;i++) r.push(['Aluno '+i,'','','','','=(B{i}+C{i}+D{i}+E{i})/4'.replace(/\{i\}/g,String(i+1)),'']);
+      return r;
+    }
+  },
+  presenca:{
+    nome:'Lista de presença',
+    desc:'Alunos × dias do mês (P/F)',
+    opts:[{id:'n',lab:'Qtd. de alunos',val:20},{id:'dias',lab:'Dias letivos',val:20}],
+    headers:function(o){var h=['Aluno'];for(var d=1;d<=o.dias;d++) h.push('D'+d);h.push('Total P');return h;},
+    rows:function(o){
+      var r=[];
+      for(var i=1;i<=o.n;i++){
+        var row=['Aluno '+i];
+        for(var d=0;d<o.dias;d++) row.push('');
+        row.push('');
+        r.push(row);
+      }
+      return r;
+    }
+  },
+  financeiro:{
+    nome:'Controle financeiro',
+    desc:'Receitas, despesas e saldo do mês',
+    opts:[{id:'n',lab:'Linhas de lançamento',val:20}],
+    headers:['Data','Descrição','Categoria','Tipo','Valor (R$)'],
+    rows:function(o){
+      var r=[['01/01/2026','Salário','Renda','Receita','3000'],['05/01/2026','Aluguel','Moradia','Despesa','1200'],['10/01/2026','Mercado','Alimentação','Despesa','450']];
+      for(var i=r.length;i<o.n;i++) r.push(['','','','','']);
+      return r;
+    }
+  },
+  estoque:{
+    nome:'Controle de estoque',
+    desc:'Produto, quantidade, mínimo e status',
+    opts:[{id:'n',lab:'Qtd. de produtos',val:15}],
+    headers:['Código','Produto','Categoria','Qtd. atual','Qtd. mínima','Preço unit.','Status'],
+    rows:function(o){
+      var r=[];
+      for(var i=1;i<=o.n;i++) r.push(['SKU-'+String(i).padStart(3,'0'),'Produto '+i,'Geral','','','','']);
+      return r;
+    }
+  },
+  tarefas:{
+    nome:'Lista de tarefas',
+    desc:'Kanban simples: a fazer, fazendo, feito',
+    opts:[{id:'n',lab:'Qtd. de tarefas',val:12}],
+    headers:['Tarefa','Responsável','Prioridade','Status','Prazo'],
+    rows:function(o){
+      var r=[];
+      for(var i=1;i<=o.n;i++) r.push(['Tarefa '+i,'','Média','A fazer','']);
+      return r;
+    }
+  },
+  orcamento:{
+    nome:'Orçamento de projeto',
+    desc:'Itens, quantidades, custos e total',
+    opts:[{id:'n',lab:'Qtd. de itens',val:10}],
+    headers:['Item','Descrição','Qtd.','Custo unit. (R$)','Total (R$)'],
+    rows:function(o){
+      var r=[];
+      for(var i=1;i<=o.n;i++) r.push([String(i),'','1','','']);
+      return r;
+    }
+  },
+  escalas:{
+    nome:'Escala de plantão',
+    desc:'Funcionários × dias da semana',
+    opts:[{id:'n',lab:'Qtd. de pessoas',val:8}],
+    headers:['Nome','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+    rows:function(o){
+      var r=[];
+      for(var i=1;i<=o.n;i++) r.push(['Pessoa '+i,'','','','','','','']);
+      return r;
+    }
+  },
+  inventario:{
+    nome:'Inventário patrimonial',
+    desc:'Patrimônio, local e estado',
+    opts:[{id:'n',lab:'Qtd. de itens',val:15}],
+    headers:['Tombo','Descrição','Local','Estado','Valor (R$)','Data aquisição'],
+    rows:function(o){
+      var r=[];
+      for(var i=1;i<=o.n;i++) r.push(['T-'+String(i).padStart(4,'0'),'','','Bom','','']);
+      return r;
+    }
+  }
+};
+
+var current='notas';
+var lastCsv='';
+var lastName='planilha.csv';
+
+function renderTpls(){
+  var html='';
+  Object.keys(MODELS).forEach(function(k){
+    var m=MODELS[k];
+    html+='<div class="tpl'+(k===current?' active':'')+'" data-k="'+k+'" onclick="sel(\''+k+'\')"><h3>'+m.nome+'</h3><p>'+m.desc+'</p></div>';
+  });
+  document.getElementById('tpls').innerHTML=html;
+  renderOpts();
+}
+function sel(k){current=k;renderTpls();}
+function renderOpts(){
+  var m=MODELS[current];
+  var html='';
+  (m.opts||[]).forEach(function(o){
+    html+='<div class="row2"><div><label>'+o.lab+'</label><input type="number" id="opt-'+o.id+'" value="'+o.val+'" min="1" max="200"></div><div></div></div>';
+  });
+  // fix: single opts still need one field
+  if((m.opts||[]).length===1){
+    html='<div><label>'+m.opts[0].lab+'</label><input type="number" id="opt-'+m.opts[0].id+'" value="'+m.opts[0].val+'" min="1" max="200"></div>';
+  }
+  document.getElementById('opts').innerHTML=html;
+}
+function getOpts(){
+  var m=MODELS[current], o={};
+  (m.opts||[]).forEach(function(opt){
+    o[opt.id]=Math.min(200,Math.max(1,+(document.getElementById('opt-'+opt.id)||{}).value||opt.val));
+  });
+  return o;
+}
+function gerar(){
+  var m=MODELS[current];
+  var o=getOpts();
+  var headers=typeof m.headers==='function'?m.headers(o):m.headers;
+  var rows=m.rows(o);
+  // preview first 8
+  document.getElementById('thead').innerHTML='<tr>'+headers.map(function(h){return '<th>'+h+'</th>';}).join('')+'</tr>';
+  document.getElementById('tbody').innerHTML=rows.slice(0,8).map(function(r){
+    return '<tr>'+r.map(function(c){return '<td>'+c+'</td>';}).join('')+'</tr>';
+  }).join('')+(rows.length>8?'<tr><td colspan="'+headers.length+'" style="color:var(--faint)">… +'+(rows.length-8)+' linhas no arquivo</td></tr>':'');
+  document.getElementById('big').textContent=m.nome+' · '+rows.length+' linhas';
+  // CSV
+  function cell(v){v=String(v==null?'':v); if(/[;"\n]/.test(v)) return '"'+v.replace(/"/g,'""')+'"'; return v;}
+  var lines=[headers.map(cell).join(';')];
+  rows.forEach(function(r){lines.push(r.map(cell).join(';'));});
+  lastCsv='\uFEFF'+lines.join('\n'); // BOM for Excel
+  lastName=current+'.csv';
+  document.getElementById('res').classList.add('show');
+  baixar();
+}
+function baixar(){
+  if(!lastCsv) return;
+  var blob=new Blob([lastCsv],{type:'text/csv;charset=utf-8'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=lastName;
+  a.click();
+}
+renderTpls();
+</script>
+
+<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
+    <div>© 2026 IRN Devs</div>
+    <div><a href="ferramentas.html">ferramentas</a></div>
+  </div>
+</footer>
+</main>
+</body>
+</html>
