@@ -185,7 +185,7 @@ body.has-site-nav { padding-top: var(--nav-top-h); }
   left: 0;
   min-width: 260px;
   max-width: 320px;
-  max-height: min(70vh, 480px);
+  max-height: min(70vh, 560px);
   overflow-y: auto;
   background: #171b16;
   border: 1px solid #2a3126;
@@ -223,6 +223,15 @@ body.has-site-nav { padding-top: var(--nav-top-h); }
   letter-spacing: 0.02em;
   border-bottom: 1px solid #2a3126;
   margin-bottom: 4px;
+}
+.sn-dd-head--cat {
+  border-bottom: none;
+  margin: 8px 0 2px;
+  padding: 8px 10px 2px;
+  color: var(--nav-amber, #e8a33d);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  opacity: 0.9;
 }
 .sn-dd-item {
   display: flex;

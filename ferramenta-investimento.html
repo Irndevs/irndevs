@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador de Investimento — Poupança, CDB, Tesouro Selic — IRN Devs</title>
+<meta name="description" content="Compare rendimentos entre poupança, CDB, Tesouro Selic e taxa livre. Veja quanto seu dinheiro rende em cada modalidade.">
+<link rel="canonical" href="https://irndevs.com/ferramenta-investimento.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:720px;margin:0 auto;padding:28px 20px 80px}
+.crumb{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:14px}
+.sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
+.amber{color:var(--amber)}
+h1{font-size:26px;margin-bottom:8px}
+.lede{color:var(--dim);margin-bottom:24px;font-size:15px}
+.card{background:var(--raised);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px}
+label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px}
+input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:#10130f;color:var(--text);font-size:15px;margin-bottom:14px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.btn{width:100%;padding:14px;background:var(--amber);color:#10130f;border:none;border-radius:10px;font-weight:700;cursor:pointer}
+.result{display:none;margin-top:16px}
+.result.show{display:block}
+.compare-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:16px}
+.inv-card{background:#1a2218;border:1px solid var(--border);border-radius:10px;padding:14px;position:relative}
+.inv-card.best{border-color:var(--amber)}
+.best-tag{position:absolute;top:-1px;right:-1px;background:var(--amber);color:#10130f;font-size:10px;font-weight:700;padding:3px 8px;border-radius:0 9px 0 8px}
+.inv-card .name{font-size:13px;color:var(--faint);margin-bottom:6px}
+.inv-card .mont{font-size:18px;font-weight:800;color:var(--amber)}
+.inv-card .juros{font-size:12px;color:var(--dim);margin-top:4px}
+.inv-card .taxa-liq{font-size:11px;color:var(--faint);margin-top:2px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:8px 10px;color:var(--faint);font-family:var(--mono);font-size:12px;border-bottom:1px solid var(--border)}
+td{padding:8px 10px;border-bottom:1px solid #1a2218}
+tr:last-child td{border:none}
+.note{margin-top:14px;font-size:12px;color:var(--faint)}
+@media(max-width:480px){.row3{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<main id="conteudo">
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / <a href="ferramentas.html">ferramentas</a> / simulador de investimento</p>
+  <div class="sec-head"><span class="amber">$</span> sim investimento --comparar --liquido</div>
+  <h1>Simulador de Investimento</h1>
+  <p class="lede">Compare quanto rende o mesmo valor na poupança, CDB, Tesouro Selic e em uma taxa personalizada, já descontando IR.</p>
+
+  <div class="card">
+    <div class="row2">
+      <div><label>Valor a investir (R$)</label><input type="number" id="valor" value="10000" min="1" step="100"></div>
+      <div><label>Prazo (meses)</label><input type="number" id="prazo" value="12" min="1" max="360"></div>
+    </div>
+    <div class="row3">
+      <div><label>Selic anual (%)</label><input type="number" id="selic" value="10.5" step="0.25"></div>
+      <div><label>CDB (% do CDI)</label><input type="number" id="cdi-pct" value="100" step="1"></div>
+      <div><label>Taxa livre anual (%)</label><input type="number" id="taxa-livre" value="12" step="0.1"></div>
+    </div>
+    <button class="btn" onclick="calcular()">Simular</button>
+
+    <div class="result" id="res">
+      <div class="compare-grid" id="cards"></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Modalidade</th><th>Taxa a.a.</th><th>Montante bruto</th><th>IR</th><th>Montante líquido</th></tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+      <p class="note">IR conforme tabela regressiva (até 180 dias: 22,5%; 181–360: 20%; 361–720: 17,5%; acima: 15%). Poupança isenta de IR. Tesouro Selic usa 100% da Selic. Simulação sem IOF (acima de 30 dias). Não constitui recomendação de investimento.</p>
+    </div>
+  </div>
+</div>
+<script>
+function fmt(v){return 'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fmtP(v){return v.toFixed(2).replace('.',',')+' %';}
+
+function aliquotaIR(meses){
+  if(meses<=6) return 0.225;
+  if(meses<=12) return 0.20;
+  if(meses<=24) return 0.175;
+  return 0.15;
+}
+
+function calcModal(nomeAnual, meses, capital, isento){
+  var taxaMensal=Math.pow(1+nomeAnual/100,1/12)-1;
+  var bruto=capital*Math.pow(1+taxaMensal,meses);
+  var rendBruto=bruto-capital;
+  var ir=isento?0:rendBruto*aliquotaIR(meses);
+  var liquido=bruto-ir;
+  return {bruto:bruto,rendBruto:rendBruto,ir:ir,liquido:liquido,taxaAA:nomeAnual};
+}
+
+function calcular(){
+  var cap=parseFloat(document.getElementById('valor').value)||0;
+  var meses=parseInt(document.getElementById('prazo').value,10)||12;
+  var selic=parseFloat(document.getElementById('selic').value)||10.5;
+  var cdiPct=parseFloat(document.getElementById('cdi-pct').value)||100;
+  var taxaLivre=parseFloat(document.getElementById('taxa-livre').value)||12;
+
+  // poupança: 70% da Selic quando Selic > 8,5%; senão 0,5% a.m. + TR (sem TR aqui)
+  var poupancaAA = selic > 8.5 ? selic*0.70 : 6.17;
+
+  var modais=[
+    {nome:'Poupança', res:calcModal(poupancaAA,meses,cap,true)},
+    {nome:'CDB '+cdiPct+'% CDI', res:calcModal(selic*(cdiPct/100),meses,cap,false)},
+    {nome:'Tesouro Selic', res:calcModal(selic,meses,cap,false)},
+    {nome:'Taxa livre '+taxaLivre+'%', res:calcModal(taxaLivre,meses,cap,false)},
+  ];
+
+  // ordena por líquido
+  modais.sort(function(a,b){return b.res.liquido-a.res.liquido;});
+
+  var cardsHTML=modais.map(function(m,i){
+    var isBest=i===0;
+    return '<div class="inv-card'+(isBest?' best':'')+'">'+
+      (isBest?'<span class="best-tag">melhor</span>':'')+
+      '<div class="name">'+m.nome+'</div>'+
+      '<div class="mont">'+fmt(m.res.liquido)+'</div>'+
+      '<div class="juros">+'+fmt(m.res.liquido-cap)+' líquidos</div>'+
+      '<div class="taxa-liq">'+fmtP(m.res.taxaAA)+' a.a.</div>'+
+      '</div>';
+  }).join('');
+
+  var tbHTML=modais.map(function(m){
+    return '<tr><td>'+m.nome+'</td><td>'+fmtP(m.res.taxaAA)+'</td><td>'+fmt(m.res.bruto)+'</td><td style="color:#f87171">'+fmt(m.res.ir)+'</td><td style="color:var(--amber)">'+fmt(m.res.liquido)+'</td></tr>';
+  }).join('');
+
+  document.getElementById('cards').innerHTML=cardsHTML;
+  document.getElementById('tbody').innerHTML=tbHTML;
+  document.getElementById('res').classList.add('show');
+}
+</script>
+<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
+    <div>© 2026 IRN Devs</div>
+    <div><a href="ferramentas.html">ferramentas</a></div>
+  </div>
+</footer>
+</main>
+</body>
+</html>

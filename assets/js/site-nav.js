@@ -42,12 +42,20 @@
       dropdown: true,
       children: [
         { href: 'ferramentas.html', label: 'Todas as ferramentas', ico: '▣' },
+        { head: 'finanças & negócios' },
         { href: 'ferramenta-salario-liquido.html', label: 'Salário Líquido CLT', ico: '₽' },
         { href: 'ferramenta-clt-pj.html', label: 'CLT vs PJ', ico: '⇄' },
-        { href: 'ferramenta-link-whatsapp.html', label: 'Link WhatsApp', ico: '✉' },
+        { href: 'ferramenta-juros-compostos.html', label: 'Juros Compostos', ico: '%' },
+        { href: 'ferramenta-investimento.html', label: 'Simulador Investimento', ico: '↑' },
+        { href: 'ferramenta-desconto-margem.html', label: 'Desconto e Margem', ico: '≡' },
+        { href: 'ferramenta-combustivel.html', label: 'Combustível', ico: '⛽' },
+        { href: 'ferramenta-financiamento.html', label: 'Financiamento', ico: '⌂' },
+        { head: 'saúde & esporte' },
         { href: 'ferramenta-biometria-saude.html', label: 'Biometria & Saúde', ico: '♥' },
         { href: 'ferramenta-esportivas.html', label: 'Esportivas', ico: '⚡' },
         { href: 'ferramenta-macros.html', label: 'Macros Fitness', ico: '⚖' },
+        { head: 'produtividade & dev' },
+        { href: 'ferramenta-link-whatsapp.html', label: 'Link WhatsApp', ico: '✉' },
         { href: 'ferramenta-prompt.html', label: 'Melhorador de Prompt', ico: '✦' },
         { href: 'ferramenta-json.html', label: 'Validador JSON', ico: '{ }' },
         { href: 'ia.html', label: 'Hub de IA', ico: '✦' }
@@ -69,24 +77,25 @@
         { href: 'como-contratar.html', label: 'como contratar', ico: '→' }
       ]
     },
-    {
-      label: 'ferramentas prioritárias',
-      items: [
+    { label: 'ferramentas', items: [
         { href: 'ferramentas.html', label: 'todas as ferramentas', ico: '▣' },
         { href: 'ferramenta-salario-liquido.html', label: 'salário líquido CLT', ico: '₽' },
         { href: 'ferramenta-clt-pj.html', label: 'CLT vs PJ', ico: '⇄' },
-        { href: 'ferramenta-link-whatsapp.html', label: 'link WhatsApp', ico: '✉' },
+        { href: 'ferramenta-juros-compostos.html', label: 'juros compostos', ico: '%' },
+        { href: 'ferramenta-investimento.html', label: 'simulador investimento', ico: '↑' },
+        { href: 'ferramenta-desconto-margem.html', label: 'desconto e margem', ico: '≡' },
+        { href: 'ferramenta-combustivel.html', label: 'combustível', ico: '⛽' },
         { href: 'ferramenta-biometria-saude.html', label: 'biometria & saúde', ico: '♥' },
         { href: 'ferramenta-esportivas.html', label: 'esporte & performance', ico: '⚡' },
         { href: 'ferramenta-macros.html', label: 'macros fitness', ico: '⚖' },
+        { href: 'ferramenta-link-whatsapp.html', label: 'link WhatsApp', ico: '✉' },
         { href: 'ferramenta-prompt.html', label: 'melhorador de prompt', ico: '✦' },
         { href: 'ferramenta-json.html', label: 'validador JSON', ico: '{ }' },
         { href: 'ia.html', label: 'hub de IA', ico: '✦' },
         { href: 'ferramenta-checklist.html', label: 'checklist grátis', ico: '✓' },
         { href: 'produtividade.html', label: 'produtividade', ico: '⏱' },
         { href: 'jogos.html', label: 'jogos', ico: '▶' }
-      ]
-    },
+      ] },
     {
       label: 'conteúdo',
       items: [
@@ -136,10 +145,13 @@
     }
     var extra = (cls(l.href).trim() + (l.extraClass ? ' ' + l.extraClass : '')).trim();
     // marcar ativo se a página atual for ferramentas ou qualquer filho
-    var isDropActive = cls(l.href) || l.children.some(function (c) { return cls(c.href); });
+    var isDropActive = cls(l.href) || l.children.some(function (c) { return c.href && cls(c.href); });
     if (isDropActive && extra.indexOf('active') === -1) extra = (extra + ' active').trim();
 
     var childrenHtml = l.children.map(function (c) {
+      if (c.head) {
+        return '<div class="sn-dd-head sn-dd-head--cat" role="presentation">' + c.head + '</div>';
+      }
       return '<a href="' + c.href + '" class="sn-dd-item' + cls(c.href) + '" role="menuitem">' +
         '<span class="ico">' + (c.ico || '·') + '</span><span class="label">' + c.label + '</span></a>';
     }).join('');
@@ -149,7 +161,7 @@
       '<span class="ico">' + l.ico + '</span><span class="label">' + l.label + '</span>' +
       '<span class="sn-dd-caret" aria-hidden="true">▾</span></a>' +
       '<div class="sn-dd-panel" role="menu" hidden data-dd-panel>' +
-      '<div class="sn-dd-head">ferramentas prioritárias</div>' +
+      '<div class="sn-dd-head">categorias</div>' +
       childrenHtml +
       '</div></div>';
   }
@@ -440,6 +452,10 @@
       { q: 'json formatar validar minificar', href: 'ferramenta-json.html', label: 'Validador JSON' },
       { q: 'conversor moedas dolar euro real cotacao', href: 'ferramenta-moeda.html', label: 'Conversor de Moedas' },
       { q: 'financiamento imobiliario sac price parcelas', href: 'ferramenta-financiamento.html', label: 'Simulador de Financiamento Imobiliário' },
+      { q: 'juros compostos montante aporte mensal', href: 'ferramenta-juros-compostos.html', label: 'Calculadora de Juros Compostos' },
+      { q: 'investimento poupanca cdb tesouro selic', href: 'ferramenta-investimento.html', label: 'Simulador de Investimento' },
+      { q: 'desconto margem lucro markup preco', href: 'ferramenta-desconto-margem.html', label: 'Desconto e Margem de Lucro' },
+      { q: 'combustivel etanol gasolina custo km viagem', href: 'ferramenta-combustivel.html', label: 'Calculadora de Combustível' },
       { q: 'referencias abnt bibliografia trabalho academico', href: 'ferramenta-abnt.html', label: 'Gerador de Referências ABNT' },
       { q: 'sensibilidade mouse dpi cs2 valorant converter', href: 'ferramenta-sensibilidade.html', label: 'Conversor de Sensibilidade de Mouse' },
       { q: 'consumo agua diario litros hidratacao', href: 'ferramenta-consumo-agua.html', label: 'Consumo de Água Diário' },

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Desconto e Margem de Lucro — IRN Devs</title>
+<meta name="description" content="Calcule preço com desconto, margem de lucro sobre custo ou venda, markup e ponto de equilíbrio — tudo em uma ferramenta.">
+<link rel="canonical" href="https://irndevs.com/ferramenta-desconto-margem.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/motion.css">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<style>
+:root{--bg:#10130f;--raised:#171b16;--border:#2a3126;--amber:#e8a33d;--text:#eae6d9;--dim:#8f9587;--faint:#828a7c;--mono:ui-monospace,monospace;--sans:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:680px;margin:0 auto;padding:28px 20px 80px}
+.crumb{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:14px}
+.sec-head{font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:10px}
+.amber{color:var(--amber)}
+h1{font-size:26px;margin-bottom:8px}
+.lede{color:var(--dim);margin-bottom:20px;font-size:15px}
+.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.tab{flex:1;min-width:140px;padding:10px;text-align:center;border:1px solid var(--border);border-radius:8px;background:var(--raised);color:var(--dim);cursor:pointer;font-size:13px}
+.tab.active{background:var(--amber);color:#10130f;border-color:var(--amber);font-weight:700}
+.card{background:var(--raised);border:1px solid var(--border);border-radius:12px;padding:22px;display:none}
+.card.show{display:block}
+label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px}
+input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:#10130f;color:var(--text);font-size:15px;margin-bottom:14px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn{width:100%;padding:14px;background:var(--amber);color:#10130f;border:none;border-radius:10px;font-weight:700;cursor:pointer}
+.result{display:none;margin-top:16px;padding:16px;border-radius:10px;background:#1a2218;border:1px solid var(--border)}
+.result.show{display:block}
+.big{font-size:26px;font-weight:800;color:var(--amber);margin-bottom:10px}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px}
+.row:last-child{border:none}
+.ok{color:#4ade80}
+.warn{color:#f87171}
+</style>
+</head>
+<body>
+<main id="conteudo">
+<div class="wrap">
+  <p class="crumb"><a href="index.html">~</a> / <a href="ferramentas.html">ferramentas</a> / desconto e margem</p>
+  <div class="sec-head"><span class="amber">$</span> calc --desconto --margem --markup</div>
+  <h1>Desconto e Margem de Lucro</h1>
+  <p class="lede">Calcule preço com desconto, margem real de lucro e markup em segundos.</p>
+
+  <div class="tabs">
+    <div class="tab active" onclick="aba('desconto',this)">Desconto</div>
+    <div class="tab" onclick="aba('margem',this)">Margem & Markup</div>
+    <div class="tab" onclick="aba('inverso',this)">Preço com margem</div>
+  </div>
+
+  <!-- DESCONTO -->
+  <div class="card show" id="card-desconto">
+    <div class="row2">
+      <div><label>Preço original (R$)</label><input type="number" id="d-preco" value="150" step="0.01"></div>
+      <div><label>Desconto (%)</label><input type="number" id="d-pct" value="20" step="0.1"></div>
+    </div>
+    <button class="btn" onclick="calcDesc()">Calcular</button>
+    <div class="result" id="d-res">
+      <div class="big" id="d-final">—</div>
+      <div class="row"><span>Preço original</span><span id="d-orig">—</span></div>
+      <div class="row"><span>Desconto (R$)</span><span id="d-valor" class="warn">—</span></div>
+      <div class="row"><span>Preço final</span><span id="d-fim" class="ok">—</span></div>
+    </div>
+  </div>
+
+  <!-- MARGEM -->
+  <div class="card" id="card-margem">
+    <div class="row2">
+      <div><label>Custo (R$)</label><input type="number" id="m-custo" value="80" step="0.01"></div>
+      <div><label>Preço de venda (R$)</label><input type="number" id="m-venda" value="120" step="0.01"></div>
+    </div>
+    <button class="btn" onclick="calcMargem()">Calcular</button>
+    <div class="result" id="m-res">
+      <div class="big" id="m-lucroVal">—</div>
+      <div class="row"><span>Lucro bruto (R$)</span><span id="m-lucroR" class="ok">—</span></div>
+      <div class="row"><span>Margem sobre venda</span><span id="m-margem" class="ok">—</span></div>
+      <div class="row"><span>Markup (sobre custo)</span><span id="m-markup">—</span></div>
+      <div class="row"><span>ROI do produto</span><span id="m-roi">—</span></div>
+    </div>
+  </div>
+
+  <!-- INVERSO: preço a partir de custo + margem desejada -->
+  <div class="card" id="card-inverso">
+    <div class="row2">
+      <div><label>Custo (R$)</label><input type="number" id="i-custo" value="80" step="0.01"></div>
+      <div><label>Margem desejada (%)</label><input type="number" id="i-margem" value="40" step="0.1"></div>
+    </div>
+    <button class="btn" onclick="calcInverso()">Calcular preço</button>
+    <div class="result" id="i-res">
+      <div class="big" id="i-preco">—</div>
+      <div class="row"><span>Custo</span><span id="i-custoR">—</span></div>
+      <div class="row"><span>Lucro bruto</span><span id="i-lucroR" class="ok">—</span></div>
+      <div class="row"><span>Markup aplicado</span><span id="i-markup">—</span></div>
+    </div>
+  </div>
+</div>
+<script>
+function fmt(v){return 'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fmtP(v){return v.toFixed(2).replace('.',',')+' %';}
+function aba(id,el){
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.card').forEach(function(c){c.classList.remove('show');});
+  el.classList.add('active');
+  document.getElementById('card-'+id).classList.add('show');
+}
+function calcDesc(){
+  var p=parseFloat(document.getElementById('d-preco').value)||0;
+  var pct=parseFloat(document.getElementById('d-pct').value)||0;
+  var desc=p*pct/100, fim=p-desc;
+  document.getElementById('d-final').textContent=fmt(fim);
+  document.getElementById('d-orig').textContent=fmt(p);
+  document.getElementById('d-valor').textContent='-'+fmt(desc);
+  document.getElementById('d-fim').textContent=fmt(fim);
+  document.getElementById('d-res').classList.add('show');
+}
+function calcMargem(){
+  var c=parseFloat(document.getElementById('m-custo').value)||0;
+  var v=parseFloat(document.getElementById('m-venda').value)||0;
+  if(!v){alert('Informe o preço de venda.');return;}
+  var lucro=v-c;
+  var margem=lucro/v*100;
+  var markup=(v/c-1)*100;
+  var roi=lucro/c*100;
+  document.getElementById('m-lucroVal').textContent=fmt(lucro);
+  document.getElementById('m-lucroR').textContent=fmt(lucro);
+  document.getElementById('m-margem').textContent=fmtP(margem);
+  document.getElementById('m-markup').textContent=fmtP(markup);
+  document.getElementById('m-roi').textContent=fmtP(roi);
+  document.getElementById('m-res').classList.add('show');
+}
+function calcInverso(){
+  var c=parseFloat(document.getElementById('i-custo').value)||0;
+  var m=parseFloat(document.getElementById('i-margem').value)||0;
+  if(m>=100){alert('Margem deve ser menor que 100%.');return;}
+  var preco=c/(1-m/100);
+  var lucro=preco-c;
+  var markup=(preco/c-1)*100;
+  document.getElementById('i-preco').textContent=fmt(preco);
+  document.getElementById('i-custoR').textContent=fmt(c);
+  document.getElementById('i-lucroR').textContent=fmt(lucro);
+  document.getElementById('i-markup').textContent=fmtP(markup);
+  document.getElementById('i-res').classList.add('show');
+}
+</script>
+<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
+    <div>© 2026 IRN Devs</div>
+    <div><a href="ferramentas.html">ferramentas</a></div>
+  </div>
+</footer>
+</main>
+</body>
+</html>
