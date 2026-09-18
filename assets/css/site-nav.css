@@ -623,3 +623,137 @@ body.has-site-nav > nav:not(.sn-bottom) {
 
 .inline-style-9{display:block;color:#a4aa9d;font-size:14px;margin-top:14px}.inline-style-9 a{color:#e8a33d;text-decoration:underline;text-underline-offset:3px}.inline-style-8{display:inline-block;color:#a4aa9d;font-size:13px;margin-left:12px}
 .article-cta{padding:42px 0;border-top:1px solid #1f251d;border-bottom:1px solid #1f251d;background:#171b16}.article-cta .wrap{max-width:980px}.article-cta h2{margin:0 0 8px;font-size:22px}.article-cta p{color:#a4aa9d;margin:0 0 18px}
+
+/* ---- Busca no header (lupa) ---- */
+.sn-search-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-left: 4px;
+  padding: 0;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--nav-faint, #a4aa9d);
+  cursor: pointer;
+  transition: color .15s, background .15s;
+  flex-shrink: 0;
+}
+.sn-search-btn:hover,
+.sn-search-btn.active {
+  color: var(--nav-amber, #e8a33d);
+  background: rgba(232, 163, 61, 0.1);
+}
+.sn-search-btn:focus-visible {
+  outline: 2px solid var(--nav-amber, #e8a33d);
+  outline-offset: 2px;
+}
+.sn-search-panel {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  z-index: 90;
+  background: rgba(18, 22, 18, 0.97);
+  border-bottom: 1px solid var(--nav-line, #1f251d);
+  backdrop-filter: blur(12px);
+  padding: 12px 16px 16px;
+  transform: translateY(-8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .2s ease, opacity .2s ease;
+}
+.sn-search-panel.open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.sn-search-panel[hidden] { display: none !important; }
+.sn-search-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--nav-bg-raised, #1a1f19);
+  border: 1px solid var(--nav-line, #2a3228);
+  border-radius: 12px;
+  padding: 6px 8px 6px 16px;
+  transition: border-color .15s;
+}
+.sn-search-inner:focus-within {
+  border-color: var(--nav-amber, #e8a33d);
+}
+.sn-search-prompt {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 14px;
+  color: var(--nav-amber, #e8a33d);
+  flex-shrink: 0;
+}
+.sn-search-input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  color: var(--nav-text, #e8ebe4);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 15px;
+  padding: 12px 0;
+  outline: none;
+}
+.sn-search-input::placeholder {
+  color: var(--nav-faint, #6b7265);
+}
+.sn-search-close {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--nav-faint, #a4aa9d);
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.sn-search-close:hover {
+  color: var(--nav-amber, #e8a33d);
+  background: rgba(232, 163, 61, 0.1);
+}
+.sn-search-results {
+  max-width: 720px;
+  margin: 10px auto 0;
+  background: var(--nav-bg-raised, #1a1f19);
+  border: 1px solid var(--nav-line, #2a3228);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.sn-search-results[hidden] { display: none !important; }
+.sn-search-results a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13.5px;
+  color: var(--nav-text-dim, #a4aa9d);
+  border-bottom: 1px solid var(--nav-line, #2a3228);
+  text-decoration: none;
+}
+.sn-search-results a:last-child { border-bottom: none; }
+.sn-search-results a:hover,
+.sn-search-results a:focus {
+  background: rgba(232, 163, 61, 0.1);
+  color: var(--nav-amber, #e8a33d);
+}
+.sn-search-results a span { opacity: 0.6; }
+@media (max-width: 639px) {
+  .sn-search-panel { top: 52px; padding: 10px 12px 14px; }
+  .sn-search-input { font-size: 14px; padding: 10px 0; }
+  .sn-search-btn { width: 36px; height: 36px; }
+}
+body.sn-search-open { overflow: hidden; }

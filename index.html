@@ -355,14 +355,7 @@
           <a class="btn ghost" href="ferramenta-checklist.html">checklist grátis</a>
           <a class="btn ghost" href="contato.html">enviar contexto</a>
         </div>
-        <div class="home-search" id="buscar" role="search">
-          <label for="siteSearch"><span class="amber" aria-hidden="true">$</span> buscar no site</label>
-          <div class="search-row">
-            <input id="siteSearch" type="search" placeholder="k3s, grafana, pacotes, blog..." autocomplete="off" enterkeyhint="search" aria-describedby="siteSearchCount">
-            <span id="siteSearchCount" aria-live="polite" class="sr-only-when-empty"></span>
-          </div>
-          <div id="siteSearchPages" class="search-pages" hidden role="listbox" aria-label="Páginas encontradas"></div>
-        </div>
+        <!-- busca movida para a lupa no header (site-nav) -->
       </div>
       <div class="term-card" aria-hidden="true">
         <div class="term-bar">
@@ -505,7 +498,9 @@
     <div class="sec-head" aria-hidden="true"><span class="amber">$</span> ls -la projetos/ --status</div>
     <h2 class="sec-title" id="titulo-projetos">Projetos em produção</h2>
     <p class="sec-sub">Status real de deploy — o que está de pé agora, não maquete de portfólio. Onde existe métrica, mostramos o impacto observado.</p>
-    <div class="proj-grid">
+    <div class="proj-carousel" id="projCarousel">
+      <button type="button" class="proj-nav proj-nav-prev" id="projPrev" aria-label="Projeto anterior">‹</button>
+      <div class="proj-track" id="projTrack" tabindex="0" role="region" aria-label="Carrossel de projetos">
     <div class="proj-card fade-in"><div class="status-tag live">● produção</div><div>
       <div class="proj-name">ZapAgendador IA</div>
       <div class="proj-desc">SaaS multi-tenant de agendamento via WhatsApp com IA generativa local (migrado de Gemini pra Gemma via serviços de IA), arquitetura type-safe ponta a ponta.</div>
@@ -585,7 +580,10 @@
       <div class="proj-links">
       </div>
     </div></div>
-    </div><!-- /proj-grid -->
+    </div><!-- /proj-track -->
+      <button type="button" class="proj-nav proj-nav-next" id="projNext" aria-label="Próximo projeto">›</button>
+      <div class="proj-dots" id="projDots" role="tablist" aria-label="Navegação do carrossel"></div>
+    </div><!-- /proj-carousel -->
   </div>
 </section>
 
@@ -732,71 +730,69 @@
 </main>
 
 <script>
-const siteSearch = document.getElementById('siteSearch');
-  const siteSearchCount = document.getElementById('siteSearchCount');
-  const siteSearchPages = document.getElementById('siteSearchPages');
-  const searchableItems = document.querySelectorAll('.proj-card, .tool, .skills-table tr, .entrega-card, .pacote-card, .processo-step');
-  const pageIndex = [
-    { q: 'início home index', href: 'index.html', label: 'Início' },
-    { q: 'serviços services infra devops observabilidade', href: 'servicos.html', label: 'Serviços' },
-    { q: 'como contratar proposta', href: 'como-contratar.html', label: 'Como contratar' },
-    { q: 'pacotes mvp automação dashboard preço', href: 'pacotes.html', label: 'Pacotes' },
-    { q: 'ia inteligência artificial ferramentas prompts rag agentes', href: 'ia.html', label: 'Ferramentas de IA' },
-    { q: 'ferramentas grátis utilitários contratos senha qrcode mei', href: 'ferramentas.html', label: 'Ferramentas grátis' },
-    { q: 'checklist grátis diagnóstico', href: 'ferramenta-checklist.html', label: 'Checklist grátis' },
-    { q: 'cursos linux docker python módulos', href: 'cursos.html', label: 'Cursos' },
-    { q: 'sobre about empresa', href: 'sobre.html', label: 'Sobre' },
-    { q: 'blog artigos posts', href: 'blog.html', label: 'Blog' },
-    { q: 'contato contact email', href: 'contato.html', label: 'Contato' },
-    { q: 'homelab lab proxmox', href: 'homelab.html', label: 'Homelab' },
-    { q: 'observabilidade grafana prometheus loki', href: 'observabilidade.html', label: 'Observabilidade' },
-    { q: 'kubernetes k3s cluster', href: 'kubernetes.html', label: 'Kubernetes / k3s' },
-    { q: 'produtividade pomodoro todo', href: 'produtividade.html', label: 'Produtividade' },
-    { q: 'jogos games', href: 'jogos.html', label: 'Jogos' },
-    { q: 'privacidade lgpd', href: 'privacidade.html', label: 'Privacidade' },
-    { q: 'docker observabilidade stack', href: 'artigo-observabilidade-docker.html', label: 'Artigo: Observabilidade Docker' },
-    { q: 'proxmox homelab', href: 'artigo-proxmox-homelab.html', label: 'Artigo: Proxmox' },
-    { q: 'k3s devops', href: 'artigo-k3s-homelab.html', label: 'Artigo: k3s' },
-    { q: 'hardening linux ssh ufw', href: 'artigo-hardening-linux.html', label: 'Artigo: Hardening Linux' },
-    { q: 'aws cloud', href: 'artigo-aws-cloud.html', label: 'Artigo: AWS' },
-    { q: 'opentelemetry otel', href: 'artigo-opentelemetry.html', label: 'Artigo: OpenTelemetry' },
-    { q: 'ubuntu server', href: 'artigo-ubuntu-server.html', label: 'Artigo: Ubuntu Server' }
-  ];
-  function searchHome() {
-    if (!siteSearch) return;
-    const query = siteSearch.value.trim().toLowerCase();
-    let visible = 0;
-    searchableItems.forEach(item => {
-      const text = (item.textContent || '').toLowerCase();
-      const show = !query || text.includes(query);
-      item.style.display = show ? '' : 'none';
-      if (show) visible++;
+/* busca global está no header (site-nav.js — lupa) */
+
+  /* ---- Carrossel de projetos ---- */
+  (function initProjCarousel() {
+    var track = document.getElementById('projTrack');
+    var prev = document.getElementById('projPrev');
+    var next = document.getElementById('projNext');
+    var dotsWrap = document.getElementById('projDots');
+    if (!track) return;
+    var cards = Array.prototype.slice.call(track.querySelectorAll('.proj-card'));
+    if (!cards.length) return;
+
+    function cardWidth() {
+      var c = cards[0];
+      if (!c) return 320;
+      var style = window.getComputedStyle(track);
+      var gap = parseFloat(style.gap || style.columnGap || '14') || 14;
+      return c.getBoundingClientRect().width + gap;
+    }
+    function scrollByCard(dir) {
+      track.scrollBy({ left: dir * cardWidth(), behavior: 'smooth' });
+    }
+    if (prev) prev.addEventListener('click', function () { scrollByCard(-1); });
+    if (next) next.addEventListener('click', function () { scrollByCard(1); });
+
+    // dots
+    if (dotsWrap) {
+      dotsWrap.innerHTML = cards.map(function (_, i) {
+        return '<button type="button" class="proj-dot" role="tab" aria-label="Ir para projeto ' + (i + 1) + '" data-i="' + i + '"></button>';
+      }).join('');
+      dotsWrap.querySelectorAll('.proj-dot').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var i = parseInt(btn.getAttribute('data-i'), 10);
+          var left = cards[i].offsetLeft - track.offsetLeft;
+          track.scrollTo({ left: left, behavior: 'smooth' });
+        });
+      });
+    }
+    function updateDots() {
+      if (!dotsWrap) return;
+      var scroll = track.scrollLeft;
+      var w = cardWidth();
+      var idx = Math.round(scroll / w);
+      idx = Math.max(0, Math.min(cards.length - 1, idx));
+      dotsWrap.querySelectorAll('.proj-dot').forEach(function (d, i) {
+        d.classList.toggle('active', i === idx);
+        d.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+      });
+      if (prev) prev.disabled = scroll <= 4;
+      if (next) next.disabled = scroll + track.clientWidth >= track.scrollWidth - 8;
+    }
+    track.addEventListener('scroll', function () {
+      window.requestAnimationFrame(updateDots);
+    }, { passive: true });
+    window.addEventListener('resize', updateDots);
+    updateDots();
+
+    // keyboard on track
+    track.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); scrollByCard(-1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); scrollByCard(1); }
     });
-    if (siteSearchCount) {
-      siteSearchCount.textContent = query ? (visible + (visible === 1 ? ' na página' : ' na página')) : '';
-    }
-    if (siteSearchPages) {
-      if (!query || query.length < 2) {
-        siteSearchPages.hidden = true;
-        siteSearchPages.innerHTML = '';
-      } else {
-        const hits = pageIndex.filter(p => p.q.includes(query) || p.label.toLowerCase().includes(query));
-        if (hits.length) {
-          siteSearchPages.hidden = false;
-          siteSearchPages.innerHTML = hits.slice(0, 8).map(p =>
-            '<a href="' + p.href + '">' + p.label + '<span>→</span></a>'
-          ).join('');
-        } else {
-          siteSearchPages.hidden = false;
-          siteSearchPages.innerHTML = '<a href="blog.html">Nada direto — ver blog <span>→</span></a>';
-        }
-      }
-    }
-  }
-  if (siteSearch) {
-    siteSearch.addEventListener('input', searchHome);
-    searchHome();
-  }
+  })();
 
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {

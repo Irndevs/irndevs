@@ -143,10 +143,23 @@
       (isInternal
         ? authSlot
         : '<nav class="sn-top-links" aria-label="Principal">' + topLinksHtml + '</nav>' +
+          '<button type="button" class="sn-search-btn" id="snSearchBtn" aria-label="Abrir busca" aria-expanded="false" aria-controls="snSearchPanel" title="Buscar">' +
+          '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">' +
+          '<circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/>' +
+          '<path d="M16.5 16.5L21 21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' +
+          '</svg></button>' +
           authSlot +
           '<a href="contato.html" class="sn-top-cta">contato</a>') +
       '</header>' +
       (isInternal ? '' :
+        '<div class="sn-search-panel" id="snSearchPanel" hidden role="search" aria-label="Busca no site">' +
+        '<div class="sn-search-inner">' +
+        '<span class="sn-search-prompt" aria-hidden="true">$</span>' +
+        '<input type="search" id="snSearchInput" class="sn-search-input" placeholder="buscar: k3s, grafana, projetos, blog..." autocomplete="off" enterkeyhint="search" aria-label="Buscar no site">' +
+        '<button type="button" class="sn-search-close" id="snSearchClose" aria-label="Fechar busca">✕</button>' +
+        '</div>' +
+        '<div id="snSearchResults" class="sn-search-results" hidden role="listbox" aria-label="Resultados"></div>' +
+        '</div>' +
         '<div class="sn-overlay" id="snOverlay" hidden></div>' +
         '<aside class="sn-drawer" id="snDrawer" role="dialog" aria-modal="true" aria-label="Menu de navegação" aria-hidden="true">' +
         '<div class="sn-drawer-head">' +
@@ -252,9 +265,114 @@
       });
     }
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeMenu();
+      if (e.key === 'Escape') {
+        closeMenu();
+        closeSearch();
+      }
     });
     if (drawer) drawer.setAttribute('aria-hidden', 'true');
+
+    /* ---- Busca no header (lupa) ---- */
+    var searchBtn = document.getElementById('snSearchBtn');
+    var searchPanel = document.getElementById('snSearchPanel');
+    var searchInput = document.getElementById('snSearchInput');
+    var searchClose = document.getElementById('snSearchClose');
+    var searchResults = document.getElementById('snSearchResults');
+    var searchPageIndex = [
+      { q: 'projetos portfolio', href: 'index.html#projetos', label: 'Projetos em produção' },
+      { q: 'servicos automacao', href: 'servicos.html', label: 'Serviços' },
+      { q: 'pacotes precos', href: 'pacotes.html', label: 'Pacotes' },
+      { q: 'cursos python docker linux', href: 'cursos.html', label: 'Cursos' },
+      { q: 'ia ferramentas sql commit', href: 'ia.html', label: 'Ferramentas de IA' },
+      { q: 'ferramentas gratis checklist', href: 'ferramentas.html', label: 'Ferramentas grátis' },
+      { q: 'diagnostico', href: 'diagnostico.html', label: 'Diagnóstico gratuito' },
+      { q: 'contato', href: 'contato.html', label: 'Contato' },
+      { q: 'blog artigos', href: 'blog.html', label: 'Blog' },
+      { q: 'homelab k3s proxmox', href: 'homelab.html', label: 'Homelab' },
+      { q: 'sobre', href: 'sobre.html', label: 'Sobre' },
+      { q: 'zapagendador whatsapp', href: 'https://zapagendador-ia.onrender.com', label: 'ZapAgendador IA' },
+      { q: 'neobank banco', href: 'https://neobankirn.irndevs.com', label: 'NeoBank' },
+      { q: 'docker observabilidade', href: 'artigo-observabilidade-docker.html', label: 'Artigo: Observabilidade Docker' },
+      { q: 'k3s kubernetes', href: 'artigo-k3s-homelab.html', label: 'Artigo: k3s' },
+      { q: 'proxmox', href: 'artigo-proxmox-homelab.html', label: 'Artigo: Proxmox' },
+      { q: 'hardening linux', href: 'artigo-hardening-linux.html', label: 'Artigo: Hardening Linux' },
+      { q: 'rag pgvector', href: 'artigo-rag-pgvector.html', label: 'Artigo: RAG + pgvector' },
+      { q: 'ollama local', href: 'artigo-ollama-local.html', label: 'Artigo: Ollama local' }
+    ];
+
+    function openSearch() {
+      if (!searchPanel) return;
+      searchPanel.hidden = false;
+      searchPanel.classList.add('open');
+      if (searchBtn) {
+        searchBtn.setAttribute('aria-expanded', 'true');
+        searchBtn.classList.add('active');
+      }
+      document.body.classList.add('sn-search-open');
+      setTimeout(function () {
+        if (searchInput) searchInput.focus();
+      }, 30);
+    }
+    function closeSearch() {
+      if (!searchPanel) return;
+      searchPanel.classList.remove('open');
+      searchPanel.hidden = true;
+      if (searchBtn) {
+        searchBtn.setAttribute('aria-expanded', 'false');
+        searchBtn.classList.remove('active');
+      }
+      document.body.classList.remove('sn-search-open');
+      if (searchResults) {
+        searchResults.hidden = true;
+        searchResults.innerHTML = '';
+      }
+      if (searchInput) searchInput.value = '';
+    }
+    function runSearch() {
+      if (!searchInput || !searchResults) return;
+      var q = (searchInput.value || '').trim().toLowerCase();
+      if (q.length < 2) {
+        searchResults.hidden = true;
+        searchResults.innerHTML = '';
+        return;
+      }
+      var hits = searchPageIndex.filter(function (p) {
+        return p.q.indexOf(q) !== -1 || p.label.toLowerCase().indexOf(q) !== -1;
+      });
+      // também filtra cards na home se existirem
+      if (path === 'index.html' || path === '') {
+        document.querySelectorAll('.proj-card, .tool, .entrega-card, .pacote-card').forEach(function (el) {
+          var text = (el.textContent || '').toLowerCase();
+          el.style.display = !q || text.indexOf(q) !== -1 ? '' : 'none';
+        });
+      }
+      if (hits.length) {
+        searchResults.hidden = false;
+        searchResults.innerHTML = hits.slice(0, 8).map(function (p) {
+          return '<a href="' + p.href + '" role="option">' + p.label + '<span>→</span></a>';
+        }).join('');
+      } else {
+        searchResults.hidden = false;
+        searchResults.innerHTML = '<a href="blog.html">Nada direto — ver blog <span>→</span></a>';
+      }
+    }
+    if (searchBtn) {
+      searchBtn.addEventListener('click', function () {
+        if (searchPanel && searchPanel.classList.contains('open')) closeSearch();
+        else openSearch();
+      });
+    }
+    if (searchClose) searchClose.addEventListener('click', closeSearch);
+    if (searchInput) {
+      searchInput.addEventListener('input', runSearch);
+      searchInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          closeSearch();
+          if (searchBtn) searchBtn.focus();
+        }
+      });
+    }
 
     window.addEventListener('pageshow', function (e) {
       if (!e.persisted) return;
