@@ -107,3 +107,12 @@
 .inline-style-1 { display:none!important }
 .inline-style-2 { font-size:12.5px;color:var(--text-faint);font-family:var(--mono);margin:12px 0 16px;line-height:1.5 }
 .inline-style-3 { color:var(--amber) }
+
+/* erro inline de validação (substitui o alert do navegador) */
+.field-error {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: #e08f85;
+  font-family: var(--mono, ui-monospace, monospace);
+}
+.finput[aria-invalid="true"] { border-color: #e08f85; }

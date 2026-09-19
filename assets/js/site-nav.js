@@ -40,6 +40,7 @@
     searchAria: 'Search the site', searchClose: 'Close search', results: 'Results',
     drawer: 'Navigation menu', close: 'Close', shortcuts: 'Shortcuts',
     noHits: 'No direct match — see the blog (PT)', socialOpen: 'Open social links', social: 'social',
+    skip: 'Skip to content',
     soc: function (n) { return 'IRN Devs on ' + n; }
   } : {
     menuOpen: 'Abrir menu de navegação', menuClose: 'Fechar menu de navegação', nav: 'Principal',
@@ -49,6 +50,7 @@
     searchAria: 'Buscar no site', searchClose: 'Fechar busca', results: 'Resultados',
     drawer: 'Menu de navegação', close: 'Fechar', shortcuts: 'Atalhos',
     noHits: 'Nada direto — ver blog', socialOpen: 'Abrir redes sociais', social: 'redes',
+    skip: 'Ir para o conteúdo',
     soc: function (n) { return n + ' da IRN Devs'; }
   };
 
@@ -451,6 +453,25 @@
         '<nav class="sn-bottom" aria-label="' + T.shortcuts + '">' + bottomHtml + '</nav>');
 
     document.body.insertBefore(root, document.body.firstChild);
+
+    /* Skip link: páginas antigas (ferramentas) não trazem o "pular para o conteúdo". */
+    var skipExistente = document.querySelector('.skip-link');
+    if (skipExistente) {
+      /* garante que o skip link seja o primeiro foco da página, antes do menu */
+      if (document.body.firstElementChild !== skipExistente) {
+        document.body.insertBefore(skipExistente, document.body.firstChild);
+      }
+    } else {
+      var mainEl = document.querySelector('main');
+      if (mainEl) {
+        if (!mainEl.id) mainEl.id = 'conteudo';
+        var skip = document.createElement('a');
+        skip.className = 'skip-link';
+        skip.href = '#' + mainEl.id;
+        skip.textContent = T.skip;
+        document.body.insertBefore(skip, document.body.firstChild);
+      }
+    }
 
     if (IS_EN) {
       root.querySelectorAll('a[href]').forEach(function (a) {
@@ -1049,8 +1070,20 @@
       });
   }
 
+  /* Tabelas largas ganham rolagem horizontal própria — evita a página inteira rolar de lado no celular. */
+  function wrapTables() {
+    document.querySelectorAll('table').forEach(function (tb) {
+      if (tb.closest('.sn-root') || tb.parentNode.classList.contains('table-scroll')) return;
+      var box = document.createElement('div');
+      box.className = 'table-scroll';
+      tb.parentNode.insertBefore(box, tb);
+      box.appendChild(tb);
+    });
+  }
+
   function boot() {
     mount();
+    wrapTables();
     loadAuthThenPaint();
     // Banner LGPD / cookies (todas as páginas)
     if (!document.querySelector('script[src*="cookie-consent.js"]')) {

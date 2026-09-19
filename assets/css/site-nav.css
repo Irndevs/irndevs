@@ -1175,3 +1175,7 @@ body.sn-search-open::after {
   z-index: 94;
   pointer-events: none;
 }
+
+/* rolagem horizontal isolada para tabelas largas (mobile) */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+.table-scroll > table { min-width: max-content; }

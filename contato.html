@@ -124,7 +124,7 @@
 
   <div class="term-form">
     <div class="sec-head"><span class="amber">$</span> ./enviar-mensagem.sh</div>
-    <div class="success-message" id="successMessage">✅ mensagem enviada — retornaremos em até 1 dia útil para alinhar o próximo passo.</div>
+    <div class="success-message" id="successMessage" role="status" aria-live="polite" tabindex="-1">✅ mensagem enviada — retornaremos em até 1 dia útil para alinhar o próximo passo.</div>
     <form id="contactForm" action="https://formsubmit.co/contato@irndevs.com" method="POST" novalidate>
       <input type="hidden" name="_subject" value="IRN Devs — contato pelo site">
       <input type="hidden" name="_captcha" value="true">
@@ -138,7 +138,8 @@
         </div>
         <div class="fgroup">
           <label for="email" class="flabel">email *</label>
-          <input type="email" id="email" name="email" class="finput" placeholder="seu@email.com" required>
+          <input type="email" id="email" name="email" class="finput" placeholder="seu@email.com" required aria-describedby="emailError">
+          <p class="field-error" id="emailError" hidden>informe um e-mail válido — ex.: nome@empresa.com</p>
         </div>
       </div>
       <div class="fgroup">
@@ -225,7 +226,7 @@
       </div>
     </div>
     <div class="footer-col">
-      <h3>Links rápidos</h3>
+      <h2>Links rápidos</h2>
       <ul>
         <li><a href="/">Início</a></li>
         <li><a href="servicos.html">Serviços</a></li>
@@ -236,7 +237,7 @@
       </ul>
     </div>
     <div class="footer-col">
-      <h3>Recursos</h3>
+      <h2>Recursos</h2>
       <ul>
         <li><a href="ferramenta-checklist.html">Checklist grátis</a></li>
         <li><a href="ferramentas.html">Ferramentas grátis</a></li>
@@ -247,7 +248,7 @@
       </ul>
     </div>
     <div class="footer-col">
-      <h3>Contato</h3>
+      <h2>Contato</h2>
       <ul>
         <li><a href="mailto:contato@irndevs.com">contato@irndevs.com</a></li>
         <li><a href="contato.html">Formulário de contato</a></li>
@@ -338,9 +339,19 @@ Tenho interesse em um diagnóstico gratuito de 30 minutos.
     const form = e.target;
     const submitBtn = form.querySelector('.submit-btn');
     const successMessage = document.getElementById('successMessage');
-    const email = form.querySelector('#email').value;
+    const emailField = form.querySelector('#email');
+    const email = emailField.value;
+    const emailError = document.getElementById('emailError');
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) { alert('Por favor, insira um email válido.'); return; }
+    if (!emailRegex.test(email)) {
+      // erro no próprio campo, em vez de alert() do navegador
+      emailError.hidden = false;
+      emailField.setAttribute('aria-invalid', 'true');
+      emailField.focus();
+      return;
+    }
+    emailError.hidden = true;
+    emailField.removeAttribute('aria-invalid');
     submitBtn.disabled = true;
     submitBtn.textContent = 'enviando...';
     try {
@@ -352,6 +363,7 @@ Tenho interesse em um diagnóstico gratuito de 30 minutos.
       });
       if (!res.ok) throw new Error('fail');
       successMessage.classList.add('show');
+      try { successMessage.focus(); } catch (e2) {}
       form.reset();
       setTimeout(() => successMessage.classList.remove('show'), 6000);
     } catch (err) {
