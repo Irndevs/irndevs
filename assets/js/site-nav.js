@@ -31,7 +31,7 @@
   }
 
   var topLinks = [
-    { href: 'index.html#projetos', label: 'projetos', ico: '▸' },
+    { href: '/#projetos', label: 'projetos', ico: '▸' },
     { href: 'servicos.html', label: 'serviços', ico: '⚙' },
     { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
     {
@@ -42,39 +42,72 @@
       dropdown: true,
       children: [
         { href: 'ferramentas.html', label: 'Todas as ferramentas', ico: '▣' },
-        { head: 'finanças & CLT' },
-        { href: 'ferramenta-salario-liquido.html', label: 'Salário Líquido', ico: '₽' },
-        { href: 'ferramenta-rescisao.html', label: 'Rescisão', ico: '📋' },
-        { href: 'ferramenta-13-ferias.html', label: '13º e Férias', ico: '📅' },
-        { href: 'ferramenta-horas-extras.html', label: 'Horas Extras', ico: '⏱' },
-        { href: 'ferramenta-porcentagem.html', label: 'Porcentagem', ico: '%' },
-        { href: 'ferramenta-juros-compostos.html', label: 'Juros Compostos', ico: '%' },
-        { href: 'ferramenta-combustivel.html', label: 'Combustível', ico: '⛽' },
-        { head: 'utilitários quentes' },
-        { href: 'ferramenta-webp.html', label: 'WEBP → JPG', ico: '🖼' },
-        { href: 'ferramenta-youtube-thumb.html', label: 'Thumb YouTube', ico: '▶' },
-        { href: 'ferramenta-rachar-conta.html', label: 'Rachar Conta', ico: '🍽' },
-        { href: 'ferramenta-datas.html', label: 'Datas / Dias Úteis', ico: '📅' },
-        { head: 'saúde & fitness' },
-        { href: 'ferramenta-tmb-calorias.html', label: 'TMB e Calorias', ico: '🔥' },
-        { href: 'ferramenta-biometria-saude.html', label: 'Biometria & IMC', ico: '♥' },
-        { href: 'ferramenta-macros.html', label: 'Macros', ico: '⚖' },
-        { href: 'ferramenta-periodo-fertil.html', label: 'Período Fértil', ico: '🌱' },
-        { head: 'esporte & redes' },
-        { href: 'ferramenta-pelada.html', label: 'Sorteador de Equipes', ico: '⚽' },
-        { href: 'ferramenta-odds.html', label: 'Odds / Apostas', ico: '∑' },
-        { href: 'ferramenta-surebet.html', label: 'Surebet', ico: '⇄' },
-        { href: 'ferramenta-mata-mata.html', label: 'Mata-Mata', ico: '🏆' },
-        { href: 'ferramenta-fontes.html', label: 'Gerador de Fontes', ico: '𝒜' },
-        { href: 'ferramenta-hashtags.html', label: 'Hashtags', ico: '#' },
-        { href: 'ferramenta-engajamento.html', label: 'Engajamento', ico: '%' },
-        { href: 'ferramenta-thread.html', label: 'Divisor de Threads', ico: '✂' },
-        { href: 'ferramenta-plano-aula.html', label: 'Plano de Aula', ico: '📚' },
-        { href: 'ferramenta-planilha.html', label: 'Gerador de Planilhas', ico: '▦' },
-        { href: 'ferramenta-pomodoro.html', label: 'Pomodoro', ico: '⏱' },
-        { head: 'dev' },
-        { href: 'ferramenta-json.html', label: 'Validador JSON', ico: '{ }' },
-        { href: 'ia.html', label: 'Hub de IA', ico: '✦' }
+        { cat: 'finanças & trabalho', ico: '₽', items: [
+          { href: 'ferramenta-salario-liquido.html', label: 'Salário Líquido', ico: '₽' },
+          { href: 'ferramenta-clt-pj.html', label: 'CLT vs PJ', ico: '⚖' },
+          { href: 'ferramenta-rescisao.html', label: 'Rescisão', ico: '📋' },
+          { href: 'ferramenta-13-ferias.html', label: '13º e Férias', ico: '📅' },
+          { href: 'ferramenta-horas-extras.html', label: 'Horas Extras', ico: '⏱' },
+          { href: 'ferramenta-porcentagem.html', label: 'Porcentagem', ico: '%' },
+          { href: 'ferramenta-juros-compostos.html', label: 'Juros Compostos', ico: '%' },
+          { href: 'ferramenta-desconto-margem.html', label: 'Desconto e Margem', ico: '🏷' },
+          { href: 'ferramenta-financiamento.html', label: 'Financiamento Imobiliário', ico: '🏠' },
+          { href: 'ferramenta-investimento.html', label: 'Simulador de Investimento', ico: '📈' },
+          { href: 'ferramenta-moeda.html', label: 'Conversor de Moedas', ico: '💱' },
+          { href: 'ferramenta-combustivel.html', label: 'Combustível', ico: '⛽' }
+        ] },
+        { cat: 'saúde & fitness', ico: '♥', items: [
+          { href: 'ferramenta-tmb-calorias.html', label: 'TMB e Calorias', ico: '🔥' },
+          { href: 'ferramenta-biometria-saude.html', label: 'Biometria & IMC', ico: '♥' },
+          { href: 'ferramenta-macros.html', label: 'Macros', ico: '🍎' },
+          { href: 'ferramenta-periodo-fertil.html', label: 'Período Fértil', ico: '🌱' },
+          { href: 'ferramenta-esportivas.html', label: 'Calculadoras Esportivas', ico: '🏃' },
+          { href: 'ferramenta-consumo-agua.html', label: 'Consumo de Água', ico: '💧' }
+        ] },
+        { cat: 'esporte & apostas', ico: '⚽', items: [
+          { href: 'ferramenta-pelada.html', label: 'Sorteador de Equipes', ico: '⚽' },
+          { href: 'ferramenta-odds.html', label: 'Odds / Apostas', ico: '∑' },
+          { href: 'ferramenta-surebet.html', label: 'Surebet', ico: '⇄' },
+          { href: 'ferramenta-mata-mata.html', label: 'Mata-Mata', ico: '🏆' },
+          { href: 'ferramenta-tabela-pontos.html', label: 'Tabela de Pontos', ico: '📊' }
+        ] },
+        { cat: 'produtividade & estudos', ico: '📚', items: [
+          { href: 'ferramenta-pomodoro.html', label: 'Pomodoro', ico: '⏱' },
+          { href: 'ferramenta-plano-aula.html', label: 'Plano de Aula', ico: '📚' },
+          { href: 'ferramenta-cronograma-estudos.html', label: 'Cronograma de Estudos', ico: '🗓' },
+          { href: 'ferramenta-media-escolar.html', label: 'Média Escolar', ico: '🎓' },
+          { href: 'ferramenta-abnt.html', label: 'Referências ABNT', ico: '📖' },
+          { href: 'ferramenta-datas.html', label: 'Datas / Dias Úteis', ico: '📅' },
+          { href: 'ferramenta-idade.html', label: 'Idade e Tempo de Vida', ico: '🎂' },
+          { href: 'ferramenta-planilha.html', label: 'Gerador de Planilhas', ico: '▦' },
+          { href: 'ferramenta-checklist.html', label: 'Checklist grátis', ico: '✓' }
+        ] },
+        { cat: 'social & marketing', ico: '#', items: [
+          { href: 'ferramenta-hashtags.html', label: 'Hashtags', ico: '#' },
+          { href: 'ferramenta-engajamento.html', label: 'Engajamento', ico: '%' },
+          { href: 'ferramenta-thread.html', label: 'Divisor de Threads', ico: '✂' },
+          { href: 'ferramenta-fontes.html', label: 'Gerador de Fontes', ico: '𝒜' },
+          { href: 'ferramenta-link-whatsapp.html', label: 'Link WhatsApp', ico: '💬' },
+          { href: 'ferramenta-utm.html', label: 'Links UTM', ico: '🔗' },
+          { href: 'ferramenta-nome-empresa.html', label: 'Nomes de Empresas', ico: '🏢' },
+          { href: 'ferramenta-sorteio.html', label: 'Sorteador de Nomes', ico: '🎲' }
+        ] },
+        { cat: 'conversores & utilitários', ico: '🔧', items: [
+          { href: 'ferramenta-webp.html', label: 'WEBP → JPG', ico: '🖼' },
+          { href: 'ferramenta-youtube-thumb.html', label: 'Thumb YouTube', ico: '▶' },
+          { href: 'ferramenta-rachar-conta.html', label: 'Rachar Conta', ico: '🍽' },
+          { href: 'ferramenta-base64.html', label: 'Base64 / URL Encode', ico: '⌘' },
+          { href: 'ferramenta-caracteres.html', label: 'Contador de Caracteres', ico: '🔤' },
+          { href: 'ferramenta-conversor-texto.html', label: 'Conversor de Texto', ico: '🔡' },
+          { href: 'ferramenta-temperatura.html', label: 'Conversor de Temperatura', ico: '🌡' },
+          { href: 'ferramenta-sensibilidade.html', label: 'Sensibilidade de Mouse', ico: '🎮' },
+          { href: 'ferramenta-uuid.html', label: 'Gerador de UUID', ico: '🔑' }
+        ] },
+        { cat: 'dev & IA', ico: '✦', items: [
+          { href: 'ferramenta-json.html', label: 'Validador JSON', ico: '{ }' },
+          { href: 'ferramenta-prompt.html', label: 'Melhorador de Prompt', ico: '🤖' },
+          { href: 'ia.html', label: 'Hub de IA', ico: '✦' }
+        ] }
       ]
     },
     { href: 'cursos.html', label: 'cursos', ico: '◈' },
@@ -85,9 +118,9 @@
     {
       label: 'produto',
       items: [
-        { href: 'index.html', label: 'início', ico: '⌂' },
+        { href: '/', label: 'início', ico: '⌂' },
         { href: 'diagnostico.html', label: 'diagnóstico grátis', ico: '⚡' },
-        { href: 'index.html#projetos', label: 'projetos', ico: '▸' },
+        { href: '/#projetos', label: 'projetos', ico: '▸' },
         { href: 'servicos.html', label: 'serviços', ico: '⚙' },
         { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
         { href: 'como-contratar.html', label: 'como contratar', ico: '→' }
@@ -139,7 +172,7 @@
   ];
 
   var bottomItems = [
-    { href: 'index.html', label: 'início', ico: '⌂' },
+    { href: '/', label: 'início', ico: '⌂' },
     { href: 'ferramentas.html', label: 'tools', ico: '▣' },
     { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
     { href: 'ia.html', label: 'IA', ico: '✦' },
@@ -159,11 +192,28 @@
       return linkHtml(l);
     }
     var extra = (cls(l.href).trim() + (l.extraClass ? ' ' + l.extraClass : '')).trim();
-    // marcar ativo se a página atual for ferramentas ou qualquer filho
-    var isDropActive = cls(l.href) || l.children.some(function (c) { return c.href && cls(c.href); });
+    // marcar ativo se a página atual for ferramentas ou qualquer filho (direto ou dentro de categoria)
+    var isDropActive = cls(l.href) || l.children.some(function (c) {
+      if (c.href) return !!cls(c.href);
+      if (c.items) return c.items.some(function (it) { return cls(it.href); });
+      return false;
+    });
     if (isDropActive && extra.indexOf('active') === -1) extra = (extra + ' active').trim();
 
     var childrenHtml = l.children.map(function (c) {
+      if (c.cat) {
+        var catActive = c.items.some(function (it) { return cls(it.href); });
+        var subItemsHtml = c.items.map(function (it) {
+          return '<a href="' + it.href + '" class="sn-dd-item' + cls(it.href) + '" role="menuitem">' +
+            '<span class="ico">' + (it.ico || '·') + '</span><span class="label">' + it.label + '</span></a>';
+        }).join('');
+        return '<div class="sn-dd-cat' + (catActive ? ' has-active' : '') + '" data-dd-cat>' +
+          '<button type="button" class="sn-dd-cat-trigger' + (catActive ? ' active' : '') + '" aria-haspopup="true" aria-expanded="false" data-dd-cat-trigger>' +
+          '<span class="ico">' + c.ico + '</span><span class="label">' + c.cat + '</span>' +
+          '<span class="sn-dd-cat-arrow" aria-hidden="true">›</span></button>' +
+          '<div class="sn-dd-flyout" role="menu" data-dd-flyout>' + subItemsHtml + '</div>' +
+          '</div>';
+      }
       if (c.head) {
         return '<div class="sn-dd-head sn-dd-head--cat" role="presentation">' + c.head + '</div>';
       }
@@ -176,7 +226,6 @@
       '<span class="ico">' + l.ico + '</span><span class="label">' + l.label + '</span>' +
       '<span class="sn-dd-caret" aria-hidden="true">▾</span></a>' +
       '<div class="sn-dd-panel" role="menu" hidden data-dd-panel>' +
-      '<div class="sn-dd-head">categorias</div>' +
       childrenHtml +
       '</div></div>';
   }
@@ -198,7 +247,7 @@
     /* Avatar de login: círculo com ícone de usuário (estado deslogado por padrão).
        paintNavAuth() em auth.js troca para avatar com inicial quando logado. */
     var authSlot = isInternal
-      ? '<div class="sn-auth-slot dash-topbar-user" data-auth-slot><a href="index.html" class="sn-back-site">← site</a></div>'
+      ? '<div class="sn-auth-slot dash-topbar-user" data-auth-slot><a href="/" class="sn-back-site">← site</a></div>'
       : '<div class="sn-auth-slot" data-auth-slot>' +
         '<a class="sn-avatar sn-avatar--guest" href="login.html" title="Entrar / cadastro" aria-label="Entrar ou criar conta">' +
         '<svg class="sn-avatar-ico" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">' +
@@ -213,7 +262,7 @@
     root.innerHTML =
       '<header class="sn-top" role="banner">' +
       (isInternal ? '' : '<button type="button" class="sn-burger" id="snBurger" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="snDrawer">☰</button>') +
-      '<a href="index.html" class="sn-logo" aria-label="IRN Devs">' +
+      '<a href="/" class="sn-logo" aria-label="IRN Devs">' +
       '<img src="assets/img/logo-irndevs.svg" alt="~/irndevs $" width="160" height="32" loading="eager" decoding="async" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline\'">' +
       '<span class="sn-logo-text" style="display:none">~/irndevs <span>$</span></span>' +
       '</a>' +
@@ -240,7 +289,7 @@
         '<div class="sn-overlay" id="snOverlay" hidden></div>' +
         '<aside class="sn-drawer" id="snDrawer" role="dialog" aria-modal="true" aria-label="Menu de navegação" aria-hidden="true">' +
         '<div class="sn-drawer-head">' +
-        '<a href="index.html" class="brand"><span class="brand-full">~/irndevs <span>$</span></span><span class="brand-mini">$</span></a>' +
+        '<a href="/" class="brand"><span class="brand-full">~/irndevs <span>$</span></span><span class="brand-mini">$</span></a>' +
         '<button type="button" class="sn-close" id="snClose" aria-label="Fechar">✕</button>' +
         '</div>' +
         '<nav class="sn-drawer-links">' + drawerHtml + '</nav>' +
@@ -416,6 +465,81 @@
       });
     })();
 
+    /* ---- Categorias do dropdown Ferramentas: flyout lateral ao passar o mouse ---- */
+    (function bindToolCategoryFlyouts() {
+      var cats = root.querySelectorAll('[data-dd-cat]');
+      if (!cats.length) return;
+
+      function closeCat(cat) {
+        cat.classList.remove('is-open');
+        cat.classList.remove('flip-left');
+        var t = cat.querySelector('[data-dd-cat-trigger]');
+        if (t) t.setAttribute('aria-expanded', 'false');
+      }
+      function closeSiblings(except) {
+        cats.forEach(function (c) { if (c !== except) closeCat(c); });
+      }
+      function openCat(cat) {
+        closeSiblings(cat);
+        cat.classList.add('is-open');
+        var t = cat.querySelector('[data-dd-cat-trigger]');
+        if (t) t.setAttribute('aria-expanded', 'true');
+        // evita o flyout vazar pra fora da tela: se não couber à direita, abre pra esquerda
+        var fly = cat.querySelector('[data-dd-flyout]');
+        if (fly) {
+          requestAnimationFrame(function () {
+            var r = fly.getBoundingClientRect();
+            if (r.right > window.innerWidth - 8) cat.classList.add('flip-left');
+            else cat.classList.remove('flip-left');
+          });
+        }
+      }
+
+      cats.forEach(function (cat) {
+        var trigger = cat.querySelector('[data-dd-cat-trigger]');
+        var flyout = cat.querySelector('[data-dd-flyout]');
+        if (!trigger || !flyout) return;
+
+        var closeTimer = null;
+        function cancelClose() { if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; } }
+        function scheduleClose() { cancelClose(); closeTimer = setTimeout(function () { closeCat(cat); }, 150); }
+
+        // mouse
+        cat.addEventListener('mouseenter', function () { cancelClose(); openCat(cat); });
+        cat.addEventListener('mouseleave', scheduleClose);
+
+        // toque / clique (mobile o dropdown inteiro some, mas mantém suporte por segurança)
+        trigger.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (cat.classList.contains('is-open')) closeCat(cat);
+          else openCat(cat);
+        });
+
+        // teclado
+        trigger.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowRight' || e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openCat(cat);
+            var first = flyout.querySelector('a');
+            if (first) first.focus();
+          } else if (e.key === 'Escape') {
+            closeCat(cat);
+          }
+        });
+        flyout.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowLeft' || e.key === 'Escape') {
+            closeCat(cat);
+            trigger.focus();
+          }
+        });
+      });
+
+      // fecha os flyouts quando o dropdown pai de "ferramentas" fecha
+      root.querySelectorAll('[data-dropdown]').forEach(function (dd) {
+        dd.addEventListener('mouseleave', function () { cats.forEach(closeCat); });
+      });
+    })();
+
     if (drawer) {
       drawer.querySelectorAll('a').forEach(function (link) {
         link.addEventListener('click', closeMenu);
@@ -451,7 +575,7 @@
     var searchClose = document.getElementById('snSearchClose');
     var searchResults = document.getElementById('snSearchResults');
     var searchPageIndex = [
-      { q: 'projetos portfolio', href: 'index.html#projetos', label: 'Projetos em produção' },
+      { q: 'projetos portfolio', href: '/#projetos', label: 'Projetos em produção' },
       { q: 'servicos automacao', href: 'servicos.html', label: 'Serviços' },
       { q: 'pacotes precos', href: 'pacotes.html', label: 'Pacotes' },
       { q: 'cursos python docker linux', href: 'cursos.html', label: 'Cursos' },
