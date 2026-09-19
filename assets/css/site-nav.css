@@ -193,7 +193,9 @@ body.has-site-nav { padding-top: var(--nav-top-h); }
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
   padding: 8px;
   z-index: 1100;
-  scrollbar-width: thin;
+  /* barra de rolagem invisível (some visualmente, continua rolável) */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   /* animação suave de entrada/saída */
   opacity: 0;
   visibility: hidden;
@@ -209,6 +211,9 @@ body.has-site-nav { padding-top: var(--nav-top-h); }
   visibility: visible;
   transform: translateY(0) scale(1);
   pointer-events: auto;
+}
+.sn-dd-panel::-webkit-scrollbar {
+  display: none;
 }
 /* não usar display:none no [hidden] — quebra a transição */
 .sn-dd-panel[hidden] {
@@ -345,7 +350,9 @@ body.has-site-nav { padding-top: var(--nav-top-h); }
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
   padding: 8px;
   z-index: 1200;
-  scrollbar-width: thin;
+  /* barra de rolagem invisível (some visualmente, continua rolável) */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   opacity: 0;
   visibility: hidden;
   transform: translateX(-6px);
@@ -353,6 +360,9 @@ body.has-site-nav { padding-top: var(--nav-top-h); }
   transition: opacity 0.16s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.18s cubic-bezier(0.22, 1, 0.36, 1),
     visibility 0.16s;
+}
+.sn-dd-flyout::-webkit-scrollbar {
+  display: none;
 }
 .sn-dd-cat.flip-left .sn-dd-flyout {
   transform: translateX(6px);
