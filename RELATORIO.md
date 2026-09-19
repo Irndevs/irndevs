@@ -165,3 +165,33 @@ Os **links contextuais dentro do corpo do texto** (parágrafos de "para quem ser
 - `curso-python-modulo-6.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
 - `curso-python-modulo-7.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
 - `curso-python-modulo-8.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+
+---
+
+# Atualização 2 — Open Graph (og:title, og:description, og:url, og:type, og:image, og:site_name)
+Adicionado em **64 páginas** que não tinham nenhuma tag Open Graph. Sem isso, quando alguém compartilhava o link no WhatsApp/LinkedIn/Twitter, o preview vinha vazio ou genérico.
+
+Padrão usado (idêntico ao que o próprio site já usa em `ferramenta-checklist.html` e nos módulos de `curso-python/docker/linux`):
+```html
+<meta property="og:title" content="{título da página}">
+<meta property="og:description" content="{meta description da página}">
+<meta property="og:url" content="{canonical da página}">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
+<meta property="og:site_name" content="IRN Devs">
+```
+
+## Páginas atualizadas
+- **50 ferramentas** (`ferramenta-*.html`)
+- **6 módulos** de `curso-cmd-modulo-*.html`
+- `certificado-docker.html`, `certificado-linux.html`, `certificado-python.html`
+- `demo-legado.html`, `demo-sql.html`
+- `admin.html`, `orcamentos.html`, `pedido.html`
+
+## O que ficou de fora (de propósito)
+- `googleb23553d3569257db.html` — não é uma página de verdade, é só o arquivo de verificação do Google Search Console. Mexer nele quebraria a verificação.
+
+## Imagem usada
+Todas usam `og-default.webp` (a imagem genérica que o site já tinha), igual ao padrão das outras ferramentas. Os artigos do blog que têm imagem própria (`og-nginx-reverse-proxy.webp` etc.) não foram tocados nessa etapa — já estavam certos.
+
+**Situação atual do site inteiro:** só falta OG em 1 arquivo (o de verificação do Google, que não deve ter mesmo). Todas as outras 173 páginas têm og:title/og:description completos.
