@@ -228,3 +228,22 @@ Isso eu **não consigo verificar nem corrigir a partir daqui** — não tenho ac
 - Não mudei nada nesses arquivos porque fortalecer só o client-side JS daria falsa sensação de segurança sem resolver o problema real.
 
 **Sugestão prática:** entra no painel do Supabase → Authentication → Policies, e confirma que toda tabela que essas páginas leem/escrevem (pedidos, orçamentos, dados de conta) tem RLS habilitado com policy que exige `auth.uid()` correspondente. Se quiser, me cola aqui o schema/policies (ou o `supabase/schema.sql` que você mencionou ter) que eu reviso com você.
+
+
+---
+
+# Atualização 4 — sitemap.xml e robots.txt
+
+## robots.txt
+Já estava correto, não precisou de alteração: libera tudo (`Allow: /`), bloqueia só `/_legado/`, e aponta pro sitemap certo.
+
+## sitemap.xml — esse sim tinha um buraco grande
+O sitemap tinha só **87 URLs**, mas o site tem **142 páginas de conteúdo real**. A maior lacuna: de 51 ferramentas, só `ferramenta-checklist.html` estava listada — **as outras 50 (quase todas as calculadoras/geradores) não apareciam no sitemap nenhuma**. Artigos e módulos de curso já estavam 100% cobertos.
+
+Isso é sério porque o sitemap é o jeito mais direto de dizer ao Google "essa página existe, indexa ela" — sem ele, o Google só encontra essas páginas se algum link levar até lá (o que a rodada de links internos já ajuda, mas o sitemap acelera e garante).
+
+**O que fiz:**
+- Adicionei as 50 ferramentas que faltavam, com `priority 0.8` e `changefreq monthly` (mesmo padrão já usado em `ferramenta-checklist.html`)
+- Atualizei o `<lastmod>` pra `2026-09-19` em toda página que mexi nas rodadas anteriores (breadcrumb, JSON-LD, OG, relacionados, defer, footer) — 118 páginas — pra refletir a data real da última mudança
+- Total agora: **137 URLs** no sitemap (era 87)
+- Validei o XML resultante (`xml.dom.minidom`) — sem erro de sintaxe
