@@ -512,7 +512,7 @@
         // esse ancestral em vez da tela — o flyout ficava fora da área
         // visível ou cortado pelo overflow do painel. Morando em <body>,
         // ele escapa de qualquer ancestral assim, hoje ou no futuro.
-        var fly = cat.querySelector('[data-dd-flyout]');
+        var fly = cat.querySelector('[data-dd-flyout]') || cat._flyoutRef;
         if (fly && t) {
           if (fly.parentNode !== document.body) {
             cat._flyoutRef = fly; // guarda referência pra achar depois de mover
