@@ -195,3 +195,36 @@ Padrão usado (idêntico ao que o próprio site já usa em `ferramenta-checklist
 Todas usam `og-default.webp` (a imagem genérica que o site já tinha), igual ao padrão das outras ferramentas. Os artigos do blog que têm imagem própria (`og-nginx-reverse-proxy.webp` etc.) não foram tocados nessa etapa — já estavam certos.
 
 **Situação atual do site inteiro:** só falta OG em 1 arquivo (o de verificação do Google, que não deve ter mesmo). Todas as outras 173 páginas têm og:title/og:description completos.
+
+
+---
+
+# Atualização 3 — Scripts bloqueantes, páginas isoladas e nota sobre RLS
+
+## 3.1 — Scripts sem `async`/`defer` (11 correções em 7 páginas)
+Adicionado `defer` em todos os `<script src="...">` que não tinham (mantém a ordem de execução entre eles, só tira o bloqueio do parser):
+- `ia.html` — `ia-history.js`
+- `ferramenta-checklist.html` — `ia-history.js`
+- `demo-sql.html` — `sql-engine.js`, `ia-history.js`
+- `demo-mock-data.html` — `mock-engine.js`, `ia-history.js`
+- `demo-legado.html` — `legacy-engine.js`, `ia-history.js`
+- `demo-conversor-linguagens.html` — `ia-history.js`
+- `demo-commit-ia.html` — `commit-engine.js`, `ia-history.js`
+
+## 3.2 — As duas páginas "ilhadas" (`ferramenta-esportivas.html` e `ferramenta-biometria-saude.html`)
+**Por que elas ficaram diferentes:** essas duas foram construídas como landing page de captação de lead (formulário de contato, CSS 100% próprio, sem depender de nada do resto do site) — provavelmente feitas numa sessão separada, focada só em converter visitante em lead, sem se preocupar em herdar o layout padrão. Depois elas foram "encaixadas" no site (viraram parte do catálogo de ferramentas, ganharam breadcrumb e blocos de relacionados na etapa anterior), mas o esqueleto visual — menu do topo e rodapé — nunca foi atualizado pra bater com as outras 49 páginas de ferramenta. É por isso que pareciam ilhas: tecnicamente já estavam linkadas, mas visualmente destoavam.
+
+**O que corrigi (sem tocar no conteúdo específico da página — hero, calculadoras, formulário de lead, breadcrumb e bloco de relacionados continuam exatamente como estavam):**
+- Incluído `assets/css/site-nav.css` e `assets/css/footer.css` (mesmas folhas de estilo que todas as outras ferramentas usam)
+- Incluído `assets/js/site-nav.js` — é esse script que desenha o menu do topo (o mesmo menu com dropdown de categorias que aparece em `ferramenta-idade.html`, `ferramenta-json.html` etc.). Ele se injeta sozinho no topo do `<body>`, então não precisei mexer no HTML do hero.
+- Troquei o rodapé próprio (`<footer class="footer">`, só com copyright e uma frase) pelo rodapé padrão (`site-footer-v2`) — o mesmo modelo enxuto (© + link para ferramentas) que as outras páginas de ferramenta usam.
+
+Resultado: as duas páginas continuam com a identidade visual própria (cores, hero, formulário), mas agora têm o mesmo menu de navegação e o mesmo rodapé do resto do site — deixam de parecer páginas soltas.
+
+## 3.3 — Sobre a checagem das políticas RLS do Supabase
+Isso eu **não consigo verificar nem corrigir a partir daqui** — não tenho acesso ao painel do seu projeto Supabase (nem credenciais, nem conector configurado nesta conversa), só aos arquivos estáticos do site. O que dá pra afirmar só olhando o código:
+- `admin.html`, `conta.html`, `area-cliente.html`, `pedidos.html`, `orcamentos.html`, `pedido.html` são protegidos **apenas no client**, pelo `assets/js/auth-gates.js` — ele esconde a página se não houver sessão, mas isso é só UX. Qualquer pessoa com DevTools aberto pode ver o HTML/JS por trás disso.
+- A proteção de verdade tem que estar nas **Row Level Security policies** do banco: mesmo que alguém desative o gate no navegador, as queries ao Supabase precisam falhar sem a sessão certa.
+- Não mudei nada nesses arquivos porque fortalecer só o client-side JS daria falsa sensação de segurança sem resolver o problema real.
+
+**Sugestão prática:** entra no painel do Supabase → Authentication → Policies, e confirma que toda tabela que essas páginas leem/escrevem (pedidos, orçamentos, dados de conta) tem RLS habilitado com policy que exige `auth.uid()` correspondente. Se quiser, me cola aqui o schema/policies (ou o `supabase/schema.sql` que você mencionou ter) que eu reviso com você.
