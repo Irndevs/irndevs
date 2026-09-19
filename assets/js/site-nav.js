@@ -519,6 +519,11 @@
             document.body.appendChild(fly);
           }
           requestAnimationFrame(function () {
+            // Guarda contra corrida: se o usuário já passou pra outra
+            // categoria antes deste frame rodar, esta categoria não deve
+            // mais abrir (evita abrir a errada ou nenhuma, ao passar o
+            // mouse rápido por vários itens seguidos).
+            if (!cat.classList.contains('is-open')) return;
             var tr = t.getBoundingClientRect();
             var flyWidth = fly.offsetWidth || 280;
             var flyHeight = fly.offsetHeight || 300;

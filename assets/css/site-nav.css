@@ -258,6 +258,14 @@ body.has-site-nav { padding-top: var(--nav-top-h); }
   opacity: 1;
   transform: translateY(0);
 }
+/* Itens dentro do flyout lateral: sempre visíveis quando o container está
+   visível. O flyout mora fora de .sn-dropdown (movido para <body> ao
+   abrir), então a regra acima (`.sn-dropdown.open .sn-dd-item`) não o
+   alcança — sem isso os itens ficavam presos em opacity:0 pra sempre. */
+.sn-dd-flyout .sn-dd-item {
+  opacity: 1;
+  transform: none;
+}
 /* stagger suave nos itens (head é o 1º filho) */
 .sn-dropdown.open .sn-dd-item:nth-child(2) { transition-delay: 0.02s; }
 .sn-dropdown.open .sn-dd-item:nth-child(3) { transition-delay: 0.04s; }
