@@ -47,14 +47,29 @@
   <p class="crumb"><a href="/">~</a> / kubernetes</p>
   <h1>Kubernetes / k3s</h1>
   <p>k3s é a escolha da IRN Devs para orquestração leve: menos overhead que um Kubernetes “cheio”, adequado a homelab, borda e workloads que precisam de API Kubernetes sem complexidade desnecessária.</p>
-  <p>Do install ao GitOps (Gitea/ArgoCD), o foco é deploy repetível e operação previsível.</p>
+  <p>Do install ao GitOps (Gitea/ArgoCD), o foco é deploy repetível e operação previsível — com runbooks claros para quem herda o ambiente.</p>
+
+  <h2>$ por que k3s (e não só Docker Compose)</h2>
+  <p>Compose resolve bem um host. Quando entram vários serviços, atualizações, reinícios e a necessidade de um padrão próximo de produção, a API do Kubernetes (via k3s) reduz surpresas: manifests versionados, healthchecks nativos e o mesmo modelo mental do cluster “grande”.</p>
+  <ul>
+    <li>Instalação enxuta em VPS ou bare-metal (Proxmox)</li>
+    <li>Ingress, storage e secrets com práticas de produção</li>
+    <li>GitOps para mudanças auditáveis (Gitea + Argo CD ou fluxos equivalentes)</li>
+    <li>Handoff documentado: o que sobe, como sobe e como reverter</li>
+  </ul>
+
+  <h2>$ o que a IRN Devs entrega</h2>
+  <p>Não é “só instalar k3s”. É desenhar o caminho do código ao runtime: imagens, namespaces, limites de recurso, backups e o mínimo de observabilidade para saber quando algo falhou.</p>
+
   <h2>$ ls artigos/</h2>
   <ul>
       <li><a href="artigo-k3s-homelab.html">k3s no homelab</a></li>
       <li><a href="artigo-proxmox-homelab.html">Proxmox: base bare-metal</a></li>
       <li><a href="homelab.html">Homelab IRN Devs</a></li>
+      <li><a href="artigo-nginx-reverse-proxy.html">Nginx como reverse proxy</a></li>
+      <li><a href="cursos.html#docker">Curso Docker em Produção</a></li>
   </ul>
-  <p class="cta"><a href="servicos.html">serviços</a> · <a href="contato.html">contato</a></p>
+  <p class="cta"><a href="servicos.html">serviços</a> · <a href="contato.html">contato</a> · <a href="diagnostico.html">diagnóstico gratuito</a></p>
 </div>
 <script src="assets/js/site-nav.js?v=20260918a11y" defer></script>
   <script src="assets/js/chat-bot.js?v=20260917a" defer></script>

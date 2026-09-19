@@ -46,15 +46,28 @@
 <div class="wrap">
   <p class="crumb"><a href="/">~</a> / observabilidade</p>
   <h1>Observabilidade</h1>
-  <p>Observabilidade não é só “ter Grafana”. É conseguir responder o que quebrou, onde e por quê — com métricas, logs e traces correlacionados.</p>
-  <p>A IRN Devs monta e opera stacks de observabilidade no homelab e em projetos de clientes, com alertas acionáveis e handoff documentado.</p>
+  <p>Observabilidade não é só “ter Grafana”. É conseguir responder o que quebrou, onde e por quê — com métricas, logs e traces correlacionados, sem depender de chute em produção.</p>
+  <p>A IRN Devs monta e opera stacks de observabilidade no homelab e em projetos de clientes, com alertas acionáveis e handoff documentado para o time que mantém o sistema no dia a dia.</p>
+
+  <h2>$ os três pilares (na prática)</h2>
+  <ul>
+    <li><strong>Métricas</strong> — uso de CPU, latência, taxa de erro; base para dashboards e SLOs simples.</li>
+    <li><strong>Logs</strong> — o “o que aconteceu” em texto estruturado; essencial para auditoria e debug.</li>
+    <li><strong>Traces</strong> — o caminho de uma requisição entre serviços; o que separa “achismo” de causa raiz.</li>
+  </ul>
+  <p>Stacks típicas incluem Prometheus/Grafana, Loki e OpenTelemetry — sempre dimensionadas ao tamanho do ambiente (homelab ≠ cluster enterprise).</p>
+
+  <h2>$ o que evita alertas inúteis</h2>
+  <p>Alerta demais cansa o time; alerta de menos atrasa o incidente. O desenho certo prioriza sinais que exigem ação (disco cheio, taxa de erro alta, healthcheck falhando) e documenta quem responde e como.</p>
+
   <h2>$ ls artigos/</h2>
   <ul>
       <li><a href="artigo-observabilidade-docker.html">Stack de observabilidade com Docker</a></li>
       <li><a href="artigo-opentelemetry.html">OpenTelemetry: métricas, logs e traces</a></li>
       <li><a href="artigo-hardening-linux.html">Hardening Linux (base segura para monitorar)</a></li>
+      <li><a href="kubernetes.html">Kubernetes / k3s</a></li>
   </ul>
-  <p class="cta"><a href="servicos.html">serviços</a> · <a href="contato.html">contato</a></p>
+  <p class="cta"><a href="servicos.html">serviços</a> · <a href="contato.html">contato</a> · <a href="diagnostico.html">diagnóstico gratuito</a></p>
 </div>
 <script src="assets/js/site-nav.js?v=20260918a11y" defer></script>
   <script src="assets/js/chat-bot.js?v=20260917a" defer></script>

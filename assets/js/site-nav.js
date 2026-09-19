@@ -931,6 +931,13 @@
   function boot() {
     mount();
     loadAuthThenPaint();
+    // Banner LGPD / cookies (todas as páginas)
+    if (!document.querySelector('script[src*="cookie-consent.js"]')) {
+      var cs = document.createElement('script');
+      cs.src = 'assets/js/cookie-consent.js?v=20260919consent';
+      cs.defer = true;
+      document.head.appendChild(cs);
+    }
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);
@@ -994,12 +1001,19 @@
  * A política de privacidade (privacidade.html) já prevê analytics sem cookies.
  * ------------------------------------------------------------------ */
 (function () {
+  /* Analytics só após consentimento (cookie-consent.js) ou se já aceito.
+     Não carrega automaticamente aqui — cookie-consent.js controla o load. */
   var cfg = window.IRN_ANALYTICS || {};
-  var enabled = cfg.enabled === true;
+  if (cfg.enabled !== true) return;
+  try {
+    var raw = localStorage.getItem('irn_cookie_consent');
+    if (!raw) return;
+    var data = JSON.parse(raw);
+    if (!data || data.choice !== 'accepted') return;
+  } catch (e) { return; }
+  if (document.querySelector('script[data-irn-analytics]')) return;
   var src = cfg.src || 'https://plausible.io/js/script.js';
   var domain = cfg.domain || 'irndevs.com';
-  if (!enabled) return; // inativo até você criar a conta e ligar
-  if (document.querySelector('script[data-irn-analytics]')) return;
   var s = document.createElement('script');
   s.defer = true;
   s.dataset.domain = domain;
