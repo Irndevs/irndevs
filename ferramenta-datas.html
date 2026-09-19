@@ -47,6 +47,32 @@ textarea{min-height:100px;resize:vertical}
 .mono{font-family:var(--mono);font-size:13px;word-break:break-all}
 @media(max-width:520px){.row2,.row3{grid-template-columns:1fr}}
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Início",
+      "item": "https://irndevs.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Ferramentas",
+      "item": "https://irndevs.com/ferramentas.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Dates e Dias Úteis",
+      "item": "https://irndevs.com/ferramenta-datas.html"
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <main id="conteudo">
@@ -101,6 +127,18 @@ function uteis(){var a=new Date(document.getElementById('u1').value+'T12:00:00')
 
 <script src="assets/js/site-nav.js?v=20260918cats" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+
+<section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">
+  <h2 style="font-size:18px;margin:0 0 12px;color:inherit">Aprofunde os seus conhecimentos</h2>
+  <ul style="margin:0;padding-left:20px;line-height:1.9">
+    <li><a href="ferramentas.html">Todas as ferramentas gratuitas</a></li>
+    <li><a href="ferramenta-webp.html">WEBP ↔ JPG / PNG</a></li>
+    <li><a href="ferramenta-rachar-conta.html">Rachar a Conta</a></li>
+    <li><a href="ferramenta-temperatura.html">Temperatura</a></li>
+    <li><a href="ferramenta-moeda.html">Conversor de Moedas</a></li>
+  </ul>
+</section>
+
 <footer class="site-footer-v2" role="contentinfo">
   <div class="wrap" style="max-width:980px;margin:0 auto;padding:24px 20px;font-size:13px;color:#8f9587;display:flex;justify-content:space-between">
     <div>© 2026 IRN Devs</div>

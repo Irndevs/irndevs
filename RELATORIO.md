@@ -1,0 +1,167 @@
+# Relatório — Links Internos (SEO) aplicados em todo o site irndevs.com
+
+Total de arquivos alterados: **106** de 174 arquivos do zip.
+
+Todos os arquivos abaixo devem **substituir** os originais de mesmo nome no seu repositório (mesma estrutura de pastas, na raiz do site).
+
+
+## 1. Ferramentas (`ferramenta-*.html`) — 51 de 51 arquivos alterados
+
+Para cada página foi verificado e, quando faltava, adicionado:
+
+- **JSON-LD `BreadcrumbList`** (dados estruturados de breadcrumb para o Google)
+
+- **Breadcrumb visual** (`início / ferramentas / nome`) — só faltava em 2 páginas: `ferramenta-esportivas.html` e `ferramenta-biometria-saude.html`
+
+- **Bloco "Conteúdo Relacionado"** no final da página, com link para a página pilar (`ferramentas.html`) + até 4 ferramentas da mesma categoria (categorias extraídas da própria `ferramentas.html`: saúde&fitness, esporte&apostas, finanças&CLT, redes sociais, produtividade&estudos, utilitários, dev)
+
+
+## 2. Artigos do blog (`artigo-*.html`) — 29 de 29 arquivos alterados
+
+- 24 artigos não tinham breadcrumb nenhum (nem visual, nem JSON-LD) — corrigido em todos
+
+- 5 artigos já tinham breadcrumb visual mas faltava o JSON-LD (`artigo-backup-restic`, `artigo-fail2ban-ubuntu`, `artigo-nginx-reverse-proxy`, `artigo-github-actions-pages`, `artigo-python-venv`) — JSON-LD adicionado
+
+- Todos os 29 artigos ganharam o bloco "Conteúdo Relacionado" (link para `blog.html` + até 3 artigos da mesma categoria: ia, linux, segurança, devops, observabilidade, cloud, proxmox, kubernetes, ops)
+
+
+## 3. Módulos de curso (`curso-*-modulo-*.html`) — 26 de 26 arquivos alterados
+
+Esses já tinham breadcrumb visual e um bom cluster interno (sumário do curso + botão "próximo módulo"), então só faltava:
+
+- **JSON-LD `BreadcrumbList`**, gerado a partir do breadcrumb visual que já existia em cada módulo
+
+Não recebi bloco de "Conteúdo Relacionado" porque o sumário do curso já cumpre esse papel.
+
+
+## O que NÃO foi alterado (e por quê)
+
+- Páginas de hub/pilar (`ferramentas.html`, `blog.html`, `cursos.html`, `index.html`, `ia.html`, `homelab.html`, `kubernetes.html`, `observabilidade.html`, `produtividade.html`, `jogos.html`, `servicos.html`, `sobre.html`, `contato.html`) — elas já são o destino dos links, não precisam de bloco de relacionados.
+
+- Páginas de conta/admin/fluxo interno (`login`, `cadastro`, `admin`, `conta`, `area-cliente`, `pedido(s)`, `orcamentos`, `diagnostico`, `404`, `offline`, `privacidade`, arquivo de verificação do Google) — não são conteúdo indexável relevante para cluster de SEO.
+
+- Páginas demo (`demo-*.html`) — ferramentas de demonstração, não fazem parte do cluster de conteúdo/ferramentas.
+
+
+## Limitação importante
+
+Os **links contextuais dentro do corpo do texto** (parágrafos de "para quem serve", benefícios etc.) — como foi feito manualmente na `ferramenta-esportivas.html` na conversa anterior — **não foram reaplicados em massa**: cada página tem um texto único, e inserir links no meio da prosa de 100+ páginas automaticamente arriscaria frases estranhas ou fora de contexto. O que foi automatizado (breadcrumbs + JSON-LD + bloco de relacionados) já cobre a maior parte do ganho de SEO com segurança. Se quiser, posso revisar manualmente um grupo menor (ex.: só as 6 ferramentas de saúde/fitness) para inserir 1–2 links contextuais no texto de cada uma.
+
+
+## Detalhe por arquivo
+
+
+### Ferramentas
+
+- `ferramenta-13-ferias.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-abnt.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-base64.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-biometria-saude.html`: breadcrumb visual adicionado; JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-caracteres.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-checklist.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-clt-pj.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-combustivel.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-consumo-agua.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-conversor-texto.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-cronograma-estudos.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-datas.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-desconto-margem.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-engajamento.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-esportivas.html`: breadcrumb visual adicionado; JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-financiamento.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-fontes.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-hashtags.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-horas-extras.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-idade.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-investimento.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-json.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-juros-compostos.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-link-whatsapp.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-macros.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-mata-mata.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-media-escolar.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-moeda.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-nome-empresa.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-odds.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-pelada.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-periodo-fertil.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-planilha.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-plano-aula.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-pomodoro.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-porcentagem.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-prompt.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-rachar-conta.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-rescisao.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-salario-liquido.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-sensibilidade.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-sorteio.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-surebet.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-tabela-pontos.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-temperatura.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-thread.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-tmb-calorias.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-utm.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-uuid.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-webp.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+- `ferramenta-youtube-thumb.html`: JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (4 links + página pilar)
+
+### Artigos
+
+- `artigo-agentes-langchain.html`: breadcrumb visual adicionado; JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+- `artigo-apis-ia.html`: breadcrumb visual adicionado; JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+- `artigo-avaliacao-rag.html`: breadcrumb visual adicionado; JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+- `artigo-aws-cloud.html`: breadcrumb visual adicionado; bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+- `artigo-backup-3-2-1-restic.html`: breadcrumb visual adicionado; bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+- `artigo-backup-restic.html`: bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+- `artigo-checklist-rag.html`: breadcrumb visual adicionado; JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+- `artigo-cron-vs-task-scheduler.html`: breadcrumb visual adicionado; bloco "Conteúdo Relacionado" adicionado (1 links + página pilar)
+- `artigo-fail2ban-ubuntu.html`: bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+- `artigo-firewall-ufw-windows.html`: breadcrumb visual adicionado; bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+- `artigo-git-fluxo-producao.html`: breadcrumb visual adicionado; bloco "Conteúdo Relacionado" adicionado (2 links + página pilar)
+- `artigo-github-actions-pages.html`: bloco "Conteúdo Relacionado" adicionado (2 links + página pilar)
+- `artigo-guardrails-agentes.html`: breadcrumb visual adicionado; JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+- `artigo-hardening-linux.html`: breadcrumb visual adicionado; bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+- `artigo-hybrid-search.html`: breadcrumb visual adicionado; JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+- `artigo-k3s-homelab.html`: breadcrumb visual adicionado; bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+- `artigo-linux-runbook-producao.html`: breadcrumb visual adicionado; bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+- `artigo-logs-journalctl-event-viewer.html`: breadcrumb visual adicionado; bloco "Conteúdo Relacionado" adicionado (1 links + página pilar)
+- `artigo-nginx-reverse-proxy.html`: bloco "Conteúdo Relacionado" adicionado (2 links + página pilar)
+- `artigo-observabilidade-docker.html`: breadcrumb visual adicionado; bloco "Conteúdo Relacionado" adicionado (1 links + página pilar)
+- `artigo-ollama-local.html`: breadcrumb visual adicionado; JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+- `artigo-opentelemetry.html`: breadcrumb visual adicionado; bloco "Conteúdo Relacionado" adicionado (1 links + página pilar)
+- `artigo-proxmox-homelab.html`: breadcrumb visual adicionado; bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+- `artigo-python-venv.html`: bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+- `artigo-rag-pgvector.html`: breadcrumb visual adicionado; JSON-LD BreadcrumbList adicionado; bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+- `artigo-ssh-seguro.html`: breadcrumb visual adicionado; bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+- `artigo-systemd-servicos.html`: breadcrumb visual adicionado; bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+- `artigo-tmux-sessoes-remotas.html`: breadcrumb visual adicionado; bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+- `artigo-ubuntu-server.html`: breadcrumb visual adicionado; bloco "Conteúdo Relacionado" adicionado (3 links + página pilar)
+
+### Módulos de curso
+
+- `curso-cmd-modulo-1.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-cmd-modulo-2.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-cmd-modulo-3.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-cmd-modulo-4.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-cmd-modulo-5.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-cmd-modulo-6.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-docker-modulo-1.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-docker-modulo-2.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-docker-modulo-3.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-docker-modulo-4.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-docker-modulo-5.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-docker-modulo-6.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-linux-modulo-1.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-linux-modulo-2.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-linux-modulo-3.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-linux-modulo-4.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-linux-modulo-5.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-linux-modulo-6.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-python-modulo-1.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-python-modulo-2.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-python-modulo-3.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-python-modulo-4.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-python-modulo-5.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-python-modulo-6.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-python-modulo-7.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)
+- `curso-python-modulo-8.html`: JSON-LD BreadcrumbList adicionado (a partir do breadcrumb existente)

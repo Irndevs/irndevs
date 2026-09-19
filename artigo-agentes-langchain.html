@@ -38,11 +38,38 @@
   <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
   <link rel="stylesheet" href="assets/css/pages/artigo-agentes-langchain.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Início",
+      "item": "https://irndevs.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://irndevs.com/blog.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "IA: Agentes com LangChain, LlamaIndex e CrewAI",
+      "item": "https://irndevs.com/artigo-agentes-langchain.html"
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <!-- nav: site-nav.js -->
 <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 <main id="conteudo" role="main" tabindex="-1">
+  <nav class="crumb"><a href="index.html">início</a> / <a href="blog.html">blog</a> / langchain</nav>
 
 <div class="wrap crumb">
   <a href="index.html">~</a> / <a href="blog.html">blog</a> / <a href="ia.html">ia</a> / <span>agentes</span>
@@ -200,6 +227,17 @@ result = crew.kickoff(inputs={"pergunta": "Como endurecer SSH em Ubuntu?"})</cod
 
 <div class="wrap inline-style-2"><h2 class="inline-style-3">Quer implementar isso na sua empresa?</h2><p class="inline-style-4">Ajudamos times a colocar RAG, agentes e modelos locais em produção com segurança e observabilidade.</p><p><a href="contato.html" class="inline-style-5">Falar com a IRN Devs</a> <a href="como-contratar.html" class="inline-style-6">Como contratar →</a></p></div>
 <section class="article-cta" aria-label="Próximo passo"><div class="wrap"><h2>Quer aplicar isso ao seu contexto?</h2><p>Se esse problema existe na sua operação, podemos analisar o cenário em um diagnóstico gratuito de 30 minutos.</p><a class="btn primary" href="diagnostico.html">solicitar diagnóstico gratuito →</a></div></section>
+
+<section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">
+  <h2 style="font-size:18px;margin:0 0 12px;color:inherit">Aprofunde os seus conhecimentos</h2>
+  <ul style="margin:0;padding-left:20px;line-height:1.9">
+    <li><a href="blog.html">Todos os artigos do blog</a></li>
+    <li><a href="artigo-hybrid-search.html">Busca semântica e hybrid search em produção</a></li>
+    <li><a href="artigo-checklist-rag.html">IA: Checklist de produção para RAG</a></li>
+    <li><a href="artigo-avaliacao-rag.html">IA: Avaliação de RAG em produção — métricas e framework</a></li>
+  </ul>
+</section>
+
 <footer class="site-footer-v2" role="contentinfo">
   <div class="wrap footer-grid">
     <div class="footer-brand">
