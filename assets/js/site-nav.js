@@ -130,7 +130,7 @@
     { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
     {
       href: 'ferramentas.html',
-      label: 'ferramentas',
+      label: 'para aprender · ferramentas',
       ico: '▣',
       extraClass: 'sn-top-tools',
       dropdown: true,
@@ -138,7 +138,7 @@
     },
     {
       href: 'cursos.html',
-      label: 'cursos',
+      label: 'para aprender · cursos',
       ico: '◈',
       extraClass: 'sn-top-cursos',
       dropdown: true,
@@ -149,14 +149,25 @@
 
   var drawerGroups = [
     {
-      label: 'produto',
+      label: 'para o negócio',
       items: [
         { href: '/', label: 'início', ico: '⌂' },
         { href: 'diagnostico.html', label: 'diagnóstico grátis', ico: '⚡' },
-        { href: '/#projetos', label: 'projetos', ico: '▸' },
         { href: 'servicos.html', label: 'serviços', ico: '⚙' },
         { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
-        { href: 'como-contratar.html', label: 'como contratar', ico: '→' }
+        { href: 'como-contratar.html', label: 'como contratar', ico: '→' },
+        { href: 'contato.html', label: 'contato', ico: '@' }
+      ]
+    },
+    {
+      label: 'para o time técnico',
+      items: [
+        { href: '/#projetos', label: 'projetos', ico: '▸' },
+        { href: 'homelab.html', label: 'homelab', ico: '▣' },
+        { href: 'blog.html', label: 'blog', ico: '≡' },
+        { href: 'kubernetes.html', label: 'kubernetes / k3s', ico: '☸' },
+        { href: 'observabilidade.html', label: 'observabilidade', ico: '◉' },
+        { href: 'sobre.html', label: 'sobre', ico: 'i' }
       ]
     },
     {
@@ -170,14 +181,6 @@
       accordion: true,
       lead: { href: 'cursos.html', label: 'todos os cursos', ico: '◈' },
       cats: courseCategories
-    },
-    {
-      label: 'conteúdo',
-      items: [
-        { href: 'blog.html', label: 'blog', ico: '≡' },
-        { href: 'homelab.html', label: 'homelab', ico: '▣' },
-        { href: 'sobre.html', label: 'sobre', ico: 'i' }
-      ]
     },
     {
       label: 'conta',

@@ -584,3 +584,97 @@ h2.sec-title {
 @media (prefers-reduced-motion: reduce) {
   .proj-track { scroll-snap-type: none; }
 }
+
+
+/* ---- Públicos: 3 portas ---- */
+.audience-section { padding: 28px 0 8px; }
+.audience-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 18px;
+}
+@media (max-width: 860px) {
+  .audience-grid { grid-template-columns: 1fr; }
+}
+.audience-card {
+  display: block;
+  background: var(--raised, #171b16);
+  border: 1px solid var(--border, #2a3126);
+  border-radius: 12px;
+  padding: 18px 18px 16px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color .2s, transform .2s;
+}
+.audience-card:hover {
+  border-color: var(--amber, #e8a33d);
+  transform: translateY(-2px);
+}
+.audience-card .aud-tag {
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 11px;
+  color: var(--amber, #e8a33d);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.audience-card h3 {
+  font-size: 16px;
+  margin: 0 0 8px;
+  color: var(--text, #eae6d9);
+}
+.audience-card p {
+  font-size: 13.5px;
+  color: var(--text-dim, #8f9587);
+  margin: 0 0 12px;
+  line-height: 1.45;
+}
+.audience-card .aud-go {
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 12.5px;
+  color: var(--amber, #e8a33d);
+}
+
+/* ---- Cases (negócio + técnico) ---- */
+.cases-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 18px;
+}
+@media (max-width: 760px) {
+  .cases-grid { grid-template-columns: 1fr; }
+}
+.case-card {
+  background: var(--raised, #171b16);
+  border: 1px solid var(--border, #2a3126);
+  border-radius: 12px;
+  padding: 18px;
+}
+.case-card .case-tag {
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 11px;
+  color: var(--amber, #e8a33d);
+  margin-bottom: 8px;
+}
+.case-card h3 {
+  font-size: 15.5px;
+  margin: 0 0 10px;
+  color: var(--text, #eae6d9);
+}
+.case-card p, .case-card li {
+  font-size: 13.5px;
+  color: var(--text-dim, #8f9587);
+  line-height: 1.5;
+}
+.case-card ul { margin: 8px 0 0; padding-left: 1.15em; }
+.case-card .case-link {
+  display: inline-block;
+  margin-top: 12px;
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 12.5px;
+  color: var(--amber, #e8a33d);
+  text-decoration: none;
+}
+.case-card .case-link:hover { text-decoration: underline; }
