@@ -3,59 +3,87 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Senhas, 2FA e higiene mínima | Segurança digital na prática | IRN Devs</title>
+<title>Senhas, 2FA e phishing | Segurança digital básica | IRN Devs</title>
 <link rel="canonical" href="https://irndevs.com/curso-seguranca-modulo-1.html">
-<meta name="description" content="Proteja contas e dispositivos com hábitos que realmente reduzem risco: gerenciador de senhas, 2FA e o que evitar no dia a dia.">
+<meta name="description" content="Proteja contas com hábitos que realmente reduzem risco — sem antivírus mágico.">
 <link rel="stylesheet" href="assets/css/pages/curso-python.css">
 <link rel="stylesheet" href="assets/css/site-nav.css?v=20260919cursos">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
 <link rel="stylesheet" href="assets/css/motion.css">
-<meta property="og:title" content="Senhas, 2FA e higiene mínima | Segurança digital na prática">
-<meta property="og:description" content="Proteja contas e dispositivos com hábitos que realmente reduzem risco: gerenciador de senhas, 2FA e o que evitar no dia a dia.">
+<meta property="og:title" content="Senhas, 2FA e phishing | Segurança digital básica">
+<meta property="og:description" content="Proteja contas com hábitos que realmente reduzem risco — sem antivírus mágico.">
 <meta property="og:url" content="https://irndevs.com/curso-seguranca-modulo-1.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
 <meta property="og:site_name" content="IRN Devs">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Início", "item": "https://irndevs.com/index.html"},
+    {"@type": "ListItem", "position": 2, "name": "Cursos", "item": "https://irndevs.com/cursos.html"},
+    {"@type": "ListItem", "position": 3, "name": "Segurança digital básica", "item": "https://irndevs.com/cursos.html#seguranca"},
+    {"@type": "ListItem", "position": 4, "name": "Módulo 1", "item": "https://irndevs.com/curso-seguranca-modulo-1.html"}
+  ]
+}
+</script>
 </head>
 <body data-course="seguranca">
 <!-- nav: site-nav.js -->
 <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 <main id="conteudo" role="main" tabindex="-1">
+
 <article class="wrap">
-  <nav class="breadcrumb"><a href="/">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#iniciantes">segurança digital na prática</a> / módulo 1</nav>
+  <nav class="breadcrumb"><a href="/">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#seguranca">segurança digital básica</a> / módulo 1</nav>
   <div class="sec-head"><span class="amber">$</span> seguranca modulo_1</div>
-  <h1>Senhas, 2FA e higiene mínima</h1>
-  <p class="lede">Proteja contas e dispositivos com hábitos que realmente reduzem risco: gerenciador de senhas, 2FA e o que evitar no dia a dia.</p>
+  <h1>Senhas, 2FA e phishing</h1>
+  <p class="lede">Proteja contas com hábitos que realmente reduzem risco — sem antivírus mágico.</p>
+  <div id="irn-progress-bar" data-progress="seguranca"></div>
+
   <h2>O que você vai aprender</h2>
   <ul>
-    <li>Por que senha reutilizada é o maior risco</li>
-    <li>Gerenciador de senhas (conceito e uso)</li>
-    <li>Autenticação em dois fatores (2FA/MFA)</li>
-    <li>Phishing: como reconhecer</li>
-    <li>Atualizações e o básico de rede doméstica</li>
+    <li>Senha reutilizada = risco</li>
+    <li>Gerenciador de senhas</li>
+    <li>2FA com app</li>
+    <li>Reconhecer phishing</li>
   </ul>
-  <h2>Segurança começa no hábito, não no antivírus caro</h2>
-  <p>A maior parte das invasões de contas pessoais e freelas acontece por senha vazada reutilizada ou golpe de phishing — não por “hacker gênio”.</p>
+
+  <h2>Segurança começa no hábito</h2>
+  <p>A maior parte das invasões acontece por senha vazada reutilizada ou phishing.</p>
   <h2>Regras de ouro</h2>
   <ol>
-    <li>Uma senha forte por serviço (gerenciador: Bitwarden, 1Password, etc.)</li>
-    <li>2FA com app autenticador (não SMS, se puder escolher)</li>
-    <li>Não clique em link de “urgente, confirme sua conta” sem checar o domínio</li>
-    <li>Mantenha SO e navegador atualizados</li>
+    <li>Uma senha forte por serviço (Bitwarden, 1Password…)</li>
+    <li>2FA com app autenticador (prefira ao SMS)</li>
+    <li>Não clique em “urgente, confirme sua conta” sem checar o domínio</li>
+    <li>SO e navegador atualizados</li>
   </ol>
-  <h2>Para quem desenvolve</h2>
-  <ul>
-    <li>Nunca commite <code>.env</code> com segredos</li>
-    <li>Use HTTPS em tudo que for público</li>
-    <li>Princípio do menor privilégio em tokens e chaves de API</li>
-  </ul>
-  <p>Aprofunde com <a href="artigo-lgpd-site-app.html">LGPD na prática</a> e os artigos de hardening Linux no blog.</p>
-  <p><a class="btn primary" href="cursos.html#iniciantes">← voltar aos cursos</a></p>
+
+
+  <h2>Sumário do curso</h2>
+  <div class="mod-sumario">
+    <a class="mod-card" href="curso-seguranca-modulo-1.html" aria-current="page"><span class="mod-card-n">01</span><span class="mod-card-name">Senhas e phishing</span></a>
+    <a class="mod-card" href="curso-seguranca-modulo-2.html"><span class="mod-card-n">02</span><span class="mod-card-name">Dev seguro</span></a>
+    <a class="mod-card" href="curso-seguranca-modulo-3.html"><span class="mod-card-n">03</span><span class="mod-card-name">Rede e dispositivos</span></a>
+    <a class="mod-card" href="curso-seguranca-modulo-4.html"><span class="mod-card-n">04</span><span class="mod-card-name">Checklist final</span></a>
+  </div>
+
+  <div class="aula-progress">
+    <a class="btn ghost" href="cursos.html#iniciantes">← todos os cursos</a>
+    <span class="dots"><b class="on"></b><b></b><b></b><b></b></span>
+    <a class="btn primary" href="curso-seguranca-modulo-2.html">próximo: Dev seguro →</a>
+  </div>
 </article>
+
+<section class="cta-diagnostico" style="max-width:920px;margin:32px auto 0;padding:20px;border-top:1px solid var(--nav-border,#2a3126);text-align:center">
+  <p style="margin:0 0 12px;font-size:15px">Precisa de algo assim, sob medida pro seu negócio?</p>
+  <a href="diagnostico.html" style="display:inline-block;padding:10px 20px;border-radius:8px;background:var(--nav-amber,#e8a33d);color:#10130f;font-weight:600;text-decoration:none">agendar diagnóstico gratuito &rarr;</a>
+</section>
+
 <footer class="site-footer-v2" role="contentinfo">
   <div class="wrap footer-grid">
     <div class="footer-brand">
@@ -109,9 +137,11 @@
     </div>
   </div>
 </footer>
-
 </main>
+
 <script src="assets/js/site-nav.js?v=20260919cursos" defer></script>
+<script src="assets/js/curso-progress.js?v=20260919cursos" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 </body>
 </html>
+

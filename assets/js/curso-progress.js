@@ -7,7 +7,13 @@
   var COURSES = {
     python: { key: 'irn_python_progress', total: 8, pattern: /curso-python-modulo-(\d)/, cert: 'certificado-python.html', label: 'Python' },
     docker: { key: 'irn_docker_progress', total: 6, pattern: /curso-docker-modulo-(\d)/, cert: 'certificado-docker.html', label: 'Docker' },
-    linux: { key: 'irn_linux_progress', total: 6, pattern: /curso-linux-modulo-(\d)/, cert: 'certificado-linux.html', label: 'Linux' }
+    linux: { key: 'irn_linux_progress', total: 6, pattern: /curso-linux-modulo-(\d)/, cert: 'certificado-linux.html', label: 'Linux' },
+    cmd: { key: 'irn_cmd_progress', total: 6, pattern: /curso-cmd-modulo-(\d)/, cert: null, label: 'CMD' },
+    git: { key: 'irn_git_progress', total: 4, pattern: /curso-git-modulo-(\d)/, cert: null, label: 'Git' },
+    'html-css': { key: 'irn_htmlcss_progress', total: 4, pattern: /curso-html-css-modulo-(\d)/, cert: null, label: 'HTML/CSS' },
+    js: { key: 'irn_js_progress', total: 4, pattern: /curso-js-modulo-(\d)/, cert: null, label: 'JavaScript' },
+    sql: { key: 'irn_sql_progress', total: 4, pattern: /curso-sql-modulo-(\d)/, cert: null, label: 'SQL' },
+    seguranca: { key: 'irn_seguranca_progress', total: 4, pattern: /curso-seguranca-modulo-(\d)/, cert: null, label: 'Segurança' }
   };
 
   function detectCourse() {
@@ -87,8 +93,10 @@
       var total = COURSES[courseId].total;
       if (e.target.checked && num === total) {
         setTimeout(function () {
-          if (confirm('Parabéns! Curso concluído. Gerar certificado?')) {
+          if (COURSES[courseId].cert && confirm('Parabéns! Curso concluído. Gerar certificado?')) {
             location.href = COURSES[courseId].cert;
+          } else if (!COURSES[courseId].cert) {
+            alert('Parabéns! Você concluiu todos os módulos desta trilha.');
           }
         }, 300);
       }

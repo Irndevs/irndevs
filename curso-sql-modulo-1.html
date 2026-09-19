@@ -3,65 +3,88 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SELECT, WHERE e suas primeiras consultas | SQL na prática | IRN Devs</title>
+<title>SELECT, WHERE e ordenação | SQL do zero | IRN Devs</title>
 <link rel="canonical" href="https://irndevs.com/curso-sql-modulo-1.html">
-<meta name="description" content="Aprenda a ler e filtrar dados em banco relacional com SQL real — a skill que backend, dados e analytics pedem o tempo todo.">
+<meta name="description" content="Consulte tabelas com confiança: filtrar, ordenar e limitar resultados.">
 <link rel="stylesheet" href="assets/css/pages/curso-python.css">
 <link rel="stylesheet" href="assets/css/site-nav.css?v=20260919cursos">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
 <link rel="stylesheet" href="assets/css/motion.css">
-<meta property="og:title" content="SELECT, WHERE e suas primeiras consultas | SQL na prática">
-<meta property="og:description" content="Aprenda a ler e filtrar dados em banco relacional com SQL real — a skill que backend, dados e analytics pedem o tempo todo.">
+<meta property="og:title" content="SELECT, WHERE e ordenação | SQL do zero">
+<meta property="og:description" content="Consulte tabelas com confiança: filtrar, ordenar e limitar resultados.">
 <meta property="og:url" content="https://irndevs.com/curso-sql-modulo-1.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
 <meta property="og:site_name" content="IRN Devs">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Início", "item": "https://irndevs.com/index.html"},
+    {"@type": "ListItem", "position": 2, "name": "Cursos", "item": "https://irndevs.com/cursos.html"},
+    {"@type": "ListItem", "position": 3, "name": "SQL do zero", "item": "https://irndevs.com/cursos.html#sql"},
+    {"@type": "ListItem", "position": 4, "name": "Módulo 1", "item": "https://irndevs.com/curso-sql-modulo-1.html"}
+  ]
+}
+</script>
 </head>
 <body data-course="sql">
 <!-- nav: site-nav.js -->
 <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 <main id="conteudo" role="main" tabindex="-1">
+
 <article class="wrap">
-  <nav class="breadcrumb"><a href="/">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#iniciantes">sql na prática</a> / módulo 1</nav>
+  <nav class="breadcrumb"><a href="/">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#sql">sql do zero</a> / módulo 1</nav>
   <div class="sec-head"><span class="amber">$</span> sql modulo_1</div>
-  <h1>SELECT, WHERE e suas primeiras consultas</h1>
-  <p class="lede">Aprenda a ler e filtrar dados em banco relacional com SQL real — a skill que backend, dados e analytics pedem o tempo todo.</p>
+  <h1>SELECT, WHERE e ordenação</h1>
+  <p class="lede">Consulte tabelas com confiança: filtrar, ordenar e limitar resultados.</p>
+  <div id="irn-progress-bar" data-progress="sql"></div>
+
   <h2>O que você vai aprender</h2>
   <ul>
-    <li>O que é tabela, linha, coluna e chave primária</li>
-    <li>SELECT e projeção de colunas</li>
-    <li>WHERE, AND/OR e operadores de comparação</li>
+    <li>SELECT e colunas</li>
+    <li>WHERE com operadores</li>
     <li>ORDER BY e LIMIT</li>
-    <li>Boas práticas para não travar o banco</li>
+    <li>NULL e LIKE</li>
   </ul>
-  <h2>Por que SQL continua insubstituível</h2>
-  <p>Planilhas não escalam. ORMs ajudam, mas quando o relatório trava ou a API fica lenta, alguém escreve SQL. Aprender o básico te coloca à frente da maioria dos iniciantes.</p>
-  <h2>Consultas essenciais</h2>
-  <pre><code>-- todas as colunas (use com cuidado em tabelas grandes)
-SELECT * FROM clientes;
 
--- só o necessário
-SELECT id, nome, email FROM clientes WHERE ativo = true;
+  <h2>1. Consulta mínima</h2>
+  <pre><code>SELECT id, nome, email
+FROM usuarios
+WHERE ativo = true
+ORDER BY nome
+LIMIT 50;</code></pre>
+  <h2>2. Filtros</h2>
+  <pre><code>WHERE idade >= 18
+  AND cidade = 'São Paulo'
+  OR nome LIKE 'A%';</code></pre>
 
--- ordenar e limitar
-SELECT nome, criado_em
-FROM clientes
-ORDER BY criado_em DESC
-LIMIT 20;</code></pre>
-  <h2>Filtros que você vai usar sempre</h2>
-  <pre><code>WHERE preco &gt;= 100
-WHERE nome ILIKE '%silva%'   -- Postgres
-WHERE email IS NOT NULL
-WHERE status IN ('pago', 'enviado')</code></pre>
-  <h2>Cuidado com SELECT *</h2>
-  <p>Em produção, prefira listar colunas. Isso reduz tráfego, deixa a intenção clara e evita quebrar clientes quando a tabela ganha colunas novas.</p>
-  <p>Ambiente para praticar: SQLite local, ou um Postgres em Docker. O curso de <a href="cursos.html#docker">Docker</a> ajuda a subir um banco em minutos.</p>
-  <p><a class="btn primary" href="cursos.html#iniciantes">← voltar aos cursos</a></p>
+
+  <h2>Sumário do curso</h2>
+  <div class="mod-sumario">
+    <a class="mod-card" href="curso-sql-modulo-1.html" aria-current="page"><span class="mod-card-n">01</span><span class="mod-card-name">SELECT e WHERE</span></a>
+    <a class="mod-card" href="curso-sql-modulo-2.html"><span class="mod-card-n">02</span><span class="mod-card-name">JOIN e GROUP BY</span></a>
+    <a class="mod-card" href="curso-sql-modulo-3.html"><span class="mod-card-n">03</span><span class="mod-card-name">Escrita e índices</span></a>
+    <a class="mod-card" href="curso-sql-modulo-4.html"><span class="mod-card-n">04</span><span class="mod-card-name">Projeto SQL</span></a>
+  </div>
+
+  <div class="aula-progress">
+    <a class="btn ghost" href="cursos.html#iniciantes">← todos os cursos</a>
+    <span class="dots"><b class="on"></b><b></b><b></b><b></b></span>
+    <a class="btn primary" href="curso-sql-modulo-2.html">próximo: JOIN e GROUP BY →</a>
+  </div>
 </article>
+
+<section class="cta-diagnostico" style="max-width:920px;margin:32px auto 0;padding:20px;border-top:1px solid var(--nav-border,#2a3126);text-align:center">
+  <p style="margin:0 0 12px;font-size:15px">Precisa de algo assim, sob medida pro seu negócio?</p>
+  <a href="diagnostico.html" style="display:inline-block;padding:10px 20px;border-radius:8px;background:var(--nav-amber,#e8a33d);color:#10130f;font-weight:600;text-decoration:none">agendar diagnóstico gratuito &rarr;</a>
+</section>
+
 <footer class="site-footer-v2" role="contentinfo">
   <div class="wrap footer-grid">
     <div class="footer-brand">
@@ -115,9 +138,11 @@ WHERE status IN ('pago', 'enviado')</code></pre>
     </div>
   </div>
 </footer>
-
 </main>
+
 <script src="assets/js/site-nav.js?v=20260919cursos" defer></script>
+<script src="assets/js/curso-progress.js?v=20260919cursos" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 </body>
 </html>
+

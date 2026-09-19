@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Estrutura HTML e o primeiro CSS | HTML e CSS — primeira página | IRN Devs</title>
 <link rel="canonical" href="https://irndevs.com/curso-html-css-modulo-1.html">
-<meta name="description" content="Monte uma página estática válida, com tipografia legível, links e um layout simples sem framework.">
+<meta name="description" content="Monte uma página estática válida, com tipografia legível, links e layout simples sem framework.">
 <link rel="stylesheet" href="assets/css/pages/curso-python.css">
 <link rel="stylesheet" href="assets/css/site-nav.css?v=20260919cursos">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
@@ -13,64 +13,96 @@
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
 <link rel="stylesheet" href="assets/css/motion.css">
 <meta property="og:title" content="Estrutura HTML e o primeiro CSS | HTML e CSS — primeira página">
-<meta property="og:description" content="Monte uma página estática válida, com tipografia legível, links e um layout simples sem framework.">
+<meta property="og:description" content="Monte uma página estática válida, com tipografia legível, links e layout simples sem framework.">
 <meta property="og:url" content="https://irndevs.com/curso-html-css-modulo-1.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
 <meta property="og:site_name" content="IRN Devs">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Início", "item": "https://irndevs.com/index.html"},
+    {"@type": "ListItem", "position": 2, "name": "Cursos", "item": "https://irndevs.com/cursos.html"},
+    {"@type": "ListItem", "position": 3, "name": "HTML e CSS — primeira página", "item": "https://irndevs.com/cursos.html#html-css"},
+    {"@type": "ListItem", "position": 4, "name": "Módulo 1", "item": "https://irndevs.com/curso-html-css-modulo-1.html"}
+  ]
+}
+</script>
 </head>
 <body data-course="html-css">
 <!-- nav: site-nav.js -->
 <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 <main id="conteudo" role="main" tabindex="-1">
+
 <article class="wrap">
-  <nav class="breadcrumb"><a href="/">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#iniciantes">html e css — primeira página</a> / módulo 1</nav>
+  <nav class="breadcrumb"><a href="/">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#html-css">html e css — primeira página</a> / módulo 1</nav>
   <div class="sec-head"><span class="amber">$</span> html-css modulo_1</div>
   <h1>Estrutura HTML e o primeiro CSS</h1>
-  <p class="lede">Monte uma página estática válida, com tipografia legível, links e um layout simples sem framework.</p>
+  <p class="lede">Monte uma página estática válida, com tipografia legível, links e layout simples sem framework.</p>
+  <div id="irn-progress-bar" data-progress="html-css"></div>
+
   <h2>O que você vai aprender</h2>
   <ul>
-    <li>Estrutura mínima de um documento HTML5</li>
-    <li>Tags semânticas: header, main, section, footer</li>
-    <li>CSS: seletores, cores, espaçamento e fonte</li>
-    <li>Links, imagens e acessibilidade básica</li>
-    <li>Publicar mentalmente: o que é estático vs dinâmico</li>
+    <li>Documento HTML5 mínimo</li>
+    <li>Tags semânticas</li>
+    <li>CSS: seletores, cores e fonte</li>
+    <li>Links, imagens e acessibilidade</li>
   </ul>
+
   <h2>HTML não é programação — e tudo bem</h2>
-  <p>HTML descreve estrutura. CSS descreve aparência. Juntos formam a base de qualquer interface web. Frameworks vêm depois.</p>
-  <h2>Documento mínimo</h2>
+  <p>HTML descreve estrutura. CSS descreve aparência. Frameworks vêm depois.</p>
+  <h2>1. Documento mínimo</h2>
   <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html lang="pt-BR"&gt;
 &lt;head&gt;
   &lt;meta charset="UTF-8"&gt;
   &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
   &lt;title&gt;Minha página&lt;/title&gt;
-  &lt;link rel="stylesheet" href="estilo.css"&gt;
+  &lt;link rel="stylesheet" href="styles.css"&gt;
 &lt;/head&gt;
 &lt;body&gt;
   &lt;header&gt;&lt;h1&gt;Olá&lt;/h1&gt;&lt;/header&gt;
-  &lt;main&gt;
-    &lt;p&gt;Meu primeiro conteúdo.&lt;/p&gt;
-  &lt;/main&gt;
+  &lt;main&gt;&lt;p&gt;Conteúdo.&lt;/p&gt;&lt;/main&gt;
+  &lt;footer&gt;&lt;p&gt;© 2026&lt;/p&gt;&lt;/footer&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
-  <h2>CSS enxuto que já melhora tudo</h2>
-  <pre><code>body {
+  <h2>2. CSS inicial</h2>
+  <pre><code>:root { --bg: #10130f; --text: #e8ebe4; --accent: #e8a33d; }
+body {
+  margin: 0;
   font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
   line-height: 1.6;
-  max-width: 40rem;
-  margin: 2rem auto;
-  padding: 0 1rem;
-  color: #1a1a1a;
 }
-a { color: #0b57d0; }</code></pre>
-  <h2>Exercício</h2>
-  <p>Crie uma página “Sobre mim” com: nome, 1 parágrafo, lista de 3 skills e um link para o GitHub. Valide mentalmente: título único, um h1, contraste legível.</p>
-  <p>Depois avance para <a href="curso-js-modulo-1.html">JavaScript</a> para deixar a página interativa.</p>
-  <p><a class="btn primary" href="cursos.html#iniciantes">← voltar aos cursos</a></p>
+a { color: var(--accent); }</code></pre>
+  <div class="tip"><strong>DICA</strong> Valide em validator.w3.org no começo.</div>
+
+
+  <h2>Sumário do curso</h2>
+  <div class="mod-sumario">
+    <a class="mod-card" href="curso-html-css-modulo-1.html" aria-current="page"><span class="mod-card-n">01</span><span class="mod-card-name">HTML e CSS base</span></a>
+    <a class="mod-card" href="curso-html-css-modulo-2.html"><span class="mod-card-n">02</span><span class="mod-card-name">Flexbox e Grid</span></a>
+    <a class="mod-card" href="curso-html-css-modulo-3.html"><span class="mod-card-n">03</span><span class="mod-card-name">Responsivo</span></a>
+    <a class="mod-card" href="curso-html-css-modulo-4.html"><span class="mod-card-n">04</span><span class="mod-card-name">Projeto portfólio</span></a>
+  </div>
+
+  <div class="aula-progress">
+    <a class="btn ghost" href="cursos.html#iniciantes">← todos os cursos</a>
+    <span class="dots"><b class="on"></b><b></b><b></b><b></b></span>
+    <a class="btn primary" href="curso-html-css-modulo-2.html">próximo: Flexbox e Grid →</a>
+  </div>
 </article>
+
+<section class="cta-diagnostico" style="max-width:920px;margin:32px auto 0;padding:20px;border-top:1px solid var(--nav-border,#2a3126);text-align:center">
+  <p style="margin:0 0 12px;font-size:15px">Precisa de algo assim, sob medida pro seu negócio?</p>
+  <a href="diagnostico.html" style="display:inline-block;padding:10px 20px;border-radius:8px;background:var(--nav-amber,#e8a33d);color:#10130f;font-weight:600;text-decoration:none">agendar diagnóstico gratuito &rarr;</a>
+</section>
+
 <footer class="site-footer-v2" role="contentinfo">
   <div class="wrap footer-grid">
     <div class="footer-brand">
@@ -124,9 +156,11 @@ a { color: #0b57d0; }</code></pre>
     </div>
   </div>
 </footer>
-
 </main>
+
 <script src="assets/js/site-nav.js?v=20260919cursos" defer></script>
+<script src="assets/js/curso-progress.js?v=20260919cursos" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 </body>
 </html>
+

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Primeiros commits e o fluxo básico | Git e GitHub do zero | IRN Devs</title>
+<title>Instalação, config e primeiros commits | Git e GitHub do zero | IRN Devs</title>
 <link rel="canonical" href="https://irndevs.com/curso-git-modulo-1.html">
 <meta name="description" content="Instale o Git, configure nome/e-mail, faça o primeiro repositório local e envie para o GitHub com segurança.">
 <link rel="stylesheet" href="assets/css/pages/curso-python.css">
@@ -12,7 +12,7 @@
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
 <link rel="stylesheet" href="assets/css/motion.css">
-<meta property="og:title" content="Primeiros commits e o fluxo básico | Git e GitHub do zero">
+<meta property="og:title" content="Instalação, config e primeiros commits | Git e GitHub do zero">
 <meta property="og:description" content="Instale o Git, configure nome/e-mail, faça o primeiro repositório local e envie para o GitHub com segurança.">
 <meta property="og:url" content="https://irndevs.com/curso-git-modulo-1.html">
 <meta property="og:type" content="website">
@@ -20,60 +20,92 @@
 <meta property="og:site_name" content="IRN Devs">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Início", "item": "https://irndevs.com/index.html"},
+    {"@type": "ListItem", "position": 2, "name": "Cursos", "item": "https://irndevs.com/cursos.html"},
+    {"@type": "ListItem", "position": 3, "name": "Git e GitHub do zero", "item": "https://irndevs.com/cursos.html#git"},
+    {"@type": "ListItem", "position": 4, "name": "Módulo 1", "item": "https://irndevs.com/curso-git-modulo-1.html"}
+  ]
+}
+</script>
 </head>
 <body data-course="git">
 <!-- nav: site-nav.js -->
 <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 <main id="conteudo" role="main" tabindex="-1">
+
 <article class="wrap">
-  <nav class="breadcrumb"><a href="/">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#iniciantes">git e github do zero</a> / módulo 1</nav>
+  <nav class="breadcrumb"><a href="/">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#git">git e github do zero</a> / módulo 1</nav>
   <div class="sec-head"><span class="amber">$</span> git modulo_1</div>
-  <h1>Primeiros commits e o fluxo básico</h1>
+  <h1>Instalação, config e primeiros commits</h1>
   <p class="lede">Instale o Git, configure nome/e-mail, faça o primeiro repositório local e envie para o GitHub com segurança.</p>
+  <div id="irn-progress-bar" data-progress="git"></div>
+
   <h2>O que você vai aprender</h2>
   <ul>
     <li>Instalar Git no Windows, Linux e macOS</li>
     <li>Configurar user.name e user.email</li>
-    <li>git init, add, commit e status sem medo</li>
-    <li>Criar repositório no GitHub e git remote add</li>
-    <li>git push e o que fazer quando der conflito simples</li>
+    <li>git init, add, commit e status</li>
+    <li>Criar repositório no GitHub e remote</li>
+    <li>git push com segurança</li>
   </ul>
+
   <h2>Por que Git importa</h2>
   <p>Git é o sistema de versões padrão da indústria. Sem ele, você não colabora em time, não mostra portfólio e não sobrevive a “apaguei o arquivo sem querer”.</p>
-  <h2>Instalação rápida</h2>
-  <pre><code># Windows: baixe em git-scm.com ou winget install Git.Git
+  <h2>1. Instalação rápida</h2>
+  <div class="code-title">terminal</div>
+  <pre><code># Windows: git-scm.com ou winget install Git.Git
 # macOS: xcode-select --install  ou  brew install git
 # Ubuntu/Debian:
 sudo apt update && sudo apt install -y git
 git --version</code></pre>
-  <h2>Configuração mínima (uma vez por máquina)</h2>
+  <h2>2. Configuração mínima</h2>
   <pre><code>git config --global user.name "Seu Nome"
 git config --global user.email "voce@email.com"
 git config --global init.defaultBranch main</code></pre>
-  <h2>Seu primeiro repositório</h2>
+  <div class="tip"><strong>DICA</strong> Use o mesmo e-mail da conta do GitHub para os commits aparecerem no perfil.</div>
+  <h2>3. Primeiro repositório</h2>
   <pre><code>mkdir meu-projeto && cd meu-projeto
 git init
 echo "# Meu projeto" > README.md
 git add README.md
 git commit -m "chore: primeiro commit"</code></pre>
-  <h2>Subir para o GitHub</h2>
-  <ol>
-    <li>Crie um repositório vazio no GitHub (sem README se o local já tem)</li>
-    <li>Copie a URL HTTPS ou SSH</li>
-    <li>No terminal:</li>
-  </ol>
+  <h2>4. Subir para o GitHub</h2>
   <pre><code>git remote add origin https://github.com/SEU_USER/meu-projeto.git
 git push -u origin main</code></pre>
-  <h2>Comandos do dia a dia</h2>
+  <h2>5. Comandos do dia a dia</h2>
   <ul>
     <li><code>git status</code> — o que mudou</li>
-    <li><code>git diff</code> — o detalhe da mudança</li>
+    <li><code>git diff</code> — detalhe da mudança</li>
     <li><code>git log --oneline</code> — histórico curto</li>
-    <li><code>git checkout -b feature/login</code> — nova branch</li>
   </ul>
-  <p>Próximo passo natural: ler o artigo <a href="artigo-portfolio-github.html">portfólio no GitHub</a> e praticar commits por 7 dias seguidos.</p>
-  <p><a class="btn primary" href="cursos.html#iniciantes">← voltar aos cursos</a></p>
+  <div class="note"><strong>BOA PRÁTICA</strong> Mensagens no formato <code>tipo: resumo</code> (feat, fix, chore, docs).</div>
+
+
+  <h2>Sumário do curso</h2>
+  <div class="mod-sumario">
+    <a class="mod-card" href="curso-git-modulo-1.html" aria-current="page"><span class="mod-card-n">01</span><span class="mod-card-name">Primeiros commits</span></a>
+    <a class="mod-card" href="curso-git-modulo-2.html"><span class="mod-card-n">02</span><span class="mod-card-name">Branches e merge</span></a>
+    <a class="mod-card" href="curso-git-modulo-3.html"><span class="mod-card-n">03</span><span class="mod-card-name">Remoto e PR</span></a>
+    <a class="mod-card" href="curso-git-modulo-4.html"><span class="mod-card-n">04</span><span class="mod-card-name">Boas práticas e projeto</span></a>
+  </div>
+
+  <div class="aula-progress">
+    <a class="btn ghost" href="cursos.html#iniciantes">← todos os cursos</a>
+    <span class="dots"><b class="on"></b><b></b><b></b><b></b></span>
+    <a class="btn primary" href="curso-git-modulo-2.html">próximo: Branches e merge →</a>
+  </div>
 </article>
+
+<section class="cta-diagnostico" style="max-width:920px;margin:32px auto 0;padding:20px;border-top:1px solid var(--nav-border,#2a3126);text-align:center">
+  <p style="margin:0 0 12px;font-size:15px">Precisa de algo assim, sob medida pro seu negócio?</p>
+  <a href="diagnostico.html" style="display:inline-block;padding:10px 20px;border-radius:8px;background:var(--nav-amber,#e8a33d);color:#10130f;font-weight:600;text-decoration:none">agendar diagnóstico gratuito &rarr;</a>
+</section>
+
 <footer class="site-footer-v2" role="contentinfo">
   <div class="wrap footer-grid">
     <div class="footer-brand">
@@ -127,9 +159,11 @@ git push -u origin main</code></pre>
     </div>
   </div>
 </footer>
-
 </main>
+
 <script src="assets/js/site-nav.js?v=20260919cursos" defer></script>
+<script src="assets/js/curso-progress.js?v=20260919cursos" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 </body>
 </html>
+

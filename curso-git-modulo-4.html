@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boas práticas, .gitignore e projeto final | Git e GitHub do zero | IRN Devs</title>
+<link rel="canonical" href="https://irndevs.com/curso-git-modulo-4.html">
+<meta name="description" content="Ignore o que não deve ir para o repositório e feche a trilha com um mini-projeto versionado do jeito certo.">
+<link rel="stylesheet" href="assets/css/pages/curso-python.css">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919cursos">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
+<link rel="stylesheet" href="assets/css/motion.css">
+<meta property="og:title" content="Boas práticas, .gitignore e projeto final | Git e GitHub do zero">
+<meta property="og:description" content="Ignore o que não deve ir para o repositório e feche a trilha com um mini-projeto versionado do jeito certo.">
+<meta property="og:url" content="https://irndevs.com/curso-git-modulo-4.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
+<meta property="og:site_name" content="IRN Devs">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Início", "item": "https://irndevs.com/index.html"},
+    {"@type": "ListItem", "position": 2, "name": "Cursos", "item": "https://irndevs.com/cursos.html"},
+    {"@type": "ListItem", "position": 3, "name": "Git e GitHub do zero", "item": "https://irndevs.com/cursos.html#git"},
+    {"@type": "ListItem", "position": 4, "name": "Módulo 4", "item": "https://irndevs.com/curso-git-modulo-4.html"}
+  ]
+}
+</script>
+</head>
+<body data-course="git">
+<!-- nav: site-nav.js -->
+<a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+<main id="conteudo" role="main" tabindex="-1">
+
+<article class="wrap">
+  <nav class="breadcrumb"><a href="/">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#git">git e github do zero</a> / módulo 4</nav>
+  <div class="sec-head"><span class="amber">$</span> git modulo_4</div>
+  <h1>Boas práticas, .gitignore e projeto final</h1>
+  <p class="lede">Ignore o que não deve ir para o repositório e feche a trilha com um mini-projeto versionado do jeito certo.</p>
+  <div id="irn-progress-bar" data-progress="git"></div>
+
+  <h2>O que você vai aprender</h2>
+  <ul>
+    <li>Escrever um .gitignore útil</li>
+    <li>Não versionar segredos nem builds</li>
+    <li>Tags e releases</li>
+    <li>Projeto final no GitHub</li>
+  </ul>
+
+  <h2>1. .gitignore essencial</h2>
+  <pre><code>.venv/
+__pycache__/
+.env
+node_modules/
+.DS_Store
+.idea/</code></pre>
+  <h2>2. O que nunca commitar</h2>
+  <ul>
+    <li>Arquivos <code>.env</code> e chaves de API</li>
+    <li>Credenciais e dumps de banco</li>
+    <li>Pastas de dependências instaladas</li>
+  </ul>
+  <div class="warn"><strong>ATENÇÃO</strong> Segredo já commitado: troque a chave imediatamente.</div>
+  <h2>3. Projeto final</h2>
+  <ol>
+    <li>Repo no GitHub com README</li>
+    <li>.gitignore adequado</li>
+    <li>Pelo menos 5 commits claros</li>
+    <li>Uma branch de feature + merge/PR</li>
+  </ol>
+  <div class="tip"><strong>PRÓXIMO PASSO</strong> Leia <a href="artigo-portfolio-github.html">portfólio no GitHub</a>.</div>
+
+
+  <h2>Sumário do curso</h2>
+  <div class="mod-sumario">
+    <a class="mod-card" href="curso-git-modulo-1.html"><span class="mod-card-n">01</span><span class="mod-card-name">Primeiros commits</span></a>
+    <a class="mod-card" href="curso-git-modulo-2.html"><span class="mod-card-n">02</span><span class="mod-card-name">Branches e merge</span></a>
+    <a class="mod-card" href="curso-git-modulo-3.html"><span class="mod-card-n">03</span><span class="mod-card-name">Remoto e PR</span></a>
+    <a class="mod-card" href="curso-git-modulo-4.html" aria-current="page"><span class="mod-card-n">04</span><span class="mod-card-name">Boas práticas e projeto</span></a>
+  </div>
+
+  <div class="aula-progress">
+    <a class="btn ghost" href="curso-git-modulo-3.html">← Remoto e PR</a>
+    <span class="dots"><b></b><b></b><b></b><b class="on"></b></span>
+    <a class="btn primary" href="cursos.html#iniciantes">concluir trilha →</a>
+  </div>
+</article>
+
+<section class="cta-diagnostico" style="max-width:920px;margin:32px auto 0;padding:20px;border-top:1px solid var(--nav-border,#2a3126);text-align:center">
+  <p style="margin:0 0 12px;font-size:15px">Precisa de algo assim, sob medida pro seu negócio?</p>
+  <a href="diagnostico.html" style="display:inline-block;padding:10px 20px;border-radius:8px;background:var(--nav-amber,#e8a33d);color:#10130f;font-weight:600;text-decoration:none">agendar diagnóstico gratuito &rarr;</a>
+</section>
+
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">IRN Devs</div>
+      <p>Software, automações e dados em produção — stacks que já rodam de verdade, com handoff claro.</p>
+      <div class="footer-social">
+        <a href="https://github.com/iri-afk" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
+        <a href="mailto:contato@irndevs.com" aria-label="E-mail">E-mail</a>
+        <a href="/en/">EN</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h3>Links rápidos</h3>
+      <ul>
+        <li><a href="/">Início</a></li>
+        <li><a href="servicos.html">Serviços</a></li>
+        <li><a href="pacotes.html">Pacotes</a></li>
+        <li><a href="/#projetos">Projetos</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Recursos</h3>
+      <ul>
+        <li><a href="ferramenta-checklist.html">Checklist grátis</a></li>
+        <li><a href="ferramentas.html">Ferramentas grátis</a></li>
+        <li><a href="ia.html">Ferramentas de IA</a></li>
+        <li><a href="cursos.html">Cursos</a></li>
+        <li><a href="homelab.html">Homelab</a></li>
+        <li><a href="como-contratar.html">Como contratar</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Contato</h3>
+      <ul>
+        <li><a href="mailto:contato@irndevs.com">contato@irndevs.com</a></li>
+        <li><a href="contato.html">Formulário de contato</a></li>
+        <li><span class="footer-meta">Atendimento remoto</span></li>
+        <li><span class="footer-meta">Disponível para projetos</span></li>
+        <li><a href="privacidade.html">Privacidade</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <div>© 2026 IRN Devs</div>
+    <div class="footer-bottom-links">
+      <a href="jogos.html">jogos</a>
+      <a href="produtividade.html">produtividade</a>
+      <a href="privacidade.html">privacidade</a>
+    </div>
+  </div>
+</footer>
+</main>
+
+<script src="assets/js/site-nav.js?v=20260919cursos" defer></script>
+<script src="assets/js/curso-progress.js?v=20260919cursos" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+</body>
+</html>
+

@@ -3,66 +3,96 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Variáveis, funções e o DOM mínimo | JavaScript para iniciantes | IRN Devs</title>
+<title>Variáveis, funções e o DOM mínimo | JavaScript do zero | IRN Devs</title>
 <link rel="canonical" href="https://irndevs.com/curso-js-modulo-1.html">
-<meta name="description" content="Domine o essencial de JavaScript no navegador: dados, decisões, funções e alterar a página sem framework.">
+<meta name="description" content="Domine o essencial de JavaScript no navegador: dados, funções e alterar a página sem framework.">
 <link rel="stylesheet" href="assets/css/pages/curso-python.css">
 <link rel="stylesheet" href="assets/css/site-nav.css?v=20260919cursos">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
 <link rel="stylesheet" href="assets/css/motion.css">
-<meta property="og:title" content="Variáveis, funções e o DOM mínimo | JavaScript para iniciantes">
-<meta property="og:description" content="Domine o essencial de JavaScript no navegador: dados, decisões, funções e alterar a página sem framework.">
+<meta property="og:title" content="Variáveis, funções e o DOM mínimo | JavaScript do zero">
+<meta property="og:description" content="Domine o essencial de JavaScript no navegador: dados, funções e alterar a página sem framework.">
 <meta property="og:url" content="https://irndevs.com/curso-js-modulo-1.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
 <meta property="og:site_name" content="IRN Devs">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Início", "item": "https://irndevs.com/index.html"},
+    {"@type": "ListItem", "position": 2, "name": "Cursos", "item": "https://irndevs.com/cursos.html"},
+    {"@type": "ListItem", "position": 3, "name": "JavaScript do zero", "item": "https://irndevs.com/cursos.html#js"},
+    {"@type": "ListItem", "position": 4, "name": "Módulo 1", "item": "https://irndevs.com/curso-js-modulo-1.html"}
+  ]
+}
+</script>
 </head>
 <body data-course="js">
 <!-- nav: site-nav.js -->
 <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 <main id="conteudo" role="main" tabindex="-1">
+
 <article class="wrap">
-  <nav class="breadcrumb"><a href="/">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#iniciantes">javascript para iniciantes</a> / módulo 1</nav>
+  <nav class="breadcrumb"><a href="/">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#js">javascript do zero</a> / módulo 1</nav>
   <div class="sec-head"><span class="amber">$</span> js modulo_1</div>
   <h1>Variáveis, funções e o DOM mínimo</h1>
-  <p class="lede">Domine o essencial de JavaScript no navegador: dados, decisões, funções e alterar a página sem framework.</p>
+  <p class="lede">Domine o essencial de JavaScript no navegador: dados, funções e alterar a página sem framework.</p>
+  <div id="irn-progress-bar" data-progress="js"></div>
+
   <h2>O que você vai aprender</h2>
   <ul>
-    <li>let, const e tipos básicos</li>
+    <li>let, const e tipos</li>
     <li>if/else e loops</li>
-    <li>Funções e parâmetros</li>
-    <li>querySelector e eventos de clique</li>
-    <li>Quando NÃO precisa de React ainda</li>
+    <li>Funções</li>
+    <li>querySelector e eventos</li>
+    <li>Quando ainda não precisa de React</li>
   </ul>
+
   <h2>JavaScript é a linguagem da web</h2>
-  <p>Roda no navegador de graça, sem instalar runtime extra. É a ponte entre HTML estático e interfaces que reagem ao usuário.</p>
-  <h2>Base da linguagem</h2>
+  <p>Roda no navegador sem runtime extra. É a ponte entre HTML estático e interfaces que reagem.</p>
+  <h2>1. Base</h2>
   <pre><code>const nome = "Ana";
 let contador = 0;
-const ativo = true;
-
 function saudacao(pessoa) {
   return `Olá, ${pessoa}!`;
 }
-
-if (contador === 0) {
-  console.log(saudacao(nome));
-}</code></pre>
-  <h2>Interagindo com a página</h2>
-  <pre><code>// HTML: &lt;button id="btn"&gt;Clique&lt;/button&gt;
-const btn = document.querySelector("#btn");
-btn.addEventListener("click", () =&gt; {
+console.log(saudacao(nome));</code></pre>
+  <h2>2. DOM</h2>
+  <pre><code>const btn = document.querySelector("#btn");
+btn.addEventListener("click", () => {
   btn.textContent = "Clicado!";
 });</code></pre>
-  <h2>Exercício</h2>
-  <p>Faça um botão que alterna o tema claro/escuro trocando uma classe no <code>body</code>. Sem bibliotecas.</p>
-  <p>Com HTML/CSS + JS você já entrega landing pages e protótipos. Depois, frameworks ficam mais fáceis de entender.</p>
-  <p><a class="btn primary" href="cursos.html#iniciantes">← voltar aos cursos</a></p>
+  <div class="exercise" data-solution="<pre><code>document.body.classList.toggle('dark');</code></pre>">
+    <strong>Exercício</strong><br>Botão que alterna tema claro/escuro no body.
+  </div>
+
+
+  <h2>Sumário do curso</h2>
+  <div class="mod-sumario">
+    <a class="mod-card" href="curso-js-modulo-1.html" aria-current="page"><span class="mod-card-n">01</span><span class="mod-card-name">Base e DOM</span></a>
+    <a class="mod-card" href="curso-js-modulo-2.html"><span class="mod-card-n">02</span><span class="mod-card-name">Arrays e DOM</span></a>
+    <a class="mod-card" href="curso-js-modulo-3.html"><span class="mod-card-n">03</span><span class="mod-card-name">Fetch e JSON</span></a>
+    <a class="mod-card" href="curso-js-modulo-4.html"><span class="mod-card-n">04</span><span class="mod-card-name">Projeto app</span></a>
+  </div>
+
+  <div class="aula-progress">
+    <a class="btn ghost" href="cursos.html#iniciantes">← todos os cursos</a>
+    <span class="dots"><b class="on"></b><b></b><b></b><b></b></span>
+    <a class="btn primary" href="curso-js-modulo-2.html">próximo: Arrays e DOM →</a>
+  </div>
 </article>
+
+<section class="cta-diagnostico" style="max-width:920px;margin:32px auto 0;padding:20px;border-top:1px solid var(--nav-border,#2a3126);text-align:center">
+  <p style="margin:0 0 12px;font-size:15px">Precisa de algo assim, sob medida pro seu negócio?</p>
+  <a href="diagnostico.html" style="display:inline-block;padding:10px 20px;border-radius:8px;background:var(--nav-amber,#e8a33d);color:#10130f;font-weight:600;text-decoration:none">agendar diagnóstico gratuito &rarr;</a>
+</section>
+
 <footer class="site-footer-v2" role="contentinfo">
   <div class="wrap footer-grid">
     <div class="footer-brand">
@@ -116,9 +146,11 @@ btn.addEventListener("click", () =&gt; {
     </div>
   </div>
 </footer>
-
 </main>
+
 <script src="assets/js/site-nav.js?v=20260919cursos" defer></script>
+<script src="assets/js/curso-progress.js?v=20260919cursos" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 </body>
 </html>
+
