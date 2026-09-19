@@ -550,12 +550,25 @@
         if (!trigger || !flyout) return;
 
         var closeTimer = null;
+        var openTimer = null;
         function cancelClose() { if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; } }
         function scheduleClose() { cancelClose(); closeTimer = setTimeout(function () { closeCat(cat); }, 150); }
+        function cancelOpen() { if (openTimer) { clearTimeout(openTimer); openTimer = null; } }
 
-        // mouse
-        cat.addEventListener('mouseenter', function () { cancelClose(); openCat(cat); });
-        cat.addEventListener('mouseleave', scheduleClose);
+        // mouse — abre com um pequeno atraso (em vez de na hora) pra não
+        // trocar de categoria só porque o cursor passou de raspão por cima
+        // dela no caminho até um item mais embaixo no flyout da categoria
+        // atual (o famoso "menu troca antes de eu clicar").
+        cat.addEventListener('mouseenter', function () {
+          cancelClose();
+          if (cat.classList.contains('is-open')) return;
+          cancelOpen();
+          openTimer = setTimeout(function () { openCat(cat); }, 120);
+        });
+        cat.addEventListener('mouseleave', function () {
+          cancelOpen();
+          scheduleClose();
+        });
         // O flyout mora em <body> depois de aberto (fora da árvore de `cat`),
         // então precisa dos próprios listeners de hover pra não fechar quando
         // o mouse entra nele — e também precisa "avisar" o dropdown pai
