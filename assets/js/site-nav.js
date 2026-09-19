@@ -30,18 +30,9 @@
     return isActive(href) ? ' active' : '';
   }
 
-  var topLinks = [
-    { href: '/#projetos', label: 'projetos', ico: '▸' },
-    { href: 'servicos.html', label: 'serviços', ico: '⚙' },
-    { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
-    {
-      href: 'ferramentas.html',
-      label: 'ferramentas',
-      ico: '▣',
-      extraClass: 'sn-top-tools',
-      dropdown: true,
-      children: [
-        { href: 'ferramentas.html', label: 'Todas as ferramentas', ico: '▣' },
+  /* Categorias de ferramentas — fonte única, usada tanto no mega-dropdown
+     desktop (flyout lateral) quanto no accordion retrátil do drawer mobile. */
+  var toolCategories = [
         { cat: 'finanças & trabalho', ico: '₽', items: [
           { href: 'ferramenta-salario-liquido.html', label: 'Salário Líquido', ico: '₽' },
           { href: 'ferramenta-clt-pj.html', label: 'CLT vs PJ', ico: '⚖' },
@@ -108,7 +99,19 @@
           { href: 'ferramenta-prompt.html', label: 'Melhorador de Prompt', ico: '🤖' },
           { href: 'ia.html', label: 'Hub de IA', ico: '✦' }
         ] }
-      ]
+  ];
+
+  var topLinks = [
+    { href: '/#projetos', label: 'projetos', ico: '▸' },
+    { href: 'servicos.html', label: 'serviços', ico: '⚙' },
+    { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
+    {
+      href: 'ferramentas.html',
+      label: 'ferramentas',
+      ico: '▣',
+      extraClass: 'sn-top-tools',
+      dropdown: true,
+      children: [{ href: 'ferramentas.html', label: 'Todas as ferramentas', ico: '▣' }].concat(toolCategories)
     },
     { href: 'cursos.html', label: 'cursos', ico: '◈' },
     { href: 'ia.html', label: 'IA', ico: '✦', extraClass: 'sn-top-ia' }
@@ -126,24 +129,12 @@
         { href: 'como-contratar.html', label: 'como contratar', ico: '→' }
       ]
     },
-    { label: 'ferramentas', items: [
-        { href: 'ferramentas.html', label: 'todas as ferramentas', ico: '▣' },
-        { href: 'ferramenta-salario-liquido.html', label: 'salário líquido CLT', ico: '₽' },
-        { href: 'ferramenta-13-ferias.html', label: '13º e férias', ico: '📅' },
-        { href: 'ferramenta-horas-extras.html', label: 'horas extras', ico: '⏱' },
-        { href: 'ferramenta-tmb-calorias.html', label: 'TMB e calorias', ico: '🔥' },
-        { href: 'ferramenta-juros-compostos.html', label: 'juros compostos', ico: '%' },
-        { href: 'ferramenta-pelada.html', label: 'sorteador de equipes', ico: '⚽' },
-        { href: 'ferramenta-fontes.html', label: 'gerador de fontes', ico: '𝒜' },
-        { href: 'ferramenta-engajamento.html', label: 'taxa de engajamento', ico: '%' },
-        { href: 'ferramenta-odds.html', label: 'calculadora de odds', ico: '∑' },
-        { href: 'ferramenta-surebet.html', label: 'surebet', ico: '⇄' },
-        { href: 'ferramenta-pomodoro.html', label: 'pomodoro', ico: '⏱' },
-        { href: 'ferramenta-hashtags.html', label: 'hashtags', ico: '#' },
-        { href: 'ferramenta-biometria-saude.html', label: 'biometria & saúde', ico: '♥' },
-        { href: 'ia.html', label: 'hub de IA', ico: '✦' },
-        { href: 'ferramenta-checklist.html', label: 'checklist grátis', ico: '✓' }
-      ] },
+    {
+      label: 'ferramentas',
+      accordion: true,
+      lead: { href: 'ferramentas.html', label: 'todas as ferramentas', ico: '▣' },
+      cats: toolCategories
+    },
     {
       label: 'conteúdo',
       items: [
@@ -230,6 +221,30 @@
       '</div></div>';
   }
 
+  /* Grupo comum do drawer: lista simples de links */
+  function drawerGroupHtml(g) {
+    if (g.accordion) {
+      var leadHtml = g.lead ? linkHtml(g.lead) : '';
+      var catsHtml = g.cats.map(function (c) {
+        var catActive = c.items.some(function (it) { return cls(it.href); });
+        var itemsHtml = c.items.map(function (it) {
+          return '<a href="' + it.href + '" class="sn-drawer-cat-item' + cls(it.href) + '">' +
+            '<span class="ico">' + (it.ico || '·') + '</span><span class="label">' + it.label + '</span></a>';
+        }).join('');
+        return '<div class="sn-drawer-cat' + (catActive ? ' has-active' : '') + '" data-drawer-cat>' +
+          '<button type="button" class="sn-drawer-cat-trigger' + (catActive ? ' active' : '') + '" aria-expanded="' + (catActive ? 'true' : 'false') + '" data-drawer-cat-trigger>' +
+          '<span class="ico">' + c.ico + '</span><span class="label">' + c.cat + '</span>' +
+          '<span class="sn-drawer-cat-arrow" aria-hidden="true">›</span></button>' +
+          '<div class="sn-drawer-cat-panel"' + (catActive ? '' : ' hidden') + ' data-drawer-cat-panel>' +
+          '<div class="sn-drawer-cat-panel-inner">' + itemsHtml + '</div></div></div>';
+      }).join('');
+      return '<div class="sn-group"><div class="sn-group-label">' + g.label + '</div>' +
+        leadHtml + '<div class="sn-drawer-cats">' + catsHtml + '</div></div>';
+    }
+    return '<div class="sn-group"><div class="sn-group-label">' + g.label + '</div>' +
+      g.items.map(linkHtml).join('') + '</div>';
+  }
+
   function mount() {
     document.querySelectorAll('body > nav:not(.sn-bottom)').forEach(function (legacyNav) {
       legacyNav.remove();
@@ -238,10 +253,7 @@
     if (isInternal) document.body.classList.add('dash-app');
 
     var topLinksHtml = topLinks.map(topItemHtml).join('');
-    var drawerHtml = drawerGroups.map(function (g) {
-      return '<div class="sn-group"><div class="sn-group-label">' + g.label + '</div>' +
-        g.items.map(linkHtml).join('') + '</div>';
-    }).join('');
+    var drawerHtml = drawerGroups.map(drawerGroupHtml).join('');
     var bottomHtml = bottomItems.map(linkHtml).join('');
 
     /* Avatar de login: círculo com ícone de usuário (estado deslogado por padrão).
@@ -537,6 +549,46 @@
       // fecha os flyouts quando o dropdown pai de "ferramentas" fecha
       root.querySelectorAll('[data-dropdown]').forEach(function (dd) {
         dd.addEventListener('mouseleave', function () { cats.forEach(closeCat); });
+      });
+    })();
+
+    /* ---- Categorias no drawer mobile: accordion retrátil (clique expande/recolhe) ---- */
+    (function bindDrawerCategoryAccordion() {
+      var cats = root.querySelectorAll('[data-drawer-cat]');
+      if (!cats.length) return;
+
+      function setOpen(cat, open) {
+        var trigger = cat.querySelector('[data-drawer-cat-trigger]');
+        var panel = cat.querySelector('[data-drawer-cat-panel]');
+        if (!trigger || !panel) return;
+        if (open) {
+          panel.hidden = false;
+          var inner = panel.querySelector('.sn-drawer-cat-panel-inner');
+          // força reflow para animar de 0 até a altura real do conteúdo
+          void panel.offsetHeight;
+          panel.style.maxHeight = (inner ? inner.scrollHeight : panel.scrollHeight) + 'px';
+          cat.classList.add('is-open');
+          trigger.setAttribute('aria-expanded', 'true');
+        } else {
+          panel.style.maxHeight = '0px';
+          cat.classList.remove('is-open');
+          trigger.setAttribute('aria-expanded', 'false');
+          setTimeout(function () {
+            if (!cat.classList.contains('is-open')) panel.hidden = true;
+          }, 240);
+        }
+      }
+
+      cats.forEach(function (cat) {
+        var trigger = cat.querySelector('[data-drawer-cat-trigger]');
+        if (!trigger) return;
+        // categoria com item ativo já abre expandida
+        if (cat.classList.contains('has-active')) setOpen(cat, true);
+
+        trigger.addEventListener('click', function () {
+          var isOpen = cat.classList.contains('is-open');
+          setOpen(cat, !isOpen);
+        });
       });
     })();
 
