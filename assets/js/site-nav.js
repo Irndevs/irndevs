@@ -395,6 +395,7 @@
           var t = dd.querySelector('[data-dd-trigger]');
           var p = dd.querySelector('[data-dd-panel]');
           if (t) t.setAttribute('aria-expanded', 'false');
+          if (dd._closeCats) dd._closeCats();
           // delay hidden para a animação CSS de saída (~220ms)
           if (p) {
             setTimeout(function () {
@@ -435,6 +436,11 @@
           openDd(dd);
         });
         dd.addEventListener('mouseleave', scheduleClose);
+        // exposto para o bind das categorias: como o flyout de categoria é
+        // movido para <body> ao abrir, ele "sai" da área de hover deste
+        // dropdown — sem isso, passar o mouse nele fecharia o painel todo.
+        dd._cancelClose = cancelClose;
+        dd._scheduleClose = scheduleClose;
 
         // Click no trigger: alterna (útil em touch / teclado)
         trigger.addEventListener('click', function (e) {
@@ -484,9 +490,10 @@
 
       function closeCat(cat) {
         cat.classList.remove('is-open');
-        cat.classList.remove('flip-left');
         var t = cat.querySelector('[data-dd-cat-trigger]');
         if (t) t.setAttribute('aria-expanded', 'false');
+        var fly = cat.querySelector('[data-dd-flyout]') || cat._flyoutRef;
+        if (fly) fly.classList.remove('is-open');
       }
       function closeSiblings(except) {
         cats.forEach(function (c) { if (c !== except) closeCat(c); });
@@ -496,24 +503,29 @@
         cat.classList.add('is-open');
         var t = cat.querySelector('[data-dd-cat-trigger]');
         if (t) t.setAttribute('aria-expanded', 'true');
-        // Posiciona o flyout via JS com position:fixed, ancorado no botão da
-        // categoria. Isso é necessário porque o painel pai (.sn-dd-panel) tem
-        // overflow-y:auto — o que faz o navegador forçar overflow-x:auto
-        // também (regra do CSS Overflow), cortando qualquer coisa que tente
-        // "vazar" pra fora do painel via position:absolute. Com position:fixed
-        // o flyout sai da árvore de overflow do painel e não é mais cortado.
+        // O flyout é movido para <body> na primeira abertura e posicionado
+        // via JS com position:fixed, ancorado no botão da categoria. É
+        // necessário porque qualquer ancestral com transform/filter/
+        // backdrop-filter (o header usa backdrop-filter; o painel usava
+        // transform na animação) cria um "containing block" para
+        // descendentes fixed, fazendo o navegador posicioná-los relativos a
+        // esse ancestral em vez da tela — o flyout ficava fora da área
+        // visível ou cortado pelo overflow do painel. Morando em <body>,
+        // ele escapa de qualquer ancestral assim, hoje ou no futuro.
         var fly = cat.querySelector('[data-dd-flyout]');
         if (fly && t) {
+          if (fly.parentNode !== document.body) {
+            cat._flyoutRef = fly; // guarda referência pra achar depois de mover
+            document.body.appendChild(fly);
+          }
           requestAnimationFrame(function () {
             var tr = t.getBoundingClientRect();
             var flyWidth = fly.offsetWidth || 280;
             var flyHeight = fly.offsetHeight || 300;
             var gap = 6;
             var left = tr.right + gap;
-            var flipLeft = false;
             if (left + flyWidth > window.innerWidth - 8) {
               left = tr.left - flyWidth - gap;
-              flipLeft = true;
             }
             if (left < 8) left = 8;
             var top = tr.top - 8;
@@ -522,7 +534,7 @@
             }
             fly.style.left = left + 'px';
             fly.style.top = top + 'px';
-            cat.classList.toggle('flip-left', flipLeft);
+            fly.classList.add('is-open');
           });
         }
       }
@@ -539,6 +551,20 @@
         // mouse
         cat.addEventListener('mouseenter', function () { cancelClose(); openCat(cat); });
         cat.addEventListener('mouseleave', scheduleClose);
+        // O flyout mora em <body> depois de aberto (fora da árvore de `cat`),
+        // então precisa dos próprios listeners de hover pra não fechar quando
+        // o mouse entra nele — e também precisa "avisar" o dropdown pai
+        // (ferramentas) que o mouse ainda está em uso, senão o painel
+        // principal se fecharia sozinho por trás do flyout.
+        var parentDd = cat.closest('[data-dropdown]');
+        flyout.addEventListener('mouseenter', function () {
+          cancelClose();
+          if (parentDd && parentDd._cancelClose) parentDd._cancelClose();
+        });
+        flyout.addEventListener('mouseleave', function () {
+          scheduleClose();
+          if (parentDd && parentDd._scheduleClose) parentDd._scheduleClose();
+        });
 
         // toque / clique (mobile o dropdown inteiro some, mas mantém suporte por segurança)
         trigger.addEventListener('click', function (e) {
@@ -568,6 +594,7 @@
 
       // fecha os flyouts quando o dropdown pai de "ferramentas" fecha
       root.querySelectorAll('[data-dropdown]').forEach(function (dd) {
+        dd._closeCats = function () { cats.forEach(closeCat); };
         dd.addEventListener('mouseleave', function () { cats.forEach(closeCat); });
       });
     })();

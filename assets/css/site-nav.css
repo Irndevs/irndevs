@@ -196,20 +196,23 @@ body.has-site-nav { padding-top: var(--nav-top-h); }
   /* barra de rolagem invisível (some visualmente, continua rolável) */
   scrollbar-width: none;
   -ms-overflow-style: none;
-  /* animação suave de entrada/saída */
+  /* animação de entrada/saída SEM `transform`: `transform` num ancestral cria
+     um novo containing block para descendentes `position:fixed` (como o
+     .sn-dd-flyout das categorias), o que quebrava o posicionamento dele em
+     relação à tela. Usamos margin-top pra simular o mesmo leve slide. */
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-8px) scale(0.98);
+  margin-top: -8px;
   pointer-events: none;
   transition:
     opacity 0.2s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    margin-top 0.22s cubic-bezier(0.22, 1, 0.36, 1),
     visibility 0.2s;
 }
 .sn-dropdown.open .sn-dd-panel {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0) scale(1);
+  margin-top: 0;
   pointer-events: auto;
 }
 .sn-dd-panel::-webkit-scrollbar {
@@ -355,7 +358,7 @@ body.has-site-nav { padding-top: var(--nav-top-h); }
   -ms-overflow-style: none;
   opacity: 0;
   visibility: hidden;
-  transform: translateX(-6px);
+  transform: translateY(4px);
   pointer-events: none;
   transition: opacity 0.16s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.18s cubic-bezier(0.22, 1, 0.36, 1),
@@ -364,11 +367,12 @@ body.has-site-nav { padding-top: var(--nav-top-h); }
 .sn-dd-flyout::-webkit-scrollbar {
   display: none;
 }
-.sn-dd-cat.flip-left .sn-dd-flyout {
-  transform: translateX(6px);
-}
-.sn-dd-cat.is-open .sn-dd-flyout,
-.sn-dd-cat:focus-within .sn-dd-flyout {
+/* Estado de aberto é uma classe no PRÓPRIO flyout (não mais num ancestral
+   .sn-dd-cat), porque o JS move este elemento para <body> ao abrir — assim
+   ele escapa de qualquer ancestral com transform/filter/backdrop-filter
+   (como o header, que usa backdrop-filter) que criaria um containing block
+   e quebraria o position:fixed relativo à tela. */
+.sn-dd-flyout.is-open {
   opacity: 1;
   visibility: visible;
   transform: translateX(0);
