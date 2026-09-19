@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="IRN Devs">
 <link rel="canonical" href="https://irndevs.com/ferramenta-tabela-pontos.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
@@ -99,13 +99,13 @@ td{padding:8px;border-bottom:1px solid #1a2218}
   <p class="lede">Simule a campanha do seu time: pontos, saldo e % de aproveitamento.</p>
   <div class="card solo">
     <div class="row3">
-      <div><label>Vitórias</label><input type="number" id="v" value="10" min="0"></div>
-      <div><label>Empates</label><input type="number" id="e" value="5" min="0"></div>
-      <div><label>Derrotas</label><input type="number" id="d" value="3" min="0"></div>
+      <div><label for="v">Vitórias</label><input type="number" id="v" value="10" min="0"></div>
+      <div><label for="e">Empates</label><input type="number" id="e" value="5" min="0"></div>
+      <div><label for="d">Derrotas</label><input type="number" id="d" value="3" min="0"></div>
     </div>
     <div class="row2">
-      <div><label>Gols marcados</label><input type="number" id="gm" value="28" min="0"></div>
-      <div><label>Gols sofridos</label><input type="number" id="gs" value="15" min="0"></div>
+      <div><label for="gm">Gols marcados</label><input type="number" id="gm" value="28" min="0"></div>
+      <div><label for="gs">Gols sofridos</label><input type="number" id="gs" value="15" min="0"></div>
     </div>
     <button class="btn" onclick="calc()">Calcular</button>
     <div class="result" id="res">
@@ -137,7 +137,7 @@ function calc(){
 }
 </script>
 
-<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 
 <section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">

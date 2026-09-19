@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="IRN Devs">
 <link rel="canonical" href="https://irndevs.com/ferramenta-porcentagem.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
@@ -94,24 +94,24 @@ textarea{min-height:100px;resize:vertical}
   </div>
   <div class="card show" id="card-a">
     <div class="row2">
-      <div><label>Porcentagem (%)</label><input type="number" id="a1" value="15" step="0.01"></div>
-      <div><label>Valor</label><input type="number" id="a2" value="200" step="0.01"></div>
+      <div><label for="a1">Porcentagem (%)</label><input type="number" id="a1" value="15" step="0.01"></div>
+      <div><label for="a2">Valor</label><input type="number" id="a2" value="200" step="0.01"></div>
     </div>
     <button class="btn" onclick="calcA()">Calcular</button>
     <div class="result" id="ra"><div class="big" id="ba">—</div></div>
   </div>
   <div class="card" id="card-b">
     <div class="row2">
-      <div><label>Valor parcial</label><input type="number" id="b1" value="30" step="0.01"></div>
-      <div><label>Valor total</label><input type="number" id="b2" value="150" step="0.01"></div>
+      <div><label for="b1">Valor parcial</label><input type="number" id="b1" value="30" step="0.01"></div>
+      <div><label for="b2">Valor total</label><input type="number" id="b2" value="150" step="0.01"></div>
     </div>
     <button class="btn" onclick="calcB()">Calcular</button>
     <div class="result" id="rb"><div class="big" id="bb">—</div></div>
   </div>
   <div class="card" id="card-c">
     <div class="row2">
-      <div><label>Valor original</label><input type="number" id="c1" value="100" step="0.01"></div>
-      <div><label>Variação (%)</label><input type="number" id="c2" value="10" step="0.01"></div>
+      <div><label for="c1">Valor original</label><input type="number" id="c1" value="100" step="0.01"></div>
+      <div><label for="c2">Variação (%)</label><input type="number" id="c2" value="10" step="0.01"></div>
     </div>
     <div class="row2">
       <button class="btn" onclick="calcC(1)">Aplicar aumento</button>
@@ -129,7 +129,7 @@ function calcB(){var a=+document.getElementById('b1').value||0,b=+document.getEl
 function calcC(dir){var v=+document.getElementById('c1').value||0,p=+document.getElementById('c2').value||0;var d=v*p/100*dir;var f=v+d;document.getElementById('bc').textContent=f.toLocaleString('pt-BR',{maximumFractionDigits:4});document.getElementById('cdiff').textContent=(d>=0?'+':'')+d.toLocaleString('pt-BR',{maximumFractionDigits:4});document.getElementById('rc').classList.add('show');}
 </script>
 
-<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 
 <section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">

@@ -1,5 +1,5 @@
 /* IRN Devs — service worker leve (cache estático) */
-const CACHE = 'irn-v20260919b';
+const CACHE = 'irn-v20260919c';
 const OFFLINE_URL = '/offline.html';
 const ASSETS = [
   '/',

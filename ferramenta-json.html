@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="IRN Devs">
 <link rel="canonical" href="https://irndevs.com/ferramenta-json.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918menu">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
@@ -70,7 +70,7 @@ textarea:focus{outline:none;border-color:var(--amber)}
   <div class="sec-head"><span class="amber">$</span> jq --format --validate</div>
   <h1>Validador e Formatador JSON</h1>
   <p class="lede">Cole o JSON, valide a sintaxe e formate com indentação.</p>
-  <textarea id="in" placeholder='{"exemplo": true, "lista": [1,2,3]}'></textarea>
+  <textarea id="in" aria-label="JSON de entrada" placeholder='{"exemplo": true, "lista": [1,2,3]}'></textarea>
   <div class="btns">
     <button class="btn" onclick="formatar()">Formatar + Validar</button>
     <button class="btn2" onclick="minificar()">Minificar</button>
@@ -102,7 +102,7 @@ function copiar(){
   navigator.clipboard.writeText(document.getElementById('in').value).then(()=>alert('Copiado!'));
 }
 </script>
-<script src="assets/js/site-nav.js?v=20260918tools" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 
 <section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">

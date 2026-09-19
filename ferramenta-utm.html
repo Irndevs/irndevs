@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="IRN Devs">
 <link rel="canonical" href="https://irndevs.com/ferramenta-utm.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
@@ -88,16 +88,16 @@ textarea{min-height:100px;resize:vertical}
   <h1>Gerador de UTM</h1>
   <p class="lede">Preencha os campos e copie o link rastreável pronto para anúncios e posts.</p>
   <div class="card solo">
-    <div><label>URL base *</label><input type="url" id="base" placeholder="https://seusite.com/pagina" value="https://irndevs.com/"></div>
+    <div><label for="base">URL base *</label><input type="url" id="base" placeholder="https://seusite.com/pagina" value="https://irndevs.com/"></div>
     <div class="row2">
-      <div><label>utm_source *</label><input type="text" id="src" value="instagram" placeholder="google, newsletter..."></div>
-      <div><label>utm_medium *</label><input type="text" id="med" value="social" placeholder="cpc, email, social..."></div>
+      <div><label for="src">utm_source *</label><input type="text" id="src" value="instagram" placeholder="google, newsletter..."></div>
+      <div><label for="med">utm_medium *</label><input type="text" id="med" value="social" placeholder="cpc, email, social..."></div>
     </div>
     <div class="row2">
-      <div><label>utm_campaign</label><input type="text" id="camp" value="lancamento_ferramentas"></div>
-      <div><label>utm_content</label><input type="text" id="cont" placeholder="opcional"></div>
+      <div><label for="camp">utm_campaign</label><input type="text" id="camp" value="lancamento_ferramentas"></div>
+      <div><label for="cont">utm_content</label><input type="text" id="cont" placeholder="opcional"></div>
     </div>
-    <div><label>utm_term</label><input type="text" id="term" placeholder="opcional (palavra-chave paga)"></div>
+    <div><label for="term">utm_term</label><input type="text" id="term" placeholder="opcional (palavra-chave paga)"></div>
     <button class="btn" onclick="gerar()">Gerar link UTM</button>
     <div class="result" id="res">
       <div class="big" style="font-size:14px;word-break:break-all" id="out">—</div>
@@ -123,7 +123,7 @@ function gerar(){
 function copiar(){navigator.clipboard.writeText(window._utm||'').then(function(){alert('Copiado!');});}
 </script>
 
-<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 
 <section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">

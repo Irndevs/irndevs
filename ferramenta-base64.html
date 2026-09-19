@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="IRN Devs">
 <link rel="canonical" href="https://irndevs.com/ferramenta-base64.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
@@ -92,7 +92,7 @@ textarea{min-height:100px;resize:vertical}
     <div class="tab" onclick="aba('url',this)">URL encode</div>
   </div>
   <div class="card show" id="card-b64">
-    <div><label>Texto</label><textarea id="bIn" placeholder="Cole o texto..."></textarea></div>
+    <div><label for="bIn">Texto</label><textarea id="bIn" placeholder="Cole o texto..."></textarea></div>
     <div class="row2">
       <button class="btn" onclick="b64enc()">Codificar Base64</button>
       <button class="btn ghost" style="margin:0" onclick="b64dec()">Decodificar Base64</button>
@@ -102,7 +102,7 @@ textarea{min-height:100px;resize:vertical}
     </div>
   </div>
   <div class="card" id="card-url">
-    <div><label>Texto / URL</label><textarea id="uIn" placeholder="https://exemplo.com/busca?q=olá mundo"></textarea></div>
+    <div><label for="uIn">Texto / URL</label><textarea id="uIn" placeholder="https://exemplo.com/busca?q=olá mundo"></textarea></div>
     <div class="row2">
       <button class="btn" onclick="urlenc()">Encode</button>
       <button class="btn ghost" style="margin:0" onclick="urldec()">Decode</button>
@@ -121,7 +121,7 @@ function urldec(){try{document.getElementById('uOut').textContent=decodeURICompo
 function copy(id){var t=document.getElementById(id).textContent;navigator.clipboard.writeText(t).then(function(){alert('Copiado!');}).catch(function(){prompt('Copie:',t);});}
 </script>
 
-<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 
 <section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">

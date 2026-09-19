@@ -33,11 +33,14 @@ irndevs/
 ├── ferramentas.html                   # Ferramentas gratuitas
 ├── ferramenta-checklist.html          # Checklist de diagnóstico
 ├── orcamentos.html                    # Área de orçamentos
-├── assets/css/                        # Estilos compartilhados e por página
-├── assets/js/                         # Navegação, autenticação e interações
+├── en/                                # Versão em inglês (home, services, packages, diagnostic, how-to-hire, courses, about, contact)
+├── assets/css/                        # Estilos compartilhados e por página (en.css = páginas em inglês)
+├── assets/js/                         # Navegação (site-nav.js, PT/EN), autenticação e interações
 ├── assets/img/                        # Logos, ícones, diagramas e OG images
-├── supabase/                          # Schema e políticas do banco
-├── scripts/validate-site.py           # Validador de HTML, links e metadados
+├── supabase/                          # Schema e políticas do banco (versionar aqui: schema.sql, admin-policies.sql)
+├── scripts/validate-site.py           # Validador: HTML, links, canonical, sitemap, hreflang, acessibilidade
+├── scripts/audit-rls.sql              # Auditoria somente-leitura da RLS do Supabase
+├── .github/workflows/validate.yml     # CI: roda o validador e checa a sintaxe dos JS
 ├── sitemap.xml                        # Sitemap do site publicado
 ├── robots.txt                         # Regras para crawlers
 └── README.md                          # Esta documentação
@@ -90,13 +93,17 @@ Execute o validador incluído no projeto:
 python3 scripts/validate-site.py
 ```
 
-A versão entregue após as melhorias foi validada com o resultado:
+Saída esperada (o número de páginas cresce com o site):
 
 ```text
-Validated 86 HTML pages: OK
+Validated 174 HTML pages: OK
 ```
 
-Também foram verificados os arquivos CSS, assets locais, sintaxe dos arquivos JavaScript, IDs duplicados, referências do sitemap e carregamento HTTP das páginas comerciais principais. A auditoria publicada encontrou zero problemas nesses arquivos ativos.
+O validador confere, por página: `<title>`, meta description, um único `h1`, IDs duplicados (só no HTML estático — templates dentro de `<script>` são ignorados), links/CSS/JS locais, `canonical`, fechamento de `</body></html>`, presença do `site-nav.js`, nome acessível em todo campo de formulário e `hreflang` nas páginas `/en/`. No site inteiro, confere o `sitemap.xml`: toda página indexável precisa estar listada e nenhuma página `noindex` pode estar. O mesmo comando roda no GitHub Actions a cada push/PR (`.github/workflows/validate.yml`).
+
+## Segurança (Supabase)
+
+O site é estático: `admin.html` e a área do cliente só redirecionam no navegador (`auth-gates.js`). A proteção real dos dados é a RLS do Supabase. Mantenha `supabase/schema.sql` e `supabase/admin-policies.sql` versionados neste repositório e rode `scripts/audit-rls.sql` no SQL Editor depois de qualquer mudança de schema ou de policy. Nunca coloque a `service_role` key no front-end (só a `anon` key).
 
 ## Publicação
 
@@ -113,7 +120,11 @@ Antes de uma publicação definitiva, confirme:
 
 ## Manutenção
 
-Ao criar uma nova página pública, adicione título, descrição, canonical, Open Graph, favicon, idioma, um único `h1` e os links necessários ao sitemap. Depois execute `scripts/validate-site.py`.
+Ao criar uma nova página pública, adicione título, descrição, canonical, Open Graph, favicon, idioma, um único `h1` e os links necessários ao sitemap. Páginas privadas (login, certificados, pedidos) devem ter `noindex` e **não** entrar no sitemap. Depois execute `scripts/validate-site.py`.
+
+Páginas com equivalente em inglês devem ter `hreflang` nos dois sentidos (`pt-BR`, `en`, `x-default`) e o par cadastrado no mapa `PT_TO_EN`/`EN_TO_PT` do `assets/js/site-nav.js`, que também controla o seletor de idioma no menu. O menu injetado por `site-nav.js` usa caminhos absolutos em `/en/*`; ao criar novos links no nav, use sempre `/caminho.html` nas páginas em inglês.
+
+Ao alterar `site-nav.js` ou `site-nav.css`, troque o token `?v=` em **todas** as páginas de uma vez (busca e substituição global) e incremente `CACHE` em `sw.js`.
 
 Ao criar um artigo, mantenha a estrutura dos artigos existentes e inclua uma chamada contextual para o diagnóstico quando o tema tiver relação com serviços da IRN Devs. Evite afirmar resultados ou métricas que não possam ser comprovados.
 

@@ -82,14 +82,18 @@
     el.id = 'irn-cookie-banner';
     el.setAttribute('role', 'dialog');
     el.setAttribute('aria-live', 'polite');
-    el.setAttribute('aria-label', 'Preferências de cookies e privacidade');
+    var en = /^\/en(\/|$)/.test(location.pathname);
+    el.setAttribute('aria-label', en ? 'Cookie and privacy preferences' : 'Preferências de cookies e privacidade');
     el.innerHTML =
-      '<p>Usamos armazenamento local para preferências do site e, se você aceitar, ' +
-      'métricas agregadas de visitas (sem rastreamento invasivo). ' +
-      'Detalhes em <a href="privacidade.html">Política de Privacidade</a>.</p>' +
+      (en
+        ? '<p>We use local storage for site preferences and, if you accept, aggregate visit metrics ' +
+          '(no invasive tracking). Details in the <a href="/privacidade.html">Privacy Policy</a> (Portuguese).</p>'
+        : '<p>Usamos armazenamento local para preferências do site e, se você aceitar, ' +
+          'métricas agregadas de visitas (sem rastreamento invasivo). ' +
+          'Detalhes em <a href="/privacidade.html">Política de Privacidade</a>.</p>') +
       '<div class="irn-cookie-actions">' +
-      '<button type="button" class="irn-cookie-accept">Aceitar</button>' +
-      '<button type="button" class="irn-cookie-reject">Recusar</button>' +
+      '<button type="button" class="irn-cookie-accept">' + (en ? 'Accept' : 'Aceitar') + '</button>' +
+      '<button type="button" class="irn-cookie-reject">' + (en ? 'Decline' : 'Recusar') + '</button>' +
       '</div>';
     document.body.appendChild(el);
 

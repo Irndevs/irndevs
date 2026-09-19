@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="IRN Devs">
 <link rel="canonical" href="https://irndevs.com/ferramenta-sensibilidade.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
@@ -78,7 +78,7 @@ input,select{width:100%;padding:12px 14px;border:1px solid var(--border);border-
 
   <div class="card">
     <h2>Jogo de origem</h2>
-    <label>Jogo</label>
+    <label for="jogoA">Jogo</label>
     <select id="jogoA" onchange="preencherYaw('A')">
       <option value="0.022">CS2 / CS:GO</option>
       <option value="0.022">Apex Legends</option>
@@ -87,18 +87,18 @@ input,select{width:100%;padding:12px 14px;border:1px solid var(--border);border-
       <option value="custom">Personalizado</option>
     </select>
     <div id="yawWrapA" style="display:none">
-      <label>Valor "yaw" (graus por contagem) do jogo de origem</label>
+      <label for="yawA">Valor "yaw" (graus por contagem) do jogo de origem</label>
       <input type="number" id="yawA" step="0.0001">
     </div>
     <div class="row2">
-      <div><label>DPI do mouse</label><input type="number" id="dpiA" value="800"></div>
-      <div><label>Sensibilidade no jogo</label><input type="number" id="sensA" value="1" step="0.001"></div>
+      <div><label for="dpiA">DPI do mouse</label><input type="number" id="dpiA" value="800"></div>
+      <div><label for="sensA">Sensibilidade no jogo</label><input type="number" id="sensA" value="1" step="0.001"></div>
     </div>
   </div>
 
   <div class="card">
     <h2>Jogo de destino</h2>
-    <label>Jogo</label>
+    <label for="jogoB">Jogo</label>
     <select id="jogoB" onchange="preencherYaw('B')">
       <option value="0.07">Valorant</option>
       <option value="0.022">CS2 / CS:GO</option>
@@ -107,10 +107,10 @@ input,select{width:100%;padding:12px 14px;border:1px solid var(--border);border-
       <option value="custom">Personalizado</option>
     </select>
     <div id="yawWrapB" style="display:none">
-      <label>Valor "yaw" (graus por contagem) do jogo de destino</label>
+      <label for="yawB">Valor "yaw" (graus por contagem) do jogo de destino</label>
       <input type="number" id="yawB" step="0.0001">
     </div>
-    <label>DPI do mouse no jogo de destino</label>
+    <label for="dpiB">DPI do mouse no jogo de destino</label>
     <input type="number" id="dpiB" value="800">
   </div>
 
@@ -154,7 +154,7 @@ function converter(){
   document.getElementById('res').classList.add('show');
 }
 </script>
-<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 
 <section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">

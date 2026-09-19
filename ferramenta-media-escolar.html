@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="IRN Devs">
 <link rel="canonical" href="https://irndevs.com/ferramenta-media-escolar.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
@@ -92,13 +92,13 @@ textarea{min-height:120px;resize:vertical}
   <p class="lede">Média simples ou ponderada com nota mínima para aprovação.</p>
   <div class="card solo">
     <div class="row2">
-      <div><label>Tipo de média</label>
+      <div><label for="tipo">Tipo de média</label>
         <select id="tipo"><option value="simples">Aritmética (simples)</option><option value="ponderada">Ponderada</option></select>
       </div>
-      <div><label>Média mínima para passar</label><input type="number" id="min" value="6" step="0.1" min="0" max="10"></div>
+      <div><label for="min">Média mínima para passar</label><input type="number" id="min" value="6" step="0.1" min="0" max="10"></div>
     </div>
-    <div><label>Notas (separadas por vírgula)</label><input type="text" id="notas" value="7.5, 6.0, 8.2, 5.5"></div>
-    <div id="pesosWrap"><label>Pesos (mesma ordem, só para ponderada)</label><input type="text" id="pesos" value="1, 1, 2, 2"></div>
+    <div><label for="notas">Notas (separadas por vírgula)</label><input type="text" id="notas" value="7.5, 6.0, 8.2, 5.5"></div>
+    <div id="pesosWrap"><label for="pesos">Pesos (mesma ordem, só para ponderada)</label><input type="text" id="pesos" value="1, 1, 2, 2"></div>
     <button class="btn" onclick="calc()">Calcular média</button>
     <div class="result" id="res">
       <div class="big" id="big">—</div>
@@ -135,7 +135,7 @@ function calc(){
 }
 </script>
 
-<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 
 <section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">

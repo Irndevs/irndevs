@@ -6,6 +6,52 @@
 (function () {
   var path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
 
+  /* Páginas em /en/ usam a mesma engine, mas com textos em inglês e destinos absolutos.
+     O nav é injetado por JS: um href relativo como "servicos.html" viraria /en/servicos.html (404). */
+  var IS_EN = /^\/en(\/|$)/.test(location.pathname);
+
+  function abs(u) {
+    return (!u || /^([a-z][a-z0-9+.-]*:|\/|#|\?)/i.test(u)) ? u : '/' + u;
+  }
+  /* Só reescreve em /en/ — nas páginas PT o caminho relativo já funciona e o auth.js
+     localiza links do drawer por href relativo. */
+  function P(u) { return IS_EN ? abs(u) : u; }
+
+  /* Equivalência PT ↔ EN (chave = nome do arquivo atual) */
+  var PT_TO_EN = {
+    'index.html': '/en/', 'servicos.html': '/en/services.html', 'sobre.html': '/en/about.html',
+    'contato.html': '/en/contact.html', 'cursos.html': '/en/courses.html',
+    'diagnostico.html': '/en/diagnostic.html', 'pacotes.html': '/en/packages.html',
+    'como-contratar.html': '/en/how-to-hire.html'
+  };
+  var EN_TO_PT = {
+    'index.html': '/', 'services.html': '/servicos.html', 'about.html': '/sobre.html',
+    'contact.html': '/contato.html', 'courses.html': '/cursos.html',
+    'diagnostic.html': '/diagnostico.html', 'packages.html': '/pacotes.html',
+    'how-to-hire.html': '/como-contratar.html'
+  };
+
+  /* Textos da interface (PT = valores originais, sem mudança de comportamento) */
+  var T = IS_EN ? {
+    menuOpen: 'Open navigation menu', menuClose: 'Close navigation menu', nav: 'Main',
+    searchOpen: 'Open search', searchTitle: 'Search', signinTitle: 'Sign in / sign up',
+    signinAria: 'Sign in or create account', signup: 'sign up', cta: 'contact', ctaHref: '/en/contact.html',
+    searchPanel: 'Site search', placeholder: 'search: services, courses, k3s, blog...',
+    searchAria: 'Search the site', searchClose: 'Close search', results: 'Results',
+    drawer: 'Navigation menu', close: 'Close', shortcuts: 'Shortcuts',
+    noHits: 'No direct match — see the blog (PT)', socialOpen: 'Open social links', social: 'social',
+    soc: function (n) { return 'IRN Devs on ' + n; }
+  } : {
+    menuOpen: 'Abrir menu de navegação', menuClose: 'Fechar menu de navegação', nav: 'Principal',
+    searchOpen: 'Abrir busca', searchTitle: 'Buscar', signinTitle: 'Entrar / cadastro',
+    signinAria: 'Entrar ou criar conta', signup: 'cadastro', cta: 'contato', ctaHref: 'contato.html',
+    searchPanel: 'Busca no site', placeholder: 'buscar: k3s, grafana, projetos, blog...',
+    searchAria: 'Buscar no site', searchClose: 'Fechar busca', results: 'Resultados',
+    drawer: 'Menu de navegação', close: 'Fechar', shortcuts: 'Atalhos',
+    noHits: 'Nada direto — ver blog', socialOpen: 'Abrir redes sociais', social: 'redes',
+    soc: function (n) { return n + ' da IRN Devs'; }
+  };
+
   var INTERNAL = {
     'conta.html': 1,
     'area-cliente.html': 1,
@@ -130,7 +176,7 @@
     { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
     {
       href: 'ferramentas.html',
-      label: 'para aprender · ferramentas',
+      label: 'ferramentas',
       ico: '▣',
       extraClass: 'sn-top-tools',
       dropdown: true,
@@ -138,7 +184,7 @@
     },
     {
       href: 'cursos.html',
-      label: 'para aprender · cursos',
+      label: 'cursos',
       ico: '◈',
       extraClass: 'sn-top-cursos',
       dropdown: true,
@@ -207,6 +253,64 @@
     { href: 'ia.html', label: 'IA', ico: '✦' },
     { href: 'contato.html', label: 'contato', ico: '@' }
   ];
+
+  if (IS_EN) {
+    /* Menu em inglês: destinos EN quando existem; conteúdo só em PT é indicado como (PT). */
+    var enTwin = EN_TO_PT[path] || '/';
+    topLinks = [
+      { href: '/en/services.html', label: 'services', ico: '⚙' },
+      { href: '/en/packages.html', label: 'packages', ico: '▣' },
+      { href: '/en/how-to-hire.html', label: 'how to hire', ico: '→' },
+      { href: '/en/courses.html', label: 'courses', ico: '◈' },
+      { href: '/en/about.html', label: 'about', ico: 'i' },
+      { href: enTwin, label: 'PT', ico: '⇄', extraClass: 'sn-top-lang' }
+    ];
+    drawerGroups = [
+      {
+        label: 'for business',
+        items: [
+          { href: '/en/', label: 'home', ico: '⌂' },
+          { href: '/en/diagnostic.html', label: 'free diagnostic', ico: '⚡' },
+          { href: '/en/services.html', label: 'services', ico: '⚙' },
+          { href: '/en/packages.html', label: 'packages', ico: '▣' },
+          { href: '/en/how-to-hire.html', label: 'how to hire', ico: '→' },
+          { href: '/en/contact.html', label: 'contact', ico: '@' }
+        ]
+      },
+      {
+        label: 'about us',
+        items: [
+          { href: '/en/about.html', label: 'about', ico: 'i' },
+          { href: '/#projetos', label: 'projects (PT)', ico: '▸' }
+        ]
+      },
+      {
+        label: 'learn · in Portuguese',
+        items: [
+          { href: '/en/courses.html', label: 'courses overview', ico: '◈' },
+          { href: '/cursos.html', label: 'all courses (PT)', ico: '◈' },
+          { href: '/ferramentas.html', label: 'free tools (PT)', ico: '▣' },
+          { href: '/blog.html', label: 'blog (PT)', ico: '≡' }
+        ]
+      },
+      {
+        label: 'language',
+        items: [{ href: enTwin, label: 'português', ico: 'PT' }]
+      }
+    ];
+    bottomItems = [
+      { href: '/en/', label: 'home', ico: '⌂' },
+      { href: '/en/services.html', label: 'services', ico: '⚙' },
+      { href: '/en/courses.html', label: 'courses', ico: '◈' },
+      { href: '/en/about.html', label: 'about', ico: 'i' },
+      { href: '/en/contact.html', label: 'contact', ico: '@' }
+    ];
+  } else if (PT_TO_EN[path]) {
+    drawerGroups.push({
+      label: 'idioma',
+      items: [{ href: PT_TO_EN[path], label: 'english version', ico: 'EN' }]
+    });
+  }
 
   function linkHtml(l) {
     var extra = (cls(l.href).trim() + (l.extraClass ? ' ' + l.extraClass : '')).trim();
@@ -299,54 +403,66 @@
     var authSlot = isInternal
       ? '<div class="sn-auth-slot dash-topbar-user" data-auth-slot><a href="/" class="sn-back-site">← site</a></div>'
       : '<div class="sn-auth-slot" data-auth-slot>' +
-        '<a class="sn-avatar sn-avatar--guest" href="login.html" title="Entrar / cadastro" aria-label="Entrar ou criar conta">' +
+        '<a class="sn-avatar sn-avatar--guest" href="login.html" title="' + T.signinTitle + '" aria-label="' + T.signinAria + '">' +
         '<svg class="sn-avatar-ico" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">' +
         '<circle cx="12" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="1.6"/>' +
         '<path d="M5 19.5c0-3.5 3.1-6 7-6s7 2.5 7 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>' +
         '</svg></a>' +
-        '<a class="sn-auth-signup" href="cadastro.html">cadastro</a>' +
+        '<a class="sn-auth-signup" href="cadastro.html">' + T.signup + '</a>' +
         '</div>';
 
     var root = document.createElement('div');
     root.id = 'siteNavRoot';
     root.innerHTML =
       '<header class="sn-top" role="banner">' +
-      (isInternal ? '' : '<button type="button" class="sn-burger" id="snBurger" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="snDrawer">☰</button>') +
+      (isInternal ? '' : '<button type="button" class="sn-burger" id="snBurger" aria-label="' + T.menuOpen + '" aria-expanded="false" aria-controls="snDrawer">☰</button>') +
       '<a href="/" class="sn-logo" aria-label="IRN Devs">' +
       '<img src="assets/img/logo-irndevs.svg" alt="~/irndevs $" width="160" height="32" loading="eager" decoding="async" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline\'">' +
       '<span class="sn-logo-text" style="display:none">~/irndevs <span>$</span></span>' +
       '</a>' +
       (isInternal
         ? authSlot
-        : '<nav class="sn-top-links" aria-label="Principal">' + topLinksHtml + '</nav>' +
-          '<button type="button" class="sn-search-btn" id="snSearchBtn" aria-label="Abrir busca" aria-expanded="false" aria-controls="snSearchPanel" title="Buscar">' +
+        : '<nav class="sn-top-links" aria-label="' + T.nav + '">' + topLinksHtml + '</nav>' +
+          '<button type="button" class="sn-search-btn" id="snSearchBtn" aria-label="' + T.searchOpen + '" aria-expanded="false" aria-controls="snSearchPanel" title="' + T.searchTitle + '">' +
           '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">' +
           '<circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/>' +
           '<path d="M16.5 16.5L21 21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' +
           '</svg></button>' +
           authSlot +
-          '<a href="contato.html" class="sn-top-cta">contato</a>') +
+          '<a href="' + T.ctaHref + '" class="sn-top-cta">' + T.cta + '</a>') +
       '</header>' +
       (isInternal ? '' :
-        '<div class="sn-search-panel" id="snSearchPanel" hidden role="search" aria-label="Busca no site">' +
+        '<div class="sn-search-panel" id="snSearchPanel" hidden role="search" aria-label="' + T.searchPanel + '">' +
         '<div class="sn-search-inner">' +
         '<span class="sn-search-prompt" aria-hidden="true">$</span>' +
-        '<input type="search" id="snSearchInput" class="sn-search-input" placeholder="buscar: k3s, grafana, projetos, blog..." autocomplete="off" enterkeyhint="search" aria-label="Buscar no site">' +
-        '<button type="button" class="sn-search-close" id="snSearchClose" aria-label="Fechar busca">✕</button>' +
+        '<input type="search" id="snSearchInput" class="sn-search-input" placeholder="' + T.placeholder + '" autocomplete="off" enterkeyhint="search" aria-label="' + T.searchAria + '">' +
+        '<button type="button" class="sn-search-close" id="snSearchClose" aria-label="' + T.searchClose + '">✕</button>' +
         '</div>' +
-        '<div id="snSearchResults" class="sn-search-results" hidden role="listbox" aria-label="Resultados"></div>' +
+        '<div id="snSearchResults" class="sn-search-results" hidden role="listbox" aria-label="' + T.results + '"></div>' +
         '</div>' +
         '<div class="sn-overlay" id="snOverlay" hidden></div>' +
-        '<aside class="sn-drawer" id="snDrawer" role="dialog" aria-modal="true" aria-label="Menu de navegação" aria-hidden="true">' +
+        '<aside class="sn-drawer" id="snDrawer" role="dialog" aria-modal="true" aria-label="' + T.drawer + '" aria-hidden="true">' +
         '<div class="sn-drawer-head">' +
         '<a href="/" class="brand"><span class="brand-full">~/irndevs <span>$</span></span><span class="brand-mini">$</span></a>' +
-        '<button type="button" class="sn-close" id="snClose" aria-label="Fechar">✕</button>' +
+        '<button type="button" class="sn-close" id="snClose" aria-label="' + T.close + '">✕</button>' +
         '</div>' +
         '<nav class="sn-drawer-links">' + drawerHtml + '</nav>' +
         '</aside>' +
-        '<nav class="sn-bottom" aria-label="Atalhos">' + bottomHtml + '</nav>');
+        '<nav class="sn-bottom" aria-label="' + T.shortcuts + '">' + bottomHtml + '</nav>');
 
     document.body.insertBefore(root, document.body.firstChild);
+
+    if (IS_EN) {
+      root.querySelectorAll('a[href]').forEach(function (a) {
+        var h = a.getAttribute('href');
+        if (h && abs(h) !== h) a.setAttribute('href', abs(h));
+      });
+      root.querySelectorAll('img[src]').forEach(function (im) {
+        var v = im.getAttribute('src');
+        if (v && abs(v) !== v) im.setAttribute('src', abs(v));
+      });
+      root.querySelectorAll('a.sn-logo, a.brand').forEach(function (a) { a.setAttribute('href', '/en/'); });
+    }
 
     if (isInternal) return;
 
@@ -380,7 +496,7 @@
       if (burger) {
         burger.setAttribute('aria-expanded', 'true');
         burger.setAttribute('aria-pressed', 'true');
-        burger.setAttribute('aria-label', 'Fechar menu de navegação');
+        burger.setAttribute('aria-label', T.menuClose);
       }
       document.body.style.overflow = 'hidden';
       // foca o botão fechar ou o primeiro link
@@ -402,7 +518,7 @@
       if (burger) {
         burger.setAttribute('aria-expanded', 'false');
         burger.setAttribute('aria-pressed', 'false');
-        burger.setAttribute('aria-label', 'Abrir menu de navegação');
+        burger.setAttribute('aria-label', T.menuOpen);
       }
       document.body.style.overflow = '';
       document.body.classList.remove('nav-expanded');
@@ -767,7 +883,7 @@
       if (searchIndexLoading) return;
       searchIndexLoading = true;
       var s = document.createElement('script');
-      s.src = 'assets/js/search-index.js';
+      s.src = P('assets/js/search-index.js');
       s.onload = function () {
         searchPageIndex = window.IRN_SEARCH_INDEX || [];
         searchIndexLoading = false;
@@ -830,11 +946,11 @@
       if (hits.length) {
         searchResults.hidden = false;
         searchResults.innerHTML = hits.slice(0, 8).map(function (p) {
-          return '<a href="' + p.href + '" role="option">' + p.label + '<span>→</span></a>';
+          return '<a href="' + P(p.href) + '" role="option">' + p.label + '<span>→</span></a>';
         }).join('');
       } else {
         searchResults.hidden = false;
-        searchResults.innerHTML = '<a href="blog.html">Nada direto — ver blog <span>→</span></a>';
+        searchResults.innerHTML = '<a href="' + P('blog.html') + '">' + T.noHits + ' <span>→</span></a>';
       }
     }
     if (searchBtn) {
@@ -865,18 +981,18 @@
       var float = document.createElement('div');
       float.id = 'irn-float-cta';
       float.innerHTML =
-        '<button type="button" class="irn-float-btn irn-float-social-toggle" id="irn-social-toggle" aria-expanded="false" aria-controls="irn-social-links" title="Abrir redes sociais" aria-label="Abrir redes sociais">' +
-        '<span class="irn-float-ico">◎</span><span class="irn-float-txt">redes</span></button>' +
+        '<button type="button" class="irn-float-btn irn-float-social-toggle" id="irn-social-toggle" aria-expanded="false" aria-controls="irn-social-links" title="' + T.socialOpen + '" aria-label="' + T.socialOpen + '">' +
+        '<span class="irn-float-ico">◎</span><span class="irn-float-txt">' + T.social + '</span></button>' +
         '<div id="irn-social-links" class="irn-social-links" hidden>' +
-        '<a href="https://instagram.com/irndevs" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="Instagram da IRN Devs" aria-label="Instagram da IRN Devs">' +
+        '<a href="https://instagram.com/irndevs" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="' + T.soc('Instagram') + '" aria-label="' + T.soc('Instagram') + '">' +
         '<span class="irn-float-ico">◎</span><span class="irn-float-txt">Instagram</span></a>' +
-        '<a href="https://linkedin.com/company/irndevs" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="LinkedIn da IRN Devs" aria-label="LinkedIn da IRN Devs">' +
+        '<a href="https://linkedin.com/company/irndevs" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="' + T.soc('LinkedIn') + '" aria-label="' + T.soc('LinkedIn') + '">' +
         '<span class="irn-float-ico">in</span><span class="irn-float-txt">LinkedIn</span></a>' +
-        '<a href="https://github.com/iri-afk" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="GitHub da IRN Devs" aria-label="GitHub da IRN Devs">' +
+        '<a href="https://github.com/iri-afk" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="' + T.soc('GitHub') + '" aria-label="' + T.soc('GitHub') + '">' +
         '<span class="irn-float-ico">⌘</span><span class="irn-float-txt">GitHub</span></a>' +
-        '<a href="https://youtube.com/@irndevs" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="YouTube da IRN Devs" aria-label="YouTube da IRN Devs">' +
+        '<a href="https://youtube.com/@irndevs" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="' + T.soc('YouTube') + '" aria-label="' + T.soc('YouTube') + '">' +
         '<span class="irn-float-ico">▶</span><span class="irn-float-txt">YouTube</span></a>' +
-        '<a href="https://x.com/irndevs" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="X da IRN Devs" aria-label="X da IRN Devs">' +
+        '<a href="https://x.com/irndevs" target="_blank" rel="noopener noreferrer" class="irn-float-btn irn-float-social" title="' + T.soc('X') + '" aria-label="' + T.soc('X') + '">' +
         '<span class="irn-float-ico">𝕏</span><span class="irn-float-txt">X</span></a></div>';
       document.body.appendChild(float);
       var socialToggle = document.getElementById('irn-social-toggle');
@@ -898,6 +1014,8 @@
   }
 
   function loadAuthThenPaint() {
+    /* Login/área do cliente são só em PT; em /en/ não carrega Supabase nem repinta o slot. */
+    if (IS_EN) return;
     if (window.IRNAuth && typeof window.IRNAuth.paintNavAuth === 'function') {
       window.IRNAuth.paintNavAuth();
       return;
@@ -937,7 +1055,7 @@
     // Banner LGPD / cookies (todas as páginas)
     if (!document.querySelector('script[src*="cookie-consent.js"]')) {
       var cs = document.createElement('script');
-      cs.src = 'assets/js/cookie-consent.js?v=20260919consent';
+      cs.src = P('assets/js/cookie-consent.js?v=20260919i18n');
       cs.defer = true;
       document.head.appendChild(cs);
     }

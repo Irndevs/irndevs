@@ -7,7 +7,7 @@
 <meta name="description" content="To-do, pomodoro e scratchpad locais no navegador. Ferramentas de foco da IRN Devs.">
 <meta name="author" content="IRN Devs">
 <link rel="stylesheet" href="assets/css/pages/produtividade.css">
-  <link rel="stylesheet" href="assets/css/site-nav.css?v=20260918menu">
+  <link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
@@ -53,7 +53,7 @@
     <h2>$ todo</h2>
     <p class="desc">Lista de tarefas do dia. Marque, apague, reinicie.</p>
     <form class="todo-form" id="todoForm">
-      <input type="text" id="todoInput" placeholder="nova tarefa…" maxlength="200" autocomplete="off">
+      <input type="text" id="todoInput" aria-label="Nova tarefa" placeholder="nova tarefa…" maxlength="200" autocomplete="off">
       <button class="btn primary" type="submit">add</button>
     </form>
     <ul class="todo-list" id="todoList"></ul>
@@ -86,7 +86,7 @@
   <div class="card notes inline-style-3">
     <h2>$ scratchpad</h2>
     <p class="desc">Notas rápidas da sessão. Salvas automaticamente.</p>
-    <textarea id="notesArea" placeholder="// anote ideias, comandos, links…"></textarea>
+    <textarea id="notesArea" aria-label="Anotações" placeholder="// anote ideias, comandos, links…"></textarea>
     <p class="hint">salvo em localStorage · irndevs_notes</p>
   </div>
 
@@ -325,7 +325,7 @@
   });
 })();
 </script>
-  <script src="assets/js/site-nav.js?v=20260918a11y" defer></script>
+  <script src="assets/js/site-nav.js?v=20260919nav" defer></script>
   <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 </body>
 </html>

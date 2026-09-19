@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="IRN Devs">
 <link rel="canonical" href="https://irndevs.com/ferramenta-13-ferias.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
@@ -96,8 +96,8 @@ textarea{min-height:120px;resize:vertical}
   </div>
   <div class="card show" id="card-13">
     <div class="row2">
-      <div><label>Salário bruto (R$)</label><input type="number" id="s13" value="3000" step="0.01"></div>
-      <div><label>Meses trabalhados no ano</label><input type="number" id="m13" value="12" min="1" max="12"></div>
+      <div><label for="s13">Salário bruto (R$)</label><input type="number" id="s13" value="3000" step="0.01"></div>
+      <div><label for="m13">Meses trabalhados no ano</label><input type="number" id="m13" value="12" min="1" max="12"></div>
     </div>
     <button class="btn" onclick="calc13()">Calcular 13º</button>
     <div class="result" id="r13">
@@ -111,14 +111,14 @@ textarea{min-height:120px;resize:vertical}
   </div>
   <div class="card" id="card-ferias">
     <div class="row2">
-      <div><label>Salário bruto (R$)</label><input type="number" id="sf" value="3000" step="0.01"></div>
-      <div><label>Dias de férias</label><input type="number" id="df" value="30" min="1" max="30"></div>
+      <div><label for="sf">Salário bruto (R$)</label><input type="number" id="sf" value="3000" step="0.01"></div>
+      <div><label for="df">Dias de férias</label><input type="number" id="df" value="30" min="1" max="30"></div>
     </div>
     <div class="row2">
-      <div><label>Vender 1/3? (abono)</label>
+      <div><label for="abono">Vender 1/3? (abono)</label>
         <select id="abono"><option value="0">Não</option><option value="1">Sim (vende 10 dias)</option></select>
       </div>
-      <div><label>Meses proporcionais (se incompleto)</label><input type="number" id="mp" value="12" min="1" max="12"></div>
+      <div><label for="mp">Meses proporcionais (se incompleto)</label><input type="number" id="mp" value="12" min="1" max="12"></div>
     </div>
     <button class="btn" onclick="calcFerias()">Calcular férias</button>
     <div class="result" id="rf">
@@ -168,7 +168,7 @@ function calcFerias(){
 }
 </script>
 
-<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 
 <section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">

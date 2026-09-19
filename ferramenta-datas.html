@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="IRN Devs">
 <link rel="canonical" href="https://irndevs.com/ferramenta-datas.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
@@ -94,8 +94,8 @@ textarea{min-height:100px;resize:vertical}
   </div>
   <div class="card show" id="card-diff">
     <div class="row2">
-      <div><label>Data inicial</label><input type="date" id="d1"></div>
-      <div><label>Data final</label><input type="date" id="d2"></div>
+      <div><label for="d1">Data inicial</label><input type="date" id="d1"></div>
+      <div><label for="d2">Data final</label><input type="date" id="d2"></div>
     </div>
     <button class="btn" onclick="diff()">Calcular diferença</button>
     <div class="result" id="rd"><div class="big" id="bd">—</div>
@@ -105,16 +105,16 @@ textarea{min-height:100px;resize:vertical}
   </div>
   <div class="card" id="card-add">
     <div class="row2">
-      <div><label>Data base</label><input type="date" id="d3"></div>
-      <div><label>Dias (+ ou −)</label><input type="number" id="n3" value="45"></div>
+      <div><label for="d3">Data base</label><input type="date" id="d3"></div>
+      <div><label for="n3">Dias (+ ou −)</label><input type="number" id="n3" value="45"></div>
     </div>
     <button class="btn" onclick="add()">Calcular data</button>
     <div class="result" id="ra"><div class="big" id="ba">—</div></div>
   </div>
   <div class="card" id="card-uteis">
     <div class="row2">
-      <div><label>Data inicial</label><input type="date" id="u1"></div>
-      <div><label>Data final</label><input type="date" id="u2"></div>
+      <div><label for="u1">Data inicial</label><input type="date" id="u1"></div>
+      <div><label for="u2">Data final</label><input type="date" id="u2"></div>
     </div>
     <button class="btn" onclick="uteis()">Contar dias úteis</button>
     <div class="result" id="ru"><div class="big" id="bu">—</div>
@@ -131,7 +131,7 @@ function add(){var a=new Date(document.getElementById('d3').value+'T12:00:00');v
 function uteis(){var a=new Date(document.getElementById('u1').value+'T12:00:00');var b=new Date(document.getElementById('u2').value+'T12:00:00');if(b<a){var t=a;a=b;b=t;}var u=0,fs=0,c=new Date(a);while(c<=b){var day=c.getDay();if(day===0||day===6)fs++;else u++;c.setDate(c.getDate()+1);}document.getElementById('bu').textContent=u+' dias úteis';document.getElementById('ufs').textContent=fs;document.getElementById('ru').classList.add('show');}
 </script>
 
-<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 
 <section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">

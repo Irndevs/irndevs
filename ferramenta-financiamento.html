@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="IRN Devs">
 <link rel="canonical" href="https://irndevs.com/ferramenta-financiamento.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
@@ -78,11 +78,11 @@ input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:
   <h1>Simulador de Financiamento Imobiliário</h1>
   <p class="lede">Compare o sistema SAC (parcelas que diminuem com o tempo) com o Price (parcela fixa) para o mesmo valor financiado.</p>
   <div class="card">
-    <label>Valor financiado (R$)</label>
+    <label for="valor">Valor financiado (R$)</label>
     <input type="number" id="valor" placeholder="300000">
     <div class="row2">
-      <div><label>Taxa de juros anual (%)</label><input type="number" id="taxa" placeholder="10.5" step="0.01"></div>
-      <div><label>Prazo (meses)</label><input type="number" id="prazo" placeholder="360"></div>
+      <div><label for="taxa">Taxa de juros anual (%)</label><input type="number" id="taxa" placeholder="10.5" step="0.01"></div>
+      <div><label for="prazo">Prazo (meses)</label><input type="number" id="prazo" placeholder="360"></div>
     </div>
     <button class="btn" onclick="calcular()">Simular</button>
     <div class="result" id="res">
@@ -148,7 +148,7 @@ function calcular(){
   document.getElementById('res').classList.add('show');
 }
 </script>
-<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 
 <section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">

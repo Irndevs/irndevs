@@ -1,0 +1,28 @@
+name: validate-site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate pages, links, canonical, sitemap and accessibility basics
+        run: python3 scripts/validate-site.py
+
+      - name: JavaScript syntax check
+        run: |
+          for f in assets/js/*.js sw.js; do
+            node --check "$f" || exit 1
+          done
+
+      - name: Sitemap is well-formed XML
+        run: python3 -c "import xml.dom.minidom as m; m.parse('sitemap.xml'); print('sitemap.xml OK')"

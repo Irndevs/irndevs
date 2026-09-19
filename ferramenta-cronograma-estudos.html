@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="IRN Devs">
 <link rel="canonical" href="https://irndevs.com/ferramenta-cronograma-estudos.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
@@ -98,7 +98,7 @@ td{padding:8px;border-bottom:1px solid #1a2218}
   <h1>Cronograma de Estudos</h1>
   <p class="lede">Disciplinas + horas disponíveis por dia = grade semanal equilibrada.</p>
   <div class="card solo">
-    <div><label>Disciplinas (uma por linha)</label>
+    <div><label for="disc">Disciplinas (uma por linha)</label>
       <textarea id="disc">Matemática
 Português
 História
@@ -106,8 +106,8 @@ Inglês
 Programação</textarea>
     </div>
     <div class="row2">
-      <div><label>Horas de estudo por dia</label><input type="number" id="horas" value="3" min="1" max="12" step="0.5"></div>
-      <div><label>Dias da semana</label>
+      <div><label for="horas">Horas de estudo por dia</label><input type="number" id="horas" value="3" min="1" max="12" step="0.5"></div>
+      <div><label for="dias">Dias da semana</label>
         <select id="dias">
           <option value="5">Seg–Sex</option>
           <option value="6">Seg–Sáb</option>
@@ -148,7 +148,7 @@ function gerar(){
 }
 </script>
 
-<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 
 <section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">

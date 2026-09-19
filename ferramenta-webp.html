@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="IRN Devs">
 <link rel="canonical" href="https://irndevs.com/ferramenta-webp.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
@@ -89,13 +89,13 @@ textarea{min-height:100px;resize:vertical}
   <p class="lede">Arraste ou escolha uma imagem. A conversão roda 100% no seu dispositivo via Canvas.</p>
   <div class="card solo">
     <div class="drop" id="drop">Arraste uma imagem aqui ou clique para escolher
-      <input type="file" id="file" accept="image/*" style="display:none">
+      <input type="file" id="file" aria-label="Selecionar imagem" accept="image/*" style="display:none">
     </div>
     <div class="row2">
-      <div><label>Converter para</label>
+      <div><label for="fmt">Converter para</label>
         <select id="fmt"><option value="image/jpeg">JPG</option><option value="image/png">PNG</option><option value="image/webp">WEBP</option></select>
       </div>
-      <div><label>Qualidade JPG/WEBP (0.1–1)</label><input type="number" id="q" value="0.92" min="0.1" max="1" step="0.01"></div>
+      <div><label for="q">Qualidade JPG/WEBP (0.1–1)</label><input type="number" id="q" value="0.92" min="0.1" max="1" step="0.01"></div>
     </div>
     <button class="btn" onclick="document.getElementById('file').click()">Escolher arquivo</button>
     <div class="result" id="res">
@@ -140,7 +140,7 @@ function handle(f){
 }
 </script>
 
-<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 
 <section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">

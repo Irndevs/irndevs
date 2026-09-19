@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="IRN Devs">
 <link rel="canonical" href="https://irndevs.com/ferramenta-surebet.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
@@ -99,12 +99,12 @@ td{padding:8px;border-bottom:1px solid #1a2218}
   <p class="lede">Insira as odds de dois (ou três) resultados e o valor total. A ferramenta diz se há lucro garantido e quanto colocar em cada.</p>
   <div class="card solo">
     <div class="row2">
-      <div><label>Odd 1 (casa A)</label><input type="number" id="o1" value="2.10" step="0.01" min="1.01"></div>
-      <div><label>Odd 2 (casa B)</label><input type="number" id="o2" value="2.05" step="0.01" min="1.01"></div>
+      <div><label for="o1">Odd 1 (casa A)</label><input type="number" id="o1" value="2.10" step="0.01" min="1.01"></div>
+      <div><label for="o2">Odd 2 (casa B)</label><input type="number" id="o2" value="2.05" step="0.01" min="1.01"></div>
     </div>
     <div class="row2">
-      <div><label>Odd 3 (opcional — empate)</label><input type="number" id="o3" value="" step="0.01" min="1.01" placeholder="deixe vazio se 2-way"></div>
-      <div><label>Valor total a apostar (R$)</label><input type="number" id="bank" value="100" step="1" min="1"></div>
+      <div><label for="o3">Odd 3 (opcional — empate)</label><input type="number" id="o3" value="" step="0.01" min="1.01" placeholder="deixe vazio se 2-way"></div>
+      <div><label for="bank">Valor total a apostar (R$)</label><input type="number" id="bank" value="100" step="1" min="1"></div>
     </div>
     <button class="btn" onclick="calc()">Calcular surebet</button>
     <div class="result" id="res">
@@ -144,7 +144,7 @@ function calc(){
 }
 </script>
 
-<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 
 <section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">

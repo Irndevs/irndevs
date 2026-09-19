@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="IRN Devs">
 <link rel="canonical" href="https://irndevs.com/ferramenta-sorteio.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
@@ -84,7 +84,7 @@ textarea{min-height:140px;font-family:var(--mono);font-size:13px}
   </div>
 
   <div class="card" id="card-nomes">
-    <label>Lista de nomes (um por linha)</label>
+    <label for="nomes">Lista de nomes (um por linha)</label>
     <textarea id="nomes" placeholder="Maria&#10;João&#10;Ana&#10;Pedro"></textarea>
     <button class="btn" onclick="sortearNome()">Sortear vencedor</button>
     <div class="result" id="resNomes">
@@ -95,10 +95,10 @@ textarea{min-height:140px;font-family:var(--mono);font-size:13px}
 
   <div class="card hidden" id="card-numeros">
     <div class="row2">
-      <div><label>Número mínimo</label><input type="number" id="min" value="1"></div>
-      <div><label>Número máximo</label><input type="number" id="max" value="100"></div>
+      <div><label for="min">Número mínimo</label><input type="number" id="min" value="1"></div>
+      <div><label for="max">Número máximo</label><input type="number" id="max" value="100"></div>
     </div>
-    <label>Quantidade de números a sortear</label>
+    <label for="qtd">Quantidade de números a sortear</label>
     <input type="number" id="qtd" value="1" min="1">
     <label><input type="checkbox" id="semRep" checked style="width:auto;display:inline-block;margin-right:6px"> Sem repetição</label>
     <button class="btn" onclick="sortearNumero()">Sortear</button>
@@ -151,7 +151,7 @@ function sortearNumero(){
   document.getElementById('resNumeros').classList.add('show');
 }
 </script>
-<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 
 <section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">

@@ -14,7 +14,7 @@
 <meta name="robots" content="noindex">
 <link rel="canonical" href="https://irndevs.com/orcamentos.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918menu" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="assets/css/dash-shell.css">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/pages/orcamentos.css">
@@ -40,8 +40,8 @@
 
     <div class="dash-card new-quote">
       <div class="dash-card-title">solicitar orçamento</div>
-      <input type="text" id="qTitle" placeholder="Título / escopo resumido" maxlength="200" />
-      <textarea id="qNotes" rows="3" placeholder="Detalhes, prazo desejado, links…"></textarea>
+      <input type="text" id="qTitle" aria-label="Título ou escopo resumido" placeholder="Título / escopo resumido" maxlength="200" />
+      <textarea id="qNotes" aria-label="Detalhes do orçamento" rows="3" placeholder="Detalhes, prazo desejado, links…"></textarea>
       <button type="button" id="btnNewQuote">enviar solicitação</button>
       <p id="qMsg" style="font-size:12px;color:var(--dash-faint);margin-top:8px"></p>
     </div>
@@ -58,7 +58,7 @@
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" integrity="sha384-GFr3yTh5lJznCbZfpTtXnwboFsxqtTQoeTZCRHhE0579KrRmlCzen5AA8ohaB5ug" crossorigin="anonymous"></script>
 <script src="assets/js/auth.js" defer></script>
 <script src="assets/js/auth-gates.js" defer></script>
-<script src="assets/js/site-nav.js?v=20260918a11y" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script>
 document.addEventListener('DOMContentLoaded', async function () {
   if (!(await IRNAuthGates.guardPage())) return;

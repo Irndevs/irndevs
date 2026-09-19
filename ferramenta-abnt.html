@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="IRN Devs">
 <link rel="canonical" href="https://irndevs.com/ferramenta-abnt.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
@@ -73,46 +73,46 @@ input,select{width:100%;padding:12px 14px;border:1px solid var(--border);border-
   <h1>Gerador de Referências Bibliográficas (ABNT)</h1>
   <p class="lede">Preencha os dados da fonte e gere a referência formatada nas regras da ABNT NBR 6023, pronta para colar no seu trabalho.</p>
   <div class="card">
-    <label>Tipo de fonte</label>
+    <label for="tipo">Tipo de fonte</label>
     <select id="tipo" onchange="trocarTipo()">
       <option value="livro">Livro</option>
       <option value="site">Site / página web</option>
       <option value="artigo">Artigo científico</option>
     </select>
 
-    <label>Autor(es) (Sobrenome, Nome)</label>
+    <label for="autor">Autor(es) (Sobrenome, Nome)</label>
     <input type="text" id="autor" placeholder="SILVA, João">
-    <label>Título</label>
+    <label for="titulo">Título</label>
     <input type="text" id="titulo" placeholder="Título da obra">
 
     <div id="campos-livro">
-      <label>Edição (opcional)</label>
+      <label for="edicao">Edição (opcional)</label>
       <input type="text" id="edicao" placeholder="3. ed.">
-      <label>Local de publicação</label>
+      <label for="local">Local de publicação</label>
       <input type="text" id="local" placeholder="São Paulo">
-      <label>Editora</label>
+      <label for="editora">Editora</label>
       <input type="text" id="editora" placeholder="Editora XYZ">
-      <label>Ano</label>
+      <label for="ano">Ano</label>
       <input type="text" id="ano" placeholder="2024">
     </div>
 
     <div id="campos-site" class="hide">
-      <label>Ano de publicação</label>
+      <label for="anoSite">Ano de publicação</label>
       <input type="text" id="anoSite" placeholder="2024">
-      <label>URL</label>
+      <label for="url">URL</label>
       <input type="text" id="url" placeholder="https://exemplo.com/pagina">
-      <label>Data de acesso</label>
+      <label for="dataAcesso">Data de acesso</label>
       <input type="date" id="dataAcesso">
     </div>
 
     <div id="campos-artigo" class="hide">
-      <label>Nome do periódico / revista</label>
+      <label for="periodico">Nome do periódico / revista</label>
       <input type="text" id="periodico" placeholder="Revista Brasileira de X">
-      <label>Local</label>
+      <label for="localArtigo">Local</label>
       <input type="text" id="localArtigo" placeholder="São Paulo">
-      <label>Volume, número e páginas</label>
+      <label for="volPag">Volume, número e páginas</label>
       <input type="text" id="volPag" placeholder="v. 10, n. 2, p. 15-30">
-      <label>Ano</label>
+      <label for="anoArtigo">Ano</label>
       <input type="text" id="anoArtigo" placeholder="2024">
     </div>
 
@@ -167,7 +167,7 @@ function copiar(){
   navigator.clipboard.writeText(window._refPlano || '').then(function(){ alert('Referência copiada!'); });
 }
 </script>
-<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 
 <section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">

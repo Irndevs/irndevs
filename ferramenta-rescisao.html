@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="IRN Devs">
 <link rel="canonical" href="https://irndevs.com/ferramenta-rescisao.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
@@ -89,8 +89,8 @@ textarea{min-height:100px;resize:vertical}
   <p class="lede">Estimativa do valor bruto do acerto ao sair do emprego (sem justa causa ou pedido de demissão).</p>
   <div class="card solo">
     <div class="row2">
-      <div><label>Salário bruto (R$)</label><input type="number" id="sal" value="3000" step="0.01"></div>
-      <div><label>Tipo de saída</label>
+      <div><label for="sal">Salário bruto (R$)</label><input type="number" id="sal" value="3000" step="0.01"></div>
+      <div><label for="tipo">Tipo de saída</label>
         <select id="tipo">
           <option value="sem">Demissão sem justa causa</option>
           <option value="pedido">Pedido de demissão</option>
@@ -99,12 +99,12 @@ textarea{min-height:100px;resize:vertical}
       </div>
     </div>
     <div class="row2">
-      <div><label>Meses trabalhados no ano (13º/férias)</label><input type="number" id="meses" value="8" min="0" max="12"></div>
-      <div><label>Dias trabalhados no mês</label><input type="number" id="dias" value="15" min="0" max="30"></div>
+      <div><label for="meses">Meses trabalhados no ano (13º/férias)</label><input type="number" id="meses" value="8" min="0" max="12"></div>
+      <div><label for="dias">Dias trabalhados no mês</label><input type="number" id="dias" value="15" min="0" max="30"></div>
     </div>
     <div class="row2">
-      <div><label>Saldo FGTS estimado (R$)</label><input type="number" id="fgts" value="5000" step="0.01"></div>
-      <div><label>Aviso prévio indenizado?</label>
+      <div><label for="fgts">Saldo FGTS estimado (R$)</label><input type="number" id="fgts" value="5000" step="0.01"></div>
+      <div><label for="aviso">Aviso prévio indenizado?</label>
         <select id="aviso"><option value="1">Sim</option><option value="0">Não / trabalhado</option></select>
       </div>
     </div>
@@ -151,7 +151,7 @@ function calc(){
 }
 </script>
 
-<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 
 <section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">

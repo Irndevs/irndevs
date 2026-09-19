@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="IRN Devs">
 <link rel="canonical" href="https://irndevs.com/ferramenta-horas-extras.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
@@ -92,12 +92,12 @@ textarea{min-height:120px;resize:vertical}
   <p class="lede">Valor da hora normal e extras (50% ou 100%) com base no salário e na jornada.</p>
   <div class="card solo">
     <div class="row2">
-      <div><label>Salário bruto (R$)</label><input type="number" id="sal" value="3000" step="0.01"></div>
-      <div><label>Jornada mensal (horas)</label><input type="number" id="jor" value="220" step="1"></div>
+      <div><label for="sal">Salário bruto (R$)</label><input type="number" id="sal" value="3000" step="0.01"></div>
+      <div><label for="jor">Jornada mensal (horas)</label><input type="number" id="jor" value="220" step="1"></div>
     </div>
     <div class="row2">
-      <div><label>Horas extras 50%</label><input type="number" id="h50" value="10" step="0.5" min="0"></div>
-      <div><label>Horas extras 100%</label><input type="number" id="h100" value="0" step="0.5" min="0"></div>
+      <div><label for="h50">Horas extras 50%</label><input type="number" id="h50" value="10" step="0.5" min="0"></div>
+      <div><label for="h100">Horas extras 100%</label><input type="number" id="h100" value="0" step="0.5" min="0"></div>
     </div>
     <button class="btn" onclick="calc()">Calcular</button>
     <div class="result" id="res">
@@ -131,7 +131,7 @@ function calc(){
 }
 </script>
 
-<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 
 <section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">

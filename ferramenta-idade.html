@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="IRN Devs">
 <link rel="canonical" href="https://irndevs.com/ferramenta-idade.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
@@ -74,7 +74,7 @@ input,select{width:100%;padding:12px 14px;border:1px solid var(--border);border-
   <h1>Calculadora de Idade e Tempo de Vida</h1>
   <p class="lede">Descubra sua idade exata em anos, meses e dias, quantos dias você já viveu e quanto falta para o próximo aniversário.</p>
   <div class="card">
-    <label>Data de nascimento</label>
+    <label for="nasc">Data de nascimento</label>
     <input type="date" id="nasc">
     <button class="btn" onclick="calcular()">Calcular</button>
     <div class="result" id="res">
@@ -122,7 +122,7 @@ function calcular(){
   document.getElementById('res').classList.add('show');
 }
 </script>
-<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 
 <section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">

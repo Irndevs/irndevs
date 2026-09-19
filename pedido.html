@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="IRN Devs">
 <meta name="robots" content="noindex">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918menu" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="assets/css/dash-shell.css">
 <link rel="stylesheet" href="assets/css/motion.css">
 <style>
@@ -74,7 +74,7 @@
       <div class="dash-card-title">arquivos</div>
       <div id="files"><p class="inline-style-7">Nenhum arquivo.</p></div>
       <div class="upload-zone">
-        <input type="file" id="fileInput" />
+        <input type="file" id="fileInput" aria-label="Anexar arquivo" />
         <button type="button" id="btnUpload" class="inline-style-8">enviar arquivo</button>
         <p id="uploadMsg" class="inline-style-9"></p>
       </div>
@@ -84,7 +84,7 @@
       <div class="dash-card-title">mensagens</div>
       <div id="messages"><p class="inline-style-10">Nenhuma mensagem.</p></div>
       <div class="msg-form">
-        <input type="text" id="msgInput" placeholder="Escreva uma mensagem…" maxlength="2000" />
+        <input type="text" id="msgInput" aria-label="Mensagem" placeholder="Escreva uma mensagem…" maxlength="2000" />
         <button type="button" id="btnMsg">enviar</button>
       </div>
     </div>
@@ -94,7 +94,7 @@
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" integrity="sha384-GFr3yTh5lJznCbZfpTtXnwboFsxqtTQoeTZCRHhE0579KrRmlCzen5AA8ohaB5ug" crossorigin="anonymous"></script>
 <script src="assets/js/auth.js" defer></script>
 <script src="assets/js/auth-gates.js" defer></script>
-<script src="assets/js/site-nav.js?v=20260918a11y" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script>
 document.addEventListener('DOMContentLoaded', async function () {
   if (!(await IRNAuthGates.guardPage())) return;

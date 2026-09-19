@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="IRN Devs">
 <link rel="canonical" href="https://irndevs.com/ferramenta-prompt.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918menu">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
@@ -70,13 +70,13 @@ textarea{min-height:100px}
   <div class="sec-head"><span class="amber">$</span> enhance --prompt</div>
   <h1>Melhorador de Prompt</h1>
   <p class="lede">Transforme uma ideia simples em um prompt mais claro e estruturado para ChatGPT, Claude ou Midjourney.</p>
-  <label>Tipo de uso</label>
+  <label for="tipo">Tipo de uso</label>
   <select id="tipo">
     <option value="texto">Texto / ChatGPT / Claude</option>
     <option value="imagem">Imagem / Midjourney / Flux</option>
     <option value="codigo">Código / Programação</option>
   </select>
-  <label>Sua ideia (prompt simples)</label>
+  <label for="ideia">Sua ideia (prompt simples)</label>
   <textarea id="ideia" placeholder="Ex: um post sobre produtividade para LinkedIn"></textarea>
   <button class="btn" onclick="melhorar()">Melhorar prompt</button>
   <div class="out" id="out"></div>
@@ -107,7 +107,7 @@ function copiar(){
   navigator.clipboard.writeText(window._prompt||'').then(()=>alert('Copiado!'));
 }
 </script>
-<script src="assets/js/site-nav.js?v=20260918tools" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 
 <section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">

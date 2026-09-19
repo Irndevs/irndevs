@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="IRN Devs">
 <link rel="canonical" href="https://irndevs.com/ferramenta-desconto-margem.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/site-nav.css?v=20260918cats">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919nav">
 <link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/palette-extra.css">
@@ -89,8 +89,8 @@ input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:
   <!-- DESCONTO -->
   <div class="card show" id="card-desconto">
     <div class="row2">
-      <div><label>Preço original (R$)</label><input type="number" id="d-preco" value="150" step="0.01"></div>
-      <div><label>Desconto (%)</label><input type="number" id="d-pct" value="20" step="0.1"></div>
+      <div><label for="d-preco">Preço original (R$)</label><input type="number" id="d-preco" value="150" step="0.01"></div>
+      <div><label for="d-pct">Desconto (%)</label><input type="number" id="d-pct" value="20" step="0.1"></div>
     </div>
     <button class="btn" onclick="calcDesc()">Calcular</button>
     <div class="result" id="d-res">
@@ -104,8 +104,8 @@ input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:
   <!-- MARGEM -->
   <div class="card" id="card-margem">
     <div class="row2">
-      <div><label>Custo (R$)</label><input type="number" id="m-custo" value="80" step="0.01"></div>
-      <div><label>Preço de venda (R$)</label><input type="number" id="m-venda" value="120" step="0.01"></div>
+      <div><label for="m-custo">Custo (R$)</label><input type="number" id="m-custo" value="80" step="0.01"></div>
+      <div><label for="m-venda">Preço de venda (R$)</label><input type="number" id="m-venda" value="120" step="0.01"></div>
     </div>
     <button class="btn" onclick="calcMargem()">Calcular</button>
     <div class="result" id="m-res">
@@ -120,8 +120,8 @@ input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:
   <!-- INVERSO: preço a partir de custo + margem desejada -->
   <div class="card" id="card-inverso">
     <div class="row2">
-      <div><label>Custo (R$)</label><input type="number" id="i-custo" value="80" step="0.01"></div>
-      <div><label>Margem desejada (%)</label><input type="number" id="i-margem" value="40" step="0.1"></div>
+      <div><label for="i-custo">Custo (R$)</label><input type="number" id="i-custo" value="80" step="0.01"></div>
+      <div><label for="i-margem">Margem desejada (%)</label><input type="number" id="i-margem" value="40" step="0.1"></div>
     </div>
     <button class="btn" onclick="calcInverso()">Calcular preço</button>
     <div class="result" id="i-res">
@@ -180,7 +180,7 @@ function calcInverso(){
   document.getElementById('i-res').classList.add('show');
 }
 </script>
-<script src="assets/js/site-nav.js?v=20260918cats" defer></script>
+<script src="assets/js/site-nav.js?v=20260919nav" defer></script>
 <script src="assets/js/chat-bot.js?v=20260917a" defer></script>
 
 <section class="conteudo-relacionado" style="max-width:920px;margin:40px auto;padding:24px 20px 8px;border-top:1px solid #e2e8f0">
