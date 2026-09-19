@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Variáveis, funções e o DOM mínimo | JavaScript para iniciantes | IRN Devs</title>
+<link rel="canonical" href="https://irndevs.com/curso-js-modulo-1.html">
+<meta name="description" content="Domine o essencial de JavaScript no navegador: dados, decisões, funções e alterar a página sem framework.">
+<link rel="stylesheet" href="assets/css/pages/curso-python.css">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919cursos">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
+<link rel="stylesheet" href="assets/css/motion.css">
+<meta property="og:title" content="Variáveis, funções e o DOM mínimo | JavaScript para iniciantes">
+<meta property="og:description" content="Domine o essencial de JavaScript no navegador: dados, decisões, funções e alterar a página sem framework.">
+<meta property="og:url" content="https://irndevs.com/curso-js-modulo-1.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
+<meta property="og:site_name" content="IRN Devs">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+</head>
+<body data-course="js">
+<!-- nav: site-nav.js -->
+<a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+<main id="conteudo" role="main" tabindex="-1">
+<article class="wrap">
+  <nav class="breadcrumb"><a href="/">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#iniciantes">javascript para iniciantes</a> / módulo 1</nav>
+  <div class="sec-head"><span class="amber">$</span> js modulo_1</div>
+  <h1>Variáveis, funções e o DOM mínimo</h1>
+  <p class="lede">Domine o essencial de JavaScript no navegador: dados, decisões, funções e alterar a página sem framework.</p>
+  <h2>O que você vai aprender</h2>
+  <ul>
+    <li>let, const e tipos básicos</li>
+    <li>if/else e loops</li>
+    <li>Funções e parâmetros</li>
+    <li>querySelector e eventos de clique</li>
+    <li>Quando NÃO precisa de React ainda</li>
+  </ul>
+  <h2>JavaScript é a linguagem da web</h2>
+  <p>Roda no navegador de graça, sem instalar runtime extra. É a ponte entre HTML estático e interfaces que reagem ao usuário.</p>
+  <h2>Base da linguagem</h2>
+  <pre><code>const nome = "Ana";
+let contador = 0;
+const ativo = true;
+
+function saudacao(pessoa) {
+  return `Olá, ${pessoa}!`;
+}
+
+if (contador === 0) {
+  console.log(saudacao(nome));
+}</code></pre>
+  <h2>Interagindo com a página</h2>
+  <pre><code>// HTML: &lt;button id="btn"&gt;Clique&lt;/button&gt;
+const btn = document.querySelector("#btn");
+btn.addEventListener("click", () =&gt; {
+  btn.textContent = "Clicado!";
+});</code></pre>
+  <h2>Exercício</h2>
+  <p>Faça um botão que alterna o tema claro/escuro trocando uma classe no <code>body</code>. Sem bibliotecas.</p>
+  <p>Com HTML/CSS + JS você já entrega landing pages e protótipos. Depois, frameworks ficam mais fáceis de entender.</p>
+  <p><a class="btn primary" href="cursos.html#iniciantes">← voltar aos cursos</a></p>
+</article>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">IRN Devs</div>
+      <p>Software, automações e dados em produção — stacks que já rodam de verdade, com handoff claro.</p>
+      <div class="footer-social">
+        <a href="https://github.com/iri-afk" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
+        <a href="mailto:contato@irndevs.com" aria-label="E-mail">E-mail</a>
+        <a href="/en/">EN</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h3>Links rápidos</h3>
+      <ul>
+        <li><a href="/">Início</a></li>
+        <li><a href="servicos.html">Serviços</a></li>
+        <li><a href="pacotes.html">Pacotes</a></li>
+        <li><a href="/#projetos">Projetos</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Recursos</h3>
+      <ul>
+        <li><a href="ferramenta-checklist.html">Checklist grátis</a></li>
+        <li><a href="ferramentas.html">Ferramentas grátis</a></li>
+        <li><a href="ia.html">Ferramentas de IA</a></li>
+        <li><a href="cursos.html">Cursos</a></li>
+        <li><a href="homelab.html">Homelab</a></li>
+        <li><a href="como-contratar.html">Como contratar</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Contato</h3>
+      <ul>
+        <li><a href="mailto:contato@irndevs.com">contato@irndevs.com</a></li>
+        <li><a href="contato.html">Formulário de contato</a></li>
+        <li><span class="footer-meta">Atendimento remoto</span></li>
+        <li><span class="footer-meta">Disponível para projetos</span></li>
+        <li><a href="privacidade.html">Privacidade</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <div>© 2026 IRN Devs</div>
+    <div class="footer-bottom-links">
+      <a href="jogos.html">jogos</a>
+      <a href="produtividade.html">produtividade</a>
+      <a href="privacidade.html">privacidade</a>
+    </div>
+  </div>
+</footer>
+
+</main>
+<script src="assets/js/site-nav.js?v=20260919cursos" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+</body>
+</html>

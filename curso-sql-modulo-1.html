@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SELECT, WHERE e suas primeiras consultas | SQL na prática | IRN Devs</title>
+<link rel="canonical" href="https://irndevs.com/curso-sql-modulo-1.html">
+<meta name="description" content="Aprenda a ler e filtrar dados em banco relacional com SQL real — a skill que backend, dados e analytics pedem o tempo todo.">
+<link rel="stylesheet" href="assets/css/pages/curso-python.css">
+<link rel="stylesheet" href="assets/css/site-nav.css?v=20260919cursos">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.webp">
+<link rel="stylesheet" href="assets/css/motion.css">
+<meta property="og:title" content="SELECT, WHERE e suas primeiras consultas | SQL na prática">
+<meta property="og:description" content="Aprenda a ler e filtrar dados em banco relacional com SQL real — a skill que backend, dados e analytics pedem o tempo todo.">
+<meta property="og:url" content="https://irndevs.com/curso-sql-modulo-1.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://irndevs.com/assets/img/og-default.webp">
+<meta property="og:site_name" content="IRN Devs">
+<link rel="stylesheet" href="assets/css/footer.css?v=20260918css4">
+<link rel="stylesheet" href="assets/css/palette-extra.css">
+</head>
+<body data-course="sql">
+<!-- nav: site-nav.js -->
+<a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+<main id="conteudo" role="main" tabindex="-1">
+<article class="wrap">
+  <nav class="breadcrumb"><a href="/">início</a> / <a href="cursos.html">cursos</a> / <a href="cursos.html#iniciantes">sql na prática</a> / módulo 1</nav>
+  <div class="sec-head"><span class="amber">$</span> sql modulo_1</div>
+  <h1>SELECT, WHERE e suas primeiras consultas</h1>
+  <p class="lede">Aprenda a ler e filtrar dados em banco relacional com SQL real — a skill que backend, dados e analytics pedem o tempo todo.</p>
+  <h2>O que você vai aprender</h2>
+  <ul>
+    <li>O que é tabela, linha, coluna e chave primária</li>
+    <li>SELECT e projeção de colunas</li>
+    <li>WHERE, AND/OR e operadores de comparação</li>
+    <li>ORDER BY e LIMIT</li>
+    <li>Boas práticas para não travar o banco</li>
+  </ul>
+  <h2>Por que SQL continua insubstituível</h2>
+  <p>Planilhas não escalam. ORMs ajudam, mas quando o relatório trava ou a API fica lenta, alguém escreve SQL. Aprender o básico te coloca à frente da maioria dos iniciantes.</p>
+  <h2>Consultas essenciais</h2>
+  <pre><code>-- todas as colunas (use com cuidado em tabelas grandes)
+SELECT * FROM clientes;
+
+-- só o necessário
+SELECT id, nome, email FROM clientes WHERE ativo = true;
+
+-- ordenar e limitar
+SELECT nome, criado_em
+FROM clientes
+ORDER BY criado_em DESC
+LIMIT 20;</code></pre>
+  <h2>Filtros que você vai usar sempre</h2>
+  <pre><code>WHERE preco &gt;= 100
+WHERE nome ILIKE '%silva%'   -- Postgres
+WHERE email IS NOT NULL
+WHERE status IN ('pago', 'enviado')</code></pre>
+  <h2>Cuidado com SELECT *</h2>
+  <p>Em produção, prefira listar colunas. Isso reduz tráfego, deixa a intenção clara e evita quebrar clientes quando a tabela ganha colunas novas.</p>
+  <p>Ambiente para praticar: SQLite local, ou um Postgres em Docker. O curso de <a href="cursos.html#docker">Docker</a> ajuda a subir um banco em minutos.</p>
+  <p><a class="btn primary" href="cursos.html#iniciantes">← voltar aos cursos</a></p>
+</article>
+<footer class="site-footer-v2" role="contentinfo">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">IRN Devs</div>
+      <p>Software, automações e dados em produção — stacks que já rodam de verdade, com handoff claro.</p>
+      <div class="footer-social">
+        <a href="https://github.com/iri-afk" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
+        <a href="mailto:contato@irndevs.com" aria-label="E-mail">E-mail</a>
+        <a href="/en/">EN</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h3>Links rápidos</h3>
+      <ul>
+        <li><a href="/">Início</a></li>
+        <li><a href="servicos.html">Serviços</a></li>
+        <li><a href="pacotes.html">Pacotes</a></li>
+        <li><a href="/#projetos">Projetos</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Recursos</h3>
+      <ul>
+        <li><a href="ferramenta-checklist.html">Checklist grátis</a></li>
+        <li><a href="ferramentas.html">Ferramentas grátis</a></li>
+        <li><a href="ia.html">Ferramentas de IA</a></li>
+        <li><a href="cursos.html">Cursos</a></li>
+        <li><a href="homelab.html">Homelab</a></li>
+        <li><a href="como-contratar.html">Como contratar</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Contato</h3>
+      <ul>
+        <li><a href="mailto:contato@irndevs.com">contato@irndevs.com</a></li>
+        <li><a href="contato.html">Formulário de contato</a></li>
+        <li><span class="footer-meta">Atendimento remoto</span></li>
+        <li><span class="footer-meta">Disponível para projetos</span></li>
+        <li><a href="privacidade.html">Privacidade</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <div>© 2026 IRN Devs</div>
+    <div class="footer-bottom-links">
+      <a href="jogos.html">jogos</a>
+      <a href="produtividade.html">produtividade</a>
+      <a href="privacidade.html">privacidade</a>
+    </div>
+  </div>
+</footer>
+
+</main>
+<script src="assets/js/site-nav.js?v=20260919cursos" defer></script>
+<script src="assets/js/chat-bot.js?v=20260917a" defer></script>
+</body>
+</html>

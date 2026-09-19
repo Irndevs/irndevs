@@ -22,7 +22,8 @@
     if (path === h) return true;
     if ((path === '' || path === 'index.html') && h === 'index.html') return true;
     if (path.indexOf('artigo-') === 0 && h === 'blog.html') return true;
-	if (path.indexOf('curso-python-') === 0 && h === 'cursos.html') return true;
+    // páginas de módulo/certificado marcam o item "cursos" (e a página listagem) como ativo
+    if ((path.indexOf('curso-') === 0 || path.indexOf('certificado-') === 0) && h === 'cursos.html') return true;
     return false;
   }
 
@@ -101,6 +102,28 @@
         ] }
   ];
 
+  /* Categorias de cursos — mesma engine do mega-dropdown de ferramentas
+     (flyout lateral no desktop + accordion no drawer mobile). */
+  var courseCategories = [
+    { cat: 'iniciantes', ico: '★', items: [
+      { href: 'curso-git-modulo-1.html', label: 'Git e GitHub do zero', ico: '⎇' },
+      { href: 'curso-html-css-modulo-1.html', label: 'HTML e CSS', ico: '<>' },
+      { href: 'curso-sql-modulo-1.html', label: 'SQL na prática', ico: '▦' },
+      { href: 'curso-js-modulo-1.html', label: 'JavaScript iniciantes', ico: 'JS' },
+      { href: 'curso-seguranca-modulo-1.html', label: 'Segurança digital', ico: '🔒' }
+    ] },
+    { cat: 'programação', ico: '🐍', items: [
+      { href: 'curso-python-modulo-1.html', label: 'Automações em Python', ico: '🐍' }
+    ] },
+    { cat: 'linux & terminal', ico: '⌘', items: [
+      { href: 'curso-cmd-modulo-1.html', label: 'Comandos Linux e Windows', ico: '⌘' },
+      { href: 'curso-linux-modulo-1.html', label: 'Linux e Servidores', ico: '🐧' }
+    ] },
+    { cat: 'containers & devops', ico: '🐳', items: [
+      { href: 'curso-docker-modulo-1.html', label: 'Docker em Produção', ico: '🐳' }
+    ] }
+  ];
+
   var topLinks = [
     { href: '/#projetos', label: 'projetos', ico: '▸' },
     { href: 'servicos.html', label: 'serviços', ico: '⚙' },
@@ -113,7 +136,14 @@
       dropdown: true,
       children: [{ href: 'ferramentas.html', label: 'Todas as ferramentas', ico: '▣' }].concat(toolCategories)
     },
-    { href: 'cursos.html', label: 'cursos', ico: '◈' },
+    {
+      href: 'cursos.html',
+      label: 'cursos',
+      ico: '◈',
+      extraClass: 'sn-top-cursos',
+      dropdown: true,
+      children: [{ href: 'cursos.html', label: 'Todos os cursos', ico: '◈' }].concat(courseCategories)
+    },
     { href: 'ia.html', label: 'IA', ico: '✦', extraClass: 'sn-top-ia' }
   ];
 
@@ -136,10 +166,15 @@
       cats: toolCategories
     },
     {
+      label: 'cursos',
+      accordion: true,
+      lead: { href: 'cursos.html', label: 'todos os cursos', ico: '◈' },
+      cats: courseCategories
+    },
+    {
       label: 'conteúdo',
       items: [
         { href: 'blog.html', label: 'blog', ico: '≡' },
-        { href: 'cursos.html', label: 'cursos', ico: '◈' },
         { href: 'homelab.html', label: 'homelab', ico: '▣' },
         { href: 'sobre.html', label: 'sobre', ico: 'i' }
       ]
@@ -695,7 +730,17 @@
       { q: 'projetos portfolio', href: '/#projetos', label: 'Projetos em produção' },
       { q: 'servicos automacao', href: 'servicos.html', label: 'Serviços' },
       { q: 'pacotes precos', href: 'pacotes.html', label: 'Pacotes' },
-      { q: 'cursos python docker linux', href: 'cursos.html', label: 'Cursos' },
+      { q: 'cursos python docker linux git sql javascript html', href: 'cursos.html', label: 'Cursos' },
+      { q: 'git github versionamento iniciante', href: 'curso-git-modulo-1.html', label: 'Git e GitHub do zero' },
+      { q: 'html css primeira pagina frontend', href: 'curso-html-css-modulo-1.html', label: 'HTML e CSS' },
+      { q: 'sql select banco de dados', href: 'curso-sql-modulo-1.html', label: 'SQL na prática' },
+      { q: 'javascript js dom iniciante', href: 'curso-js-modulo-1.html', label: 'JavaScript para iniciantes' },
+      { q: 'seguranca digital senha 2fa phishing', href: 'curso-seguranca-modulo-1.html', label: 'Segurança digital' },
+      { q: 'portfolio github recrutador carreira', href: 'artigo-portfolio-github.html', label: 'Portfólio no GitHub' },
+      { q: 'frontend backend fullstack o que estudar', href: 'artigo-frontend-backend-fullstack.html', label: 'Front vs Back vs Fullstack' },
+      { q: 'chatgpt trabalho seguro dados empresa', href: 'artigo-chatgpt-trabalho-seguro.html', label: 'ChatGPT no trabalho seguro' },
+      { q: 'primeira vaga tech roadmap 2026', href: 'artigo-primeira-vaga-tech-2026.html', label: 'Primeira vaga em tech' },
+      { q: 'lgpd site app privacidade cookies', href: 'artigo-lgpd-site-app.html', label: 'LGPD na prática' },
       { q: 'ia ferramentas sql commit', href: 'ia.html', label: 'Ferramentas de IA' },
       { q: 'ferramentas gratis checklist', href: 'ferramentas.html', label: 'Ferramentas grátis' },
       { q: 'biometria saude corporativa imc roi', href: 'ferramenta-biometria-saude.html', label: 'Biometria & Saúde Corporativa' },
