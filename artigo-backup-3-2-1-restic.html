@@ -4,8 +4,8 @@
 </head><body>
 <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 <main id="conteudo" role="main" tabindex="-1">
-  <nav class="crumb"><a href="index.html">início</a> / <a href="blog.html">blog</a> / restic</nav>
-<div class="wrap crumb"><a href="index.html">~</a> / <a href="blog.html">blog</a> / <span>backup</span></div><div class="wrap article-head"><div class="meta"><span>16 set 2026</span><span class="tag">backup</span><span>10 min de leitura</span></div><h1>Backup 3-2-1 com Restic: retenção, criptografia e restore</h1><p class="excerpt">Uma estratégia operacional para proteger dados de servidores com snapshots criptografados, cópia externa e testes de recuperação.</p><div class="stack"><span>Restic</span><span>Rsync</span><span>Linux</span></div></div><div class="wrap"><div class="toc"><div class="label">$ cat sumario.txt</div><ol><li><a href="#regra">1. A regra 3-2-1</a></li><li><a href="#restic">2. Repositório Restic</a></li><li><a href="#retencao">3. Retenção e integridade</a></li><li><a href="#restore">4. Restore ensaiado</a></li><li><a href="#check">5. Checklist final</a></li></ol></div><article class="body"><h2 id="regra">1. A regra 3-2-1</h2><p>Tenha três cópias, em dois meios diferentes, com uma delas fora do ambiente principal. O backup só é confiável quando a recuperação foi testada e o tempo de restauração é conhecido.</p><h2 id="restic">2. Repositório Restic</h2><pre><code>export RESTIC_REPOSITORY=s3:s3.amazonaws.com/bucket-servidor
+  <nav class="crumb"><a href="/">início</a> / <a href="blog.html">blog</a> / restic</nav>
+<div class="wrap crumb"><a href="/">~</a> / <a href="blog.html">blog</a> / <span>backup</span></div><div class="wrap article-head"><div class="meta"><span>16 set 2026</span><span class="tag">backup</span><span>10 min de leitura</span></div><h1>Backup 3-2-1 com Restic: retenção, criptografia e restore</h1><p class="excerpt">Uma estratégia operacional para proteger dados de servidores com snapshots criptografados, cópia externa e testes de recuperação.</p><div class="stack"><span>Restic</span><span>Rsync</span><span>Linux</span></div></div><div class="wrap"><div class="toc"><div class="label">$ cat sumario.txt</div><ol><li><a href="#regra">1. A regra 3-2-1</a></li><li><a href="#restic">2. Repositório Restic</a></li><li><a href="#retencao">3. Retenção e integridade</a></li><li><a href="#restore">4. Restore ensaiado</a></li><li><a href="#check">5. Checklist final</a></li></ol></div><article class="body"><h2 id="regra">1. A regra 3-2-1</h2><p>Tenha três cópias, em dois meios diferentes, com uma delas fora do ambiente principal. O backup só é confiável quando a recuperação foi testada e o tempo de restauração é conhecido.</p><h2 id="restic">2. Repositório Restic</h2><pre><code>export RESTIC_REPOSITORY=s3:s3.amazonaws.com/bucket-servidor
 export RESTIC_PASSWORD_FILE=/etc/restic/password
 sudo chmod 600 /etc/restic/password
 restic init
@@ -36,13 +36,13 @@ journalctl -u restic-backup --since yesterday
       <div class="footer-social">
         <a href="https://github.com/iri-afk" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
         <a href="mailto:contato@irndevs.com" aria-label="E-mail">E-mail</a>
-        <a href="en/index.html">EN</a>
+        <a href="/en/">EN</a>
       </div>
     </div>
     <div class="footer-col">
       <h3>Links rápidos</h3>
       <ul>
-        <li><a href="index.html">Início</a></li>
+        <li><a href="/">Início</a></li>
         <li><a href="servicos.html">Serviços</a></li>
         <li><a href="pacotes.html">Pacotes</a></li>
         <li><a href="index.html#projetos">Projetos</a></li>
