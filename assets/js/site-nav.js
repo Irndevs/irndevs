@@ -496,13 +496,33 @@
         cat.classList.add('is-open');
         var t = cat.querySelector('[data-dd-cat-trigger]');
         if (t) t.setAttribute('aria-expanded', 'true');
-        // evita o flyout vazar pra fora da tela: se não couber à direita, abre pra esquerda
+        // Posiciona o flyout via JS com position:fixed, ancorado no botão da
+        // categoria. Isso é necessário porque o painel pai (.sn-dd-panel) tem
+        // overflow-y:auto — o que faz o navegador forçar overflow-x:auto
+        // também (regra do CSS Overflow), cortando qualquer coisa que tente
+        // "vazar" pra fora do painel via position:absolute. Com position:fixed
+        // o flyout sai da árvore de overflow do painel e não é mais cortado.
         var fly = cat.querySelector('[data-dd-flyout]');
-        if (fly) {
+        if (fly && t) {
           requestAnimationFrame(function () {
-            var r = fly.getBoundingClientRect();
-            if (r.right > window.innerWidth - 8) cat.classList.add('flip-left');
-            else cat.classList.remove('flip-left');
+            var tr = t.getBoundingClientRect();
+            var flyWidth = fly.offsetWidth || 280;
+            var flyHeight = fly.offsetHeight || 300;
+            var gap = 6;
+            var left = tr.right + gap;
+            var flipLeft = false;
+            if (left + flyWidth > window.innerWidth - 8) {
+              left = tr.left - flyWidth - gap;
+              flipLeft = true;
+            }
+            if (left < 8) left = 8;
+            var top = tr.top - 8;
+            if (top + flyHeight > window.innerHeight - 8) {
+              top = Math.max(8, window.innerHeight - 8 - flyHeight);
+            }
+            fly.style.left = left + 'px';
+            fly.style.top = top + 'px';
+            cat.classList.toggle('flip-left', flipLeft);
           });
         }
       }
