@@ -83,5 +83,40 @@
       <pubDate>Wed, 16 Sep 2026 10:00:00 GMT</pubDate>
       <description>Checklist operacional de acesso, serviços, firewall, logs e rollback.</description>
     </item>
+    <item>
+      <title>Como montar um portfólio no GitHub que atrai recrutadores</title>
+      <link>https://irndevs.com/artigo-portfolio-github.html</link>
+      <guid>https://irndevs.com/artigo-portfolio-github.html</guid>
+      <pubDate>Sat, 19 Sep 2026 10:00:00 GMT</pubDate>
+      <description>Checklist prático: profile README, pins, commits legíveis e projetos com deploy.</description>
+    </item>
+    <item>
+      <title>Frontend, backend e fullstack: o que estudar em cada caminho</title>
+      <link>https://irndevs.com/artigo-frontend-backend-fullstack.html</link>
+      <guid>https://irndevs.com/artigo-frontend-backend-fullstack.html</guid>
+      <pubDate>Sat, 19 Sep 2026 10:00:00 GMT</pubDate>
+      <description>Diferenças claras, o que o mercado pede e um roadmap realista para a primeira vaga.</description>
+    </item>
+    <item>
+      <title>ChatGPT no trabalho sem vazar dados da empresa</title>
+      <link>https://irndevs.com/artigo-chatgpt-trabalho-seguro.html</link>
+      <guid>https://irndevs.com/artigo-chatgpt-trabalho-seguro.html</guid>
+      <pubDate>Sat, 19 Sep 2026 10:00:00 GMT</pubDate>
+      <description>O que nunca colar no prompt, anonimização e política mínima de segurança para o time.</description>
+    </item>
+    <item>
+      <title>Roadmap: primeira vaga em tech em 2026</title>
+      <link>https://irndevs.com/artigo-primeira-vaga-tech-2026.html</link>
+      <guid>https://irndevs.com/artigo-primeira-vaga-tech-2026.html</guid>
+      <pubDate>Sat, 19 Sep 2026 10:00:00 GMT</pubDate>
+      <description>Plano em 6 meses: o que estudar, o que ignorar e como se posicionar de verdade.</description>
+    </item>
+    <item>
+      <title>LGPD na prática para quem tem site ou app</title>
+      <link>https://irndevs.com/artigo-lgpd-site-app.html</link>
+      <guid>https://irndevs.com/artigo-lgpd-site-app.html</guid>
+      <pubDate>Sat, 19 Sep 2026 10:00:00 GMT</pubDate>
+      <description>Checklist técnico mínimo: coleta, cookies, privacidade e o essencial sem juridiquês.</description>
+    </item>
   </channel>
 </rss>

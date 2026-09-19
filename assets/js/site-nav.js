@@ -200,7 +200,7 @@
   var bottomItems = [
     { href: '/', label: 'início', ico: '⌂' },
     { href: 'ferramentas.html', label: 'tools', ico: '▣' },
-    { href: 'pacotes.html', label: 'pacotes', ico: '▣' },
+    { href: 'cursos.html', label: 'cursos', ico: '◈' },
     { href: 'ia.html', label: 'IA', ico: '✦' },
     { href: 'contato.html', label: 'contato', ico: '@' }
   ];
@@ -462,7 +462,8 @@
         }
         function scheduleClose() {
           cancelClose();
-          closeTimer = setTimeout(function () { closeAll(); }, 180);
+          // 400ms: tempo pra atravessar o gap até o flyout de categoria (em <body>)
+          closeTimer = setTimeout(function () { closeAll(); }, 400);
         }
 
         // Hover (desktop)
@@ -518,10 +519,28 @@
       });
     })();
 
-    /* ---- Categorias do dropdown Ferramentas: flyout lateral ao passar o mouse ---- */
+    /* ---- Categorias do dropdown (ferramentas + cursos): flyout lateral ----
+       Timers compartilhados + delays longos: o flyout vive em <body>, então
+       há um “buraco” entre a lista de categorias e o painel. Sem grace period
+       generoso, o menu fecha/troca antes de o usuário conseguir clicar. */
     (function bindToolCategoryFlyouts() {
       var cats = root.querySelectorAll('[data-dd-cat]');
       if (!cats.length) return;
+
+      var OPEN_DELAY = 220;   // evita troca ao raspar categoria no caminho
+      var CLOSE_DELAY = 450;  // tempo de atravessar o gap até o flyout
+      var openTimer = null;
+      var closeTimer = null;
+      var pendingCat = null;
+
+      function cancelOpen() {
+        if (openTimer) { clearTimeout(openTimer); openTimer = null; }
+        pendingCat = null;
+      }
+      function cancelClose() {
+        if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      }
+      function cancelAll() { cancelOpen(); cancelClose(); }
 
       function closeCat(cat) {
         cat.classList.remove('is-open');
@@ -530,103 +549,115 @@
         var fly = cat.querySelector('[data-dd-flyout]') || cat._flyoutRef;
         if (fly) fly.classList.remove('is-open');
       }
+      function closeAllCats() {
+        cancelAll();
+        cats.forEach(closeCat);
+      }
       function closeSiblings(except) {
         cats.forEach(function (c) { if (c !== except) closeCat(c); });
       }
+
+      function positionFlyout(cat, fly, t) {
+        requestAnimationFrame(function () {
+          if (!cat.classList.contains('is-open')) return;
+          var tr = t.getBoundingClientRect();
+          var flyWidth = fly.offsetWidth || 280;
+          var flyHeight = fly.offsetHeight || 300;
+          // gap negativo = sobreposição de 2px: o mouse não “cai no vazio”
+          var gap = -2;
+          var left = tr.right + gap;
+          if (left + flyWidth > window.innerWidth - 8) {
+            left = tr.left - flyWidth - gap;
+          }
+          if (left < 8) left = 8;
+          var top = tr.top - 8;
+          if (top + flyHeight > window.innerHeight - 8) {
+            top = Math.max(8, window.innerHeight - 8 - flyHeight);
+          }
+          fly.style.left = left + 'px';
+          fly.style.top = top + 'px';
+          fly.classList.add('is-open');
+        });
+      }
+
       function openCat(cat) {
+        cancelAll();
         closeSiblings(cat);
         cat.classList.add('is-open');
         var t = cat.querySelector('[data-dd-cat-trigger]');
         if (t) t.setAttribute('aria-expanded', 'true');
-        // O flyout é movido para <body> na primeira abertura e posicionado
-        // via JS com position:fixed, ancorado no botão da categoria. É
-        // necessário porque qualquer ancestral com transform/filter/
-        // backdrop-filter (o header usa backdrop-filter; o painel usava
-        // transform na animação) cria um "containing block" para
-        // descendentes fixed, fazendo o navegador posicioná-los relativos a
-        // esse ancestral em vez da tela — o flyout ficava fora da área
-        // visível ou cortado pelo overflow do painel. Morando em <body>,
-        // ele escapa de qualquer ancestral assim, hoje ou no futuro.
         var fly = cat.querySelector('[data-dd-flyout]') || cat._flyoutRef;
         if (fly && t) {
           if (fly.parentNode !== document.body) {
-            cat._flyoutRef = fly; // guarda referência pra achar depois de mover
+            cat._flyoutRef = fly;
             document.body.appendChild(fly);
           }
-          requestAnimationFrame(function () {
-            // Guarda contra corrida: se o usuário já passou pra outra
-            // categoria antes deste frame rodar, esta categoria não deve
-            // mais abrir (evita abrir a errada ou nenhuma, ao passar o
-            // mouse rápido por vários itens seguidos).
-            if (!cat.classList.contains('is-open')) return;
-            var tr = t.getBoundingClientRect();
-            var flyWidth = fly.offsetWidth || 280;
-            var flyHeight = fly.offsetHeight || 300;
-            var gap = 6;
-            var left = tr.right + gap;
-            if (left + flyWidth > window.innerWidth - 8) {
-              left = tr.left - flyWidth - gap;
-            }
-            if (left < 8) left = 8;
-            var top = tr.top - 8;
-            if (top + flyHeight > window.innerHeight - 8) {
-              top = Math.max(8, window.innerHeight - 8 - flyHeight);
-            }
-            fly.style.left = left + 'px';
-            fly.style.top = top + 'px';
-            fly.classList.add('is-open');
-          });
+          positionFlyout(cat, fly, t);
         }
+      }
+
+      function scheduleOpen(cat) {
+        cancelClose();
+        if (cat.classList.contains('is-open')) return;
+        cancelOpen();
+        pendingCat = cat;
+        openTimer = setTimeout(function () {
+          openTimer = null;
+          if (pendingCat === cat) openCat(cat);
+          pendingCat = null;
+        }, OPEN_DELAY);
+      }
+
+      function scheduleCloseCat(cat) {
+        cancelOpen();
+        cancelClose();
+        closeTimer = setTimeout(function () {
+          closeTimer = null;
+          closeCat(cat);
+        }, CLOSE_DELAY);
+      }
+
+      function holdOpen(parentDd) {
+        cancelClose();
+        cancelOpen();
+        if (parentDd && parentDd._cancelClose) parentDd._cancelClose();
       }
 
       cats.forEach(function (cat) {
         var trigger = cat.querySelector('[data-dd-cat-trigger]');
         var flyout = cat.querySelector('[data-dd-flyout]');
         if (!trigger || !flyout) return;
+        var parentDd = cat.closest('[data-dropdown]');
 
-        var closeTimer = null;
-        var openTimer = null;
-        function cancelClose() { if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; } }
-        function scheduleClose() { cancelClose(); closeTimer = setTimeout(function () { closeCat(cat); }, 150); }
-        function cancelOpen() { if (openTimer) { clearTimeout(openTimer); openTimer = null; } }
-
-        // mouse — abre com um pequeno atraso (em vez de na hora) pra não
-        // trocar de categoria só porque o cursor passou de raspão por cima
-        // dela no caminho até um item mais embaixo no flyout da categoria
-        // atual (o famoso "menu troca antes de eu clicar").
         cat.addEventListener('mouseenter', function () {
-          cancelClose();
-          if (cat.classList.contains('is-open')) return;
-          cancelOpen();
-          openTimer = setTimeout(function () { openCat(cat); }, 120);
+          holdOpen(parentDd);
+          scheduleOpen(cat);
         });
         cat.addEventListener('mouseleave', function () {
-          cancelOpen();
-          scheduleClose();
+          // não cancela open se ainda estamos no delay da MESMA cat
+          if (pendingCat !== cat) cancelOpen();
+          scheduleCloseCat(cat);
         });
-        // O flyout mora em <body> depois de aberto (fora da árvore de `cat`),
-        // então precisa dos próprios listeners de hover pra não fechar quando
-        // o mouse entra nele — e também precisa "avisar" o dropdown pai
-        // (ferramentas) que o mouse ainda está em uso, senão o painel
-        // principal se fecharia sozinho por trás do flyout.
-        var parentDd = cat.closest('[data-dropdown]');
+
         flyout.addEventListener('mouseenter', function () {
-          cancelClose();
-          if (parentDd && parentDd._cancelClose) parentDd._cancelClose();
+          holdOpen(parentDd);
+          // garante que esta categoria permanece a aberta
+          if (!cat.classList.contains('is-open')) openCat(cat);
         });
         flyout.addEventListener('mouseleave', function () {
-          scheduleClose();
+          scheduleCloseCat(cat);
           if (parentDd && parentDd._scheduleClose) parentDd._scheduleClose();
         });
 
-        // toque / clique (mobile o dropdown inteiro some, mas mantém suporte por segurança)
+        // clique: abre/fecha na hora (sem delay)
         trigger.addEventListener('click', function (e) {
           e.preventDefault();
+          e.stopPropagation();
+          cancelAll();
           if (cat.classList.contains('is-open')) closeCat(cat);
           else openCat(cat);
         });
 
-        // teclado
         trigger.addEventListener('keydown', function (e) {
           if (e.key === 'ArrowRight' || e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
@@ -645,10 +676,10 @@
         });
       });
 
-      // fecha os flyouts quando o dropdown pai de "ferramentas" fecha
       root.querySelectorAll('[data-dropdown]').forEach(function (dd) {
-        dd._closeCats = function () { cats.forEach(closeCat); };
-        dd.addEventListener('mouseleave', function () { cats.forEach(closeCat); });
+        dd._closeCats = closeAllCats;
+        // NÃO fechar categorias no mouseleave imediato do pai —
+        // o scheduleClose do dropdown (400ms) + _closeCats no closeAll bastam.
       });
     })();
 
